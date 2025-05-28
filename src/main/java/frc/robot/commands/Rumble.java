@@ -15,20 +15,21 @@ public class Rumble extends Command{
         m_RumbleType=_RumbleType;
         value=_value;
     }
+    
     public void initialize()
     {
         RobotContainer.driverController.setRumble(m_RumbleType,value);
     }
+
     @Override
-    public void execute()
-    {
-        
-    }
+    public void execute(){}
+
     @Override
     public void end(boolean interrupted)
     {
         RobotContainer.driverController.setRumble(m_RumbleType,0.);
     }
+
     @Override
     public boolean isFinished() 
     {

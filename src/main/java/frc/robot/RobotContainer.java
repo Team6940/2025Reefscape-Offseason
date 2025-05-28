@@ -1,12 +1,8 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
-import javax.print.StreamPrintService;
+// import javax.print.StreamPrintService;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -17,8 +13,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.subsystems.ImprovedCommandXboxController;
-import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Chassis.TunerConstants;
+import frc.robot.subsystems.Chassis.*;
 
 public class RobotContainer {
 
@@ -51,17 +46,37 @@ public class RobotContainer {
 
         /* DRIVER CONTROLLER */
 
+        /**
+        * The ideal control logic is such: 
+        * Left Stick: Translation
+        * Right Stick: Rotation
+        * Left bumper: Hybrid Intake
+        * Left trigger: Outtake from the back
+        * Right Bumper + Right Trigger: Hybrid Scoring
+        * Left Stick Pressed: Extend Climber and Intake
+        * Right Stick Pressed: Retract Climber
+        * X: Algae Romoval After Scoring
+        * Y: Increase Reef Level Index
+        * A: Decrease Reef Level Index
+        * B: Outtake from the front
+        * povDown: switch hybrid intake and elevator control
+        * povUP: resetFieldCentric
+        * povLeft: 
+        * povRight: 
+   */
+
         /* Povs */ //TODO
-        driverController.leftTrigger().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())); // Bind the left trigger to seed the field-centric heading.
+        driverController.povUp().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())); // Bind the left trigger to seed the field-centric heading.
+
 
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driverController.getLeftY() * MaxSpeed /8.) // Drive forward with negative Y (forward) //TODO
-                    .withVelocityY(-driverController.getLeftX() * MaxSpeed/ 8.) // Drive left with negative X (left) //TODO
-                    .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(-driverController.getLeftY() * MaxSpeed /1.) // Drive forward with negative Y (forward) //TODO:change speed here
+                    .withVelocityY(-driverController.getLeftX() * MaxSpeed/ 1.) // Drive left with negative X (left) //TODO:change speed here
+                    .withRotationalRate(-driverController.getRightX() * MaxAngularRate /1.) // Drive counterclockwise with negative X (left)
             )
         );
 

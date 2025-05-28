@@ -30,8 +30,8 @@ public class TunerConstants {
 
     /* Voltage */
     private static final Slot0Configs driveGains = new Slot0Configs()
-        .withKP(0.2).withKI(0).withKD(0)
-        .withKS(0.082).withKV(0.116).withKA(0.092);         //0.2 0 0 0.082 0.116 0.092
+        .withKP(0.3).withKI(0).withKD(0)
+        .withKS(0.01).withKV(0.1).withKA(0.04);         //0.2 0 0 0.082 0.116 0.092
 
     /* Torque Current FOC */
     // private static final Slot0Configs driveGains = new Slot0Configs()
