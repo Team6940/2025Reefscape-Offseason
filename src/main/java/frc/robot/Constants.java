@@ -24,22 +24,24 @@ public class Constants {
         public final static double kInnerDeadband = 0.004;
         public final static double kOuterDeadband = 0.98; // these were defined for the 1706 lib;
         public static final int IntakeButton = 0;
+        public static final double defaultDrivePower = 1.2;
+
     }
 
-    // public static final class IntakerConstants {
-    //     public static final int IntakerLeftMotorID = 18;
-    //     public static final int IntakerRghtMotorID = 19;
-    //     public static final double intakerVelocityToleranceRPS = 0.2;
-    //     public static final double kP = 0.2;
-    //     public static final double kI = 0;
-    //     public static final double kD = 0;
-    //     public static final double kV = 0.22;
-    //     public static final double kS = 0.15;
-    //     public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
-    //     public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
-    //     public static final double IntakerIntakeRPS = 12.;
-    //     public static final double IntakerRatio = 50./24.;      //LCY: 50. :24.      //GY: 20. : 10.
-    // }
+    public static final class GroundIntakerConstants {
+        public static final int IntakerLeftMotorID = 18;
+        public static final int IntakerRghtMotorID = 19;
+        public static final double intakerVelocityToleranceRPS = 0.2;
+        public static final double kP = 0.2;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kV = 0.22;
+        public static final double kS = 0.15;
+        public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
+        public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
+        public static final double IntakerIntakeRPS = 12.;
+        public static final double IntakerRatio = 50./24.;      //LCY: 50. :24.      //GY: 20. : 10.
+    }
 
     public static final class PoseEstimatorConstants {
         public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.3, 0.3, 0.1);
