@@ -7,24 +7,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.GroundIntakerConstants;
 
-public class GroundIntakerSubsystem extends SubsystemBase{
-    public static GroundIntakerSubsystem m_instance;
-    public static GroundIntakerSubsystem getInstance() {
-        return m_instance == null? m_instance = new GroundIntakerSubsystem() : m_instance;
+public class IntakerSubsystem extends SubsystemBase{
+    public static IntakerSubsystem m_instance;
+    public static IntakerSubsystem getInstance() {
+        return m_instance == null? m_instance = new IntakerSubsystem() : m_instance;
     }
 
-    private final GroundIntakerIO io;
+    private final IntakerIO io;
     // private final IntakerIOInputsAutoLogged inputs = new IntakerIOInputsAutoLogged();
 
     private double targetRPS = 0.;
 
-    public GroundIntakerSubsystem(){
+    public IntakerSubsystem(){
         if(Robot.isReal()){
-            io = new GroundIntakerIOPhoenix6();
+            io = new IntakerIOPhoenix6();
         }
         else{
             //TODO: Implement simulation code here
-            io = new GroundIntakerIOPhoenix6();
+            io = new IntakerIOPhoenix6();
         }
     }
 

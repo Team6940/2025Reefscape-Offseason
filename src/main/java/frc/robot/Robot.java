@@ -8,6 +8,7 @@ import frc.robot.Library.MUtils;
 import frc.robot.commands.Autos.*;
 
 public class Robot extends TimedRobot { //TODO
+
   private Command m_autonomousCommand;
   public Command autoCommand = new Down3Corals();
   private int autoChoice = 3; 
@@ -28,7 +29,7 @@ public class Robot extends TimedRobot { //TODO
 
   @Override
   public void disabledPeriodic() {
-          /*
+      /*
        * (Ivan 2025.5.26):
        * 
        * This is for cycle selecting through 3 auto choices and select the autonomous command:
@@ -36,7 +37,7 @@ public class Robot extends TimedRobot { //TODO
        * 2. Mid1Coral
        * 3. Down3Corals
        * 
-       * (for more info look up at AutoGenerator.java)
+       * (for more info look up in AutoGenerator.java)
        *  autoChoice variable : keep track of the current selection.
        * The autoCommand variable is updated with the new command based on the autoChoice.
       */
@@ -58,7 +59,7 @@ public class Robot extends TimedRobot { //TODO
     }
     switch(autoChoice){
 
-      //(Ivan 2025.5.26): Display autoChoice on the SmartDashboard
+      //(Ivan 2025.5.26): Display autoChoice on your SmartDashboard
 
       case 1:
       SmartDashboard.putString("AutoType", "Up3Corals");
@@ -78,11 +79,15 @@ public class Robot extends TimedRobot { //TODO
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.schedule();
+    // }
+
+      // if(autoAlreadyRan = true) return;
+      autoCommand.withTimeout(15.).schedule();
+      // this is for the autonomous command to run only once
   }
 
   @Override
@@ -92,11 +97,7 @@ public class Robot extends TimedRobot { //TODO
   public void autonomousExit() {}
 
   @Override
-  public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
-  }
+  public void teleopInit() {}
 
   @Override
   public void teleopPeriodic() {}
@@ -116,5 +117,7 @@ public class Robot extends TimedRobot { //TODO
   public void testExit() {}
 
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+    // (Ivan 2025.5.26): This method will be called once per scheduler run during simulation, not used in the real robot.
+  }
 }

@@ -2,7 +2,7 @@ package frc.robot.subsystems.GroundIntaker.Intaker;
 
 import org.littletonrobotics.junction.AutoLog;
 
-public interface GroundIntakerIO {
+public interface IntakerIO {
     default public void setVoltage(double voltage){}
     default public void setRPS(double rps){}
 

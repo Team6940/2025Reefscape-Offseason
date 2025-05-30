@@ -8,13 +8,13 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import frc.robot.Constants.GroundIntakerConstants;
 
-public class GroundIntakerIOPhoenix6 implements GroundIntakerIO {
+public class IntakerIOPhoenix6 implements IntakerIO {
     private static final TalonFX leftMotor = new TalonFX(GroundIntakerConstants.IntakerLeftMotorID, "canivore");
     private static final TalonFX rghtMotor = new TalonFX(GroundIntakerConstants.IntakerRghtMotorID, "canivore");
 
     private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
 
-    public GroundIntakerIOPhoenix6() {
+    public IntakerIOPhoenix6() {
         motorConfig();
     }
 

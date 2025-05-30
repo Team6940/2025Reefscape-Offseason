@@ -19,6 +19,8 @@ import frc.robot.subsystems.Chassis.*;
 
 public class RobotContainer {
 
+    public static final String m_Limelight = "limelight-front";
+    
     public static final ImprovedCommandXboxController driverController = new ImprovedCommandXboxController(0); 
       public static final XboxController traditionalDriverController = new XboxController(0);
 
