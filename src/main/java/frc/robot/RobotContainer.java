@@ -78,7 +78,7 @@ public class RobotContainer {
    */
 
         /* Povs */ //TODO
-        driverController.povUp().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // Bind the left trigger to seed the field-centric heading.
+        driverController.povUp().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); //seed field-centric heading.
 
 
         // Note that X is defined as forward according to WPILib convention,

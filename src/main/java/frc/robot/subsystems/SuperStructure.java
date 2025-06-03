@@ -1,35 +1,58 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.commands.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Climber.ClimberSubsystem;
+import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.subsystems.GroundIntaker.G_Arm.G_ArmSubsystem;
+import frc.robot.subsystems.Shooter.ShooterSubsystem;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SuperStructure extends SubsystemBase{
-    private static SuperStructure m_Instance = null;
 
+    private static SuperStructure m_Instance = null;
     public static SuperStructure getInstance() {
         return m_Instance == null ? m_Instance = new SuperStructure() : m_Instance;
     }
 
+    public enum ExampleState { //TODO
+        STATE_ONE,
+        STATE_TWO,
+        STATE_THREE
+    }
+
+    /** Subsystems */
+    private CommandSwerveDrivetrain chassis;
+    private G_ArmSubsystem groundIntaker; 
+    private ShooterSubsystem shooter;
+    private ElevatorSubsystem elevator;
+    private ClimberSubsystem climber; 
+    
+
     /** Joysticks */
     private ImprovedCommandXboxController driverController;
-    private ImprovedCommandXboxController operatorController;
 
-        public SuperStructure() {
-        // chassis = CommandSwerveDrivetrain.getInstance();
-        // climber = ClimberSubsystem.getInstance();
-        // elevator = ElevatorSubsystem.getInstance();
-        // shooter = ShooterSubsystem.getInstance();
+    /** Variables */
+    //TODO
+
+    public SuperStructure() {
+        chassis = CommandSwerveDrivetrain.getInstance();
+        groundIntaker = G_ArmSubsystem.getInstance();
+        shooter = ShooterSubsystem.getInstance();
+        elevator = ElevatorSubsystem.getInstance();
+        climber = ClimberSubsystem.getInstance();
+        
         driverController = new ImprovedCommandXboxController(0);
-        operatorController = new ImprovedCommandXboxController(1);
     }
+
+    //TODO:add requirements here
 
     public void periodic(){
-        // This method will be called once per scheduler run
         // Add any periodic tasks here, such as updating telemetry or checking subsystem states
-        //        SmartDashboard.putNumber("SuperStructure/targetLevelIndex",); //TODO
+        // SmartDashboard.putNumber("SuperStructure/targetLevelIndex",); //TODO
     }
+
 }
