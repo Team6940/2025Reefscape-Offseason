@@ -3,11 +3,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.commands.*;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Climber.ClimberSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
-import frc.robot.subsystems.GroundIntaker.G_Arm.G_ArmSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,7 +26,7 @@ public class SuperStructure extends SubsystemBase{
 
     /** Subsystems */
     private CommandSwerveDrivetrain chassis;
-    private G_ArmSubsystem groundIntaker; 
+    private ArmSubsystem groundIntaker; 
     private ShooterSubsystem shooter;
     private ElevatorSubsystem elevator;
     private ClimberSubsystem climber; 
@@ -40,7 +40,7 @@ public class SuperStructure extends SubsystemBase{
 
     public SuperStructure() {
         chassis = CommandSwerveDrivetrain.getInstance();
-        groundIntaker = G_ArmSubsystem.getInstance();
+        groundIntaker = ArmSubsystem.getInstance();
         shooter = ShooterSubsystem.getInstance();
         elevator = ElevatorSubsystem.getInstance();
         climber = ClimberSubsystem.getInstance();
