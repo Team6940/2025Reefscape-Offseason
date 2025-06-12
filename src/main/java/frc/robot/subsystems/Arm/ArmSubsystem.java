@@ -1,4 +1,4 @@
-package frc.robot.subsystems.GroundIntaker.Transmission;
+package frc.robot.subsystems.Arm;
 
 import org.littletonrobotics.junction.Logger;
 
@@ -7,25 +7,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.GroundIntakerConstants;
 
-public class TransmissionSubsystem extends SubsystemBase{
+public class ArmSubsystem extends SubsystemBase{
     
-    public static TransmissionSubsystem m_instance;
-    public static TransmissionSubsystem getInstance() {
-        return m_instance == null? m_instance = new TransmissionSubsystem() : m_instance;
+    public static ArmSubsystem m_instance;
+    public static ArmSubsystem getInstance() {
+        return m_instance == null? m_instance = new ArmSubsystem() : m_instance;
     }
 
-    private final TransmissionIO io;
+    private final ArmIO io;
     // private final IntakerIOInputsAutoLogged inputs = new IntakerIOInputsAutoLogged();
 
     private double targetRPS = 0.;
 
-    public TransmissionSubsystem(){
+    public ArmSubsystem(){
         if(Robot.isReal()){
-            io = new TransmissionIOPhoenix6();
+            io = new ArmIOPhoenix6();
         }
         else{
             //TODO: Implement simulation code here
-            io = new TransmissionIOPhoenix6();
+            io = new ArmIOPhoenix6();
         }
     }
 

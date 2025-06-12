@@ -28,6 +28,8 @@ public class Robot extends LoggedRobot { //TODO
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
     //TODO: copied from 2025Reefscape
+
+    ///
     if (isReal()) {
       Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
@@ -41,7 +43,7 @@ public class Robot extends LoggedRobot { //TODO
     }
 
     Logger.start();
-
+    ///
 
   }
 
@@ -62,7 +64,7 @@ public class Robot extends LoggedRobot { //TODO
        * 3. Down3Corals
        * 
        * (for more info look up in AutoGenerator.java)
-       * autoChoice variable : keep track of the current selection.
+       * autoChoice : keep track of the current selection.
        * The autoCommand variable is updated with the new command based on the autoChoice.
       */
     if(RobotContainer.traditionalDriverController.getXButtonPressed()){
