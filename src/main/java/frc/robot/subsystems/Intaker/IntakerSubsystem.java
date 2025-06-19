@@ -5,7 +5,7 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.Constants.IntakerConstants;
+import frc.robot.Constants.GroundIntakerConstants;
 
 public class IntakerSubsystem extends SubsystemBase{
     public static IntakerSubsystem m_instance;
