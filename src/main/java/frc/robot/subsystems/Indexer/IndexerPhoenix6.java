@@ -6,10 +6,10 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import frc.robot.Constants.GroundIntakerConstants;
+import frc.robot.Constants.IndexerConstants;
 
 public class IndexerPhoenix6 implements IndexerIO {
-    private static final TalonFX Motor = new TalonFX(GroundIntakerConstants.IntakerLeftMotorID, "canivore");
+    private static final TalonFX Motor = new TalonFX(IndexerConstants.IndexerMotorID, "canivore");
 
     private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
 
@@ -20,16 +20,15 @@ public class IndexerPhoenix6 implements IndexerIO {
     private void motorConfig() {
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        config.Feedback.SensorToMechanismRatio = GroundIntakerConstants.IntakerRatio;
+        config.Feedback.SensorToMechanismRatio = IndexerConstants.IndexerRatio;
         config.Voltage.PeakForwardVoltage = 12.0;
         config.Voltage.PeakReverseVoltage = -12.0;
-        config.Slot0.kP = GroundIntakerConstants.kP;
-        config.Slot0.kI = GroundIntakerConstants.kI;
-        config.Slot0.kD = GroundIntakerConstants.kD;
-        config.Slot0.kV = GroundIntakerConstants.kV;
-        config.Slot0.kS = GroundIntakerConstants.kS;
-
-        config.MotorOutput.Inverted = GroundIntakerConstants.LeftInverted;
+        config.Slot0.kP = IndexerConstants.kP;
+       config.Slot0.kI = IndexerConstants.kI;
+       config.Slot0.kD = IndexerConstants.kD;
+       config.Slot0.kV = IndexerConstants.kV;
+       config.Slot0.kS = IndexerConstants.kS;
+        config.MotorOutput.Inverted = IndexerConstants.IndexerInverted;
         Motor.getConfigurator().apply(config);
 
     }
