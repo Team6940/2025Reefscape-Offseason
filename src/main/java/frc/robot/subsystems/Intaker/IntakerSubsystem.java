@@ -1,4 +1,4 @@
-package frc.robot.subsystems.GroundIntaker.Intaker;
+package frc.robot.subsystems.Intaker;
 
 import org.littletonrobotics.junction.Logger;
 

@@ -1,7 +1,13 @@
-package frc.robot.subsystems.Shooter;
+package frc.robot.subsystems.Climber;
 
-public class ShooterIOPheonix6 {
-    public static class ShooterIOInputs {
+public interface ClimberIO {
+
+    default public void setVoltage(double voltage) {}
+
+    default public void setRPS(double rps) {}
+
+    @org.littletonrobotics.junction.AutoLog
+    public class ClimberIOInputs {
         public boolean leftMotorConnected;
         public boolean rightMotorConnected;
 
@@ -13,9 +19,5 @@ public class ShooterIOPheonix6 {
         public double rightVelocityRPS;
     }
 
-    public void setVoltage(double voltage) {}
-
-    public void setRPS(double rps) {}
-
-    public void updateInputs(ShooterIOInputs inputs) {}
+    default public void updateInputs(ClimberIOInputs inputs) {}
 }

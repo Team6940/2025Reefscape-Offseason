@@ -19,17 +19,20 @@ import frc.robot.subsystems.Chassis.*;
 
 public class RobotContainer {
 
+    /* INITIALIZE */
+
     public static final String m_Limelight = "limelight-front";
     
     public static final ImprovedCommandXboxController driverController = new ImprovedCommandXboxController(0); 
-      public static final XboxController traditionalDriverController = new XboxController(0);
+    public static final XboxController traditionalDriverController = new XboxController(0);
 
     public static final CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
         
 
     private final Telemetry logger = new Telemetry(TunerConstants.kSpeedAt12Volts.in(MetersPerSecond));
+
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // Originally 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     //TODO: change deadband here
     public static final double driveDeadband = 0.04;
@@ -42,6 +45,7 @@ public class RobotContainer {
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
+
     public RobotContainer() {
         configureBindings();
     }
@@ -49,17 +53,17 @@ public class RobotContainer {
     private void configureBindings() {
 
         /* DEFAULT COMMANDS */
-        chassis.registerTelemetry(logger::telemeterize); //TODO: copied from 2025Reefscape
+        //TODO
 
-
+        
         /* DRIVER CONTROLLER */
 
         /**  
         * The ideal control logic is such: 
         * Left Stick: Translation
         * Right Stick: Rotation
-        * Left bumper: Hybrid Intake
-        * Left trigger: Outtake from the back
+        * Left bumper: Hybrid Intake (release the ground intake and stop after releasing the bumper)
+        * Left trigger: Outtake from the back (shake ground intake)
         * Right Bumper + Right Trigger: Hybrid Scoring
         * Left Stick Pressed: Extend Climber and Intake
         * Right Stick Pressed: Retract Climber
@@ -74,7 +78,7 @@ public class RobotContainer {
    */
 
         /* Povs */ //TODO
-        driverController.povUp().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // Bind the left trigger to seed the field-centric heading.
+        driverController.povUp().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); //seed field-centric heading.
 
 
         // Note that X is defined as forward according to WPILib convention,

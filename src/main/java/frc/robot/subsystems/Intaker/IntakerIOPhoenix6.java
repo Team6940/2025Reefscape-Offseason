@@ -1,4 +1,4 @@
-package frc.robot.subsystems.GroundIntaker.Intaker;
+package frc.robot.subsystems.Intaker;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;

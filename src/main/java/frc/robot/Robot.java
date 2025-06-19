@@ -1,13 +1,21 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Library.MUtils;
 import frc.robot.commands.Autos.*;
 
-public class Robot extends TimedRobot { //TODO
+public class Robot extends LoggedRobot { //TODO
 
   private Command m_autonomousCommand;
   public Command autoCommand = new Down3Corals();
@@ -17,6 +25,26 @@ public class Robot extends TimedRobot { //TODO
 
   public Robot() {
     m_robotContainer = new RobotContainer();
+    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+
+    //TODO: copied from 2025Reefscape
+
+    ///
+    if (isReal()) {
+      Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
+      Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+      new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
+    } 
+    else {
+      setUseTiming(false); // Run as fast as possible
+      String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
+      Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
+      Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
+    }
+
+    Logger.start();
+    ///
+
   }
 
   @Override
@@ -30,22 +58,19 @@ public class Robot extends TimedRobot { //TODO
   @Override
   public void disabledPeriodic() {
       /*
-       * (Ivan 2025.5.26):
-       * 
-       * This is for cycle selecting through 3 auto choices and select the autonomous command:
+       * for cycle selecting through 3 auto choices and select the autonomous command:
        * 1. Up3Corals
        * 2. Mid1Coral
        * 3. Down3Corals
        * 
        * (for more info look up in AutoGenerator.java)
-       *  autoChoice variable : keep track of the current selection.
+       * autoChoice : keep track of the current selection.
        * The autoCommand variable is updated with the new command based on the autoChoice.
       */
     if(RobotContainer.traditionalDriverController.getXButtonPressed()){
       autoChoice = MUtils.cycleNumber(autoChoice, 1, 3, -1);
       autoCommand = AutoGenerator.generate(autoChoice);
       /*
-       * (Ivan 2025.5.26):
        * press X and autoChoice -1 
       */
     }
@@ -53,23 +78,22 @@ public class Robot extends TimedRobot { //TODO
       autoChoice = MUtils.cycleNumber(autoChoice, 1, 3, 1);
       autoCommand = AutoGenerator.generate(autoChoice);
       /*
-       * (Ivan 2025.5.26):
        * press B and autoChoice +1
       */
     }
     switch(autoChoice){
 
-      //(Ivan 2025.5.26): Display autoChoice on your SmartDashboard
+      //Display autoChoice on your SmartDashboard
 
       case 1:
-      SmartDashboard.putString("AutoType", "Up3Corals");
-      break;
+        SmartDashboard.putString("AutoType", "Up3Corals");
+        break;
       case 2:
-      SmartDashboard.putString("AutoType", "Mid1Coral");
-      break;
+        SmartDashboard.putString("AutoType", "Mid1Coral");
+        break;
       case 3:
-      SmartDashboard.putString("AutoType", "Down3Corals");
-      break;
+        SmartDashboard.putString("AutoType", "Down3Corals");
+        break;
     }
     
   }
@@ -79,15 +103,8 @@ public class Robot extends TimedRobot { //TODO
 
   @Override
   public void autonomousInit() {
-    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
-    // }
-
       // if(autoAlreadyRan = true) return;
       autoCommand.withTimeout(15.).schedule();
-      // this is for the autonomous command to run only once
   }
 
   @Override
@@ -118,6 +135,6 @@ public class Robot extends TimedRobot { //TODO
 
   @Override
   public void simulationPeriodic() {
-    // (Ivan 2025.5.26): This method will be called once per scheduler run during simulation, not used in the real robot.
+    //This method will be called once per scheduler run during simulation, not used in the real robot.
   }
 }
