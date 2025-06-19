@@ -28,19 +28,37 @@ public class Constants {
 
     }
 
-    public static final class GroundIntakerConstants {
-        public static final int IntakerLeftMotorID = 18;
-        public static final int IntakerRghtMotorID = 19;
-        public static final double intakerVelocityToleranceRPS = 0.2;
+    public static final class ShooterConstants {
+        public static final int ShooterMotorID = 17;
+        
         public static final double kP = 0.2;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kV = 0.22;
         public static final double kS = 0.15;
-        public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
-        public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
-        public static final double IntakerIntakeRPS = 12.;
-        public static final double IntakerRatio = 50./24.;      //LCY: 50. :24.      //GY: 20. : 10.
+
+        public static final InvertedValue ShooterInverted = InvertedValue.Clockwise_Positive;
+        public static final double ShooterRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
+
+        
+    }
+
+    public static final class ArmConstants {
+        public static final int ArmMotorID = 18;
+        public static final double ArmVelocityToleranceRPS = 0.2;
+        public static final double kP = 0.2;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kV = 0.22;
+        public static final double kS = 0.15;
+        public static final double kG = 0.0; //gravity
+        public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
+        public static final double ArmRatio = 50./24.;      //LCY: 50. :24.      //GY: 20. : 10.
+        public static final double MaxVelocity = 0.5; // RPS
+        public static final double Acceleration = 0.5; // RPS^2
+
+        public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
+        public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
     }
 
     public static final class PoseEstimatorConstants {
