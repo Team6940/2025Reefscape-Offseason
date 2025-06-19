@@ -8,11 +8,15 @@ public interface IndexerIO {
 
     @AutoLog
     public class IndexerIOInputs {
-        public boolean IndexerMotorConnected;
+        public boolean leftMotorConnected;
+        public boolean rghtMotorConnected;
 
-        public double IndexerVoltageVolts;
-        public double IndexerCurrentAmps;
-        public double IndexerVelocityRPS;
+        public double leftVoltageVolts;
+        public double rghtVoltageVolts;
+        public double leftCurrentAmps;
+        public double rghtCurrentAmps;
+        public double leftVelocityRPS;
+        public double rghtVelocityRPS;
 
     }
     default public void updateInputs(IndexerIOInputs inputs){}

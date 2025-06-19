@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ShooterConstants;
 
-public class ShooterSubsystem {
+public class ShooterSubsystem{
     public static ShooterSubsystem m_Instance;
     public static ShooterSubsystem getInstance(){
         return m_Instance == null? m_Instance = new ShooterSubsystem() : m_Instance;
@@ -57,6 +57,39 @@ public class ShooterSubsystem {
         COMING_OUT
     }
 
+    //public ShooterState getCoralState() {
+        // if (inputs.motorConnected == false) { //TODO:用电流判断吸球装置
+        //     return ShooterState.READY;
+        // }
+        // return ShooterState.IDLE;
+   // }
 
+    // public boolean isReady() {
+    //     return getCoralState() == ShooterState.READY;
+    // }
+
+    // @Override
+    // public void periodic() {
+    //     processLog();
+    //     processDashboard();
+        
+    //     SmartDashboard.putString("status", getCoralState().toString());
+    // }
+
+    private void processLog() {
+    //     io.updateInputs(inputs);
+    //     Logger.processInputs("Shooter", inputs);
+    //     Logger.recordOutput("Shooter/TargetRPS", targetRPS);
+    //     Logger.recordOutput("Shooter/IsAtTargetRPS", IsAtTargetRps());
+    }
+
+    private void processDashboard() {
+        //TODO: Implement dashboard code here
+
+    }
+
+    public double getShootRPS(int level){
+        return ShooterConstants.ShooterShootRPSs[level];
+    }
 
 }

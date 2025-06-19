@@ -43,7 +43,9 @@ public class Constants {
     }
 
     public static class IndexerConstants {
-        public static final int IndexerMotorID = 16;
+        public static final int IndexerLeftMotorID = 16;
+        public static final int IndexerRghtMotorID = 16;
+
         
         public static final double kP = 0.2;
         public static final double kI = 0;
@@ -51,8 +53,11 @@ public class Constants {
         public static final double kV = 0.22;
         public static final double kS = 0.15;
 
-        public static final InvertedValue IndexerInverted = InvertedValue.Clockwise_Positive;
+        public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
+        public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
         public static final double IndexerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
+        
+        public static final double IndexerVelocityToleranceRPS = 0;
         
     }
 
@@ -64,6 +69,14 @@ public class Constants {
         public static final double kD = 0;
         public static final double kV = 0.22;
         public static final double kS = 0.15;
+
+        public static final double ShooterShootRPSs[] = new double[]{
+            0.,
+            15.5,
+            12.5,
+            12.5,
+            18.,
+        };
 
         public static final InvertedValue ShooterInverted = InvertedValue.Clockwise_Positive;
         public static final double ShooterRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
@@ -88,6 +101,25 @@ public class Constants {
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
     }
+
+    public static final class GrArmConstants {
+        public static final int GrArmMotorID = 21;
+        public static final double GrArmVelocityToleranceRPS = 0.2;
+        public static final double kP = 0.2;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kV = 0.22;
+        public static final double kS = 0.15;
+        public static final double kG = 0.0; //gravity
+        public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
+        public static final double GrArmRatio = 50./24.;      //LCY: 50. :24.      //GY: 20. : 10.
+        public static final double MaxVelocity = 0.5; // RPS
+        public static final double Acceleration = 0.5; // RPS^2
+
+        public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
+        public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
+    }
+
 
 
     public static final class PoseEstimatorConstants {
@@ -138,6 +170,58 @@ public class Constants {
         // public static final double maxSpeed = 0.2; //
     }
 
+    public static final class ElevatorConstants {
+        public static final double ElevatorHeightTolerence = 0.05;
+        public static final double ElevatorVelocityTolerence = 0.2;
+
+        public static final int leftMotorID = 15;
+        public static final int rghtMotorID = 14;
+
+        public static final double kP = 13.5;
+        public static final double kI = 0;
+        public static final double kD = 0.5;
+        public static final double kS = 0.2;
+        public static final double kV = 0.05;
+        public static final double kG = 0.8;
+        public static final double Acceleration = 130.;     //102.
+        public static final double MaxVelocity = 32.5;      //32.5
+        public static final double MaxHeight = 1.39;
+
+        public static final double MotorToRollerRatio = 3;
+
+        public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
+        public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
+
+        public static final double RollerRoundToMeters = 0.04 * Math.PI;
+
+    }
+
+    public static final class ClimberConstants {
+
+        public static final InvertedValue ClimberInverted = InvertedValue.CounterClockwise_Positive;
+
+        public static final int ClimberMotorID = 17;
+        public static final double ClimberkP = 14.;
+        public static final double ClimberkI = 0.;
+        public static final double ClimberkD = 0.;
+        public static final double ClimberkS = 0.1;
+        public static final double ClimberRatio = 45.;
+        public static final double ClimberkG = 0;
+        public static final double ClimberkV = 0;
+        public static final double Acceleration = 1.8;
+        public static final double MaxVelocity = 1.8;
+
+        public static final double ClimberRotationTolerence = 0.05;
+
+        public static final double ClimberDefaultPos = 0.;
+        public static final double ClimberMaxPos = 2.82;
+        public static final double ClimberMinPos = -0.875;
+        public static final double ClimberExtensionPos = 2.74;
+        public static final double ClimberRetractionPos = -0.87;
+
+    }
+
+
     public static final class FieldConstants {
 
         public static final Translation2d FieldCenter = new Translation2d(17.548225 / 2, 8.0518 / 2.);
@@ -171,6 +255,8 @@ public class Constants {
         public static final SegmentOnTheField BlueLeftStation = new SegmentOnTheField(BlueLeftStationStPos,
                 BlueLeftStationEdPos);
     }
+
+
 
     public static void initializeConstants() {
         // for (var p : PoseEstimatorConstants.tAtoDevPoints)

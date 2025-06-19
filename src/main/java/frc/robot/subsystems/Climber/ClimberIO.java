@@ -1,23 +1,27 @@
 package frc.robot.subsystems.Climber;
 
+import org.littletonrobotics.junction.AutoLog;
+
 public interface ClimberIO {
+    public void setRotation(double rotation);
 
-    default public void setVoltage(double voltage) {}
+    public void resetRotation(double rotation);
 
-    default public void setRPS(double rps) {}
+    default public void zeroRotation() {
+        resetRotation(0.);
+    };
 
-    @org.littletonrobotics.junction.AutoLog
-    public class ClimberIOInputs {
-        public boolean leftMotorConnected;
-        public boolean rightMotorConnected;
+    @AutoLog
+    public class ClimberIOInputs{
 
-        public double leftVoltageVolts;
-        public double rightVoltageVolts;
-        public double leftCurrentAmps;
-        public double rightCurrentAmps;
-        public double leftVelocityRPS;
-        public double rightVelocityRPS;
+        public boolean motorConnected;
+        public double motorVoltageVolts;
+        public double mechanismPositionRotations;
+        public double mechanismVelocityRPS;
+
+        // public double ClimberHeight;
+        // public double ClimberVelocity;
     }
 
-    default public void updateInputs(ClimberIOInputs inputs) {}
+    public void updateInputs(ClimberIOInputs inputs);
 }

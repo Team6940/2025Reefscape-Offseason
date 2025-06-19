@@ -33,10 +33,6 @@ public class IntakerSubsystem extends SubsystemBase{
         io.setRPS(rps);
     }
 
-    // public boolean IsAtTargetRPS(){
-    //      return MathUtil.isNear(targetRPS, (inputs.leftVelocityRPS + inputs.rghtVelocityRPS) / 2., IntakerConstants.intakerVelocityToleranceRPS);
-    // }
-
     public void stop(){
         setRPS(0.);
     }
@@ -50,13 +46,6 @@ public class IntakerSubsystem extends SubsystemBase{
         // processLog();
         processDashboard();
     }
-
-    // private void processLog(){
-    //     io.updateInputs(inputs);
-    //     Logger.processInputs("Intaker", inputs);
-    //     Logger.recordOutput("Intaker/TargetRPS", targetRPS);
-    //     Logger.recordOutput("Intaker/IsAtTargetRPS", IsAtTargetRPS());
-    // }
 
     private void processDashboard(){
         //TODO: Implement dashboard code here
