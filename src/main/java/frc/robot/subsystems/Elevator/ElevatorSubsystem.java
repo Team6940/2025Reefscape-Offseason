@@ -13,7 +13,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     public static ElevatorSubsystem m_Instance = null;
 
     private final ElevatorIO io;
-    private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
+    //private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
 
     private double targetHeight;
 
@@ -37,21 +37,21 @@ public class ElevatorSubsystem extends SubsystemBase{
         io.setHeight(targetHeight);
     }
 
-    public double getHeight(){
-        return inputs.ElevatorHeight;
-    }
+    // public double getHeight(){
+    //     return inputs.ElevatorHeight;
+    // }
 
-    public double getVelocity(){
-        return inputs.ElevatorVelocity;
-    }
+    // public double getVelocity(){
+    //     return inputs.ElevatorVelocity;
+    // }
 
     public double getTargetHeight(){
         return targetHeight;
     }
 
-    public boolean isAtTargetHeight(){
-        return MathUtil.isNear(targetHeight, inputs.ElevatorHeight, ElevatorConstants.ElevatorHeightTolerence);
-    }
+   // public boolean isAtTargetHeight(){
+       // return MathUtil.isNear(targetHeight, inputs.ElevatorHeight, ElevatorConstants.ElevatorHeightTolerence);
+   // }
 
     public void resetHeight(double _height){
         io.resetHeight(_height);
@@ -66,15 +66,15 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public void processLog(){
-        io.updateInputs(inputs);
-        Logger.processInputs("Elevator", inputs);
-        Logger.recordOutput("Elevator/TargetHeight", targetHeight);
+        // io.updateInputs(inputs);
+        // Logger.processInputs("Elevator", inputs);
+        // Logger.recordOutput("Elevator/TargetHeight", targetHeight);
         //TODO Logger
     }
 
     public void processDashboard(){
-        SmartDashboard.putNumber("Elevator/Height", inputs.ElevatorHeight);
-        SmartDashboard.putNumber("Elevator/Rotation", inputs.leftMotorPositionRotations);
+        // SmartDashboard.putNumber("Elevator/Height", inputs.ElevatorHeight);
+        // SmartDashboard.putNumber("Elevator/Rotation", inputs.leftMotorPositionRotations);
         //TODO SmartDashboard
     }
 
