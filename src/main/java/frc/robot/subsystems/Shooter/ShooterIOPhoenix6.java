@@ -1,4 +1,4 @@
-package frc.robot.subsystems.Intaker;
+package frc.robot.subsystems.Shooter;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -6,33 +6,33 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import frc.robot.Constants.IntakerConstants;
+import frc.robot.Constants.ShooterConstants;
 
-public class IntakerIOPhoenix6 implements IntakerIO {
-    private static final TalonFX leftMotor = new TalonFX(IntakerConstants.LeftMotorID, "canivore");
-    private static final TalonFX rghtMotor = new TalonFX(IntakerConstants.RghtMotorID, "canivore");
+public class ShooterIOPhoenix6 implements ShooterIO {
+    private static final TalonFX leftMotor = new TalonFX(ShooterConstants.LeftMotorID, "canivore");
+    private static final TalonFX rghtMotor = new TalonFX(ShooterConstants.RghtMotorID, "canivore");
 
     private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
 
-    public IntakerIOPhoenix6() {
+    public ShooterIOPhoenix6() {
         motorConfig();
     }
 
     private void motorConfig() {
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        config.Feedback.SensorToMechanismRatio = IntakerConstants.IntakerRatio;
+        config.Feedback.SensorToMechanismRatio = ShooterConstants.ShooterRatio;
         config.Voltage.PeakForwardVoltage = 12.0;
         config.Voltage.PeakReverseVoltage = -12.0;
-        config.Slot0.kP = IntakerConstants.kP;
-        config.Slot0.kI = IntakerConstants.kI;
-        config.Slot0.kD = IntakerConstants.kD;
-        config.Slot0.kV = IntakerConstants.kV;
-        config.Slot0.kS = IntakerConstants.kS;
+        config.Slot0.kP = ShooterConstants.kP;
+        config.Slot0.kI = ShooterConstants.kI;
+        config.Slot0.kD = ShooterConstants.kD;
+        config.Slot0.kV = ShooterConstants.kV;
+        config.Slot0.kS = ShooterConstants.kS;
 
-        config.MotorOutput.Inverted = IntakerConstants.LeftInverted;
+        config.MotorOutput.Inverted = ShooterConstants.LeftInverted;
         leftMotor.getConfigurator().apply(config);
-        config.MotorOutput.Inverted = IntakerConstants.RghtInverted;
+        config.MotorOutput.Inverted = ShooterConstants.RghtInverted;
         rghtMotor.getConfigurator().apply(config);
 
     }
@@ -54,7 +54,7 @@ public class IntakerIOPhoenix6 implements IntakerIO {
     }
 
     @Override
-    public void updateInputs(IntakerIOInputs inputs) {
+    public void updateInputs(ShooterIOInputs inputs) {
         inputs.leftMotorConnected = BaseStatusSignal.refreshAll(
             leftMotor.getMotorVoltage(),
             leftMotor.getSupplyCurrent(),
