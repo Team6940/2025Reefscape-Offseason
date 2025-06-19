@@ -5,11 +5,14 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.Constants.GroundIntakerConstants;
+import frc.robot.Constants.ArmConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.MathUtil;
 
 public class ArmSubsystem extends SubsystemBase{
     
-    public static ArmSubsystem m_instance;
+    public static ArmSubsystem m_instance = null;
+
     public static ArmSubsystem getInstance() {
         return m_instance == null? m_instance = new ArmSubsystem() : m_instance;
     }
@@ -28,10 +31,17 @@ public class ArmSubsystem extends SubsystemBase{
             io = new ArmIOPhoenix6();
         }
     }
-
-    public void setRPS(double rps){
-        targetRPS = rps;
-        io.setRPS(rps);
+    /**
+     * 
+     * @param position radians
+     */
+    public void setPosition(double position){
+        targetRPS = position;
+        io.setPosition(position);
+    }
+   
+    public double getTargetRPS(){
+        return targetRPS;
     }
 
     // public boolean IsAtTargetRPS(){
@@ -39,7 +49,7 @@ public class ArmSubsystem extends SubsystemBase{
     // }
 
     public void stop(){
-        setRPS(0.);
+        setPosition(0.);
     }
 
     public void setVoltage(double voltage){
