@@ -1,11 +1,68 @@
 package frc.robot.subsystems.Climber;
-public class ClimberSubsystem {
-    // This class is a placeholder for the Shooter subsystem.
-    
-    public static ClimberSubsystem m_instance;
+
+import org.littletonrobotics.junction.Logger;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.Library.MUtils;
+
+public class ClimberSubsystem extends SubsystemBase{
+    public static ClimberSubsystem m_Instance = null;
+
+    private final ClimberIO io;
+    private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
+
+    private double targetRotation = 0.;
+
     public static ClimberSubsystem getInstance() {
-        return m_instance == null? m_instance = new ClimberSubsystem() : m_instance;
+        return m_Instance == null ? m_Instance = new ClimberSubsystem() : m_Instance;
     }
-    
-    // Additional methods and properties can be added here as needed.
+
+    ClimberSubsystem(){
+        if(Robot.isReal()){
+            io = new ClimberIOPhoenix6();
+        }
+        else {
+            //TODO implement simulation
+            io = new ClimberIOPhoenix6();
+        }
+    };
+
+    public void setPosition(double rotation){
+        rotation = MUtils.numberLimit(ClimberConstants.ClimberMinPos, ClimberConstants.ClimberMaxPos, rotation);
+        targetRotation = rotation;
+        io.setRotation(rotation);
+    }
+
+    public boolean isAtTargetRotation(){
+        return Math.abs(targetRotation - inputs.mechanismPositionRotations) < ClimberConstants.ClimberRotationTolerence;
+    }
+
+    public void resetPosition(double rotation){
+        io.resetRotation(rotation);
+    }
+
+    public double getRotation(){
+        return inputs.mechanismPositionRotations;
+    }
+
+    public double getVelocity(){
+        return inputs.mechanismVelocityRPS;
+    }
+
+    public void processLog(){
+        io.updateInputs(inputs);
+        Logger.processInputs("Climber", inputs);
+        Logger.recordOutput("Climber/targetRotation", targetRotation);
+    }
+
+    public void processDashboard(){
+    }
+
+    @Override
+    public void periodic() {
+        processLog();
+        processDashboard();
+    }
 }
