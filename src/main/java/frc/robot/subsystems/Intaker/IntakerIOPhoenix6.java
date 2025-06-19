@@ -6,11 +6,11 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import frc.robot.Constants.IntakerConstants;
+import frc.robot.Constants.GroundIntakerConstants;
 
 public class IntakerIOPhoenix6 implements IntakerIO {
-    private static final TalonFX leftMotor = new TalonFX(IntakerConstants.LeftMotorID, "canivore");
-    private static final TalonFX rghtMotor = new TalonFX(IntakerConstants.RghtMotorID, "canivore");
+    private static final TalonFX leftMotor = new TalonFX(GroundIntakerConstants.IntakerLeftMotorID, "canivore");
+    private static final TalonFX rghtMotor = new TalonFX(GroundIntakerConstants.IntakerRghtMotorID, "canivore");
 
     private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
 
@@ -21,18 +21,18 @@ public class IntakerIOPhoenix6 implements IntakerIO {
     private void motorConfig() {
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        config.Feedback.SensorToMechanismRatio = IntakerConstants.IntakerRatio;
+        config.Feedback.SensorToMechanismRatio = GroundIntakerConstants.IntakerRatio;
         config.Voltage.PeakForwardVoltage = 12.0;
         config.Voltage.PeakReverseVoltage = -12.0;
-        config.Slot0.kP = IntakerConstants.kP;
-        config.Slot0.kI = IntakerConstants.kI;
-        config.Slot0.kD = IntakerConstants.kD;
-        config.Slot0.kV = IntakerConstants.kV;
-        config.Slot0.kS = IntakerConstants.kS;
+        config.Slot0.kP = GroundIntakerConstants.kP;
+        config.Slot0.kI = GroundIntakerConstants.kI;
+        config.Slot0.kD = GroundIntakerConstants.kD;
+        config.Slot0.kV = GroundIntakerConstants.kV;
+        config.Slot0.kS = GroundIntakerConstants.kS;
 
-        config.MotorOutput.Inverted = IntakerConstants.LeftInverted;
+        config.MotorOutput.Inverted = GroundIntakerConstants.LeftInverted;
         leftMotor.getConfigurator().apply(config);
-        config.MotorOutput.Inverted = IntakerConstants.RghtInverted;
+        config.MotorOutput.Inverted = GroundIntakerConstants.RghtInverted;
         rghtMotor.getConfigurator().apply(config);
 
     }
