@@ -29,7 +29,8 @@ public class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int ShooterMotorID = 17;
+        public static final int LeftMotorID = 16;
+        public static final int RghtMotorID = 17;
         
         public static final double kP = 0.2;
         public static final double kI = 0;
@@ -37,10 +38,26 @@ public class Constants {
         public static final double kV = 0.22;
         public static final double kS = 0.15;
 
-        public static final InvertedValue ShooterInverted = InvertedValue.Clockwise_Positive;
+        public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
+        public static final InvertedValue RghtInverted = InvertedValue.Clockwise_Positive;
         public static final double ShooterRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
+    }
 
-        
+    public static final class IntakerConstants {
+        public static final int LeftMotorID = 20;
+        public static final int RghtMotorID = 21;
+
+        public static final double kP = 0.2;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kV = 0.22;
+        public static final double kS = 0.15;
+
+        public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
+        public static final InvertedValue RghtInverted = InvertedValue.Clockwise_Positive;
+
+        public static final double IntakerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
+        public static final double IntakerVelocityToleranceRPS = 0.2; // LCY: 0.2 // GY: 0.1
     }
 
     public static final class ArmConstants {
@@ -60,6 +77,20 @@ public class Constants {
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
     }
+
+    
+    public static final class IndexerConstants {
+        public static final int MotorID = 19;
+        public static final double kP = 0.2;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kV = 0.22;
+        public static final double kS = 0.15;
+        public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
+        public static final double IntakerRatio = 50. / 24.; 
+
+    }
+
 
     public static final class PoseEstimatorConstants {
         public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.3, 0.3, 0.1);
