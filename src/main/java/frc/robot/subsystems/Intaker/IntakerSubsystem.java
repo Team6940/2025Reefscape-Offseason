@@ -5,7 +5,7 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.Constants.GroundIntakerConstants;
+import frc.robot.Constants.IntakerConstants;
 
 public class IntakerSubsystem extends SubsystemBase{
     public static IntakerSubsystem m_instance;
@@ -34,7 +34,7 @@ public class IntakerSubsystem extends SubsystemBase{
     }
 
     // public boolean IsAtTargetRPS(){
-    //      return MathUtil.isNear(targetRPS, (inputs.leftVelocityRPS + inputs.rghtVelocityRPS) / 2., GroundIntakerConstants.intakerVelocityToleranceRPS);
+    //      return MathUtil.isNear(targetRPS, (inputs.leftVelocityRPS + inputs.rghtVelocityRPS) / 2., IntakerConstants.intakerVelocityToleranceRPS);
     // }
 
     public void stop(){

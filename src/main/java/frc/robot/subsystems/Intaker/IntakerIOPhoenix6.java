@@ -6,11 +6,10 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import frc.robot.Constants.GroundIntakerConstants;
+import frc.robot.Constants.IntakerConstants;
 
 public class IntakerIOPhoenix6 implements IntakerIO {
-    private static final TalonFX leftMotor = new TalonFX(GroundIntakerConstants.IntakerLeftMotorID, "canivore");
-    private static final TalonFX rghtMotor = new TalonFX(GroundIntakerConstants.IntakerRghtMotorID, "canivore");
+    private static final TalonFX motor = new TalonFX(IntakerConstants.IntakerMotorID, "canivore");
 
     private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
 
@@ -21,58 +20,49 @@ public class IntakerIOPhoenix6 implements IntakerIO {
     private void motorConfig() {
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        config.Feedback.SensorToMechanismRatio = GroundIntakerConstants.IntakerRatio;
+        config.Feedback.SensorToMechanismRatio = IntakerConstants.IntakerRatio;
         config.Voltage.PeakForwardVoltage = 12.0;
         config.Voltage.PeakReverseVoltage = -12.0;
-        config.Slot0.kP = GroundIntakerConstants.kP;
-        config.Slot0.kI = GroundIntakerConstants.kI;
-        config.Slot0.kD = GroundIntakerConstants.kD;
-        config.Slot0.kV = GroundIntakerConstants.kV;
-        config.Slot0.kS = GroundIntakerConstants.kS;
+        config.Slot0.kP = IntakerConstants.kP;
+        config.Slot0.kI = IntakerConstants.kI;
+        config.Slot0.kD = IntakerConstants.kD;
+        config.Slot0.kV = IntakerConstants.kV;
+        config.Slot0.kS = IntakerConstants.kS;
 
-        config.MotorOutput.Inverted = GroundIntakerConstants.LeftInverted;
-        leftMotor.getConfigurator().apply(config);
-        config.MotorOutput.Inverted = GroundIntakerConstants.RghtInverted;
-        rghtMotor.getConfigurator().apply(config);
-
+        config.MotorOutput.Inverted = IntakerConstants.IntakerInverted;
+        motor.getConfigurator().apply(config);
     }
 
     @Override
     public void setVoltage(double voltage) {
-        leftMotor.setVoltage(voltage);
-        rghtMotor.setVoltage(voltage);
+        motor.setVoltage(voltage);
     }
 
     @Override
     public void setRPS(double rps) {
         if(rps == 0){
-            leftMotor.stopMotor();
-            rghtMotor.stopMotor();
+            motor.stopMotor();
+            //rghtMotor.stopMotor();
         }
-        leftMotor.setControl(dutycycle.withVelocity(rps));
-        rghtMotor.setControl(dutycycle.withVelocity(rps));
+        motor.setControl(dutycycle.withVelocity(rps));
+       // rghtMotor.setControl(dutycycle.withVelocity(rps));
     }
 
     @Override
     public void updateInputs(IntakerIOInputs inputs) {
         inputs.leftMotorConnected = BaseStatusSignal.refreshAll(
-            leftMotor.getMotorVoltage(),
-            leftMotor.getSupplyCurrent(),
-            leftMotor.getVelocity()
-        ).isOK();
-        inputs.rghtMotorConnected = BaseStatusSignal.refreshAll(
-            rghtMotor.getMotorVoltage(),
-            rghtMotor.getSupplyCurrent(),
-            rghtMotor.getVelocity()
+            motor.getMotorVoltage(),
+            motor.getSupplyCurrent(),
+            motor.getVelocity()
         ).isOK();
         
-        inputs.leftVoltageVolts = leftMotor.getMotorVoltage().getValueAsDouble();
-        inputs.rghtVoltageVolts = rghtMotor.getMotorVoltage().getValueAsDouble();
-        inputs.leftCurrentAmps = leftMotor.getSupplyCurrent().getValueAsDouble();
-        inputs.rghtCurrentAmps = rghtMotor.getSupplyCurrent().getValueAsDouble();
+        inputs.leftVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
+        //inputs.rghtVoltageVolts = rghtMotor.getMotorVoltage().getValueAsDouble();
+        inputs.leftCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
+        //inputs.rghtCurrentAmps = rghtMotor.getSupplyCurrent().getValueAsDouble();
 
-        inputs.leftVelocityRPS = leftMotor.getVelocity().getValueAsDouble();
-        inputs.rghtVelocityRPS = rghtMotor.getVelocity().getValueAsDouble();
+        inputs.leftVelocityRPS = motor.getVelocity().getValueAsDouble();
+        //inputs.rghtVelocityRPS = rghtMotor.getVelocity().getValueAsDouble();
     }
 
 
