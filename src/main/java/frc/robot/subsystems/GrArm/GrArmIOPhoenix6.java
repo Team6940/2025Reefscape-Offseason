@@ -54,7 +54,7 @@ public class GrArmIOPhoenix6 implements GrArmIO {
         if (position == 0) {
             motor.stopMotor();
         }
-        motor.setControl(m_request.withPosition(position * GrArmConstants.ArmRatio));
+        motor.setControl(m_request.withPosition(position * GrArmConstants.GrArmRatio));
     }
 
     public void updateInputs(GrArmIOInputs GrArmInputs) {

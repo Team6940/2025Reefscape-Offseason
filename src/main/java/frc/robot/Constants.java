@@ -102,6 +102,25 @@ public class Constants {
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
     }
 
+    public static final class GrArmConstants {
+        public static final int GrArmMotorID = 21;
+        public static final double GrArmVelocityToleranceRPS = 0.2;
+        public static final double kP = 0.2;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kV = 0.22;
+        public static final double kS = 0.15;
+        public static final double kG = 0.0; //gravity
+        public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
+        public static final double GrArmRatio = 50./24.;      //LCY: 50. :24.      //GY: 20. : 10.
+        public static final double MaxVelocity = 0.5; // RPS
+        public static final double Acceleration = 0.5; // RPS^2
+
+        public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
+        public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
+    }
+
+
 
     public static final class PoseEstimatorConstants {
         public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.3, 0.3, 0.1);
