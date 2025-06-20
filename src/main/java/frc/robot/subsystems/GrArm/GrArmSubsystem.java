@@ -20,8 +20,7 @@ public class GrArmSubsystem extends SubsystemBase {
     }
 
     private final GrArmIO io;
-    // private final IntakerIOInputsAutoLogged inputs = new
-    // IntakerIOInputsAutoLogged();
+    private final GrArmIOInputsAutoLogged inputs = new GrArmIOInputsAutoLogged();
 
     private double targetPosition = 0.;
 
@@ -66,8 +65,12 @@ public class GrArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // processLog();
+        processLog();
         processDashboard();
+    }
+
+    public void processLog(){
+        
     }
 
     private void processDashboard() {

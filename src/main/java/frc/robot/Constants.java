@@ -39,6 +39,8 @@ public class Constants {
 
         public static final InvertedValue IntakerInverted = InvertedValue.Clockwise_Positive;
         public static final double IntakerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
+
+        public static final double IntakerVelocityToleranceRPS = 0;
         
     }
 
@@ -80,6 +82,8 @@ public class Constants {
 
         public static final InvertedValue ShooterInverted = InvertedValue.Clockwise_Positive;
         public static final double ShooterRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
+
+        public static final double ShooterSpeedTolerence = 0;
 
         
     }

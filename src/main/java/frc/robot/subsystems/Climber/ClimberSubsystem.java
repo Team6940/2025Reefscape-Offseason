@@ -11,7 +11,7 @@ public class ClimberSubsystem extends SubsystemBase{
     public static ClimberSubsystem m_Instance = null;
 
     private final ClimberIO io;
-    //private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
+    private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
 
     private double targetRotation = 0.;
 
@@ -35,26 +35,26 @@ public class ClimberSubsystem extends SubsystemBase{
         io.setRotation(rotation);
     }
 
-    // public boolean isAtTargetRotation(){
-    //     return Math.abs(targetRotation - inputs.mechanismPositionRotations) < ClimberConstants.ClimberRotationTolerence;
-    // }
+    public boolean isAtTargetRotation(){
+        return Math.abs(targetRotation - inputs.mechanismPositionRotations) < ClimberConstants.ClimberRotationTolerence;
+    }
 
     public void resetPosition(double rotation){
         io.resetRotation(rotation);
     }
 
-    // public double getRotation(){
-    //     return inputs.mechanismPositionRotations;
-    // }
+    public double getRotation(){
+        return inputs.mechanismPositionRotations;
+    }
 
-    // public double getVelocity(){
-    //     return inputs.mechanismVelocityRPS;
-    // }
+    public double getVelocity(){
+        return inputs.mechanismVelocityRPS;
+    }
 
     public void processLog(){
-        // io.updateInputs(inputs);
-        // Logger.processInputs("Climber", inputs);
-        // Logger.recordOutput("Climber/targetRotation", targetRotation);
+        io.updateInputs(inputs);
+        Logger.processInputs("Climber", inputs);
+        Logger.recordOutput("Climber/targetRotation", targetRotation);
     }
 
     public void processDashboard(){

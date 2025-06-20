@@ -8,21 +8,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ShooterConstants;
 
-public class ShooterSubsystem{
+public class ShooterSubsystem extends SubsystemBase{
     public static ShooterSubsystem m_Instance;
     public static ShooterSubsystem getInstance(){
         return m_Instance == null? m_Instance = new ShooterSubsystem() : m_Instance;
     }
 
     private final ShooterIO io;
-    //private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
+    private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
     private double targetRPS = 0;
 
     public ShooterSubsystem() {
         if(Robot.isReal()){
             io = new ShooterIOPhoenix6();
-            // io = new ShooterIOEmpty();
+            //io = new ShooterIOEmpty();
         }
         else{
             //TODO: Implement simulation code here
@@ -36,8 +36,7 @@ public class ShooterSubsystem{
     }
 
     public boolean IsAtTargetRps() {
-        //return MathUtil.isNear(targetRPS, inputs.shooterVelocityRPS, ShooterConstants.ShooterSpeedTolerence);
-        return true;
+        return MathUtil.isNear(targetRPS, inputs.shooterVelocityRPS, ShooterConstants.ShooterSpeedTolerence);
     }
 
     public void stop() {
@@ -57,30 +56,30 @@ public class ShooterSubsystem{
         COMING_OUT
     }
 
-    //public ShooterState getCoralState() {
-        // if (inputs.motorConnected == false) { //TODO:用电流判断吸球装置
-        //     return ShooterState.READY;
-        // }
-        // return ShooterState.IDLE;
-   // }
+    public ShooterState getCoralState() {
+        if (inputs.motorConnected == false) { //TODO:用电流判断吸球装置
+            return ShooterState.READY;
+        }
+        return ShooterState.IDLE;
+   }
 
-    // public boolean isReady() {
-    //     return getCoralState() == ShooterState.READY;
-    // }
+    public boolean isReady() {
+        return getCoralState() == ShooterState.READY;
+    }
 
-    // @Override
-    // public void periodic() {
-    //     processLog();
-    //     processDashboard();
+    @Override
+    public void periodic() {
+        processLog();
+        processDashboard();
         
-    //     SmartDashboard.putString("status", getCoralState().toString());
-    // }
+        SmartDashboard.putString("status", getCoralState().toString());
+    }
 
     private void processLog() {
-    //     io.updateInputs(inputs);
-    //     Logger.processInputs("Shooter", inputs);
-    //     Logger.recordOutput("Shooter/TargetRPS", targetRPS);
-    //     Logger.recordOutput("Shooter/IsAtTargetRPS", IsAtTargetRps());
+        io.updateInputs(inputs);
+        Logger.processInputs("Shooter", inputs);
+        Logger.recordOutput("Shooter/TargetRPS", targetRPS);
+        Logger.recordOutput("Shooter/IsAtTargetRPS", IsAtTargetRps());
     }
 
     private void processDashboard() {

@@ -14,7 +14,7 @@ public class IndexerSubsystem extends SubsystemBase{
     }
 
     private final IndexerIO io;
-    //private final IndexerIOInputsAutoLogged inputs = new IndexerIOInputsAutoLogged(); //TODO
+    private final IndexerIOInputsAutoLogged inputs = new IndexerIOInputsAutoLogged(); //TODO
 
     private double targetRPS = 0.;
 
@@ -33,9 +33,9 @@ public class IndexerSubsystem extends SubsystemBase{
         io.setRPS(rps);
     }
 
-    // public boolean IsAtTargetRPS(){
-    //     return MathUtil.isNear(targetRPS, (inputs.leftVelocityRPS + inputs.rghtVelocityRPS) / 2., IndexerConstants.IndexerVelocityToleranceRPS);
-    // }
+    public boolean IsAtTargetRPS(){
+        return MathUtil.isNear(targetRPS, (inputs.leftVelocityRPS + inputs.rghtVelocityRPS) / 2., IndexerConstants.IndexerVelocityToleranceRPS);
+    }
 
     public void stop(){
         setRPS(0.);
@@ -47,16 +47,16 @@ public class IndexerSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
-        //processLog();
+        processLog();
         processDashboard();
     }
 
-    // private void processLog(){
-    //     io.updateInputs(inputs);
-    //     Logger.processInputs("Indexer", inputs);
-    //     Logger.recordOutput("Indexer/TargetRPS", targetRPS);
-    //     Logger.recordOutput("Indexer/IsAtTargetRPS", IsAtTargetRPS());
-    // }
+    private void processLog(){
+        io.updateInputs(inputs);
+        Logger.processInputs("Indexer", inputs);
+        Logger.recordOutput("Indexer/TargetRPS", targetRPS);
+        Logger.recordOutput("Indexer/IsAtTargetRPS", IsAtTargetRPS());
+    }
 
     private void processDashboard(){
         //TODO: Implement dashboard code here
