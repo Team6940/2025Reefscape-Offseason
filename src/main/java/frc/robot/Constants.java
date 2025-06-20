@@ -30,7 +30,7 @@ public class Constants {
 
     public static class IntakerConstants {
         public static final int IntakerMotorID = 16;
-        
+
         public static final double kP = 0.2;
         public static final double kI = 0;
         public static final double kD = 0;
@@ -41,14 +41,13 @@ public class Constants {
         public static final double IntakerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
         public static final double IntakerVelocityToleranceRPS = 0;
-        
+
     }
 
     public static class IndexerConstants {
         public static final int IndexerLeftMotorID = 16;
         public static final int IndexerRghtMotorID = 16;
 
-        
         public static final double kP = 0.2;
         public static final double kI = 0;
         public static final double kD = 0;
@@ -58,26 +57,26 @@ public class Constants {
         public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
         public static final double IndexerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
-        
+
         public static final double IndexerVelocityToleranceRPS = 0;
-        
+
     }
 
     public static final class ShooterConstants {
         public static final int ShooterMotorID = 17;
-        
+
         public static final double kP = 0.2;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kV = 0.22;
         public static final double kS = 0.15;
 
-        public static final double ShooterShootRPSs[] = new double[]{
-            0.,
-            15.5,
-            12.5,
-            12.5,
-            18.,
+        public static final double ShooterShootRPSs[] = new double[] {
+                0.,
+                15.5,
+                12.5,
+                12.5,
+                18.,
         };
 
         public static final InvertedValue ShooterInverted = InvertedValue.Clockwise_Positive;
@@ -85,7 +84,8 @@ public class Constants {
 
         public static final double ShooterSpeedTolerence = 0;
 
-        
+        public static final double shooterScoringRPS = 0;
+
     }
 
     public static final class ArmConstants {
@@ -96,9 +96,9 @@ public class Constants {
         public static final double kD = 0;
         public static final double kV = 0.22;
         public static final double kS = 0.15;
-        public static final double kG = 0.0; //gravity
+        public static final double kG = 0.0; // gravity
         public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
-        public static final double ArmRatio = 50./24.;      //LCY: 50. :24.      //GY: 20. : 10.
+        public static final double ArmRatio = 50. / 24.; // LCY: 50. :24. //GY: 20. : 10.
         public static final double MaxVelocity = 0.5; // RPS
         public static final double Acceleration = 0.5; // RPS^2
 
@@ -114,17 +114,15 @@ public class Constants {
         public static final double kD = 0;
         public static final double kV = 0.22;
         public static final double kS = 0.15;
-        public static final double kG = 0.0; //gravity
+        public static final double kG = 0.0; // gravity
         public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
-        public static final double GrArmRatio = 50./24.;      //LCY: 50. :24.      //GY: 20. : 10.
+        public static final double GrArmRatio = 50. / 24.; // LCY: 50. :24. //GY: 20. : 10.
         public static final double MaxVelocity = 0.5; // RPS
         public static final double Acceleration = 0.5; // RPS^2
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
     }
-
-
 
     public static final class PoseEstimatorConstants {
         public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.3, 0.3, 0.1);
@@ -187,8 +185,8 @@ public class Constants {
         public static final double kS = 0.2;
         public static final double kV = 0.05;
         public static final double kG = 0.8;
-        public static final double Acceleration = 130.;     //102.
-        public static final double MaxVelocity = 32.5;      //32.5
+        public static final double Acceleration = 130.; // 102.
+        public static final double MaxVelocity = 32.5; // 32.5
         public static final double MaxHeight = 1.39;
 
         public static final double MotorToRollerRatio = 3;
@@ -225,15 +223,14 @@ public class Constants {
 
     }
 
-
     public static final class FieldConstants {
 
         public static final Translation2d FieldCenter = new Translation2d(17.548225 / 2, 8.0518 / 2.);
 
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
         public static final Translation2d DReefTranslation12 = new Translation2d(1.31, 0.161);
-                                                                                               // Translation2d(1.32,
-                                                                                               // 0.162)
+        // Translation2d(1.32,
+        // 0.162)
 
         public static final double reefTranslationAdjustmentRange = 0.15;
         public static final double reefRotationAdjustmentRangeDegs = 20;
@@ -264,12 +261,38 @@ public class Constants {
         public static final int DChuteX = 0;
 
         public static final int BlueFirstChuteTranslationX = 0;
+
+        public static final double elevatorHeights[] = {
+                0.,
+                0.53,
+                0.475,
+                0.82,
+                1.39
+        };
+
+        public static final double armAngles[] = {
+                0.,
+                0.53,
+                0.475,
+                0.82,
+                1.39// these data needs to be tuned
+        };
+
+        public static final double reefRotationAdjustmentRange[] = {
+                0,
+                0,
+                0,
+                0,
+                0
+        };
+
+        public static final double pushDistance = 0.2; // meters, this is the distance the robot will push forward after
+                                                       // aligning to the reef pose
+        public static final double departDistance =0.1; // meters, this is the distance the robot will move forward after scoring
     }
-
-
 
     public static void initializeConstants() {
         // for (var p : PoseEstimatorConstants.tAtoDevPoints)
-        //     PoseEstimatorConstants.tAtoDev.put(p.getX(), p.getY());
+        // PoseEstimatorConstants.tAtoDev.put(p.getX(), p.getY());
     }
 }
