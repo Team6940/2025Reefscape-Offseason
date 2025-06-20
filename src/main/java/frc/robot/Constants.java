@@ -143,11 +143,11 @@ public class Constants {
 
     public static final class AutoConstants {
         // Path Following
-        public static final double followPathTranslationkP = 5.; // TODO
+        public static final double followPathTranslationkP = 3.; // TODO
         public static final double followPathTranslationkI = 0.; // TODO
         public static final double followPathTranslationkD = 0.; // TODO
 
-        public static final double followPathRotationkP = 5.; // TODO
+        public static final double followPathRotationkP = 3.; // TODO
         public static final double followPathRotationkI = 0.; // TODO
         public static final double followPathRotationkD = 0.; // TODO
 

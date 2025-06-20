@@ -67,7 +67,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void rotateArm(double rotation) {
-        rotateArm(rotation);
+        io.rotateArm(rotation);
     }
 
     public void processLog() {
