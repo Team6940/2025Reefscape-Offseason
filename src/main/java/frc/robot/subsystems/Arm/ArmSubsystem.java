@@ -19,8 +19,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     private final ArmIO io;
-    // private final IntakerIOInputsAutoLogged inputs = new
-    // IntakerIOInputsAutoLogged();
+    private final ArmIOInputsAutoLogged inputs = new ArmIOInputsAutoLogged();
 
     private double targetPosition = 0.;
 
@@ -42,12 +41,12 @@ public class ArmSubsystem extends SubsystemBase {
      * @param position radians
      */
     public void setPosition(double position) {
-        position =  MUtils.numberLimit(ArmConstants.MinRadians, ArmConstants.MaxRadians, position);
+        position = MUtils.numberLimit(ArmConstants.MinRadians, ArmConstants.MaxRadians, position);
         io.setPosition(position);
     }
 
     boolean IsAtTargetPositon() {
-        //needed here
+        // needed here
         return true;
     }
 
@@ -63,13 +62,24 @@ public class ArmSubsystem extends SubsystemBase {
         io.setVoltage(voltage);
     }
 
-    public void rotateArm(double rotation){
+    public double getArmPosition() {
+        return inputs.ArmPositionRadians;
+    }
+
+    public void rotateArm(double rotation) {
         rotateArm(rotation);
+    }
+
+    public void processLog() {
+        io.updateInputs(inputs);
+        Logger.processInputs("Arm", inputs);
+        Logger.recordOutput("Arm/TargetPosition", targetPosition);
+        // TODO Logger
     }
 
     @Override
     public void periodic() {
-        // processLog();
+        processLog();
         processDashboard();
     }
 

@@ -54,12 +54,12 @@ public class ArmIOPhoenix6 implements ArmIO {
         if (position == 0) {
             motor.stopMotor();
         }
-        motor.setControl(m_request.withPosition(position * ArmConstants.ArmRatio));
+        motor.setControl(m_request.withPosition(position));
     }
 
     @Override
     public void rotateArm(double rotation) {
-        double position = motor.getPosition().getValueAsDouble() / ArmConstants.ArmRatio;
+        double position = motor.getPosition().getValueAsDouble();
         position += rotation;
         position = Math.max(ArmConstants.MinRadians, Math.min(ArmConstants.MaxRadians, position));
         setPosition(position);
@@ -73,6 +73,8 @@ public class ArmIOPhoenix6 implements ArmIO {
 
         ArmInputs.ArmVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
         ArmInputs.ArmCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
+        ArmInputs.ArmRotationDegrees = motor.getPosition().getValueAsDouble();
+        ArmInputs.ArmPositionRadians = ArmInputs.ArmRotationDegrees * Math.PI / 180.0;
 
     }
 
