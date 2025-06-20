@@ -143,32 +143,32 @@ public class Constants {
 
     }
 
-    // public static final class AutoConstants {
-    //     // Path Following
-    //     public static final double followPathTranslationkP = 5.; // TODO
-    //     public static final double followPathTranslationkI = 0.; // TODO
-    //     public static final double followPathTranslationkD = 0.; // TODO
+    public static final class AutoConstants {
+        // Path Following
+        public static final double followPathTranslationkP = 5.; // TODO
+        public static final double followPathTranslationkI = 0.; // TODO
+        public static final double followPathTranslationkD = 0.; // TODO
 
-    //     public static final double followPathRotationkP = 5.; // TODO
-    //     public static final double followPathRotationkI = 0.; // TODO
-    //     public static final double followPathRotationkD = 0.; // TODO
+        public static final double followPathRotationkP = 5.; // TODO
+        public static final double followPathRotationkI = 0.; // TODO
+        public static final double followPathRotationkD = 0.; // TODO
 
-    //     // Move To Pose
-    //     public static final double moveToPoseTranslationkP = 5.; // TODO
-    //     public static final double moveToPoseTranslationkI = 0.; // TODO
-    //     public static final double moveToPoseTranslationkD = 0.; // TODO
+        // Move To Pose
+        public static final double moveToPoseTranslationkP = 5.; // TODO
+        public static final double moveToPoseTranslationkI = 0.; // TODO
+        public static final double moveToPoseTranslationkD = 0.; // TODO
 
-    //     public static final double moveToPoseRotationkP = 5.; // TODO
-    //     public static final double moveToPoseRotationkI = 0.; // TODO
-    //     public static final double moveToPoseRotationkD = 0.; // TODO
+        public static final double moveToPoseRotationkP = 5.; // TODO
+        public static final double moveToPoseRotationkI = 0.; // TODO
+        public static final double moveToPoseRotationkD = 0.; // TODO
 
-    //     public static final double moveToPoseRotationToleranceRadians = Units.degreesToRadians(3.);
-    //     public static final double moveToPoseTranslationToleranceMeters = 0.02;
+        public static final double moveToPoseRotationToleranceRadians = Units.degreesToRadians(3.);
+        public static final double moveToPoseTranslationToleranceMeters = 0.02;
 
-    //     public static final double maxMoveToSpeed = 3.8;
-    //     public static final double maxMoveToAngularVelocity = Units.degreesToRadians(230.);
-    //     public static final double IntakePredictionTimeSecs = 0.1;
-    // }
+        public static final double maxMoveToSpeed = 3.8;
+        public static final double maxMoveToAngularVelocity = Units.degreesToRadians(230.);
+        public static final double IntakePredictionTimeSecs = 0.1;
+    }
 
     public static final class ManualConstants {
         // public static final double maxSpeed = 0.2; //
@@ -258,6 +258,12 @@ public class Constants {
                 BlueRghtStationEdPos);
         public static final SegmentOnTheField BlueLeftStation = new SegmentOnTheField(BlueLeftStationStPos,
                 BlueLeftStationEdPos);
+
+        public static final double StationDetectionArea = 0;
+
+        public static final int DChuteX = 0;
+
+        public static final int BlueFirstChuteTranslationX = 0;
     }
 
 
