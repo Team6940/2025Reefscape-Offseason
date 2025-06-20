@@ -14,7 +14,7 @@ public class IntakerSubsystem extends SubsystemBase{
     }
 
     private final IntakerIO io;
-    // private final IntakerIOInputsAutoLogged inputs = new IntakerIOInputsAutoLogged();
+    private final IntakerIOInputsAutoLogged inputs = new IntakerIOInputsAutoLogged();
 
     private double targetRPS = 0.;
 
@@ -33,6 +33,10 @@ public class IntakerSubsystem extends SubsystemBase{
         io.setRPS(rps);
     }
 
+    public boolean isAtTargetRPS(){
+        return MathUtil.isNear(targetRPS, (inputs.leftVelocityRPS + inputs.rghtVelocityRPS) / 2., IntakerConstants.IntakerVelocityToleranceRPS);
+    }
+
     public void stop(){
         setRPS(0.);
     }
@@ -43,8 +47,15 @@ public class IntakerSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
-        // processLog();
+        processLog();
         processDashboard();
+    }
+
+    public void processLog(){
+        io.updateInputs(inputs);
+        Logger.processInputs("Intaker", inputs);
+        Logger.recordOutput("Intaker/TargetRPS", targetRPS);
+        Logger.recordOutput("Intaker/IsAtTargetRPS", isAtTargetRPS());
     }
 
     private void processDashboard(){

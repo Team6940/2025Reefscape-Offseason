@@ -43,7 +43,7 @@ public class Robot extends LoggedRobot { //TODO
     }
 
     Logger.start();
-    ///
+    ///This is copied from advantagekit.org documentation.
 
   }
 
