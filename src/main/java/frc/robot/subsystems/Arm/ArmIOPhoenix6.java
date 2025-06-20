@@ -57,6 +57,14 @@ public class ArmIOPhoenix6 implements ArmIO {
         motor.setControl(m_request.withPosition(position * ArmConstants.ArmRatio));
     }
 
+    @Override
+    public void rotateArm(double rotation) {
+        double position = motor.getPosition().getValueAsDouble() / ArmConstants.ArmRatio;
+        position += rotation;
+        position = Math.max(ArmConstants.MinRadians, Math.min(ArmConstants.MaxRadians, position));
+        setPosition(position);
+    }
+
     public void updateInputs(ArmIOInputs ArmInputs) {
         ArmInputs.ArmMotorConnected = BaseStatusSignal.refreshAll(
                 motor.getMotorVoltage(),

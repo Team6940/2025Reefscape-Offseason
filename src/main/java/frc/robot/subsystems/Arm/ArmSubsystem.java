@@ -63,6 +63,10 @@ public class ArmSubsystem extends SubsystemBase {
         io.setVoltage(voltage);
     }
 
+    public void rotateArm(double rotation){
+        rotateArm(rotation);
+    }
+
     @Override
     public void periodic() {
         // processLog();
