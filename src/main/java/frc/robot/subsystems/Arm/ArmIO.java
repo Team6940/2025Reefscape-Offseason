@@ -19,6 +19,7 @@ public interface ArmIO {
     default public void rotateArm(double rotation) {
     }
 
+
     @AutoLog
     public class ArmIOInputs {
         public boolean ArmMotorConnected = false;
