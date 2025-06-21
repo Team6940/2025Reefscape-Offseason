@@ -17,6 +17,17 @@ public class IndexerSubsystem extends SubsystemBase{
     private final IndexerIOInputsAutoLogged inputs = new IndexerIOInputsAutoLogged(); //TODO
 
     private double targetRPS = 0.;
+    public IndexerState IndexerState;
+
+    public enum IndexerState {
+        IDLE,
+        INTAKING,
+        ALIGNED
+    }
+
+    public IndexerState getIndexerState() {
+        return IndexerState;
+    }
 
     public IndexerSubsystem(){
         if(Robot.isReal()){

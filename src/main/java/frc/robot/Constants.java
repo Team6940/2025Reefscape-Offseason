@@ -42,6 +42,8 @@ public class Constants {
 
         public static final double IntakerVelocityToleranceRPS = 0;
 
+        public static double intakingRPS;
+
     }
 
     public static class IndexerConstants {
@@ -59,6 +61,7 @@ public class Constants {
         public static final double IndexerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
         public static final double IndexerVelocityToleranceRPS = 0;
+        public static final double IntakingRPS = 0;
 
     }
 
@@ -85,6 +88,8 @@ public class Constants {
         public static final double ShooterSpeedTolerence = 0;
 
         public static final double shooterScoringRPS = 0;
+
+        public static final double IntakingRPS = 0;
 
     }
 
@@ -122,6 +127,8 @@ public class Constants {
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
+        public static double retractedPosition = 0.;
+        public static double extendedPosition = 0;
     }
 
     public static final class PoseEstimatorConstants {
@@ -195,6 +202,7 @@ public class Constants {
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
 
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
+        public static final double IntakingHeight = 0;
 
     }
 
@@ -288,7 +296,8 @@ public class Constants {
 
         public static final double pushDistance = 0.2; // meters, this is the distance the robot will push forward after
                                                        // aligning to the reef pose
-        public static final double departDistance =0.1; // meters, this is the distance the robot will move forward after scoring
+        public static final double departDistance = 0.1; // meters, this is the distance the robot will move forward
+                                                         // after scoring
     }
 
     public static void initializeConstants() {
