@@ -179,7 +179,7 @@ public class Constants {
         public static final int leftMotorID = 15;
         public static final int rghtMotorID = 14;
 
-        public static final double kP = 13.5;
+        public static final double kP = 5;
         public static final double kI = 0;
         public static final double kD = 0.5;
         public static final double kS = 0.2;

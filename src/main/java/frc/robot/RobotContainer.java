@@ -18,35 +18,36 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.Chassis.*;
+import frc.robot.subsystems.Elevator.*;
 
 public class RobotContainer {
 
     /* INITIALIZE */
 
     public static final String m_Limelight = "limelight-front";
-    
-    public static final ImprovedCommandXboxController driverController = new ImprovedCommandXboxController(0); 
+
+    public static final ImprovedCommandXboxController driverController = new ImprovedCommandXboxController(0);
     public static final XboxController traditionalDriverController = new XboxController(0);
 
     public static final CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
-        
+    public static final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
 
     private final Telemetry logger = new Telemetry(TunerConstants.kSpeedAt12Volts.in(MetersPerSecond));
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
+                                                                                      // max angular velocity
 
-    //TODO: change deadband here
+    // TODO: change deadband here
     public static final double driveDeadband = 0.04;
-    public static final double rotateDeadband = 0.04;    
-             
+    public static final double rotateDeadband = 0.04;
+
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-                    .withDeadband(MaxSpeed * driveDeadband).withRotationalDeadband(MaxAngularRate * rotateDeadband) 
+            .withDeadband(MaxSpeed * driveDeadband).withRotationalDeadband(MaxAngularRate * rotateDeadband)
             .withDriveRequestType(DriveRequestType.Velocity); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-
 
     public RobotContainer() {
         configureBindings();
@@ -55,56 +56,83 @@ public class RobotContainer {
     private void configureBindings() {
 
         /* DEFAULT COMMANDS */
-        //TODO
+        // TODO
 
-        
         /* DRIVER CONTROLLER */
 
-        /**  
-        * The ideal control logic is such: 
-        * Left Stick: Translation
-        * Right Stick: Rotation
-        * Left bumper: Hybrid Intake (release the ground intake and stop after releasing the bumper)
-        * Left trigger: Outtake from the back (shake ground intake)
-        * Right Bumper + Right Trigger: Hybrid Scoring
-        * Left Stick Pressed: Extend Climber and Intake
-        * Right Stick Pressed: Retract Climber
-        * X: Algae Romoval After Scoring
-        * Y: Increase Reef Level Index
-        * A: Decrease Reef Level Index
-        * B: Outtake from the front
-        * povDown: switch hybrid intake and elevator control
-        * povUP: resetFieldCentric
-        * povLeft: 
-        * povRight: 
-   */
+        /**
+         * The ideal control logic is such:
+         * Left Stick: Translation
+         * Right Stick: Rotation
+         * Left bumper: Hybrid Intake (release the ground intake and stop after
+         * releasing the bumper)
+         * Left trigger: Outtake from the back (shake ground intake)
+         * Right Bumper + Right Trigger: Hybrid Scoring
+         * Left Stick Pressed: Extend Climber and Intake
+         * Right Stick Pressed: Retract Climber
+         * X: Algae Romoval After Scoring
+         * Y: Increase Reef Level Index
+         * A: Decrease Reef Level Index
+         * B: Outtake from the front
+         * povDown: switch hybrid intake and elevator control
+         * povUP: resetFieldCentric
+         * povLeft:
+         * povRight:
+         */
 
-        /* Povs */ //TODO
-        driverController.povUp().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); //seed field-centric heading.
-
+        /* Povs */ // TODO
+        driverController.povUp().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // seed field-centric
+                                                                                            // heading.
 
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         chassis.setDefaultCommand(
-            // chassis will execute this command periodically
-            chassis.applyRequest(() ->
-                drive.withVelocityX(-driverController.getLeftY()*Math.abs(driverController.getLeftY()) * MaxSpeed /1.) // Drive forward with negative Y (forward) //TODO: change speed here
-                    .withVelocityY(-driverController.getLeftX()*Math.abs(driverController.getLeftX()) * MaxSpeed/ 1.) // Drive left with negative X (left) //TODO: change speed here
-                    .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.) // Drive counterclockwise with negative X (left) //TODO: change speed here
-            )
-        );
+                // chassis will execute this command periodically
+                chassis.applyRequest(() -> drive
+                        .withVelocityX(
+                                -driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.) // Drive
+                                                                                                                      // forward
+                                                                                                                      // with
+                                                                                                                      // negative
+                                                                                                                      // Y
+                                                                                                                      // (forward)
+                                                                                                                      // //TODO:
+                                                                                                                      // change
+                                                                                                                      // speed
+                                                                                                                      // here
+                        .withVelocityY(
+                                -driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.) // Drive
+                                                                                                                      // left
+                                                                                                                      // with
+                                                                                                                      // negative
+                                                                                                                      // X
+                                                                                                                      // (left)
+                                                                                                                      // //TODO:
+                                                                                                                      // change
+                                                                                                                      // speed
+                                                                                                                      // here
+                        .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.) // Drive
+                                                                                                 // counterclockwise
+                                                                                                 // with negative X
+                                                                                                 // (left) //TODO:
+                                                                                                 // change speed here
+                ));
 
         // Idle while the robot is disabled. This ensures the configured
         // neutral mode is applied to the drive motors while disabled.
         final var idle = new SwerveRequest.Idle();
         RobotModeTriggers.disabled().whileTrue(
-            chassis.applyRequest(() -> idle).ignoringDisable(true)
-        );
-        driverController.x().onTrue(new InstantCommand(()->chassis.resetPose(new Pose2d(0,4,new Rotation2d()))));
+                chassis.applyRequest(() -> idle).ignoringDisable(true));
+        driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));
         driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
-        driverController.b().whileTrue(chassis.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))
-        ));
+        driverController.b().whileTrue(chassis.applyRequest(() -> point
+                .withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
+        
+        driverController.y().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[0])));
+        driverController.povRight().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[1])));
+        driverController.povUp().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[2])));
+        driverController.povLeft().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[3])));
+        driverController.povDown().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[4])));
 
         chassis.registerTelemetry(logger::telemeterize);
     }
