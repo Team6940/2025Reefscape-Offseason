@@ -42,13 +42,12 @@ public class GrArmSubsystem extends SubsystemBase {
      * @param position radians
      */
     public void setPosition(double position) {
-        position =  MUtils.numberLimit(GrArmConstants.MinRadians, GrArmConstants.MaxRadians, position);
-        io.setPosition(position);
+        targetPosition = MUtils.numberLimit(GrArmConstants.MinRadians, GrArmConstants.MaxRadians, position);
+        io.setPosition(targetPosition);
     }
 
     boolean IsAtTargetPositon() {
-        //needed here
-        return true;
+        return MathUtil.isNear(targetPosition, inputs.GrArmPositionRadians, GrArmConstants.GrArmPositionToleranceRadians);
     }
 
     public double getTargetPosition() {
@@ -63,14 +62,17 @@ public class GrArmSubsystem extends SubsystemBase {
         io.setVoltage(voltage);
     }
 
+    public void processLog() {
+        io.updateInputs(inputs);
+        Logger.processInputs("GrArm", inputs);
+        Logger.recordOutput("GrArm/TargetPosition", targetPosition);
+        // TODO Logger
+    }
+
     @Override
     public void periodic() {
         processLog();
         processDashboard();
-    }
-
-    public void processLog(){
-        
     }
 
     private void processDashboard() {

@@ -6,6 +6,7 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface GrArmIO {
     default public void setVoltage(double voltage) {
+
     }
 
     default public void setPosition(double position) {
@@ -24,6 +25,7 @@ public interface GrArmIO {
         public double GrArmCurrentAmps;
 
         public double GrArmPositionRadians = 0.;
+        public double GrArmRotationDegrees = 0.;
     }
 
     default public void updateInputs(GrArmIOInputs inputs) {

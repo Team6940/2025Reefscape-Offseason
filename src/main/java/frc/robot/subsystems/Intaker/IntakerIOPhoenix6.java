@@ -42,27 +42,21 @@ public class IntakerIOPhoenix6 implements IntakerIO {
     public void setRPS(double rps) {
         if(rps == 0){
             motor.stopMotor();
-            //rghtMotor.stopMotor();
         }
         motor.setControl(dutycycle.withVelocity(rps));
-       // rghtMotor.setControl(dutycycle.withVelocity(rps));
     }
 
     @Override
     public void updateInputs(IntakerIOInputs inputs) {
-        inputs.leftMotorConnected = BaseStatusSignal.refreshAll(
+        inputs.motorConnected = BaseStatusSignal.refreshAll(
             motor.getMotorVoltage(),
             motor.getSupplyCurrent(),
             motor.getVelocity()
         ).isOK();
         
-        inputs.leftVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
-        //inputs.rghtVoltageVolts = rghtMotor.getMotorVoltage().getValueAsDouble();
-        inputs.leftCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
-        //inputs.rghtCurrentAmps = rghtMotor.getSupplyCurrent().getValueAsDouble();
-
-        inputs.leftVelocityRPS = motor.getVelocity().getValueAsDouble();
-        //inputs.rghtVelocityRPS = rghtMotor.getVelocity().getValueAsDouble();
+        inputs.motorVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
+        inputs.motorCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
+        inputs.intakerVelocityRPS = motor.getVelocity().getValueAsDouble();
     }
 
 

@@ -41,13 +41,12 @@ public class ArmSubsystem extends SubsystemBase {
      * @param position radians
      */
     public void setPosition(double position) {
-        position = MUtils.numberLimit(ArmConstants.MinRadians, ArmConstants.MaxRadians, position);
-        io.setPosition(position);
+        targetPosition = MUtils.numberLimit(ArmConstants.MinRadians, ArmConstants.MaxRadians, position);
+        io.setPosition(targetPosition);
     }
 
     boolean IsAtTargetPositon() {
-        // needed here
-        return true;
+        return MathUtil.isNear(targetPosition, inputs.ArmPositionRadians, ArmConstants.ArmPositionToleranceRadians);
     }
 
     public double getTargetPosition() {

@@ -12,7 +12,7 @@ import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem.IndexerState;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class HybridCoralIntake extends Command {
+public class CoralAlignSequence extends Command {
     enum IntakeState {
         ALIGNING,
         GRABBING,
@@ -26,7 +26,7 @@ public class HybridCoralIntake extends Command {
     ArmSubsystem arm = ArmSubsystem.getInstance();
     IndexerSubsystem indexer = IndexerSubsystem.getInstance();
 
-    public HybridCoralIntake() {
+    public CoralAlignSequence() {
         addRequirements(shooter, elevator, arm, indexer);
     }
 
@@ -55,14 +55,14 @@ public class HybridCoralIntake extends Command {
         shooter.setRPS(ShooterConstants.IntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
         indexer.setRPS(IndexerConstants.IntakingRPS);
-        if (indexer.getIndexerState() == IndexerState.ALIGNED) {
+        if (indexer.getIndexerState() == IndexerState.FREE_SPINNING) {
             state = IntakeState.GRABBING;
         }
     }
 
     private void grab() {
         elevator.zeroHeight();
-        if(shooter.getCoralState()==ShooterState.READY){
+        if (shooter.getCoralState() == ShooterState.READY) {
             state = IntakeState.END;
         }
 

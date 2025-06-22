@@ -12,7 +12,6 @@ public class GrArmIOPhoenix6 implements GrArmIO {
     private static TalonFX motor;
 
     private static MotionMagicVoltage m_request = new MotionMagicVoltage(0.);
-    // private static VelocityVoltage m_request=new VelocityVoltage(0);
 
     public GrArmIOPhoenix6() {
         motorConfig();
@@ -65,6 +64,8 @@ public class GrArmIOPhoenix6 implements GrArmIO {
 
         GrArmInputs.GrArmVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
         GrArmInputs.GrArmCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
+        GrArmInputs.GrArmRotationDegrees = motor.getPosition().getValueAsDouble();
+        GrArmInputs.GrArmPositionRadians = GrArmInputs.GrArmRotationDegrees * Math.PI / 180.0;
 
     }
 

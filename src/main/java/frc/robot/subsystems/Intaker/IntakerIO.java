@@ -8,15 +8,10 @@ public interface IntakerIO {
 
     @AutoLog
     public class IntakerIOInputs {
-        public boolean leftMotorConnected;
-        public boolean rghtMotorConnected;
-
-        public double leftVoltageVolts;
-        public double rghtVoltageVolts;
-        public double leftCurrentAmps;
-        public double rghtCurrentAmps;
-        public double leftVelocityRPS;
-        public double rghtVelocityRPS;
+        public boolean motorConnected;
+        public double motorVoltageVolts;
+        public double motorCurrentAmps;
+        public double intakerVelocityRPS;
 
     }
     default public void updateInputs(IntakerIOInputs inputs){}

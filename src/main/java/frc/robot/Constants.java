@@ -62,6 +62,8 @@ public class Constants {
 
         public static final double IndexerVelocityToleranceRPS = 0;
         public static final double IntakingRPS = 0;
+        public static final double IndexerAligningCurrentThreshold = 0;
+        public static final double IndexerFreeSpinCurrentThreshold = 0;
 
     }
 
@@ -91,6 +93,12 @@ public class Constants {
 
         public static final double IntakingRPS = 0;
 
+        public static final double ShooterFreeSpinCurrentThreshold = 0;
+
+        public static final double ShooterReadyCurrentThreshold = 0;
+
+        public static final double ShooterGrabbingCurrentThreshold = 0;
+
     }
 
     public static final class ArmConstants {
@@ -109,6 +117,7 @@ public class Constants {
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
+        public static final double ArmPositionToleranceRadians = 0;
     }
 
     public static final class GrArmConstants {
@@ -127,6 +136,7 @@ public class Constants {
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
+        public static final double GrArmPositionToleranceRadians = 0;
         public static double retractedPosition = 0.;
         public static double extendedPosition = 0;
     }
