@@ -19,10 +19,10 @@ public interface GrArmIO {
 
     @AutoLog
     public class GrArmIOInputs {
-        public boolean GrArmMotorConnected = false;
+        public boolean motorConnected = false;
 
-        public double GrArmVoltageVolts;
-        public double GrArmCurrentAmps;
+        public double motorVoltageVolts;
+        public double motorCurrentAmps;
 
         public double GrArmPositionRadians = 0.;
         public double GrArmRotationDegrees = 0.;

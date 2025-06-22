@@ -16,8 +16,8 @@ public interface ClimberIO {
 
         public boolean motorConnected;
         public double motorVoltageVolts;
-        public double mechanismPositionRotations;
-        public double mechanismVelocityRPS;
+        public double climberPositionRotations;
+        public double climberVelocityRPS;
 
         // public double ClimberHeight;
         // public double ClimberVelocity;
