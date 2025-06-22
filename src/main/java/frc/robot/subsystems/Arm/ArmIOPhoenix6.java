@@ -12,7 +12,6 @@ public class ArmIOPhoenix6 implements ArmIO {
     private static TalonFX motor;
 
     private static MotionMagicVoltage m_request = new MotionMagicVoltage(0.);
-    // private static VelocityVoltage m_request=new VelocityVoltage(0);
 
     public ArmIOPhoenix6() {
         motorConfig();

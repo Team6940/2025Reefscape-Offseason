@@ -13,6 +13,8 @@ public class IndexerIOPhoenix6 implements IndexerIO {
     private static final TalonFX rghtMotor = new TalonFX(IndexerConstants.IndexerRghtMotorID, "canivore");
 
     private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
+    double leftCurrentAmps = leftMotor.getSupplyCurrent().getValueAsDouble();
+    double rghtCurrentAmps = rghtMotor.getSupplyCurrent().getValueAsDouble();
 
     public IndexerIOPhoenix6() {
         motorConfig();
@@ -45,7 +47,7 @@ public class IndexerIOPhoenix6 implements IndexerIO {
 
     @Override
     public void setRPS(double rps) {
-        if(rps == 0){
+        if (rps == 0) {
             leftMotor.stopMotor();
             rghtMotor.stopMotor();
         }
@@ -54,18 +56,32 @@ public class IndexerIOPhoenix6 implements IndexerIO {
     }
 
     @Override
+    public void setLeftRPS(double rps) {
+        if (rps == 0) {
+            leftMotor.stopMotor();
+        }
+        leftMotor.setControl(dutycycle.withVelocity(rps));
+    }
+
+    @Override
+    public void setRghtRPS(double rps) {
+        if (rps == 0) {
+            rghtMotor.stopMotor();
+        }
+        rghtMotor.setControl(dutycycle.withVelocity(rps));
+    }
+
+    @Override
     public void updateInputs(IndexerIOInputs inputs) {
         inputs.leftMotorConnected = BaseStatusSignal.refreshAll(
-            leftMotor.getMotorVoltage(),
-            leftMotor.getSupplyCurrent(),
-            leftMotor.getVelocity()
-        ).isOK();
+                leftMotor.getMotorVoltage(),
+                leftMotor.getSupplyCurrent(),
+                leftMotor.getVelocity()).isOK();
         inputs.rghtMotorConnected = BaseStatusSignal.refreshAll(
-            rghtMotor.getMotorVoltage(),
-            rghtMotor.getSupplyCurrent(),
-            rghtMotor.getVelocity()
-        ).isOK();
-        
+                rghtMotor.getMotorVoltage(),
+                rghtMotor.getSupplyCurrent(),
+                rghtMotor.getVelocity()).isOK();
+
         inputs.leftVoltageVolts = leftMotor.getMotorVoltage().getValueAsDouble();
         inputs.rghtVoltageVolts = rghtMotor.getMotorVoltage().getValueAsDouble();
         inputs.leftCurrentAmps = leftMotor.getSupplyCurrent().getValueAsDouble();
@@ -74,6 +90,5 @@ public class IndexerIOPhoenix6 implements IndexerIO {
         inputs.leftVelocityRPS = leftMotor.getVelocity().getValueAsDouble();
         inputs.rghtVelocityRPS = rghtMotor.getVelocity().getValueAsDouble();
     }
-
 
 }

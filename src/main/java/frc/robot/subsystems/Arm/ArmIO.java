@@ -1,11 +1,10 @@
 package frc.robot.subsystems.Arm;
 
-import java.util.Set;
-
 import org.littletonrobotics.junction.AutoLog;
 
 public interface ArmIO {
     default public void setVoltage(double voltage) {
+
     }
 
     default public void setPosition(double position) {
@@ -17,8 +16,8 @@ public interface ArmIO {
     }
 
     default public void rotateArm(double rotation) {
-    }
 
+    }
 
     @AutoLog
     public class ArmIOInputs {

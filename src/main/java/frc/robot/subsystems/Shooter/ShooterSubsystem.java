@@ -19,6 +19,8 @@ public class ShooterSubsystem extends SubsystemBase{
 
     private double targetRPS = 0;
 
+    private ShooterState state;
+
     public ShooterSubsystem() {
         if(Robot.isReal()){
             io = new ShooterIOPhoenix6();
@@ -51,24 +53,39 @@ public class ShooterSubsystem extends SubsystemBase{
 
     public enum ShooterState{
         IDLE,
-        COMING_IN,
+        FREE_SPINNING,
         READY,
-        COMING_OUT
+        GRABBING
     }
 
     public ShooterState getCoralState() {
-        if (inputs.motorConnected == false) { //TODO:用电流判断吸球装置
-            return ShooterState.READY;
-        }
-        return ShooterState.IDLE;
+       return state;
    }
 
     public boolean isReady() {
         return getCoralState() == ShooterState.READY;
     }
 
+    public void shooterStateUpdate(){
+        double current = inputs.motorCurrentAmps;
+        if(current<ShooterConstants.ShooterFreeSpinCurrentThreshold){
+            state=ShooterState.IDLE;
+        }
+        else if(current<ShooterConstants.ShooterReadyCurrentThreshold){
+            state=ShooterState.FREE_SPINNING;
+        }
+        else if(current<ShooterConstants.ShooterGrabbingCurrentThreshold){
+            state=ShooterState.READY;
+        }
+        else{
+            state=ShooterState.GRABBING;
+        }
+
+    }
+
     @Override
     public void periodic() {
+        shooterStateUpdate();
         processLog();
         processDashboard();
         

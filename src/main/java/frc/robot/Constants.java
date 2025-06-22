@@ -42,6 +42,8 @@ public class Constants {
 
         public static final double IntakerVelocityToleranceRPS = 0;
 
+        public static double intakingRPS;
+
     }
 
     public static class IndexerConstants {
@@ -59,6 +61,9 @@ public class Constants {
         public static final double IndexerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
         public static final double IndexerVelocityToleranceRPS = 0;
+        public static final double IntakingRPS = 0;
+        public static final double IndexerAligningCurrentThreshold = 0;
+        public static final double IndexerFreeSpinCurrentThreshold = 0;
 
     }
 
@@ -86,6 +91,14 @@ public class Constants {
 
         public static final double shooterScoringRPS = 0;
 
+        public static final double IntakingRPS = 0;
+
+        public static final double ShooterFreeSpinCurrentThreshold = 0;
+
+        public static final double ShooterReadyCurrentThreshold = 0;
+
+        public static final double ShooterGrabbingCurrentThreshold = 0;
+
     }
 
     public static final class ArmConstants {
@@ -104,6 +117,7 @@ public class Constants {
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
+        public static final double ArmPositionToleranceRadians = 0;
     }
 
     public static final class GrArmConstants {
@@ -122,6 +136,9 @@ public class Constants {
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
+        public static final double GrArmPositionToleranceRadians = 0;
+        public static double retractedPosition = 0.;
+        public static double extendedPosition = 0;
     }
 
     public static final class PoseEstimatorConstants {
@@ -143,11 +160,11 @@ public class Constants {
 
     public static final class AutoConstants {
         // Path Following
-        public static final double followPathTranslationkP = 5.; // TODO
+        public static final double followPathTranslationkP = 3.; // TODO
         public static final double followPathTranslationkI = 0.; // TODO
         public static final double followPathTranslationkD = 0.; // TODO
 
-        public static final double followPathRotationkP = 5.; // TODO
+        public static final double followPathRotationkP = 3.; // TODO
         public static final double followPathRotationkI = 0.; // TODO
         public static final double followPathRotationkD = 0.; // TODO
 
@@ -179,7 +196,7 @@ public class Constants {
         public static final int leftMotorID = 15;
         public static final int rghtMotorID = 14;
 
-        public static final double kP = 13.5;
+        public static final double kP = 5;
         public static final double kI = 0;
         public static final double kD = 0.5;
         public static final double kS = 0.2;
@@ -195,6 +212,7 @@ public class Constants {
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
 
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
+        public static final double IntakingHeight = 0;
 
     }
 
@@ -288,7 +306,8 @@ public class Constants {
 
         public static final double pushDistance = 0.2; // meters, this is the distance the robot will push forward after
                                                        // aligning to the reef pose
-        public static final double departDistance =0.1; // meters, this is the distance the robot will move forward after scoring
+        public static final double departDistance = 0.1; // meters, this is the distance the robot will move forward
+                                                         // after scoring
     }
 
     public static void initializeConstants() {

@@ -34,7 +34,7 @@ public class IntakerSubsystem extends SubsystemBase{
     }
 
     public boolean isAtTargetRPS(){
-        return MathUtil.isNear(targetRPS, (inputs.leftVelocityRPS + inputs.rghtVelocityRPS) / 2., IntakerConstants.IntakerVelocityToleranceRPS);
+        return MathUtil.isNear(targetRPS, inputs.intakerVelocityRPS, IntakerConstants.IntakerVelocityToleranceRPS);
     }
 
     public void stop(){

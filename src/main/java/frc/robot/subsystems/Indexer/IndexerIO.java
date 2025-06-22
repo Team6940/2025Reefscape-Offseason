@@ -5,6 +5,8 @@ import org.littletonrobotics.junction.AutoLog;
 public interface IndexerIO {
     default public void setVoltage(double voltage){}
     default public void setRPS(double rps){}
+    default public void setLeftRPS(double rps){}
+    default public void setRghtRPS(double rps){}
 
     @AutoLog
     public class IndexerIOInputs {
@@ -17,6 +19,7 @@ public interface IndexerIO {
         public double rghtCurrentAmps;
         public double leftVelocityRPS;
         public double rghtVelocityRPS;
+
 
     }
     default public void updateInputs(IndexerIOInputs inputs){}
