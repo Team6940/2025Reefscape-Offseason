@@ -57,13 +57,13 @@ public class GrArmIOPhoenix6 implements GrArmIO {
     }
 
     public void updateInputs(GrArmIOInputs GrArmInputs) {
-        GrArmInputs.motorConnected = BaseStatusSignal.refreshAll(
+        GrArmInputs.GrArmMotorConnected = BaseStatusSignal.refreshAll(
                 motor.getMotorVoltage(),
                 motor.getSupplyCurrent(),
                 motor.getVelocity()).isOK();
 
-        GrArmInputs.motorVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
-        GrArmInputs.motorCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
+        GrArmInputs.GrArmVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
+        GrArmInputs.GrArmCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
         GrArmInputs.GrArmRotationDegrees = motor.getPosition().getValueAsDouble();
         GrArmInputs.GrArmPositionRadians = GrArmInputs.GrArmRotationDegrees * Math.PI / 180.0;
 

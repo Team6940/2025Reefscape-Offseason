@@ -21,9 +21,10 @@ public interface ArmIO {
 
     @AutoLog
     public class ArmIOInputs {
-        public boolean motorConnected = false;
-        public double motorVoltageVolts;
-        public double motorCurrentAmps;
+        public boolean ArmMotorConnected = false;
+
+        public double ArmVoltageVolts;
+        public double ArmCurrentAmps;
 
         public double ArmRotationDegrees = 0.0;
         public double ArmPositionRadians = 0.0;

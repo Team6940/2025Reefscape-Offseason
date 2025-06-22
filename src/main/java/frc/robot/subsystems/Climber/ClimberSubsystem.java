@@ -36,7 +36,7 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     public boolean isAtTargetRotation(){
-        return Math.abs(targetRotation - inputs.climberPositionRotations) < ClimberConstants.ClimberRotationTolerence;
+        return Math.abs(targetRotation - inputs.mechanismPositionRotations) < ClimberConstants.ClimberRotationTolerence;
     }
 
     public void resetPosition(double rotation){
@@ -44,11 +44,11 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     public double getRotation(){
-        return inputs.climberPositionRotations;
+        return inputs.mechanismPositionRotations;
     }
 
     public double getVelocity(){
-        return inputs.climberVelocityRPS;
+        return inputs.mechanismVelocityRPS;
     }
 
     public void processLog(){
