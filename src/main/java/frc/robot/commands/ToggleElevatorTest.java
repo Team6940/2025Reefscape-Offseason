@@ -1,0 +1,32 @@
+package frc.robot.commands;
+
+import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+
+import edu.wpi.first.wpilibj2.command.Command;
+
+public class ToggleElevatorTest extends Command {
+    ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
+    double position;
+
+    public ToggleElevatorTest(ElevatorSubsystem elevator,Double postion) {
+        this.elevator= elevator;
+        this.position = postion;
+        addRequirements(elevator);
+    }
+
+    @Override
+    public void initialize() {
+        elevator.setHeight(position);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        elevator.setHeight(0);
+    }
+
+    public boolean isFinished(){
+        return false; // This command runs until interrupted
+    }
+    
+
+}

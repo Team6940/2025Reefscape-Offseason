@@ -19,6 +19,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.Chassis.*;
 import frc.robot.subsystems.Elevator.*;
+import frc.robot.commands.ToggleElevatorTest;
 
 public class RobotContainer {
 
@@ -129,11 +130,10 @@ public class RobotContainer {
                 .withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
         
         driverController.y().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[0])));
-        driverController.povRight().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[1])));
-        driverController.povUp().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[2])));
-        driverController.povLeft().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[3])));
-        driverController.povDown().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[4])));
-
+        driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[1]));
+        driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[2]));
+        driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[3]));
+        driverController.povDown().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[4]));
         chassis.registerTelemetry(logger::telemeterize);
     }
 
