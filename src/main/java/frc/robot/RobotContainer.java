@@ -81,55 +81,33 @@ public class RobotContainer {
          * povRight:
          */
 
-        /* Povs */ // TODO
-        driverController.povUp().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // seed field-centric
-                                                                                            // heading.
 
-        // Note that X is defined as forward according to WPILib convention,
-        // and Y is defined as to the left according to WPILib convention.
+        /* Stick */
+        /* Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.*/
         chassis.setDefaultCommand(
                 // chassis will execute this command periodically
                 chassis.applyRequest(() -> drive
-                        .withVelocityX(
-                                -driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.) // Drive
-                                                                                                                      // forward
-                                                                                                                      // with
-                                                                                                                      // negative
-                                                                                                                      // Y
-                                                                                                                      // (forward)
-                                                                                                                      // //TODO:
-                                                                                                                      // change
-                                                                                                                      // speed
-                                                                                                                      // here
-                        .withVelocityY(
-                                -driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.) // Drive
-                                                                                                                      // left
-                                                                                                                      // with
-                                                                                                                      // negative
-                                                                                                                      // X
-                                                                                                                      // (left)
-                                                                                                                      // //TODO:
-                                                                                                                      // change
-                                                                                                                      // speed
-                                                                                                                      // here
-                        .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.) // Drive
-                                                                                                 // counterclockwise
-                                                                                                 // with negative X
-                                                                                                 // (left) //TODO:
-                                                                                                 // change speed here
+                        .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.)    //TODO: change speed here
+                        .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.)  //TODO: change speed here
+                        .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.)//TODO: change speed here
                 ));
 
-        // Idle while the robot is disabled. This ensures the configured
-        // neutral mode is applied to the drive motors while disabled.
-        final var idle = new SwerveRequest.Idle();
-        RobotModeTriggers.disabled().whileTrue(
-                chassis.applyRequest(() -> idle).ignoringDisable(true));
+        /* Bumpers & Triggers */ // TODO
+        driverController.leftBumper().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // seed field-centric heading.
+
+        // // Idle while the robot is disabled. This ensures the configured
+        // // neutral mode is applied to the drive motors while disabled.
+        // final var idle = new SwerveRequest.Idle();
+        // RobotModeTriggers.disabled().whileTrue(
+        //         chassis.applyRequest(() -> idle).ignoringDisable(true));
+
+        /* Buttons */
         driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));
         driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
-        driverController.b().whileTrue(chassis.applyRequest(() -> point
-                .withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
-        
+        driverController.b().whileTrue(chassis.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
         driverController.y().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[0])));
+
+        /* Povs */
         driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[1]));
         driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[2]));
         driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[3]));

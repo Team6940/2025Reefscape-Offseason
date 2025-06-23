@@ -67,7 +67,7 @@ public class CoralHybridScoring extends Command {
     public void execute() {
         chassis.hybridMoveToPose(targetPose, driverController,
                 FieldConstants.reefTranslationAdjustmentRange, FieldConstants.reefRotationAdjustmentRangeDegs);
-        SmartDashboard.putString("Hybrid Scoring State", state.toString());
+        SmartDashboard.putString("CORAL hybrid Scoring State", state.toString());
         switch (state) {
             case ALIGNING:
                 align();
@@ -87,18 +87,18 @@ public class CoralHybridScoring extends Command {
     }
 
     public void align() {
-        SmartDashboard.putString("Hybrid Scoring State", "ALIGNING");
+        SmartDashboard.putString("CORAL Hhbrid Scoring State", "ALIGNING");
         elevator.setHeight(targetHeight);
         arm.setPosition(targetAngle);
         if (arm.getArmPosition()> targetAngle - 0.1) {
 
             state = ScoringState.PUSHING;
-            SmartDashboard.putString("Hybrid Scoring State", "ALIGNING complete, moving to PUSHING");
+            SmartDashboard.putString("CORAL hybrid Scoring State", "ALIGNING complete, moving to PUSHING");
         }
     }
 
     public void push() {
-        SmartDashboard.putString("Hybrid Scoring State", "PUSHING");
+        SmartDashboard.putString("CORAL hybrid Scoring State", "PUSHING");
 
         // Get current pose and add small forward offset (e.g. 0.2 meters)
         Pose2d currentPose = targetPose;
@@ -110,24 +110,24 @@ public class CoralHybridScoring extends Command {
         // When in position, transition to scoring
         if (chassis.isAtPose(pushPose) && driverController.getButton(m_executionButton)) {
             state = ScoringState.SCORING;
-            SmartDashboard.putString("Hybrid Scoring State", "PUSHING complete, moving to SCORING");
+            SmartDashboard.putString("CORAL hybrid Scoring State", "PUSHING complete, moving to SCORING");
         }
     }
 
     public void score() {
-        SmartDashboard.putString("Hybrid Scoring State", "SCORING");
+        SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING");
         arm.rotateArm(targetAngle);
         if (shooter.getCoralState() == ShooterState.IDLE) {
-            SmartDashboard.putString("Hybrid Scoring State", "SCORING complete, moving to DEPARTING");
+            SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING complete, moving to DEPARTING");
             state = ScoringState.DEPARTING;
         } else {
-            SmartDashboard.putString("Hybrid Scoring State", "SCORING in progress");
+            SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING in progress");
         }
 
     }
 
     public void depart() {
-        SmartDashboard.putString("Hybrid Scoring State", "DEPARTING");
+        SmartDashboard.putString("CORAL hybrid Scoring State", "DEPARTING");
 
         // Calculate retreat position (move backward)
         Pose2d currentPose = targetPose;
@@ -144,14 +144,14 @@ public class CoralHybridScoring extends Command {
             elevator.setHeight(0);
             shooter.stop();
             state = ScoringState.END;
-            SmartDashboard.putString("Hybrid Scoring State", "DEPARTING complete, moving to END");
+            SmartDashboard.putString("CORAL hybrid Scoring State", "DEPARTING complete, moving to END");
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         if(interrupted)
-            SmartDashboard.putString("Hybrid Scoring State", "END due to interruption");
+            SmartDashboard.putString("CORAL hybrid Scoring State", "END due to interruption");
         arm.stop();
         elevator.setHeight(0);
         shooter.stop();
