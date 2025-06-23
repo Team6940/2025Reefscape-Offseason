@@ -65,13 +65,13 @@ public class ArmIOPhoenix6 implements ArmIO {
     }
 
     public void updateInputs(ArmIOInputs ArmInputs) {
-        ArmInputs.ArmMotorConnected = BaseStatusSignal.refreshAll(
+        ArmInputs.motorConnected = BaseStatusSignal.refreshAll(
                 motor.getMotorVoltage(),
                 motor.getSupplyCurrent(),
                 motor.getVelocity()).isOK();
 
-        ArmInputs.ArmVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
-        ArmInputs.ArmCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
+        ArmInputs.motorVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
+        ArmInputs.motorCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
         ArmInputs.ArmRotationDegrees = motor.getPosition().getValueAsDouble();
         ArmInputs.ArmPositionRadians = ArmInputs.ArmRotationDegrees * Math.PI / 180.0;
 

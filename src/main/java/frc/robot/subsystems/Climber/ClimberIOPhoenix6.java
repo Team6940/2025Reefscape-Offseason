@@ -67,8 +67,8 @@ public class ClimberIOPhoenix6 implements ClimberIO{
             motor.getPosition()
         ).isOK();
 
-        inputs.mechanismVelocityRPS = motor.getVelocity().getValueAsDouble();
-        inputs.mechanismPositionRotations = motor.getPosition().getValueAsDouble();
+        inputs.climberVelocityRPS = motor.getVelocity().getValueAsDouble();
+        inputs.climberPositionRotations = motor.getPosition().getValueAsDouble();
         inputs.motorVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
     }
 }
