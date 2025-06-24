@@ -196,11 +196,11 @@ public class Constants {
         public static final int leftMotorID = 15;
         public static final int rghtMotorID = 14;
 
-        public static final double kP = 5;
+        public static final double kP = 10;
         public static final double kI = 0;
-        public static final double kD = 0.5;
+        public static final double kD = 0.4;
         public static final double kS = 0.2;
-        public static final double kV = 0.05;
+        public static final double kV = 0.06;
         public static final double kG = 0.8;
         public static final double Acceleration = 130.; // 102.
         public static final double MaxVelocity = 32.5; // 32.5

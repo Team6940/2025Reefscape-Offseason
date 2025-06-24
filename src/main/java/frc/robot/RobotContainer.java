@@ -62,24 +62,46 @@ public class RobotContainer {
         /* DRIVER CONTROLLER */
 
         /**
-         * The ideal control logic is such:
+         * Driver Controller:
          * Left Stick: Translation
          * Right Stick: Rotation
-         * Left bumper: Hybrid Intake (release the ground intake and stop after
-         * releasing the bumper)
-         * Left trigger: Outtake from the back (shake ground intake)
-         * Right Bumper + Right Trigger: Hybrid Scoring
-         * Left Stick Pressed: Extend Climber and Intake
+         * Left bumper: Hybrid Intake (deploy the ground intake and stop after releasing the bumper)
+         * Left trigger: Algae Intake
+         * Right Bumper: Hybrid Scoring
+         * Right Trigger: Algae Scoring
+         * Left Stick Pressed: Extend Climber & Climb Action
          * Right Stick Pressed: Retract Climber
-         * X: Algae Romoval After Scoring
-         * Y: Increase Reef Level Index
-         * A: Decrease Reef Level Index
-         * B: Outtake from the front
-         * povDown: switch hybrid intake and elevator control
-         * povUP: resetFieldCentric
-         * povLeft:
-         * povRight:
+         * X: Reset Gyro
+         * Y: System Initialize (Reset All Subsystems)
+         * B: Drive To Net Scoring Point
+         * A: (Auto) Confirm Coral Scoring Position Selection
+         * povDown: (Auto) ReefLevelIndex + 1
+         * povUP: (Auto) ReefLevelIndex - 1
+         * povLeft: (Auto) ReefPoseIndex + 1    
+         * povRight: (Auto) ReefPoseIndex - 1
          */
+
+        /* Operator Controller: 
+         * povUp: Teleop Select L2
+         * povDown: Teleop Select L1
+         * povLeft: Teleop ReefSideIndex - 1
+         * povRight: Teleop ReefSideIndex + 1
+         * **   The 'SideIndex' refers to the different 'sides' of the hexogonal reef,
+         * **   which are numbered 0-5, going clockwise,
+         * **   e.g, ReefPoseIndex 1,2 -> SideIndex 0
+         * **                      3,4 -> SideIndex 1
+         * **                      5,6 -> SideIndex 2
+         * **                      7,8 -> SideIndex 3
+         * **                     9,10 -> SideIndex 4
+         * **                    11,12 -> SideIndex 5     TODO needed here, decide whether it's 0-5 or 1-6
+         * X: Select Left            
+         * B: Select Right
+         * ** The left and right is decided by the following method,
+         * ** imaging facing the 'side' which you are trying to score the coral at,
+         * ** the left is the side which is on your left hand side, and the right is the side which is on your right hand side.
+         * A: Teleop Select L3
+         * Y: Teleop Select L4
+        */
 
 
         /* Stick */
