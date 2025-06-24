@@ -95,9 +95,9 @@ public class Constants {
 
         public static final double ShooterFreeSpinCurrentThreshold = 0;
 
-        public static final double ShooterReadyCurrentThreshold = 0;
+        public static final double ShooterReadyCurrentThreshold = 0; //FREE SPINNING
 
-        public static final double ShooterGrabbingCurrentThreshold = 0;
+        public static final double ShooterGrabbingCurrentThreshold = 0; //GOT HOLD OF STUFF //TODO: should add 2 thresholds for the coral and the algae
 
     }
 
@@ -308,6 +308,19 @@ public class Constants {
                                                        // aligning to the reef pose
         public static final double departDistance = 0.1; // meters, this is the distance the robot will move forward
                                                          // after scoring
+
+
+        //THESE ARE FOR THE CLIMBING  //COPIED FROM 2025 REEFSCAPE
+        public static final double ClimbPushDis = 0.;                             //0.48
+        public static final double ClimbRetreatToDis = 0.;        //0.272         //0.40
+                                                 
+        public static final double elevatorClimbHeight = 0.29;
+                                                 
+        public static final Pose2d BlueClimbPoses[] = {
+            new Pose2d(8.3, 7.15, Rotation2d.k180deg),
+            new Pose2d(0, 0, Rotation2d.k180deg),
+            new Pose2d(0, 0, Rotation2d.k180deg)
+        };
     }
 
     public static void initializeConstants() {
