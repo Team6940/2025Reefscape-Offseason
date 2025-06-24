@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -26,9 +27,10 @@ public class AlgaeHybridScoring extends Command {
         END
     }
 
-    private int m_targetReefPoseIndex;
-    private int m_targetReefLevelIndex;
-    private Button m_Button; //TODO: DESIGNED AS A TOGGLE BUTTON
+    private int m_targetBargePoseIndex;
+    private double m_targetBargeLevel = Constants.FieldConstants.BargeHeight;
+    private double m_targetBargeAngle = Constants.FieldConstants.BargeAngle;
+    private Button m_resetButton;
     private Button m_executionButton;
     ScoringState state;
 
@@ -43,22 +45,20 @@ public class AlgaeHybridScoring extends Command {
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
-    public AlgaeHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button button,
-            Button executionButton) {
+    public AlgaeHybridScoring(int targetBargePoseIndex,Button resetButton, Button executionButton) {
         addRequirements(elevator, shooter, chassis, arm);
-        m_targetReefPoseIndex = targetReefPoseIndex;
-        m_targetReefLevelIndex = targetReefLevelIndex;
-        m_Button = button;
+        m_targetBargePoseIndex = targetBargePoseIndex;
+        m_resetButton = resetButton;
         m_executionButton = executionButton;
     }
 
     @Override
     public void initialize() {
         state = ScoringState.ALIGNING;
-        targetPose = chassis.generateReefPose(m_targetReefPoseIndex);
-        targetHeight = FieldConstants.elevatorHeights[m_targetReefLevelIndex];
-        targetAngle = FieldConstants.armAngles[m_targetReefLevelIndex];
-        targetRotation = FieldConstants.reefRotationAdjustmentRange[m_targetReefPoseIndex];
+        // targetPose = chassis.generateReefPose(m_targetBargePoseIndex);
+        targetHeight = m_targetBargeLevel;
+        targetAngle = m_targetBargeAngle;
+        // targetRotation = FieldConstants.reefRotationAdjustmentRange[m_targetBargePoseIndex];
         elevator.setHeight(0);
 
     }
@@ -72,10 +72,13 @@ public class AlgaeHybridScoring extends Command {
             case ALIGNING:
                 align();
                 break;
+            case PUSHING:
+                push();
+                break;
             case SCORING:
                 score();
                 break;
-            case DEPARTING: //TODO
+            case DEPARTING:
                 depart();
                 break;
             case END:
@@ -90,30 +93,35 @@ public class AlgaeHybridScoring extends Command {
         if (arm.getArmPosition()> targetAngle - 0.1) {
 
             state = ScoringState.SCORING;
-            SmartDashboard.putString("ALGAE hybrid Scoring State", "ALIGNING complete, moving to SCORING");
+            SmartDashboard.putString("ALGAE hybrid Scoring State", "ALIGNING complete, moving to PUSHING");
         }
     }
 
-    // public void push() {
-    //     SmartDashboard.putString("Hybrid Scoring State", "PUSHING");
+    public void push() {
+        SmartDashboard.putString("Hybrid Scoring State", "PUSHING");
 
-    //     // Get current pose and add small forward offset (e.g. 0.2 meters)
-    //     Pose2d currentPose = targetPose;
-    //     Translation2d transformTranslation2d=new Translation2d(-FieldConstants.pushDistance, currentPose.getRotation());
-    //     Pose2d pushPose=new Pose2d(currentPose.getTranslation().plus(transformTranslation2d), currentPose.getRotation());
-    //     // Move to push position
-    //     chassis.autoMoveToPose(pushPose);
+        // Get current pose and add small forward offset (e.g. 0.2 meters)
+        Pose2d currentPose = targetPose;
+        Translation2d transformTranslation2d=new Translation2d(-FieldConstants.pushDistance, currentPose.getRotation());
+        Pose2d pushPose=new Pose2d(currentPose.getTranslation().plus(transformTranslation2d), currentPose.getRotation());
+        // Move to push position
+        chassis.autoMoveToPose(pushPose);
 
-    //     // When in position, transition to scoring
-    //     if (chassis.isAtPose(pushPose) && driverController.getButton(m_executionButton)) {
-    //         state = ScoringState.SCORING;
-    //         SmartDashboard.putString("Hybrid Scoring State", "PUSHING complete, moving to SCORING");
-    //     }
-    // }
+        // When in position, transition to scoring
+        if (chassis.isAtPose(pushPose) && !driverController.getButton(m_resetButton) && driverController.getButton(m_executionButton)) {
+            state = ScoringState.SCORING;
+            SmartDashboard.putString("Hybrid Scoring State", "PUSHING complete, moving to SCORING");
+        }
+        else if (chassis.isAtPose(pushPose) && driverController.getButton(m_resetButton)) {
+            state = ScoringState.DEPARTING;
+            SmartDashboard.putString("Hybrid Scoring State", "PUSHING *QUIT, moving to DEPARTING");
+        }
+    }
 
     public void score() {
         SmartDashboard.putString("ALGAE hybrid Scoring State", "SCORING");
         arm.rotateArm(targetAngle);
+        shooter.setRPS(shooter.getShootRPS(4));     //TODO 'level' here indicates the fifth line of ShoooterShootRPS(constants.java) ,which is the speed for shooting the algae
         if (shooter.getCoralState() == ShooterState.IDLE) {
             SmartDashboard.putString("ALGAE hybrid Scoring State", "SCORING complete, moving to DEPARTING");
             state = ScoringState.DEPARTING;
