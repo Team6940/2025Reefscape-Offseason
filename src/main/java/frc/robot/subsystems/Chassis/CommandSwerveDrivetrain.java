@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 
 import org.littletonrobotics.junction.Logger;
 
-import frc.robot.Constants.AutoConstants;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
@@ -582,6 +581,29 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if(res == null){
             DriverStation.reportWarning("1111111111111111111", false);
         }
+
+        return res;
+    }
+
+    public Pose2d generateAlgaePose(int index){
+        Translation2d t = FieldConstants.BlueReefCenterPos;
+        Translation2d dt = FieldConstants.DAlgaeTranslation6;
+        t=t.plus(dt);//translation here
+
+        Rotation2d r = new Rotation2d(Math.PI);
+        Rotation2d dr = Rotation2d.fromDegrees(
+                (double)(index+1) * 60.
+        );
+        r=r.plus(dr);//rotation here
+
+        t=t.rotateAround(FieldConstants.BlueReefCenterPos,dr);
+        r=r.plus(dr);//constructing the final pose
+
+        Pose2d res = new Pose2d(t,r);
+
+        if(DriverStation.getAlliance().get() == Alliance.Red){
+            res = FieldConstants.rotateAroundCenter(res, FieldConstants.FieldCenter, Rotation2d.k180deg);
+        }//position shifts based on red&blue
 
         return res;
     }

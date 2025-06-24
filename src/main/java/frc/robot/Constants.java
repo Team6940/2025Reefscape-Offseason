@@ -100,6 +100,8 @@ public class Constants {
 
         public static final double ShooterGrabbingCurrentThreshold = 0; //GOT HOLD OF STUFF //TODO: should add 2 thresholds for the coral and the algae
 
+        public static final double AlgaeIntakingRPS = 0;
+
     }
 
     public static final class ArmConstants {
@@ -248,15 +250,28 @@ public class Constants {
 
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
         public static final Translation2d DReefTranslation12 = new Translation2d(1.31, 0.161);
-        // Translation2d(1.32,
-        // 0.162)
+        public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
 
         public static final double reefTranslationAdjustmentRange = 0.15;
         public static final double reefRotationAdjustmentRangeDegs = 20;
 
+
         public static final Translation2d BlueRightStationCenterPos = new Translation2d(1.2, 1.05);
         public static final Translation2d DStationTranslationRSL = new Translation2d(-0.675, 0.42);
         public static final Rotation2d DStationRotationRSL = Rotation2d.fromRadians(0.935);
+
+        public static final double armIntakePosition[]={
+            0,
+            0
+        };
+
+        public static double algaeAlignmentDistanceThreshold;
+
+        public static int algaeIntakePushDistance;
+
+        public static double armAlgaeStowPosition;
+
+        public static double pushDistance;
 
         public static Pose2d rotateAroundCenter(Pose2d pose, Translation2d centre, Rotation2d rotation) {
             return new Pose2d(pose.getTranslation().rotateAround(centre, rotation), pose.getRotation().plus(rotation));
@@ -284,6 +299,10 @@ public class Constants {
         public static final double BargeHeight = 114514.; //TODO: this is a placeholder value, should be replaced with the actual barge height
 
         public static final double BargeAngle = 1919810.; //TODO: this is a placeholder value, should be replaced with the actual barge angle
+        public static final double elevatorAlgaeIntakeHeight[]={
+            0,
+            0
+        };
 
         public static final double elevatorHeights[] = {
                 0.,
@@ -309,7 +328,7 @@ public class Constants {
                 0
         };
 
-        public static final double pushDistance = 0.2; // meters, this is the distance the robot will push forward after
+        public static final double coralScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after
                                                        // aligning to the reef pose
         public static final double departDistance = 0.1; // meters, this is the distance the robot will move forward
                                                          // after scoring

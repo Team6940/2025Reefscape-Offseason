@@ -55,7 +55,7 @@ public class AlgaeHybridScoring extends Command {
     @Override
     public void initialize() {
         state = ScoringState.ALIGNING;
-        // targetPose = chassis.generateReefPose(m_targetBargePoseIndex);
+        targetPose = chassis.generateReefPose(m_targetBargePoseIndex);
         targetHeight = m_targetBargeLevel;
         targetAngle = m_targetBargeAngle;
         // targetRotation = FieldConstants.reefRotationAdjustmentRange[m_targetBargePoseIndex];
@@ -122,7 +122,7 @@ public class AlgaeHybridScoring extends Command {
         SmartDashboard.putString("ALGAE hybrid Scoring State", "SCORING");
         arm.rotateArm(targetAngle);
         shooter.setRPS(shooter.getShootRPS(4));     //TODO 'level' here indicates the fifth line of ShoooterShootRPS(constants.java) ,which is the speed for shooting the algae
-        if (shooter.getCoralState() == ShooterState.IDLE) {
+        if (shooter.getShooterState() == ShooterState.IDLE) {
             SmartDashboard.putString("ALGAE hybrid Scoring State", "SCORING complete, moving to DEPARTING");
             state = ScoringState.DEPARTING;
         } else {
