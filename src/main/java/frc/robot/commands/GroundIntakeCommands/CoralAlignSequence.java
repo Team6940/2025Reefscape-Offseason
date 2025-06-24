@@ -62,7 +62,7 @@ public class CoralAlignSequence extends Command {
 
     private void grab() {
         elevator.zeroHeight();
-        if (shooter.getCoralState() == ShooterState.READY) {
+        if (shooter.getShooterState() == ShooterState.READY) {
             state = IntakeState.END;
         }
 
