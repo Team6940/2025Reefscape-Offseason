@@ -58,12 +58,12 @@ public class ShooterSubsystem extends SubsystemBase{
         GRABBING
     }
 
-    public ShooterState getCoralState() {
+    public ShooterState getShooterState() {
        return state;
    }
 
     public boolean isReady() {
-        return getCoralState() == ShooterState.READY;
+        return getShooterState() == ShooterState.READY;
     }
 
     public void shooterStateUpdate(){
@@ -89,7 +89,7 @@ public class ShooterSubsystem extends SubsystemBase{
         processLog();
         processDashboard();
         
-        SmartDashboard.putString("status", getCoralState().toString());
+        SmartDashboard.putString("status", getShooterState().toString());
     }
 
     private void processLog() {

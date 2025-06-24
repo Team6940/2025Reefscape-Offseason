@@ -71,7 +71,7 @@ public class RobotContainer {
          * Right Trigger: Algae Scoring
          * Left Stick Pressed: Extend Climber & Climb Action
          * Right Stick Pressed: Retract Climber
-         * X: Reset Gyro
+         * X: Emergency Stop
          * Y: System Initialize (Reset All Subsystems)
          * B: Drive To Net Scoring Point
          * A: (Auto) Confirm Coral Scoring Position Selection
@@ -79,28 +79,31 @@ public class RobotContainer {
          * povUP: (Auto) ReefLevelIndex - 1
          * povLeft: (Auto) ReefPoseIndex + 1    
          * povRight: (Auto) ReefPoseIndex - 1
+         * back & start: Reset Gyro
          */
 
         /* Operator Controller: 
          * povUp: Teleop Select L2
          * povDown: Teleop Select L1
-         * povLeft: Teleop ReefSideIndex - 1
-         * povRight: Teleop ReefSideIndex + 1
-         * **   The 'SideIndex' refers to the different 'sides' of the hexogonal reef,
+         * povLeft: Teleop ReefFaceIndex - 1
+         * povRight: Teleop ReefFaceIndex + 1
+         * **   The 'FaceIndex' refers to the different 'Faces' of the hexogonal reef,
          * **   which are numbered 0-5, going clockwise,
-         * **   e.g, ReefPoseIndex 1,2 -> SideIndex 0
-         * **                      3,4 -> SideIndex 1
-         * **                      5,6 -> SideIndex 2
-         * **                      7,8 -> SideIndex 3
-         * **                     9,10 -> SideIndex 4
-         * **                    11,12 -> SideIndex 5     TODO needed here, decide whether it's 0-5 or 1-6
+         * **   e.g, ReefPoseIndex 1,2 -> FaceIndex 0
+         * **                      3,4 -> FaceIndex 1
+         * **                      5,6 -> FaceIndex 2
+         * **                      7,8 -> FaceIndex 3
+         * **                     9,10 -> FaceIndex 4
+         * **                    11,12 -> FaceIndex 5     TODO needed here, decide whether it's 0-5 or 1-6
          * X: Select Left            
          * B: Select Right
          * ** The left and right is decided by the following method,
-         * ** imaging facing the 'side' which you are trying to score the coral at,
-         * ** the left is the side which is on your left hand side, and the right is the side which is on your right hand side.
+         * ** imaging facing the 'Face' which you are trying to score the coral at,
+         * ** the left is the Face which is on your left hand Face, and the right is the Face which is on your right hand Face.
          * A: Teleop Select L3
          * Y: Teleop Select L4
+         * Left Bumper: Teleop Select Lower Algae
+         * Right Bumper: Teleop Select Upper Algae
         */
 
 

@@ -90,7 +90,7 @@ public class CoralHybridScoring extends Command {
         SmartDashboard.putString("CORAL Hhbrid Scoring State", "ALIGNING");
         elevator.setHeight(targetHeight);
         arm.setPosition(targetAngle);
-        if (arm.getArmPosition()> targetAngle - 0.1) {
+        if (arm.getArmPosition() > targetAngle - 0.1 && chassis.isAtTargetPose()) {
 
             state = ScoringState.PUSHING;
             SmartDashboard.putString("CORAL hybrid Scoring State", "ALIGNING complete, moving to PUSHING");
@@ -102,8 +102,10 @@ public class CoralHybridScoring extends Command {
 
         // Get current pose and add small forward offset (e.g. 0.2 meters)
         Pose2d currentPose = targetPose;
-        Translation2d transformTranslation2d=new Translation2d(-FieldConstants.pushDistance, currentPose.getRotation());
-        Pose2d pushPose=new Pose2d(currentPose.getTranslation().plus(transformTranslation2d), currentPose.getRotation());
+        Translation2d transformTranslation2d = new Translation2d(-FieldConstants.coralScorePushDistance,
+                currentPose.getRotation());
+        Pose2d pushPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
+                currentPose.getRotation());
         // Move to push position
         chassis.autoMoveToPose(pushPose);
 
@@ -117,7 +119,7 @@ public class CoralHybridScoring extends Command {
     public void score() {
         SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING");
         arm.rotateArm(targetAngle);
-        if (shooter.getCoralState() == ShooterState.IDLE) {
+        if (shooter.getShooterState() == ShooterState.IDLE) {
             SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING complete, moving to DEPARTING");
             state = ScoringState.DEPARTING;
         } else {
@@ -131,11 +133,14 @@ public class CoralHybridScoring extends Command {
 
         // Calculate retreat position (move backward)
         Pose2d currentPose = targetPose;
-        Translation2d transformTranslation2d=new Translation2d(FieldConstants.pushDistance, currentPose.getRotation());
-        Pose2d departPose=new Pose2d(currentPose.getTranslation().plus(transformTranslation2d), currentPose.getRotation());
+        Translation2d transformTranslation2d = new Translation2d(FieldConstants.coralScorePushDistance,
+                currentPose.getRotation());
+        Pose2d departPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
+                currentPose.getRotation());
 
         // Move to retreat position
-        targetPose=departPose;
+        targetPose = departPose;
+        chassis.autoMoveToPose(targetPose);
 
         shooter.setRPS(ShooterConstants.shooterScoringRPS);
         // When in position, reset systems and end
@@ -150,7 +155,7 @@ public class CoralHybridScoring extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        if(interrupted)
+        if (interrupted)
             SmartDashboard.putString("CORAL hybrid Scoring State", "END due to interruption");
         arm.stop();
         elevator.setHeight(0);
