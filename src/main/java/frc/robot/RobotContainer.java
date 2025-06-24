@@ -75,10 +75,10 @@ public class RobotContainer {
          * Y: System Initialize (Reset All Subsystems)
          * B: Drive To Net Scoring Point
          * A: (Auto) Confirm Coral Scoring Position Selection
-         * povDown: (Auto) ReefLevelIndex + 1
-         * povUP: (Auto) ReefLevelIndex - 1
-         * povLeft: (Auto) ReefPoseIndex + 1    
-         * povRight: (Auto) ReefPoseIndex - 1
+         * povDown: (Auto) ReefLevelIndex - 1
+         * povUP: (Auto) ReefLevelIndex + 1
+         * povLeft: (Auto) ReefPoseIndex - 1    
+         * povRight: (Auto) ReefPoseIndex + 1
          * back & start: Reset Gyro
          */
 
