@@ -3,6 +3,7 @@ package frc.robot.subsystems.Climber;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -10,13 +11,16 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberIOPhoenix6 implements ClimberIO{
-    private static TalonFX motor = new TalonFX(ClimberConstants.ClimberMotorID, "rio");
+    private static TalonFX liftMotor = new TalonFX(ClimberConstants.ClimberliftMotorID, "rio"); //TODO change to canivore
+    private static TalonFX lockMotor = new TalonFX(ClimberConstants.ClimberlockMotorID, "rio"); //TODO change to canivore
 
     private static final MotionMagicVoltage positionVoltage = new MotionMagicVoltage(0.);
+    private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
 
     ClimberIOPhoenix6(){
         motorConfig();
-        motor.setPosition(0.);
+        liftMotor.setPosition(0.);
+        lockMotor.setPosition(0.); //TODO
     }
 
     private void motorConfig(){
@@ -38,20 +42,21 @@ public class ClimberIOPhoenix6 implements ClimberIO{
 
         configs.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
 
-        configs.MotionMagic.MotionMagicAcceleration = ClimberConstants.Acceleration;
-        configs.MotionMagic.MotionMagicCruiseVelocity = ClimberConstants.MaxVelocity;
+        configs.MotionMagic.MotionMagicAcceleration = ClimberConstants.ClimberAcceleration;
+        configs.MotionMagic.MotionMagicCruiseVelocity = ClimberConstants.ClimberMaxVelocity;
 
-        motor.getConfigurator().apply(configs);
+        liftMotor.getConfigurator().apply(configs);
+        lockMotor.getConfigurator().apply(configs);
     }
 
     @Override
     public void setRotation(double rotation){
-        motor.setControl(positionVoltage.withPosition(rotation));
+        liftMotor.setControl(positionVoltage.withPosition(rotation));
     }
 
     @Override
     public void resetRotation(double rotation){
-        motor.setPosition(rotation);
+        liftMotor.setPosition(rotation);
     }
 
     @Override
@@ -60,15 +65,30 @@ public class ClimberIOPhoenix6 implements ClimberIO{
     }
 
     @Override
+    public void setLockRPS(double rps){
+        lockMotor.setControl(dutycycle.withVelocity(rps)); //TODO
+    }
+
+    @Override
     public void updateInputs(ClimberIOInputs inputs){
-        inputs.motorConnected = BaseStatusSignal.refreshAll(
-            motor.getVelocity(),
-            motor.getMotorVoltage(),
-            motor.getPosition()
+        inputs.liftMotorConnected = BaseStatusSignal.refreshAll(
+            liftMotor.getVelocity(),
+            liftMotor.getMotorVoltage(),
+            liftMotor.getPosition()
         ).isOK();
 
-        inputs.climberVelocityRPS = motor.getVelocity().getValueAsDouble();
-        inputs.climberPositionRotations = motor.getPosition().getValueAsDouble();
-        inputs.motorVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
+        inputs.liftMotorVelocityRPS = liftMotor.getVelocity().getValueAsDouble();
+        inputs.liftMotorPositionRotations = liftMotor.getPosition().getValueAsDouble();
+        inputs.liftMotorVoltageVolts = liftMotor.getMotorVoltage().getValueAsDouble();
+
+        inputs.lockMotorConnected = BaseStatusSignal.refreshAll(
+            lockMotor.getVelocity(),
+            lockMotor.getMotorVoltage(),
+            lockMotor.getPosition()
+        ).isOK();
+
+        inputs.lockMotorVelocityRPS = lockMotor.getVelocity().getValueAsDouble();
+        inputs.lockMotorPositionRotations = lockMotor.getPosition().getValueAsDouble();
+        inputs.lockMotorVoltageVolts = lockMotor.getMotorVoltage().getValueAsDouble();
     }
 }

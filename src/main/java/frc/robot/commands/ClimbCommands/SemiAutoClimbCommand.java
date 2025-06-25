@@ -97,9 +97,11 @@ public class SemiAutoClimbCommand extends Command{
     }
 
     private void push(){
-        chassis.hybridMoveToPose(poseToPush, controller, 0.15, 15.);
-        if(!controller.getButton(executionButton)){
+        chassis.hybridMoveToPose(poseToPush, controller, 0.15, 15.); //TODO need to change position
+        climber.lockMotorSetRPS(ClimberConstants.LockMotorRPS);
+        if(!controller.getButton(executionButton)){  //TODO add currentThreshold if needed    //TODO add rumble
             state = ClimbState.RETRACTING;
+            climber.lockMotorSetRPS(0.0); //TODO: stop lock motor
         };
     }
 

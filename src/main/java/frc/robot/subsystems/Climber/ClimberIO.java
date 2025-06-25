@@ -11,13 +11,20 @@ public interface ClimberIO {
         resetRotation(0.);
     };
 
+    default public void setLockRPS(double rps){}
+
     @AutoLog
     public class ClimberIOInputs{
 
-        public boolean motorConnected;
-        public double motorVoltageVolts;
-        public double climberPositionRotations;
-        public double climberVelocityRPS;
+        public boolean liftMotorConnected;
+        public double liftMotorVoltageVolts;
+        public double liftMotorPositionRotations;
+        public double liftMotorVelocityRPS;
+
+        public boolean lockMotorConnected;
+        public double lockMotorVoltageVolts;
+        public double lockMotorPositionRotations;
+        public double lockMotorVelocityRPS;
 
         // public double ClimberHeight;
         // public double ClimberVelocity;
