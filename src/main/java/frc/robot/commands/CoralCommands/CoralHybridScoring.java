@@ -14,6 +14,7 @@ import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
+import frc.robot.subsystems.SuperStructure.Selection;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 
@@ -28,7 +29,8 @@ public class CoralHybridScoring extends Command {
 
     private int m_targetReefPoseIndex;
     private int m_targetReefLevelIndex;
-    private Button m_Button;
+    private Button m_Button;  //TODO i dontt think we need this anymore, or at least i dont know what it is for
+    private Button m_resetButton;
     private Button m_executionButton;
     ScoringState state;
 
@@ -43,13 +45,12 @@ public class CoralHybridScoring extends Command {
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
-    public CoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button button,
-            Button executionButton) {
+    public CoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button button,Button resetButton, Button executionButton) {
         addRequirements(elevator, shooter, chassis, arm);
         m_targetReefPoseIndex = targetReefPoseIndex;
         m_targetReefLevelIndex = targetReefLevelIndex;
         m_Button = button;
-        m_executionButton = executionButton;
+        m_resetButton = resetButton;
     }
 
     @Override
@@ -110,7 +111,7 @@ public class CoralHybridScoring extends Command {
         chassis.autoMoveToPose(pushPose);
 
         // When in position, transition to scoring
-        if (chassis.isAtPose(pushPose) && driverController.getButton(m_executionButton)) {
+        if (chassis.isAtPose(pushPose) && !driverController.getButton(m_resetButton) && driverController.getButton(m_executionButton)) {
             state = ScoringState.SCORING;
             SmartDashboard.putString("CORAL hybrid Scoring State", "PUSHING complete, moving to SCORING");
         }
@@ -160,6 +161,18 @@ public class CoralHybridScoring extends Command {
         arm.stop();
         elevator.setHeight(0);
         shooter.stop();
+    }
+
+    
+        public CoralHybridScoring withSelection(Selection selection){
+        switch (selection) {
+            case LEFT:
+                return new CoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 1, m_targetReefLevelIndex, m_Button,m_resetButton,m_executionButton);
+            case RIGHT:
+                return new CoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 2, m_targetReefLevelIndex, m_Button,m_resetButton,m_executionButton);
+            default:
+                return null;
+        }
     }
 
 }

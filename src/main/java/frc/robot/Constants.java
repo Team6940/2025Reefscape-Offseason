@@ -77,11 +77,12 @@ public class Constants {
         public static final double kS = 0.15;
 
         public static final double ShooterShootRPSs[] = new double[] {
-                0.,
+                0., //These four are for coral scoring
                 15.5,
                 12.5,
                 12.5,
                 18.,
+                114514. //This is for the algae scoring
         };
 
         public static final InvertedValue ShooterInverted = InvertedValue.Clockwise_Positive;
@@ -270,6 +271,8 @@ public class Constants {
 
         public static double armAlgaeStowPosition;
 
+        public static double pushDistance;
+
         public static Pose2d rotateAroundCenter(Pose2d pose, Translation2d centre, Rotation2d rotation) {
             return new Pose2d(pose.getTranslation().rotateAround(centre, rotation), pose.getRotation().plus(rotation));
         }
@@ -293,6 +296,9 @@ public class Constants {
 
         public static final int BlueFirstChuteTranslationX = 0;
 
+        public static final double BargeHeight = 114514.; //TODO: this is a placeholder value, should be replaced with the actual barge height
+
+        public static final double BargeAngle = 1919810.; //TODO: this is a placeholder value, should be replaced with the actual barge angle
         public static final double elevatorAlgaeIntakeHeight[]={
             0,
             0
