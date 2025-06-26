@@ -89,10 +89,9 @@ public class CoralHybridScoring extends Command {
 
     public void align() {
         SmartDashboard.putString("CORAL Hhbrid Scoring State", "ALIGNING");
-        elevator.setHeight(targetHeight);
-        arm.setPosition(targetAngle);
         if (arm.getArmPosition() > targetAngle - 0.1 && chassis.isAtTargetPose()) {
-
+            elevator.setHeight(targetHeight);
+            arm.setPosition(targetAngle);
             state = ScoringState.PUSHING;
             SmartDashboard.putString("CORAL hybrid Scoring State", "ALIGNING complete, moving to PUSHING");
         }
