@@ -2,10 +2,13 @@ package frc.robot.subsystems.Climber;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Library.MUtils;
+import frc.robot.commands.Rumble;
 
 public class ClimberSubsystem extends SubsystemBase{
     public static ClimberSubsystem m_Instance = null;
@@ -31,8 +34,13 @@ public class ClimberSubsystem extends SubsystemBase{
     };
 
     public void lockMotorSetRPS(double rps){
+        double current = inputs.lockMotorCurrentAmps;
         targetLockRPS = rps;
         io.setLockRPS(targetLockRPS); //TODO: Implement lock motor control
+        if(current<ShooterConstants.ShooterFreeSpinCurrentThreshold){
+            new Rumble(RumbleType.kLeftRumble, 1).withTimeout(0.2).schedule(); //TODO rumble type
+            io.setLockRPS(0.0); //TODO: stop lock motor
+        }
     }
 
     public void setPosition(double rotation){
