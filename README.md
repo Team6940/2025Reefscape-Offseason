@@ -1,2 +1,4 @@
 # 2025Reefscape-Offseason
-code for 2025 Reefscape Offseason
+Code for 2025 Reefscape Offseason
+ATTENTION: All Collaborators please create your OWN BRANCHES.
+If you want to update your changes in branch 'main', create a PULL REQUEST.

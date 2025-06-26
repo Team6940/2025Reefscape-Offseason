@@ -53,7 +53,7 @@ public class AlgaeHybridIntake extends Command {
     @Override
     public void initialize() {
         state = IntakeState.ALIGNING;
-        targetPose = chassis.generateAlgaePose(m_targetReefFaceIndex);
+        targetPose = chassis.generateAlgaeIntakePose(m_targetReefFaceIndex);
         targetHeight = FieldConstants.elevatorAlgaeIntakeHeight[m_targetAlgaeHeightIndex];
         targetAngle = FieldConstants.armIntakePosition[m_targetAlgaeHeightIndex];
         elevator.setHeight(0);

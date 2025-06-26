@@ -104,8 +104,8 @@ public class ShooterSubsystem extends SubsystemBase{
 
     }
 
-    public double getShootRPS(int level){
-        return ShooterConstants.ShooterShootRPSs[level];
+    public double getShootRPS(){
+        return inputs.shooterVelocityRPS;
     }
 
 }

@@ -86,7 +86,7 @@ public class SuperStructure extends SubsystemBase{
     }
 
     public Command getHybridAlgaeCommand(Button resetButton,Button executionButton) {
-        return new AlgaeHybridScoring(chassis.generateReefIndex(), resetButton, executionButton);
+        return new AlgaeHybridScoring(executionButton);
     }
 
 
