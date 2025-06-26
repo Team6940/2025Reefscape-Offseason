@@ -5,6 +5,7 @@ import static edu.wpi.first.units.Units.*;
 import java.util.function.Supplier;
 
 import org.littletonrobotics.junction.Logger;
+import org.opencv.core.RotatedRect;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
@@ -585,7 +586,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return res;
     }
 
-    public Pose2d generateAlgaePose(int index){
+    public Pose2d generateAlgaeIntakePose(int index){
         Translation2d t = FieldConstants.BlueReefCenterPos;
         Translation2d dt = FieldConstants.DAlgaeTranslation6;
         t=t.plus(dt);//translation here
@@ -605,6 +606,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             res = FieldConstants.rotateAroundCenter(res, FieldConstants.FieldCenter, Rotation2d.k180deg);
         }//position shifts based on red&blue
 
+        return res;
+    }
+
+    public Pose2d generateAlgaeScorePose(Pose2d currentPose){
+        Translation2d t = new Translation2d(FieldConstants.AlgaeScoreTransalationX,currentPose.getY());
+        Pose2d res = new Pose2d(t,new Rotation2d(Math.PI));//todo, decide which direction the robot is facing.
         return res;
     }
 

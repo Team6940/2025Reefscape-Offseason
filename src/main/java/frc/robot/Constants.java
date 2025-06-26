@@ -102,6 +102,8 @@ public class Constants {
 
         public static final double AlgaeIntakingRPS = 0;
 
+        public static final double AlgaeScoringRPS = 0;
+
     }
 
     public static final class ArmConstants {
@@ -279,6 +281,8 @@ public class Constants {
         public static double armAlgaeStowPosition;
 
         public static double pushDistance;
+        
+        public static double AlgaeScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after aligning to the algae pose
 
         public static Pose2d rotateAroundCenter(Pose2d pose, Translation2d centre, Rotation2d rotation) {
             return new Pose2d(pose.getTranslation().rotateAround(centre, rotation), pose.getRotation().plus(rotation));
@@ -352,6 +356,10 @@ public class Constants {
             new Pose2d(0, 0, Rotation2d.k180deg),
             new Pose2d(0, 0, Rotation2d.k180deg)
         };
+
+        public static final double AlgaeScoreTransalationX = 0;
+
+        public static final double AlgaeScoreDistanceThreshold = 0;
     }
 
     public static void initializeConstants() {

@@ -45,7 +45,7 @@ public class ArmSubsystem extends SubsystemBase {
         io.setPosition(targetPosition);
     }
 
-    boolean IsAtTargetPositon() {
+    public boolean isAtTargetPositon() {
         return MathUtil.isNear(targetPosition, inputs.ArmPositionRadians, ArmConstants.ArmPositionToleranceRadians);
     }
 
