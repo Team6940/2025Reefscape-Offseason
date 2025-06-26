@@ -36,7 +36,7 @@ public class SemiAutoClimbCommand extends Command{
     Pose2d poseToPush = new Pose2d();
     Pose2d poseToRetreat = new Pose2d();
 
-    public SemiAutoClimbCommand(Button toggleButton, Button executionButton) {
+    public SemiAutoClimbCommand(Button toggleButton,Button executionButton) {
         this.toggleButton = toggleButton;
         this.executionButton = executionButton;
         climber = ClimberSubsystem.getInstance();
@@ -99,9 +99,8 @@ public class SemiAutoClimbCommand extends Command{
     private void push(){
         chassis.hybridMoveToPose(poseToPush, controller, 0.15, 15.); //TODO need to change position
         climber.lockMotorSetRPS(ClimberConstants.LockMotorRPS);
-        if(!controller.getButton(executionButton)){  //TODO add currentThreshold if needed    //TODO add rumble
+        if(controller.getButton(executionButton)){
             state = ClimbState.RETRACTING;
-            climber.lockMotorSetRPS(0.0); //TODO: stop lock motor
         };
     }
 
