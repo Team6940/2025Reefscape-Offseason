@@ -14,6 +14,7 @@ public class ClimberSubsystem extends SubsystemBase{
     private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
 
     private double targetRotation = 0.;
+    private double targetLockRPS = 0.;
 
     public static ClimberSubsystem getInstance() {
         return m_Instance == null ? m_Instance = new ClimberSubsystem() : m_Instance;
@@ -29,6 +30,11 @@ public class ClimberSubsystem extends SubsystemBase{
         }
     };
 
+    public void lockMotorSetRPS(double rps){
+        targetLockRPS = rps;
+        io.setLockRPS(targetLockRPS); //TODO: Implement lock motor control
+    }
+
     public void setPosition(double rotation){
         rotation = MUtils.numberLimit(ClimberConstants.ClimberMinPos, ClimberConstants.ClimberMaxPos, rotation);
         targetRotation = rotation;
@@ -36,7 +42,7 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     public boolean isAtTargetRotation(){
-        return Math.abs(targetRotation - inputs.climberPositionRotations) < ClimberConstants.ClimberRotationTolerence;
+        return Math.abs(targetRotation - inputs.liftMotorPositionRotations) < ClimberConstants.ClimberRotationTolerence;
     }
 
     public void resetPosition(double rotation){
@@ -44,11 +50,11 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     public double getRotation(){
-        return inputs.climberPositionRotations;
+        return inputs.liftMotorPositionRotations;
     }
 
     public double getVelocity(){
-        return inputs.climberVelocityRPS;
+        return inputs.liftMotorVelocityRPS;
     }
 
     public void processLog(){

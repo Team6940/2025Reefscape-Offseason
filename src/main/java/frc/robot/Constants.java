@@ -222,8 +222,11 @@ public class Constants {
     public static final class ClimberConstants {
 
         public static final InvertedValue ClimberInverted = InvertedValue.CounterClockwise_Positive;
+        public static final InvertedValue LockMotorInverted = InvertedValue.CounterClockwise_Positive;
 
-        public static final int ClimberMotorID = 17;
+        public static final int ClimberliftMotorID = 17; //TODO
+        public static final int ClimberlockMotorID = 18; //TODO
+
         public static final double ClimberkP = 14.;
         public static final double ClimberkI = 0.;
         public static final double ClimberkD = 0.;
@@ -231,8 +234,8 @@ public class Constants {
         public static final double ClimberRatio = 45.;
         public static final double ClimberkG = 0;
         public static final double ClimberkV = 0;
-        public static final double Acceleration = 1.8;
-        public static final double MaxVelocity = 1.8;
+        public static final double ClimberAcceleration = 1.8;
+        public static final double ClimberMaxVelocity = 1.8;
 
         public static final double ClimberRotationTolerence = 0.05;
 
@@ -241,6 +244,10 @@ public class Constants {
         public static final double ClimberMinPos = -0.875;
         public static final double ClimberExtensionPos = 2.74;
         public static final double ClimberRetractionPos = -0.87;
+
+
+        public static final double LockMotorRPS = 114514.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
+        public static final double LockMotorCurrentThreshold = 0;
 
     }
 
