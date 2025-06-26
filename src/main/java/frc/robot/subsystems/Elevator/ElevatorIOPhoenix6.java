@@ -30,7 +30,7 @@ public class ElevatorIOPhoenix6 implements ElevatorIO{
         configs.Voltage.PeakForwardVoltage = 12.;
         configs.Voltage.PeakReverseVoltage = -6.5;          //This can slow down its going down, reducing impact on the base tube.
         configs.Feedback.SensorToMechanismRatio = ElevatorConstants.MotorToRollerRatio;
-        configs.MotorOutput.DutyCycleNeutralDeadband = 0.02;
+        configs.MotorOutput.DutyCycleNeutralDeadband = 0.02; 
 
         configs.Slot0.kG = ElevatorConstants.kG;
         configs.Slot0.kS = ElevatorConstants.kS;
