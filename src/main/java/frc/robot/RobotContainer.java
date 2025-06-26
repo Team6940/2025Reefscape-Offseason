@@ -31,6 +31,7 @@ import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.commands.ToggleElevatorTest;
+import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.subsystems.Climber.ClimberSubsystem;
 
 public class RobotContainer {
@@ -157,6 +158,8 @@ public class RobotContainer {
         operatorController.povDown().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefLevelIndex(-1)));
 
         ///THOSE ARE FOR TESTING.
+        driverController.leftTrigger().whileTrue(new ToggleIntake(grArm, intaker)); 
+        
         driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[1]));
         driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[2]));
         driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[3]));

@@ -50,9 +50,9 @@ public class ArmIOPhoenix6 implements ArmIO {
 
     @Override
     public void setPosition(double position) {
-        if (position == 0) {
-            motor.stopMotor();
-        }
+        // if (position == 0) {
+        //     motor.stopMotor();
+        // }
         motor.setControl(m_request.withPosition(position));
     }
 
