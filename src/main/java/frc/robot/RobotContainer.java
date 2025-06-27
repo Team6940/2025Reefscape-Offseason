@@ -110,35 +110,36 @@ public class RobotContainer {
          *  
          * povDown: (Auto) ReefLevelIndex - 1  ///
          * povUP: (Auto) ReefLevelIndex + 1    ///
-         * povLeft: (Auto) ReefPoseIndex + 1    ///
-         * povRight: (Auto) ReefPoseIndex - 1   ///
+         * povLeft: (Auto) ReefPoseIndex - 1    ///
+         * povRight: (Auto) ReefPoseIndex + 1   ///
          */
 
         /* Operator Controller: 
-         * povUp: Teleop Select L2
-         * povDown: Teleop Select L1
-         * povLeft: Teleop ReefSideIndex - 1
-         * povRight: Teleop ReefSideIndex + 1
+         * povUp: Teleop Select 'Upper' Face of the Reef
+         * povDown: Teleop Select 'Lower' Face of the Reef
+         * povLeft: Teleop Select Left Hand Side Face
+         * povRight: Teleop Select Right Hand Side Face
          * 
-         * **   The 'SideIndex' refers to the different 'sides' of the hexogonal reef,
+         * **   The 'FaceIndex' refers to the different 'sides' of the hexogonal reef,
          * **   which are numbered 0-5, going clockwise,
-         * **   e.g, ReefPoseIndex 1,2 -> SideIndex 0
-         * **                      3,4 -> SideIndex 1
-         * **                      5,6 -> SideIndex 2
-         * **                      7,8 -> SideIndex 3
-         * **                     9,10 -> SideIndex 4
-         * **                    11,12 -> SideIndex 5     TODO needed here, decide whether it's 0-5 or 1-6
+         * **   e.g, ReefPoseIndex 1,2 -> FaceIndex 0
+         * **                      3,4 -> FaceIndex 1
+         * **                      5,6 -> FaceIndex 2
+         * **                      7,8 -> FaceIndex 3
+         * **                     9,10 -> FaceIndex 4
+         * **                    11,12 -> FaceIndex 5     TODO needed here, decide whether it's 0-5 or 1-6
          * 
-         * X: Select Left            
-         * B: Select Right
+         * LB: Select Left          
+         * RB: Select Right
          * 
          * ** The left and right is decided by the following method,
          * ** imaging facing the 'side' which you are trying to score the coral at,
          * ** the left is the side which is on your left hand side, and the right is the side which is on your right hand side.
          * 
-         * A: Teleop Select L3
+         * A: Teleop Select L1
+         * B: Teleop Select L2
+         * X: Teleop Select L3
          * Y: Teleop Select L4
-         * 
         */
 
 

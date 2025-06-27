@@ -30,7 +30,6 @@ public class CoralHybridScoring extends Command {
     private int m_targetReefPoseIndex;
     private int m_targetReefLevelIndex;
     private Button m_locationButton;
-    private Button m_resetButton;
     private Button m_executionButton;
     ScoringState state;
 
@@ -45,12 +44,10 @@ public class CoralHybridScoring extends Command {
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
-    public CoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button locationButton,Button resetButton, Button executionButton) {
+    public CoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button executionButton) {
         addRequirements(elevator, shooter, chassis, arm);
         m_targetReefPoseIndex = targetReefPoseIndex;
         m_targetReefLevelIndex = targetReefLevelIndex;
-        m_locationButton = locationButton;
-        m_resetButton = resetButton;
     }
 
     @Override
@@ -89,7 +86,7 @@ public class CoralHybridScoring extends Command {
 
     public void align() {
         SmartDashboard.putString("CORAL Hhbrid Scoring State", "ALIGNING");
-        if (arm.getArmPosition() > targetAngle - 0.1 && chassis.isAtTargetPose() && !driverController.getButton(m_resetButton) && driverController.getButton(m_locationButton)) { //TODO
+        if (arm.getArmPosition() > targetAngle - 0.1 && chassis.isAtTargetPose() && driverController.getButton(m_locationButton)) { //TODO
             elevator.setHeight(targetHeight);
             arm.setPosition(targetAngle);
             state = ScoringState.PUSHING;
@@ -110,7 +107,7 @@ public class CoralHybridScoring extends Command {
         chassis.autoMoveToPose(pushPose);
 
         // When in position, transition to scoring
-        if (chassis.isAtPose(pushPose) && !driverController.getButton(m_resetButton) && driverController.getButton(m_executionButton)) {
+        if (chassis.isAtPose(pushPose) && driverController.getButton(m_executionButton)) {
             state = ScoringState.SCORING;
             SmartDashboard.putString("CORAL hybrid Scoring State", "PUSHING complete, moving to SCORING");
         }
@@ -166,9 +163,9 @@ public class CoralHybridScoring extends Command {
         public CoralHybridScoring withSelection(Selection selection){
         switch (selection) {
             case LEFT:
-                return new CoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 1, m_targetReefLevelIndex, m_locationButton,m_resetButton,m_executionButton);
+                return new CoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 1, m_targetReefLevelIndex,m_executionButton);
             case RIGHT:
-                return new CoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 2, m_targetReefLevelIndex, m_locationButton,m_resetButton,m_executionButton);
+                return new CoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 2, m_targetReefLevelIndex,m_executionButton);
             default:
                 return null;
         }
