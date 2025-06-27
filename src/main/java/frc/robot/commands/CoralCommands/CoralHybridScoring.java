@@ -44,10 +44,12 @@ public class CoralHybridScoring extends Command {
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
+
     public CoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button executionButton) {
         addRequirements(elevator, shooter, chassis, arm);
         m_targetReefPoseIndex = targetReefPoseIndex;
         m_targetReefLevelIndex = targetReefLevelIndex;
+
     }
 
     @Override
@@ -166,6 +168,7 @@ public class CoralHybridScoring extends Command {
                 return new CoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 1, m_targetReefLevelIndex,m_executionButton);
             case RIGHT:
                 return new CoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 2, m_targetReefLevelIndex,m_executionButton);
+
             default:
                 return null;
         }
