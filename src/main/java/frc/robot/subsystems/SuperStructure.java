@@ -138,8 +138,8 @@ public class SuperStructure extends SubsystemBase{
         m_targetReefLevelIndex = MUtils.numberLimit(1, 4, m_targetReefLevelIndex + delta);
     }
 
-    public Command getHybridCoralCommand(Button locateButton,Button resetButton,Button executionButton) {
-        return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, locateButton, resetButton,executionButton).withSelection(driverSelection);
+    public Command getHybridCoralCommand(Button locateButton,Button executionButton) {
+        return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, locateButton,executionButton).withSelection(driverSelection);
     }
 
     public Command getHybridAlgaeCommand(Button resetButton,Button executionButton) {
