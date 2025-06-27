@@ -31,7 +31,6 @@ public class ShooterIOPhoenix6 implements ShooterIO{
         config.Slot0.kV = ShooterConstants.kV;
         config.Slot0.kS = ShooterConstants.kS;
 
-
         motor.getConfigurator().apply(config);
     }
 

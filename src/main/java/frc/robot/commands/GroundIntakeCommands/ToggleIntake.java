@@ -22,8 +22,9 @@ public class ToggleIntake extends Command {
     @Override
     public void initialize() {
         grArm.setPosition(GrArmConstants.extendedPosition);
-        intaker.setRPS(IntakerConstants.intakingRPS);
+        intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
     }
+
     @Override
     public void end(boolean interrupted) {
         grArm.setPosition(GrArmConstants.retractedPosition);

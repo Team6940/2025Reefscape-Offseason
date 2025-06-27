@@ -149,15 +149,15 @@ public class RobotContainer {
         driverController.leftStick().toggleOnTrue(new SemiAutoClimbCommand(Button.kLeftStick,Button.kRightStick)); // TODO change configure bindings
 
         /* Bumpers & Triggers */
-        driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralCommand(Button.kRightBumper, Button.kRightBumper))); //TODO change configure bindings kY
-        driverController.rightTrigger().onTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeCommand(Button.kY,Button.kRightBumper))); //TODO change configure bindings kY
-        driverController.leftBumper().whileTrue(new ToggleIntake(grArm, intaker));
-        driverController.leftTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeIntakeCommand(Button.kLeftTrigger))); // TODO change configure bindings
-
-        driverController.leftBumper().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // TODO seed field-centric heading
+        driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralCommand(Button.kRightBumper)));
+        driverController.rightTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeCommand(Button.kRightBumper)));
+        driverController.leftBumper().toggleOnTrue(new ToggleIntake(grArm, intaker));
+        driverController.leftBumper().toggleOnFalse(superStructure.runOnce(() -> superStructure.getHybridCoralIntakeCommand()));
+        driverController.leftTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeIntakeCommand(Button.kLeftTrigger)));
 
         /* Buttons */
         driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));
+        // driverController.x().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // TODO seed field-centric heading
         driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
         driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
         driverController.b().whileTrue(chassis.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
