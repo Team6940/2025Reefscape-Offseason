@@ -32,8 +32,8 @@ public class Constants {
         public static final int IntakerMotorID = 16;
 
         public static final double kP = 0.2;
-        public static final double kI = 0;
-        public static final double kD = 0;
+        public static final double kI = 0.;
+        public static final double kD = 0.;
         public static final double kV = 0.22;
         public static final double kS = 0.15;
 
@@ -42,7 +42,7 @@ public class Constants {
 
         public static final double IntakerVelocityToleranceRPS = 0;
 
-        public static double intakingRPS;
+        public static double intakingRPS= 0.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
     }
 
