@@ -9,25 +9,24 @@ import java.util.Set;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-// import frc.robot.commands.AlgaeRemovalCommand;
-// import frc.robot.commands.CoralCommands.HybridScoring;
+import frc.robot.commands.CoralCommands.CoralHybridScoring;
 // import frc.robot.commands.IntakeCommands.CentreCoralPos;
-// import frc.robot.commands.IntakeCommands.HybridCoralIn;
+import frc.robot.commands.GroundIntakeCommands.ToggleIntake; //TODO
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
-// import frc.robot.subsystems.Elevator.ElevatorSubsystem;
-// import frc.robot.subsystems.Shooter.ShooterSubsystem;
+import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 
 public class Down3Corals extends SequentialCommandGroup {
     //TODO: it's possible to use HybridCommands directly instead of FollowPath in order to save time
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
-    // ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
-    // ShooterSubsystem shooter = ShooterSubsystem.getInstance();
+    ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
+    ShooterSubsystem shooter = ShooterSubsystem.getInstance();
 
     public Down3Corals() {
-    //     if(DriverStation.getAlliance().get() == Alliance.Blue){
-    //         addCommands(new InstantCommand(() -> chassis.resetPose(chassis.generatePPPath("RBL-10").getStartingHolonomicPose().get())));
-    //     }
+        // if(DriverStation.getAlliance().get() == Alliance.Blue){
+        //     addCommands(new InstantCommand(() -> chassis.resetPose(chassis.generatePPPath("RBL-10").getStartingHolonomicPose().get())));
+        // }
     //     else{
     //         addCommands(new InstantCommand(() -> chassis.resetPose(chassis.generatePPPath("RBL-10").flipPath().getStartingHolonomicPose().get())));
     //     }

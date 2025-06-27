@@ -82,7 +82,7 @@ public class Constants {
                 12.5,
                 12.5,
                 18.,
-                114514. //This is for the algae scoring
+                20. //This is for the algae scoring
         };
 
         public static final InvertedValue ShooterInverted = InvertedValue.Clockwise_Positive;
@@ -248,8 +248,8 @@ public class Constants {
         public static final double ClimberRetractionPos = -0.87;
 
 
-        public static final double LockMotorRPS = 114514.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
-        public static final double LockMotorCurrentThreshold = 0;
+        public static final double LockMotorRPS = 1.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
+        public static final double LockMotorCurrentThreshold = 0.;
 
     }
 
@@ -307,12 +307,13 @@ public class Constants {
 
         public static final int BlueFirstChuteTranslationX = 0;
 
-        public static final double BargeHeight = 114514.; //TODO: this is a placeholder value, should be replaced with the actual barge height
+        public static final double BargeHeight = 20.; //TODO: this is a placeholder value, should be replaced with the actual barge height
 
-        public static final double BargeAngle = 1919810.; //TODO: this is a placeholder value, should be replaced with the actual barge angle
-        public static final double elevatorAlgaeIntakeHeight[]={
-            0,
-            0
+        public static final double BargeAngle = 4.; //TODO: this is a placeholder value, should be replaced with the actual barge angle
+        
+        public static final double elevatorAlgaeIntakeHeight[]={ //TODO tuning
+            10.,
+            20.
         };
 
         public static final double elevatorHeights[] = {

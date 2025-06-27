@@ -22,8 +22,8 @@ public class SemiAutoClimbCommand extends Command{
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController controller = new ImprovedCommandXboxController(0);
 
-    Button toggleButton;
-    Button executionButton;
+    Button toggleButton; //toggle button also act as a release button (toggle 2nd)
+    Button retractButton;
 
     Translation2d pushTransform = new Translation2d(
         DriverStation.getAlliance().get() == Alliance.Blue ? FieldConstants.ClimbPushDis : -FieldConstants.ClimbPushDis,
@@ -36,9 +36,9 @@ public class SemiAutoClimbCommand extends Command{
     Pose2d poseToPush = new Pose2d();
     Pose2d poseToRetreat = new Pose2d();
 
-    public SemiAutoClimbCommand(Button toggleButton,Button executionButton) {
+    public SemiAutoClimbCommand(Button toggleButton,Button retractButton) {
         this.toggleButton = toggleButton;
-        this.executionButton = executionButton;
+        this.retractButton = retractButton;
         climber = ClimberSubsystem.getInstance();
         addRequirements(climber);
         addRequirements(chassis);
@@ -81,7 +81,7 @@ public class SemiAutoClimbCommand extends Command{
     private void extend() {
         climber.setPosition(ClimberConstants.ClimberExtensionPos);
         chassis.driveFieldCentric(controller, DriveConstants.defaultDrivePower);
-        if(climber.isAtTargetRotation() && controller.getButton(executionButton)){
+        if(climber.isAtTargetRotation() && controller.getButton(toggleButton)){
         // pushTransform=pushTransform.rotateBy(Rotation2d.k180deg);//2025.3.14 rotatethe push and pull transform
         // retreatTransform=pushTransform.rotateBy(Rotation2d.k180deg);
             poseToPush = new Pose2d(
@@ -99,7 +99,7 @@ public class SemiAutoClimbCommand extends Command{
     private void push(){
         chassis.hybridMoveToPose(poseToPush, controller, 0.15, 15.); //TODO need to change position
         climber.lockMotorSetRPS(ClimberConstants.LockMotorRPS);
-        if(controller.getButton(executionButton)){
+        if( controller.getButton(retractButton) ){ //if retract button is pressed, retract
             state = ClimbState.RETRACTING;
         };
     }
@@ -115,10 +115,11 @@ public class SemiAutoClimbCommand extends Command{
     }
 
     @Override
-    public void end(boolean interrupted) {          //this shouldn't be called if u climbed successfully
+    public void end(boolean interrupted) {          //this shouldn't be called if climbed successfully
         chassis.brake();
         // climber.setPosition(ClimberConstants.ClimberExtensionPos);
         climber.setPosition(ClimberConstants.ClimberDefaultPos);
+        climber.lockMotorSetRPS(0.0); //TODO: stop lock motor
         // elevator.setHeight(0);
     }
 
