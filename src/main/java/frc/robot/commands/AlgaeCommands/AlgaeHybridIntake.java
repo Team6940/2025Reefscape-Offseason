@@ -118,7 +118,8 @@ public class AlgaeHybridIntake extends Command {
         if (chassis.isAtPose(targetPose)) {
             arm.setPosition(FieldConstants.armAlgaeStowPosition);
             elevator.setHeight(0);
-            shooter.stop();
+            // shooter.stop();
+            shooter.setRPS(ShooterConstants.HoldingAlgaeRPS); //get hold of the coral in case the robot throws it out accidently
             state = IntakeState.END;
         }
     }

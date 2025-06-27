@@ -42,7 +42,10 @@ public class Constants {
 
         public static final double IntakerVelocityToleranceRPS = 0;
 
-        public static double intakingRPS= 0.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
+        public static final double IntakerHoldingCurrentThreshold = 0.;
+        public static final double IntakerFreeSpinCurrentThreshold = 0.;
+
+        public static final double IntakerIntakingRPS= 0.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
     }
 
@@ -90,19 +93,23 @@ public class Constants {
 
         public static final double ShooterSpeedTolerence = 0;
 
-        public static final double shooterScoringRPS = 0;
+        public static final double CoralIntakingRPS = -10.;
 
-        public static final double IntakingRPS = 0;
+        public static final double CoralScoringRPS = 18.;
+
+        public static final double AlgaeIntakingRPS = -10.;
+
+        public static final double AlgaeScoringRPS = 19.;
+
+        public static final double HoldingCoralRPS = 5.;
+
+        public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
         public static final double ShooterFreeSpinCurrentThreshold = 0;
 
         public static final double ShooterReadyCurrentThreshold = 0; //FREE SPINNING
 
         public static final double ShooterGrabbingCurrentThreshold = 0; //GOT HOLD OF STUFF //TODO: should add 2 thresholds for the coral and the algae
-
-        public static final double AlgaeIntakingRPS = 0;
-
-        public static final double AlgaeScoringRPS = 0;
 
     }
 
@@ -138,6 +145,8 @@ public class Constants {
         public static final double GrArmRatio = 50. / 24.; // LCY: 50. :24. //GY: 20. : 10.
         public static final double MaxVelocity = 0.5; // RPS
         public static final double Acceleration = 0.5; // RPS^2
+
+
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees

@@ -2,15 +2,27 @@ package frc.robot.subsystems.Intaker;
 
 import org.littletonrobotics.junction.Logger;
 
+import com.ctre.phoenix6.swerve.SwerveRequest.Idle;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 import frc.robot.Constants.IntakerConstants;
+import frc.robot.Constants.ShooterConstants;
 
 public class IntakerSubsystem extends SubsystemBase{
     public static IntakerSubsystem m_instance;
     public static IntakerSubsystem getInstance() {
         return m_instance == null? m_instance = new IntakerSubsystem() : m_instance;
+    }
+
+    private IntakerState state;
+
+    public enum IntakerState {
+        IDLE,
+        READY,
+        GRABBING
     }
 
     private final IntakerIO io;
@@ -25,6 +37,27 @@ public class IntakerSubsystem extends SubsystemBase{
         else{
             //TODO: Implement simulation code here
             io = new IntakerIOPhoenix6();
+        }
+    }
+
+    public IntakerState getIntakerState() {
+        return state;
+    }
+
+    public boolean isReady(){
+        return getIntakerState() == IntakerState.READY;
+    }
+
+        public void intakerStateUpdate(){
+        double current = inputs.motorCurrentAmps;
+        if(current<IntakerConstants.IntakerFreeSpinCurrentThreshold){
+            state=IntakerState.IDLE;
+        }
+        else if(current<IntakerConstants.IntakerHoldingCurrentThreshold){
+            state=IntakerState.READY;
+        }
+        else{
+            state=IntakerState.GRABBING;
         }
     }
 

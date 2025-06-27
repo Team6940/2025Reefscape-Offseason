@@ -52,7 +52,7 @@ public class CoralAlignSequence extends Command {
     }
 
     private void align() {
-        shooter.setRPS(ShooterConstants.IntakingRPS);
+        shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
         indexer.setRPS(IndexerConstants.IntakingRPS);
         if (indexer.getIndexerState() == IndexerState.FREE_SPINNING) {
@@ -64,6 +64,7 @@ public class CoralAlignSequence extends Command {
         elevator.zeroHeight();
         if (shooter.getShooterState() == ShooterState.READY) {
             state = IntakeState.END;
+            shooter.setRPS(ShooterConstants.HoldingCoralRPS); //get hold of the coral in case the robot throws it out accidently
         }
 
     }

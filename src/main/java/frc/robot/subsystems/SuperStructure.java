@@ -10,9 +10,13 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Climber.ClimberSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
+import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
+import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
+import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,10 +42,12 @@ public class SuperStructure extends SubsystemBase{
 
     /** Subsystems */
     private CommandSwerveDrivetrain chassis;
-    private ArmSubsystem groundIntaker; 
+    private ArmSubsystem Arm; 
     private ShooterSubsystem shooter;
     private ElevatorSubsystem elevator;
     private ClimberSubsystem climber; 
+    private GrArmSubsystem grArm = GrArmSubsystem.getInstance();
+    private IntakerSubsystem intaker = IntakerSubsystem.getInstance();
     
 
     /** Joysticks */
@@ -58,10 +64,12 @@ public class SuperStructure extends SubsystemBase{
 
     public SuperStructure() {
         chassis = CommandSwerveDrivetrain.getInstance();
-        groundIntaker = ArmSubsystem.getInstance();
+        Arm= ArmSubsystem.getInstance();
         shooter = ShooterSubsystem.getInstance();
         elevator = ElevatorSubsystem.getInstance();
         climber = ClimberSubsystem.getInstance();
+        grArm = GrArmSubsystem.getInstance();
+        intaker = IntakerSubsystem.getInstance(); //TODO: Change to GroundIntakerSubsystem if needed
         
         driverController = new ImprovedCommandXboxController(0);
         operatorController = new ImprovedCommandXboxController(1);
@@ -138,16 +146,23 @@ public class SuperStructure extends SubsystemBase{
         m_targetReefLevelIndex = MUtils.numberLimit(1, 4, m_targetReefLevelIndex + delta);
     }
 
-    public Command getHybridCoralCommand(Button locateButton,Button executionButton) {
-        return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, locateButton,executionButton).withSelection(driverSelection);
+    public Command getHybridCoralCommand(Button executionButton) {
+        return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton).withSelection(driverSelection);
     }
 
-    public Command getHybridAlgaeCommand(Button resetButton,Button executionButton) {
+    public Command getHybridAlgaeCommand(Button executionButton) {
         return new AlgaeHybridScoring(executionButton);
     }
 
     public Command getHybridAlgaeIntakeCommand(Button executionButton) {
         return new AlgaeHybridIntake(m_targetReefPoseIndex, m_targetALgaeIntakeLevelIndex, executionButton); //TODO
+    }
+
+    public Command getHybridCoralIntakeCommand() {
+        if(intaker.isReady()){
+            return new CoralAlignSequence();
+        }
+        return null;
     }
 
 
@@ -157,3 +172,5 @@ public class SuperStructure extends SubsystemBase{
     }
 
 }
+
+
