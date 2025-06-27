@@ -37,26 +37,26 @@ public class Depart extends SequentialCommandGroup{
                 DriverStation.reportWarning("Invalid startP1", true);
                 return;
         }
-        pathName = mod1 + "B" + mod2 + "_D";
-        // if(DriverStation.getAlliance().get() == Alliance.Blue){
-        //     addCommands(
-        //         new InstantCommand(() ->
-        //             RobotContainer.chassis.resetPose(
-        //                 // RobotContainer.chassis.generateChoreoPath(pathName).getStartingHolonomicPose().get()
-        //             )
-        //         )
-        //     );
-        // } else {
-        //     addCommands(
-        //         new InstantCommand(() ->
-        //             RobotContainer.chassis.resetPose(
-        //                 RobotContainer.chassis.generateChoreoPath(pathName).flipPath().getStartingHolonomicPose().get()
-        //             )
-        //         )
-        //     );
-        // }
+        pathName = mod1 + "B" + mod2 + "_D"; //TODO
+        if(DriverStation.getAlliance().get() == Alliance.Blue){
+            addCommands(
+                new InstantCommand(() ->
+                    RobotContainer.chassis.resetPose(
+                        RobotContainer.chassis.generateChoreoPath(pathName).getStartingHolonomicPose().get()
+                    )
+                )
+            );
+        } else {
+            addCommands(
+                new InstantCommand(() ->
+                    RobotContainer.chassis.resetPose(
+                        RobotContainer.chassis.generateChoreoPath(pathName).flipPath().getStartingHolonomicPose().get()
+                    )
+                )
+            );
+        }
 
-        // addCommands(RobotContainer.chassis.followChoreoPath(pathName));
+        addCommands(RobotContainer.chassis.followChoreoPath(pathName));
 
     }
 }
