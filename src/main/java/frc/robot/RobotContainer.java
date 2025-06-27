@@ -2,6 +2,7 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.io.ObjectInputStream.GetField;
 import java.util.Set;
 
 // import javax.print.StreamPrintService;
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants.DriveConstants;
-
+import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.ImprovedCommandXboxController.*;
 
@@ -31,6 +32,8 @@ import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.commands.ToggleElevatorTest;
+import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
+import frc.robot.commands.ClimbCommands.SemiAutoClimbCommand;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.subsystems.Climber.ClimberSubsystem;
 
@@ -64,8 +67,9 @@ public class RobotContainer {
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * driveDeadband).withRotationalDeadband(MaxAngularRate * rotateDeadband)
-            .withDriveRequestType(DriveRequestType.Velocity); // Use open-loop control for drive motors
-    private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+            .withDriveRequestType(DriveRequestType.Velocity); // Use open-loop control for drive 
+            
+    // private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
 
@@ -78,28 +82,36 @@ public class RobotContainer {
         /* DEFAULT COMMANDS */  // TODO
         chassis.registerTelemetry(logger::telemeterize);
 
+        chassis.setDefaultCommand(
+            // chassis will execute this command periodically
+            chassis.applyRequest(() -> drive
+                    .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.)    //TODO: change speed here
+                    .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.)  //TODO: change speed here
+                    .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.)//TODO: change speed here
+            ));
+
         /**
          * Driver Controller:
          * Left Stick: Translation
          * Right Stick: Rotation
          * 
          * Left bumper: Hybrid Intake (deploy the ground intake and stop after releasing the bumper)
-         * Left trigger: Algae Intake
-         * Right Bumper: Hybrid Scoring
-         * Right Trigger: Algae Scoring
+         * Left trigger: Algae Intake   ///
+         * Right Bumper: Hybrid Scoring   ///
+         * Right Trigger: Algae Scoring   ///
          * 
-         * Left Stick Pressed: Extend Climber & Climb Action
-         * Right Stick Pressed: Retract Climber
+         * Left Stick Pressed: Extend Climber (toggle command) & Climb Release (press again)   ///
+         * Right Stick Pressed: Retract Climber   ///
          * 
-         * X: Reset Gyro
-         * Y: System Initialize (Reset All Subsystems)
-         * A: (Auto) Confirm Coral Scoring Position Selection
-         * B: Drive To Net Scoring Point
+         * X: Reset Gyro   ///
+         * Y: System Initialize (Reset All Subsystems)   ///TODO
+         * A: (Auto) Confirm Coral Scoring Position Selection   
+         * B: Drive To Net Scoring Point   ///(written in command)
          *  
-         * povDown: (Auto) ReefLevelIndex - 1
-         * povUP: (Auto) ReefLevelIndex + 1
-         * povLeft: (Auto) ReefPoseIndex + 1    
-         * povRight: (Auto) ReefPoseIndex - 1
+         * povDown: (Auto) ReefLevelIndex - 1  ///
+         * povUP: (Auto) ReefLevelIndex + 1    ///
+         * povLeft: (Auto) ReefPoseIndex + 1    ///
+         * povRight: (Auto) ReefPoseIndex - 1   ///
          */
 
         /* Operator Controller: 
@@ -129,33 +141,31 @@ public class RobotContainer {
          * 
         */
 
+
         /* ---------------------------------------- DRIVER CONTROLLER ----------------------------------------*/
-        /* Stick */  
+        /* Sticks */  
         // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
-        chassis.setDefaultCommand(
-                // chassis will execute this command periodically
-                chassis.applyRequest(() -> drive
-                        .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.)    //TODO: change speed here
-                        .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.)  //TODO: change speed here
-                        .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.)//TODO: change speed here
-                ));
+        driverController.leftStick().toggleOnTrue(new SemiAutoClimbCommand(Button.kLeftStick,Button.kRightStick)); // TODO change configure bindings
 
-        /* Bumpers & Triggers */ // TODO
-        driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralCommand(Button.kB, Button.kY, Button.kRightBumper))); //TODO have to change logic of this command
-        driverController.rightTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeCommand(Button.kY,Button.kRightBumper))); //TODO have to change logic of this command
+        /* Bumpers & Triggers */
+        driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralCommand(Button.kB, Button.kY, Button.kRightBumper))); //TODO change configure bindings kY
+        driverController.rightTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeCommand(Button.kY,Button.kRightBumper))); //TODO change configure bindings kY
+        driverController.leftBumper().whileTrue(new ToggleIntake(grArm, intaker));
+        driverController.leftTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeIntakeCommand(Button.kLeftTrigger))); // TODO change configure bindings
 
-
-        // driverController.leftBumper().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // seed field-centric heading.
+        // driverController.leftBumper().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // TODO seed field-centric heading
 
         /* Buttons */
         driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));
         driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
+        driverController.y().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[0]))); //TODO do we really need this?
         driverController.b().whileTrue(chassis.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
-        driverController.y().whileTrue(new InstantCommand(() -> elevator.setHeight(Constants.FieldConstants.elevatorHeights[0])));
 
         /* Povs */
         operatorController.povUp().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefLevelIndex(1)));
         operatorController.povDown().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefLevelIndex(-1)));
+        operatorController.povLeft().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefPoseIndex(1)));
+        operatorController.povRight().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefPoseIndex(-1)));
 
         ///THOSE ARE FOR TESTING.
         driverController.leftTrigger().whileTrue(new ToggleIntake(grArm, intaker)); 
@@ -165,7 +175,14 @@ public class RobotContainer {
         driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[3]));
         driverController.povDown().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[4]));
 
+
         /* ---------------------------------------- OPERATOR CONTROLLER ----------------------------------------*/
+
+        /* Sticks */
+        /* Bumpers & Triggers */
+        /* Buttons */
+        /* Povs */
+        
     }
 
     public Command getAutonomousCommand() {
