@@ -738,6 +738,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return res % 12 + 1;
     }
 
+    public int generateAlgaeIntakeIndex(){
+        Translation2d t = getFromReefCentreTranslation();
+        if(DriverStation.getAlliance().get() == Alliance.Red){
+            t.rotateBy(new Rotation2d(Math.PI));
+        }
+        double angle = t.getAngle().getDegrees();
+        int res = (int)Math.floor(angle / 60.) + 5;
+        return res % 6 ;
+    }
+
     public enum AutonomousTargetType{
         BARGE,      //Should not be called unless you're returning to barge at teammates' request.
         STATION,

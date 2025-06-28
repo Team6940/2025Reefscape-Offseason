@@ -84,7 +84,7 @@ public class AlgaeHybridScoring extends Command {
         if (chassis.getToPoseDistance(targetPose) < FieldConstants.AlgaeScoreDistanceThreshold) {
             elevator.setHeight(targetHeight);
             arm.setPosition(targetAngle);
-            if (arm.isAtTargetPositon() && elevator.isAtTargetHeight()) {
+            if (arm.isAtTargetPositon() && elevator.isAtTargetHeight()&& driverController.getButton(m_executionButton)) {
                 state = ScoringState.SCORING;
                 SmartDashboard.putString("ALGAE hybrid Scoring State", "ALIGNING complete, moving to PUSHING");
             }
