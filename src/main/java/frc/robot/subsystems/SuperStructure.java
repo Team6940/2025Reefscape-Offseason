@@ -158,7 +158,12 @@ public class SuperStructure extends SubsystemBase{
     }
 
     public Command getHybridCoralScoreCommand(Button executionButton) {
-        return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton).withSelection(driverSelection);
+        if(chassis.getToReefCenterDistance()<=FieldConstants.AutoMaticllyAttachDistanceThreshold){
+            return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton).withSelection(driverSelection);
+        }//If the bot is near the reef, it will automatically attach to the nearest reef 'face'
+        else {
+            return new CoralHybridScoring(m_operatorReefFaceIndex * 2 - (driverSelection == Selection.LEFT ? 1 : 0), m_targetReefLevelIndex, executionButton);
+        }//Otherwise when the distance is too far, it will use the operator's selected reef face
     }
 
     public Command getHybridAlgaeScoreCommand(Button executionButton) {
