@@ -29,7 +29,6 @@ public class CoralHybridScoring extends Command {
 
     private int m_targetReefPoseIndex;
     private int m_targetReefLevelIndex;
-    private Button m_locationButton;
     private Button m_executionButton;
     ScoringState state;
 
@@ -49,7 +48,7 @@ public class CoralHybridScoring extends Command {
         addRequirements(elevator, shooter, chassis, arm);
         m_targetReefPoseIndex = targetReefPoseIndex;
         m_targetReefLevelIndex = targetReefLevelIndex;
-
+        m_executionButton = executionButton;
     }
 
     @Override
@@ -88,7 +87,7 @@ public class CoralHybridScoring extends Command {
 
     public void align() {
         SmartDashboard.putString("CORAL Hybrid Scoring State", "ALIGNING");
-        if (arm.getArmPosition() > targetAngle - 0.1 && chassis.isAtTargetPose() && driverController.getButton(m_locationButton)) { //TODO
+        if (arm.getArmPosition() > targetAngle - 0.1 && chassis.isAtTargetPose() && driverController.getButton(m_executionButton)) { //TODO
             elevator.setHeight(targetHeight);
             arm.setPosition(targetAngle);
             state = ScoringState.PUSHING;
