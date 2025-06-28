@@ -476,6 +476,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return getPose().getTranslation().getDistance(pose.getTranslation());
     }
 
+    public double getToReefCenterDistance(){
+      return getFromReefCentreTranslation().getNorm();
+    }
+
     public double getHybridMoveToposeDistance()
     {
         // return Math.sqrt(m_translationXController.getError()*m_translationXController.getError()+m_translationYController.getError()*m_translationYController.getError());
