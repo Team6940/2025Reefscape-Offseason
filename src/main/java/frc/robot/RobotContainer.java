@@ -24,6 +24,7 @@ import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.ImprovedCommandXboxController.*;
 
 import frc.robot.subsystems.SuperStructure;
+import frc.robot.subsystems.SuperStructure.Selection;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Chassis.TunerConstants;
@@ -132,6 +133,9 @@ public class RobotContainer {
          * LB: Select Left          
          * RB: Select Right
          * 
+         * LT: Lower Algae Intake
+         * RT: Higher Algae Intake
+         * 
          * ** The left and right is decided by the following method,
          * ** imaging facing the 'side' which you are trying to score the coral at,
          * ** the left is the side which is on your left hand side, and the right is the side which is on your right hand side.
@@ -149,14 +153,14 @@ public class RobotContainer {
         driverController.leftStick().toggleOnTrue(new SemiAutoClimbCommand(Button.kLeftStick,Button.kRightStick)); // TODO change configure bindings
 
         /* Bumpers & Triggers */
-        driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralCommand(Button.kRightBumper)));
-        driverController.rightTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeCommand(Button.kRightBumper)));
+        driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralScoreCommand(Button.kRightBumper)));
+        driverController.rightTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeScoreCommand(Button.kRightTrigger)));
         driverController.leftBumper().toggleOnTrue(new ToggleIntake(grArm, intaker));
-        driverController.leftBumper().toggleOnFalse(superStructure.runOnce(() -> superStructure.getHybridCoralIntakeCommand()));
+        driverController.leftBumper().toggleOnFalse(superStructure.runOnce(() -> superStructure.getCoralAlignSequenceCommand()));
         driverController.leftTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeIntakeCommand(Button.kLeftTrigger)));
 
         /* Buttons */
-        driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));
+        driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));//This needs to be changed
         // driverController.x().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // TODO seed field-centric heading
         driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
         driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
@@ -168,21 +172,33 @@ public class RobotContainer {
         operatorController.povLeft().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefPoseIndex(1)));
         operatorController.povRight().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefPoseIndex(-1)));
 
-        ///THOSE ARE FOR TESTING.
+        ///THOSE ARE FOR TESTING.-------------------------------------------------------------------------------------------
         driverController.leftTrigger().whileTrue(new ToggleIntake(grArm, intaker)); 
         
         driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[1]));
         driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[2]));
         driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[3]));
         driverController.povDown().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[4]));
-
+        //------------------------------------------------------------------------------------------------------------------
 
         /* ---------------------------------------- OPERATOR CONTROLLER ----------------------------------------*/
 
         /* Sticks */
         /* Bumpers & Triggers */
+        operatorController.leftBumper().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
+        operatorController.rightBumper().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
+        operatorController.leftTrigger().onTrue(superStructure.runOnce(() -> superStructure.setTargetAlgaeIntakeLevelIndex(0)));
+        operatorController.rightTrigger().onTrue(superStructure.runOnce(() -> superStructure.setTargetAlgaeIntakeLevelIndex(1)));
         /* Buttons */
+        operatorController.a().whileTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(1)));
+        operatorController.b().whileTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(2)));
+        operatorController.x().whileTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(3)));
+        operatorController.y().whileTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(4)));
         /* Povs */
+        operatorController.povUp().onTrue(superStructure.runOnce(() -> superStructure.setOperatorReefFaceIndex(6)));
+        operatorController.povDown().onTrue(superStructure.runOnce(() -> superStructure.setOperatorReefFaceIndex(3)));
+        operatorController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.changeOperatorReefFaceIndex(Selection.LEFT)));
+        operatorController.povRight().onTrue(superStructure.runOnce(() -> superStructure.changeOperatorReefFaceIndex(Selection.RIGHT)));
         
     }
 

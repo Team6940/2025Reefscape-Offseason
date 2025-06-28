@@ -86,7 +86,7 @@ public class AlgaeHybridIntake extends Command {
             elevator.setHeight(targetHeight);
             arm.setPosition(targetAngle);
         }
-        if (chassis.isAtTargetPose()) {
+        if (chassis.isAtTargetPose() && driverController.getButton(m_executionButton)) {
             state = IntakeState.PUSHING;
         }
     }
