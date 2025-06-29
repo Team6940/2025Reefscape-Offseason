@@ -370,10 +370,12 @@ public class Constants {
         public static final double AlgaeScoreTransalationX = 0;
 
         public static final double AlgaeScoreDistanceThreshold = 0;
+
+        public static final double AutoMaticllyAttachDistanceThreshold = 0;
     }
 
     public static void initializeConstants() {
-        // for (var p : PoseEstimatorConstants.tAtoDevPoints)
-        // PoseEstimatorConstants.tAtoDev.put(p.getX(), p.getY());
+        for (var p : PoseEstimatorConstants.tAtoDevPoints)
+        PoseEstimatorConstants.tAtoDev.put(p.getX(), p.getY());
     }
 }

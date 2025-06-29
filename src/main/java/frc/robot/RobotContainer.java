@@ -162,8 +162,8 @@ public class RobotContainer {
         /* Buttons */
         driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));//This needs to be changed
         // driverController.x().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // TODO seed field-centric heading
-        driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
-        driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
+        //driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
+        //driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
         driverController.b().whileTrue(chassis.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
 
         /* Povs */
