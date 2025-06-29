@@ -316,13 +316,13 @@ public class Constants {
 
         public static final int BlueFirstChuteTranslationX = 0;
 
-        public static final double BargeHeight = 20.; //TODO: this is a placeholder value, should be replaced with the actual barge height
+        public static final double BargeHeight = 3.; //TODO: this is a placeholder value, should be replaced with the actual barge height
 
         public static final double BargeAngle = 4.; //TODO: this is a placeholder value, should be replaced with the actual barge angle
         
         public static final double elevatorAlgaeIntakeHeight[]={ //TODO tuning
-            10.,
-            20.
+            1.,
+            1.5
         };
 
         public static final double elevatorHeights[] = {

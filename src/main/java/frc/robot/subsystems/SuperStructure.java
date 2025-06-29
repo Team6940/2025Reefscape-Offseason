@@ -76,8 +76,7 @@ public class SuperStructure extends SubsystemBase{
         elevator = ElevatorSubsystem.getInstance();
         climber = ClimberSubsystem.getInstance();
         grArm = GrArmSubsystem.getInstance();
-        intaker = IntakerSubsystem.getInstance(); //TODO: Change to GroundIntakerSubsystem if needed
-        
+        intaker = IntakerSubsystem.getInstance();
         driverController = new ImprovedCommandXboxController(0);
         operatorController = new ImprovedCommandXboxController(1);
 

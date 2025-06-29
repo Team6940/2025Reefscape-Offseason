@@ -6,10 +6,12 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Climber.ClimberSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
@@ -20,6 +22,7 @@ public class SemiAutoClimbCommand extends Command{
     ClimberSubsystem climber;
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
+    ArmSubsystem arm = ArmSubsystem.getInstance();
     ImprovedCommandXboxController controller = new ImprovedCommandXboxController(0);
 
     Button toggleButton; //toggle button also act as a release button (toggle 2nd)
@@ -43,6 +46,7 @@ public class SemiAutoClimbCommand extends Command{
         addRequirements(climber);
         addRequirements(chassis);
         addRequirements(elevator);
+        addRequirements(arm);
     }
 
     public enum ClimbState {
@@ -80,6 +84,7 @@ public class SemiAutoClimbCommand extends Command{
 
     private void extend() {
         climber.setPosition(ClimberConstants.ClimberExtensionPos);
+        arm.setPosition(FieldConstants.armAngles[4]); //for keeping balance while climbing //TODO set height / clockwise or conter_clockwise
         chassis.driveFieldCentric(controller, DriveConstants.defaultDrivePower);
         if(climber.isAtTargetRotation() && controller.getButton(toggleButton)){
         // pushTransform=pushTransform.rotateBy(Rotation2d.k180deg);//2025.3.14 rotatethe push and pull transform
