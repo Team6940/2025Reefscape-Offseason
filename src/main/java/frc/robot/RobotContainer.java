@@ -173,12 +173,12 @@ public class RobotContainer {
         operatorController.povRight().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefPoseIndex(-1)));
 
         ///THOSE ARE FOR TESTING.-------------------------------------------------------------------------------------------
-        driverController.leftTrigger().whileTrue(new ToggleIntake(grArm, intaker)); 
+        //driverController.leftTrigger().whileTrue(new ToggleIntake(grArm, intaker)); 
         
-        driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[1]));
-        driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[2]));
-        driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[3]));
-        driverController.povDown().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.elevatorHeights[4]));
+        driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
+        driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));
+        driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[3]));
+        driverController.povDown().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[4]));
         //------------------------------------------------------------------------------------------------------------------
 
         /* ---------------------------------------- OPERATOR CONTROLLER ----------------------------------------*/

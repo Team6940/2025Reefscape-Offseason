@@ -54,8 +54,8 @@ public class AlgaeHybridIntake extends Command {
     public void initialize() {
         state = IntakeState.ALIGNING;
         targetPose = chassis.generateAlgaeIntakePose(m_targetReefFaceIndex);
-        targetHeight = FieldConstants.elevatorAlgaeIntakeHeight[m_targetAlgaeHeightIndex];
-        targetAngle = FieldConstants.armIntakePosition[m_targetAlgaeHeightIndex];
+        targetHeight = FieldConstants.ElevatorAlgaeIntakeHeight[m_targetAlgaeHeightIndex];
+        targetAngle = FieldConstants.ArmIntakePosition[m_targetAlgaeHeightIndex];
         elevator.setHeight(0);
     }
 
@@ -82,7 +82,7 @@ public class AlgaeHybridIntake extends Command {
     }
 
     public void align() {
-        if (chassis.getToPoseDistance(targetPose) < FieldConstants.algaeAlignmentDistanceThreshold) {
+        if (chassis.getToPoseDistance(targetPose) < FieldConstants.AlgaeAlignmentDistanceThreshold) {
             elevator.setHeight(targetHeight);
             arm.setPosition(targetAngle);
         }
@@ -94,7 +94,7 @@ public class AlgaeHybridIntake extends Command {
     public void push() {
         // Get current pose and add small forward offset (e.g. 0.2 meters)
         Pose2d currentPose = targetPose;
-        Translation2d transformTranslation2d = new Translation2d(-FieldConstants.algaeIntakePushDistance,
+        Translation2d transformTranslation2d = new Translation2d(-FieldConstants.AlgaeIntakePushDistance,
                 currentPose.getRotation());
         Pose2d pushPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
                 currentPose.getRotation());
@@ -116,7 +116,7 @@ public class AlgaeHybridIntake extends Command {
     public void depart() {
         chassis.autoMoveToPose(targetPose);
         if (chassis.isAtPose(targetPose)) {
-            arm.setPosition(FieldConstants.armAlgaeStowPosition);
+            arm.setPosition(FieldConstants.ArmAlgaeStowPosition);
             elevator.setHeight(0);
             // shooter.stop();
             shooter.setRPS(ShooterConstants.HoldingAlgaeRPS); //get hold of the coral in case the robot throws it out accidently

@@ -278,18 +278,18 @@ public class Constants {
         public static final Translation2d DStationTranslationRSL = new Translation2d(-0.675, 0.42);
         public static final Rotation2d DStationRotationRSL = Rotation2d.fromRadians(0.935);
 
-        public static final double armIntakePosition[]={
+        public static final double ArmIntakePosition[]={
             0,
             0
         };
 
-        public static double algaeAlignmentDistanceThreshold;
+        public static double AlgaeAlignmentDistanceThreshold;
 
-        public static int algaeIntakePushDistance;
+        public static int AlgaeIntakePushDistance;
 
-        public static double armAlgaeStowPosition;
+        public static double ArmAlgaeStowPosition;
 
-        public static double pushDistance;
+        public static double PushDistance;
         
         public static double AlgaeScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after aligning to the algae pose
 
@@ -320,12 +320,12 @@ public class Constants {
 
         public static final double BargeAngle = 4.; //TODO: this is a placeholder value, should be replaced with the actual barge angle
         
-        public static final double elevatorAlgaeIntakeHeight[]={ //TODO tuning
+        public static final double ElevatorAlgaeIntakeHeight[]={ //TODO tuning
             10.,
             20.
         };
 
-        public static final double elevatorHeights[] = {
+        public static final double ElevatorHeights[] = {
                 0.,
                 0.53,
                 0.475,
@@ -333,7 +333,7 @@ public class Constants {
                 1.39
         };
 
-        public static final double armAngles[] = {
+        public static final double ArmAngles[] = {
                 0.,
                 0.53,
                 0.475,
@@ -341,7 +341,7 @@ public class Constants {
                 1.39// these data needs to be tuned
         };
 
-        public static final double reefRotationAdjustmentRange[] = {
+        public static final double ReefRotationAdjustmentRange[] = {
                 0,
                 0,
                 0,
@@ -349,9 +349,9 @@ public class Constants {
                 0
         };
 
-        public static final double coralScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after
+        public static final double CoralScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after
                                                        // aligning to the reef pose
-        public static final double departDistance = 0.1; // meters, this is the distance the robot will move forward
+        public static final double DepartDistance = 0.1; // meters, this is the distance the robot will move forward
                                                          // after scoring
 
 
