@@ -40,12 +40,12 @@ public class Constants {
         public static final InvertedValue IntakerInverted = InvertedValue.Clockwise_Positive;
         public static final double IntakerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
-        public static final double IntakerVelocityToleranceRPS = 0;
+        public static final double IntakerVelocityToleranceRPS = 0.5;
 
-        public static final double IntakerHoldingCurrentThreshold = 0.;
-        public static final double IntakerFreeSpinCurrentThreshold = 0.;
+        public static final double IntakerHoldingCurrentThreshold = 5.;
+        public static final double IntakerFreeSpinCurrentThreshold = 5.;
 
-        public static final double IntakerIntakingRPS= 0.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
+        public static final double IntakerIntakingRPS= 10.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
     }
 
@@ -63,10 +63,10 @@ public class Constants {
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
         public static final double IndexerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
-        public static final double IndexerVelocityToleranceRPS = 0;
-        public static final double IntakingRPS = 0;
-        public static final double IndexerAligningCurrentThreshold = 0;
-        public static final double IndexerFreeSpinCurrentThreshold = 0;
+        public static final double IndexerVelocityToleranceRPS = 0.5;
+        public static final double IntakingRPS = 2.;
+        public static final double IndexerAligningCurrentThreshold = 5.;
+        public static final double IndexerFreeSpinCurrentThreshold = 5.;
 
     }
 
@@ -91,7 +91,7 @@ public class Constants {
         public static final InvertedValue ShooterInverted = InvertedValue.Clockwise_Positive;
         public static final double ShooterRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
-        public static final double ShooterSpeedTolerence = 0;
+        public static final double ShooterSpeedTolerence = 0.5;
 
         public static final double CoralIntakingRPS = -10.;
 
@@ -105,11 +105,14 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterFreeSpinCurrentThreshold = 0;
+        public static final double ShooterFreeSpinCurrentThreshold = 5.;
 
-        public static final double ShooterReadyCurrentThreshold = 0; //FREE SPINNING
+        public static final double ShooterReadyCurrentThreshold = 5.; //FREE SPINNING
 
-        public static final double ShooterGrabbingCurrentThreshold = 0; //GOT HOLD OF STUFF //TODO: should add 2 thresholds for the coral and the algae
+        public static final double ShooterGrabbingCoralCurrentThreshold = 5.; 
+        public static final double ShooterGrabbingAlgaeCurrentThreshold = 5.; 
+        //GOT HOLD OF STUFF //TODO: should add 2 thresholds for the coral and the algae
+
 
     }
 
@@ -129,7 +132,7 @@ public class Constants {
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
-        public static final double ArmPositionToleranceRadians = 0;
+        public static final double ArmPositionToleranceRadians = 0.;
     }
 
     public static final class GrArmConstants {
@@ -150,9 +153,9 @@ public class Constants {
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
-        public static final double GrArmPositionToleranceRadians = 0;
+        public static final double GrArmPositionToleranceRadians = 0.;
         public static double retractedPosition = 0.;
-        public static double extendedPosition = 0;
+        public static double extendedPosition = 1.6;
     }
 
     public static final class PoseEstimatorConstants {
@@ -226,7 +229,7 @@ public class Constants {
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
 
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
-        public static final double IntakingHeight = 0;
+        public static final double IntakingHeight = 0.3;
 
     }
 
@@ -356,8 +359,8 @@ public class Constants {
 
 
         //THESE ARE FOR THE CLIMBING  //COPIED FROM 2025 REEFSCAPE
-        public static final double ClimbPushDis = 0.;                             //0.48
-        public static final double ClimbRetreatToDis = 0.;        //0.272         //0.40
+        public static final double ClimbPushDis = 0.48;                             //0.48
+        public static final double ClimbRetreatToDis = 0.4;        //0.272         //0.40
                                                  
         public static final double elevatorClimbHeight = 0.29;
                                                  
