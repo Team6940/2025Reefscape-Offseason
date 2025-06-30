@@ -55,9 +55,9 @@ public class CoralHybridScoring extends Command {
     public void initialize() {
         state = ScoringState.ALIGNING;
         targetPose = chassis.generateReefPose(m_targetReefPoseIndex);
-        targetHeight = FieldConstants.elevatorHeights[m_targetReefLevelIndex];
-        targetAngle = FieldConstants.armAngles[m_targetReefLevelIndex];
-        targetRotation = FieldConstants.reefRotationAdjustmentRange[m_targetReefPoseIndex];
+        targetHeight = FieldConstants.ElevatorHeights[m_targetReefLevelIndex];
+        targetAngle = FieldConstants.ArmAngles[m_targetReefLevelIndex];
+        targetRotation = FieldConstants.ReefRotationAdjustmentRange[m_targetReefPoseIndex];
         elevator.setHeight(0);
 
     }
@@ -100,7 +100,7 @@ public class CoralHybridScoring extends Command {
 
         // Get current pose and add small forward offset (e.g. 0.2 meters)
         Pose2d currentPose = targetPose;
-        Translation2d transformTranslation2d = new Translation2d(-FieldConstants.coralScorePushDistance,
+        Translation2d transformTranslation2d = new Translation2d(-FieldConstants.CoralScorePushDistance,
                 currentPose.getRotation());
         Pose2d pushPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
                 currentPose.getRotation());
@@ -131,7 +131,7 @@ public class CoralHybridScoring extends Command {
 
         // Calculate retreat position (move backward)
         Pose2d currentPose = targetPose;
-        Translation2d transformTranslation2d = new Translation2d(FieldConstants.coralScorePushDistance,
+        Translation2d transformTranslation2d = new Translation2d(FieldConstants.CoralScorePushDistance,
                 currentPose.getRotation());
         Pose2d departPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
                 currentPose.getRotation());

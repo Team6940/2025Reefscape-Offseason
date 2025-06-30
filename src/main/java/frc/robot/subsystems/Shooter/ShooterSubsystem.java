@@ -74,7 +74,10 @@ public class ShooterSubsystem extends SubsystemBase{
         else if(current<ShooterConstants.ShooterReadyCurrentThreshold){
             state=ShooterState.FREE_SPINNING;
         }
-        else if(current<ShooterConstants.ShooterGrabbingCurrentThreshold){
+        else if(current<ShooterConstants.ShooterGrabbingCoralCurrentThreshold){
+            state=ShooterState.READY;
+        }
+        else if(current<ShooterConstants.ShooterGrabbingAlgaeCurrentThreshold){
             state=ShooterState.READY;
         }
         else{
