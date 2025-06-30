@@ -40,12 +40,12 @@ public class Constants {
         public static final InvertedValue IntakerInverted = InvertedValue.Clockwise_Positive;
         public static final double IntakerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
-        public static final double IntakerVelocityToleranceRPS = 0;
+        public static final double IntakerVelocityToleranceRPS = 0.5;
 
-        public static final double IntakerHoldingCurrentThreshold = 0.;
-        public static final double IntakerFreeSpinCurrentThreshold = 0.;
+        public static final double IntakerHoldingCurrentThreshold = 5.;
+        public static final double IntakerFreeSpinCurrentThreshold = 5.;
 
-        public static final double IntakerIntakingRPS= 0.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
+        public static final double IntakerIntakingRPS= 10.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
     }
 
@@ -63,10 +63,10 @@ public class Constants {
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
         public static final double IndexerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
-        public static final double IndexerVelocityToleranceRPS = 0;
-        public static final double IntakingRPS = 0;
-        public static final double IndexerAligningCurrentThreshold = 0;
-        public static final double IndexerFreeSpinCurrentThreshold = 0;
+        public static final double IndexerVelocityToleranceRPS = 0.5;
+        public static final double IntakingRPS = 2.;
+        public static final double IndexerAligningCurrentThreshold = 5.;
+        public static final double IndexerFreeSpinCurrentThreshold = 5.;
 
     }
 
@@ -91,7 +91,7 @@ public class Constants {
         public static final InvertedValue ShooterInverted = InvertedValue.Clockwise_Positive;
         public static final double ShooterRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
-        public static final double ShooterSpeedTolerence = 0;
+        public static final double ShooterSpeedTolerence = 0.5;
 
         public static final double CoralIntakingRPS = -10.;
 
@@ -105,11 +105,14 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterFreeSpinCurrentThreshold = 0;
+        public static final double ShooterFreeSpinCurrentThreshold = 5.;
 
-        public static final double ShooterReadyCurrentThreshold = 0; //FREE SPINNING
+        public static final double ShooterReadyCurrentThreshold = 5.; //FREE SPINNING
 
-        public static final double ShooterGrabbingCurrentThreshold = 0; //GOT HOLD OF STUFF //TODO: should add 2 thresholds for the coral and the algae
+        public static final double ShooterGrabbingCoralCurrentThreshold = 5.; 
+        public static final double ShooterGrabbingAlgaeCurrentThreshold = 5.; 
+        //GOT HOLD OF STUFF //TODO: should add 2 thresholds for the coral and the algae
+
 
     }
 
@@ -129,7 +132,7 @@ public class Constants {
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
-        public static final double ArmPositionToleranceRadians = 0;
+        public static final double ArmPositionToleranceRadians = 0.;
     }
 
     public static final class GrArmConstants {
@@ -150,9 +153,9 @@ public class Constants {
 
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
-        public static final double GrArmPositionToleranceRadians = 0;
+        public static final double GrArmPositionToleranceRadians = 0.;
         public static double retractedPosition = 0.;
-        public static double extendedPosition = 0;
+        public static double extendedPosition = 1.6;
     }
 
     public static final class PoseEstimatorConstants {
@@ -226,7 +229,7 @@ public class Constants {
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
 
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
-        public static final double IntakingHeight = 0;
+        public static final double IntakingHeight = 0.3;
 
     }
 
@@ -278,18 +281,18 @@ public class Constants {
         public static final Translation2d DStationTranslationRSL = new Translation2d(-0.675, 0.42);
         public static final Rotation2d DStationRotationRSL = Rotation2d.fromRadians(0.935);
 
-        public static final double armIntakePosition[]={
+        public static final double ArmIntakePosition[]={
             0,
             0
         };
 
-        public static double algaeAlignmentDistanceThreshold;
+        public static double AlgaeAlignmentDistanceThreshold;
 
-        public static int algaeIntakePushDistance;
+        public static int AlgaeIntakePushDistance;
 
-        public static double armAlgaeStowPosition;
+        public static double ArmAlgaeStowPosition;
 
-        public static double pushDistance;
+        public static double PushDistance;
         
         public static double AlgaeScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after aligning to the algae pose
 
@@ -320,12 +323,12 @@ public class Constants {
 
         public static final double BargeAngle = 4.; //TODO: this is a placeholder value, should be replaced with the actual barge angle
         
-        public static final double elevatorAlgaeIntakeHeight[]={ //TODO tuning
+        public static final double ElevatorAlgaeIntakeHeight[]={ //TODO tuning
             10.,
             20.
         };
 
-        public static final double elevatorHeights[] = {
+        public static final double ElevatorHeights[] = {
                 0.,
                 0.53,
                 0.475,
@@ -333,7 +336,7 @@ public class Constants {
                 1.39
         };
 
-        public static final double armAngles[] = {
+        public static final double ArmAngles[] = {
                 0.,
                 0.53,
                 0.475,
@@ -341,7 +344,7 @@ public class Constants {
                 1.39// these data needs to be tuned
         };
 
-        public static final double reefRotationAdjustmentRange[] = {
+        public static final double ReefRotationAdjustmentRange[] = {
                 0,
                 0,
                 0,
@@ -349,15 +352,15 @@ public class Constants {
                 0
         };
 
-        public static final double coralScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after
+        public static final double CoralScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after
                                                        // aligning to the reef pose
-        public static final double departDistance = 0.1; // meters, this is the distance the robot will move forward
+        public static final double DepartDistance = 0.1; // meters, this is the distance the robot will move forward
                                                          // after scoring
 
 
         //THESE ARE FOR THE CLIMBING  //COPIED FROM 2025 REEFSCAPE
-        public static final double ClimbPushDis = 0.;                             //0.48
-        public static final double ClimbRetreatToDis = 0.;        //0.272         //0.40
+        public static final double ClimbPushDis = 0.48;                             //0.48
+        public static final double ClimbRetreatToDis = 0.4;        //0.272         //0.40
                                                  
         public static final double elevatorClimbHeight = 0.29;
                                                  
