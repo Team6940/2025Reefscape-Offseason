@@ -89,7 +89,7 @@ public class RobotContainer {
                     .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.)    //TODO: change speed here
                     .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.)  //TODO: change speed here
                     .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.)//TODO: change speed here
-            ));
+            ));//Left Stick
 
         /**
          * Driver Controller:
@@ -154,17 +154,15 @@ public class RobotContainer {
 
         /* Bumpers & Triggers */
         driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralScoreCommand(Button.kRightBumper)));
-        driverController.rightTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeScoreCommand(Button.kRightTrigger)));
+        driverController.b().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeScoreCommand(Button.kB,Button.kRightTrigger)));
         driverController.leftBumper().toggleOnTrue(new ToggleIntake(grArm, intaker));
         driverController.leftBumper().toggleOnFalse(superStructure.runOnce(() -> superStructure.getCoralAlignSequenceCommand()));
         driverController.leftTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeIntakeCommand(Button.kLeftTrigger)));
 
         /* Buttons */
-        driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));//This needs to be changed
-        // driverController.x().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // TODO seed field-centric heading
-        //driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
-        //driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
+        
         driverController.b().whileTrue(chassis.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
+        driverController.x().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // TODO seed field-centric heading
 
         /* Povs */
         operatorController.povUp().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefLevelIndex(1)));
@@ -173,7 +171,11 @@ public class RobotContainer {
         operatorController.povRight().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefPoseIndex(-1)));
 
         ///THOSE ARE FOR TESTING.-------------------------------------------------------------------------------------------
+        /// 
         //driverController.leftTrigger().whileTrue(new ToggleIntake(grArm, intaker)); 
+        //driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));//This needs to be changed
+        //driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
+        //driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
         
         driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
         driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));

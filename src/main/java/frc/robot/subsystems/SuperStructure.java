@@ -166,8 +166,8 @@ public class SuperStructure extends SubsystemBase{
         }//Otherwise when the distance is too far, it will use the operator's selected reef face
     }
 
-    public Command getHybridAlgaeScoreCommand(Button executionButton) {
-        return new AlgaeHybridScoring(executionButton);
+    public Command getHybridAlgaeScoreCommand(Button triggeringButton, Button executionButton) {
+        return new AlgaeHybridScoring(triggeringButton, executionButton);
     }
 
     public Command getHybridAlgaeIntakeCommand(Button executionButton) {
