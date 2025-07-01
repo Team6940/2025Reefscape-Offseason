@@ -17,6 +17,7 @@ import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
+import frc.robot.commands.CoralCommands.ReversedCoralHybridScoring;
 import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
@@ -159,8 +160,14 @@ public class SuperStructure extends SubsystemBase{
     }
 
     public Command getHybridCoralScoreCommand(Button executionButton) {
-        if(chassis.getToReefCenterDistance()<=FieldConstants.AutoMaticllyAttachDistanceThreshold){
-            return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton).withSelection(driverSelection);
+        if(chassis.getToReefCenterDistance() <= FieldConstants.AutomaticallyAttachDistanceThreshold){
+            if(!chassis.isFacingReefCenter())
+            {
+                return new ReversedCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton).withSelection(driverSelection);
+            }
+            else{
+                return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton).withSelection(driverSelection);
+            }
         }//If the bot is near the reef, it will automatically attach to the nearest reef 'face'
         else {
             return new CoralHybridScoring(m_operatorReefFaceIndex * 2 - (driverSelection == Selection.LEFT ? 1 : 0), m_targetReefLevelIndex, executionButton);

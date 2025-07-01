@@ -278,6 +278,7 @@ public class Constants {
 
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
         public static final Translation2d DReefTranslation12 = new Translation2d(1.31, 0.161);
+        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.31, -0.161);
         public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
 
         public static final double reefTranslationAdjustmentRange = 0.15;
@@ -359,6 +360,30 @@ public class Constants {
                 0
         };
 
+        public static final double ElevatorHeightsReversed[] = {
+            0.,
+            0.53,
+            0.475,
+            0.82,
+            1.39
+        };
+
+        public static final double ArmAnglesReversed[] = {
+            0.,
+            0.53,
+            0.475,
+            0.82,
+            1.39// these data needs to be tuned
+        };
+
+        public static final double ReefRotationAdjustmentRangeReversed[] = {
+            0,
+            0,
+            0,
+            0,
+            0
+        };
+
         public static final double CoralScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after
                                                        // aligning to the reef pose
         public static final double DepartDistance = 0.1; // meters, this is the distance the robot will move forward
@@ -381,7 +406,7 @@ public class Constants {
 
         public static final double AlgaeScoreDistanceThreshold = 0;
 
-        public static final double AutoMaticllyAttachDistanceThreshold = 0;
+        public static final double AutomaticallyAttachDistanceThreshold = 0;
     }
 
     public static void initializeConstants() {
