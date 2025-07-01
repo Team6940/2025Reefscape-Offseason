@@ -53,7 +53,7 @@ public class ArmSubsystem extends SubsystemBase {
         return targetPosition;
     }
 
-    public void stop() {
+    public void reset() {
         setPosition(0.);
     }
 

@@ -590,6 +590,37 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return res;
     }
 
+    public Pose2d generateReefPoseReversed(int index){
+        Translation2d t = FieldConstants.BlueReefCenterPos;
+        Translation2d dt = FieldConstants.DReefTranslation12Reversed;
+        if(index % 2 == 1){
+            dt = new Translation2d(dt.getX(), -dt.getY());
+        }
+        t = t.plus(dt);
+
+        Rotation2d r = new Rotation2d(0);//changed from PI to 0 here
+        Rotation2d dr = Rotation2d.fromDegrees(
+                (double)((index+1) / 2) * 60.
+        );
+
+        t = t.rotateAround(FieldConstants.BlueReefCenterPos, dr);
+        r = r.plus(dr);
+
+        Pose2d res = new Pose2d(t, r);
+
+        if(DriverStation.getAlliance().get() == Alliance.Red){
+            // t = t.rotateAround(FieldConstants.FieldCenter, Rotation2d.fromDegrees(180));
+            // r = r.plus(Rotation2d.fromDegrees(180));
+            res = FieldConstants.rotateAroundCenter(res, FieldConstants.FieldCenter, Rotation2d.k180deg);
+        }
+
+        if(res == null){
+            DriverStation.reportWarning("1111111111111111111", false);
+        }
+
+        return res;
+    }
+
     public Pose2d generateAlgaeIntakePose(int index){
         Translation2d t = FieldConstants.BlueReefCenterPos;
         Translation2d dt = FieldConstants.DAlgaeTranslation6;
@@ -631,6 +662,18 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             getPose().getTranslation().minus(FieldConstants.BlueReefCenterPos):
             FieldConstants.BlueReefCenterPos.rotateAround(FieldConstants.FieldCenter, Rotation2d.k180deg).minus(getPose().getTranslation())
         ;
+    }
+
+    public boolean isFacingReefCenter(){
+        Translation2d t = getFromReefCentreTranslation();
+        double positionDegrees = t.getAngle().getDegrees();
+        double facingDegrees = getPose().getRotation().getDegrees();
+        if(Math.abs(positionDegrees - facingDegrees) <= 90.){
+            return true;//TODO here
+        }
+        else {
+            return false;
+        }
     }
 
     /**

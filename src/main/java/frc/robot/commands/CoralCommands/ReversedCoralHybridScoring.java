@@ -13,15 +13,15 @@ import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.SuperStructure.Selection;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 
-public class CoralHybridScoring extends Command {
+public class ReversedCoralHybridScoring extends Command {
     enum ScoringState {
         ALIGNING,
-        PUSHING,
         SCORING,
         DEPARTING,
         END
@@ -41,10 +41,11 @@ public class CoralHybridScoring extends Command {
     ShooterSubsystem shooter = ShooterSubsystem.getInstance();
     ArmSubsystem arm = ArmSubsystem.getInstance();
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
+    GrArmSubsystem grArm = GrArmSubsystem.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
-    public CoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button executionButton) {
-        addRequirements(elevator, shooter, chassis, arm);
+    public ReversedCoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button executionButton) {
+        addRequirements(elevator, shooter, chassis, arm, grArm);
         m_targetReefPoseIndex = targetReefPoseIndex;
         m_targetReefLevelIndex = targetReefLevelIndex;
         m_executionButton = executionButton;
@@ -53,25 +54,20 @@ public class CoralHybridScoring extends Command {
     @Override
     public void initialize() {
         state = ScoringState.ALIGNING;
-        targetPose = chassis.generateReefPose(m_targetReefPoseIndex);
-        targetHeight = FieldConstants.ElevatorHeights[m_targetReefLevelIndex];
-        targetAngle = FieldConstants.ArmAngles[m_targetReefLevelIndex];
-        targetRotation = FieldConstants.ReefRotationAdjustmentRange[m_targetReefLevelIndex];
+        targetPose = chassis.generateReefPoseReversed(m_targetReefPoseIndex);
+        targetHeight = FieldConstants.ElevatorHeightsReversed[m_targetReefLevelIndex];
+        targetAngle = FieldConstants.ArmAnglesReversed[m_targetReefLevelIndex];
+        targetRotation = FieldConstants.ReefRotationAdjustmentRangeReversed[m_targetReefLevelIndex];
         elevator.setHeight(0);
-
     }
 
     @Override
     public void execute() {
-        chassis.hybridMoveToPose(targetPose, driverController,
-                FieldConstants.reefTranslationAdjustmentRange, FieldConstants.reefRotationAdjustmentRangeDegs);
-        SmartDashboard.putString("CORAL hybrid Scoring State", state.toString());
+        chassis.hybridMoveToPose(targetPose, driverController, FieldConstants.reefTranslationAdjustmentRange,
+                FieldConstants.reefRotationAdjustmentRangeDegs);
         switch (state) {
             case ALIGNING:
                 align();
-                break;
-            case PUSHING:
-                push();
                 break;
             case SCORING:
                 score();
@@ -85,63 +81,28 @@ public class CoralHybridScoring extends Command {
     }
 
     public void align() {
-        SmartDashboard.putString("CORAL Hybrid Scoring State", "ALIGNING");
-        if (chassis.isAtTargetPose() && driverController.getButton(m_executionButton)) { // TODO
-            elevator.setHeight(targetHeight);
-            arm.setPosition(targetAngle);
-            state = ScoringState.PUSHING;
-            SmartDashboard.putString("CORAL hybrid Scoring State", "ALIGNING complete, moving to PUSHING");
-        }
-    }
-
-    public void push() {
-        SmartDashboard.putString("CORAL hybrid Scoring State", "PUSHING");
-
-        // Get current pose and add small forward offset (e.g. 0.2 meters)
-        Pose2d currentPose = targetPose;
-        Translation2d transformTranslation2d = new Translation2d(-FieldConstants.CoralScorePushDistance,
-                currentPose.getRotation());
-        Pose2d pushPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
-                currentPose.getRotation());
-        // Move to push position
-        chassis.autoMoveToPose(pushPose);
-
-        // When in position, transition to scoring
-        if (chassis.isAtPose(pushPose) && driverController.getButton(m_executionButton)) {
+        elevator.setHeight(targetHeight);
+        arm.setPosition(targetAngle);
+        if (arm.isAtTargetPositon()) {
             state = ScoringState.SCORING;
-            SmartDashboard.putString("CORAL hybrid Scoring State", "PUSHING complete, moving to SCORING");
         }
     }
 
     public void score() {
-        SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING");
         arm.rotateArm(targetAngle);
-        if (shooter.getShooterState() == ShooterState.IDLE) {
-            SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING complete, moving to DEPARTING");
-            state = ScoringState.DEPARTING;
-        } else {
-            SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING in progress");
-        }
-
     }
 
     public void depart() {
-        SmartDashboard.putString("CORAL hybrid Scoring State", "DEPARTING");
+        shooter.setRPS(ShooterConstants.CoralScoringRPS);
 
-        // Calculate retreat position (move backward)
-        Pose2d currentPose = targetPose;
+        Pose2d currentPose = chassis.getPose();
         Translation2d transformTranslation2d = new Translation2d(FieldConstants.CoralScorePushDistance,
                 currentPose.getRotation());
         Pose2d departPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
                 currentPose.getRotation());
+        chassis.autoMoveToPose(departPose);// Move to retreat position
 
-        // Move to retreat position
-        targetPose = departPose;
-        chassis.autoMoveToPose(targetPose);
-
-        shooter.setRPS(ShooterConstants.CoralScoringRPS);
-        // When in position, reset systems and end
-        if (chassis.isAtPose(departPose)) {
+        if (shooter.getShooterState() == ShooterState.IDLE) {
             arm.setPosition(0);
             elevator.setHeight(0);
             shooter.stop();
@@ -152,8 +113,6 @@ public class CoralHybridScoring extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        if (interrupted)
-            SmartDashboard.putString("CORAL hybrid Scoring State", "END due to interruption");
         arm.reset();
         elevator.setHeight(0);
         shooter.stop();
