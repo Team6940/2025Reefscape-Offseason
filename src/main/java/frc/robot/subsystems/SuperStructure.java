@@ -21,6 +21,7 @@ import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
+import frc.robot.commands.Initialization;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SuperStructure extends SubsystemBase{
@@ -179,6 +180,10 @@ public class SuperStructure extends SubsystemBase{
             return new CoralAlignSequence();
         }
         else return null;
+    }
+    
+    public Command getInitializationCommand(Button toggleButton){
+        return new Initialization(toggleButton);
     }
 
 

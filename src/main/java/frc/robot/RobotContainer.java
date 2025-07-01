@@ -163,6 +163,7 @@ public class RobotContainer {
         
         driverController.b().whileTrue(chassis.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
         driverController.x().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // TODO seed field-centric heading
+        driverController.y().onTrue(superStructure.runOnce(() -> superStructure.getInitializationCommand(Button.kY)));
 
         /* Povs */
         operatorController.povUp().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefLevelIndex(1)));

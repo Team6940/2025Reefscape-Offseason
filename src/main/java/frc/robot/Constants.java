@@ -47,6 +47,8 @@ public class Constants {
 
         public static final double IntakerIntakingRPS= 10.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
+        public static final double ReversingRPS = 0;
+
     }
 
     public static class IndexerConstants {
@@ -67,6 +69,7 @@ public class Constants {
         public static final double IntakingRPS = 2.;
         public static final double IndexerAligningCurrentThreshold = 5.;
         public static final double IndexerFreeSpinCurrentThreshold = 5.;
+        public static final double ReversingRPS = 0;
 
     }
 
@@ -113,6 +116,8 @@ public class Constants {
         public static final double ShooterGrabbingAlgaeCurrentThreshold = 5.; 
         //GOT HOLD OF STUFF //TODO: should add 2 thresholds for the coral and the algae
 
+        public static final double DroppingRPS = 0;
+
 
     }
 
@@ -133,6 +138,7 @@ public class Constants {
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
         public static final double ArmPositionToleranceRadians = 0.;
+        public static final double DroppingPosition = 0;
     }
 
     public static final class GrArmConstants {
@@ -154,8 +160,8 @@ public class Constants {
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
         public static final double GrArmPositionToleranceRadians = 0.;
-        public static double RetractedPosition = 0.;
-        public static double ExtendedPosition = 1.6;
+        public static final double RetractedPosition = 0.;
+        public static final double ExtendedPosition = 1.6;
     }
 
     public static final class PoseEstimatorConstants {
@@ -230,6 +236,7 @@ public class Constants {
 
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
         public static final double IntakingHeight = 0.3;
+        public static final double DroppingHeight = 0;
 
     }
 
@@ -286,15 +293,15 @@ public class Constants {
             0
         };
 
-        public static double AlgaeAlignmentDistanceThreshold=1.5;
+        public static final double AlgaeAlignmentDistanceThreshold=1.5;
 
-        public static double AlgaeIntakePushDistance=1.5;
+        public static final double AlgaeIntakePushDistance=1.5;
 
-        public static double ArmAlgaeStowPosition=0.;//TODO
+        public static final double ArmAlgaeStowPosition=0.;//TODO
 
-        public static double PushDistance=1.;
+        public static final double PushDistance=1.;
         
-        public static double AlgaeScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after aligning to the algae pose
+        public static final double AlgaeScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after aligning to the algae pose
 
         public static Pose2d rotateAroundCenter(Pose2d pose, Translation2d centre, Rotation2d rotation) {
             return new Pose2d(pose.getTranslation().rotateAround(centre, rotation), pose.getRotation().plus(rotation));
