@@ -154,8 +154,8 @@ public class Constants {
         public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
         public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
         public static final double GrArmPositionToleranceRadians = 0.;
-        public static double retractedPosition = 0.;
-        public static double extendedPosition = 1.6;
+        public static double RetractedPosition = 0.;
+        public static double ExtendedPosition = 1.6;
     }
 
     public static final class PoseEstimatorConstants {
@@ -286,13 +286,13 @@ public class Constants {
             0
         };
 
-        public static double AlgaeAlignmentDistanceThreshold;
+        public static double AlgaeAlignmentDistanceThreshold=1.5;
 
-        public static int AlgaeIntakePushDistance;
+        public static double AlgaeIntakePushDistance=1.5;
 
-        public static double ArmAlgaeStowPosition;
+        public static double ArmAlgaeStowPosition=0.;//TODO
 
-        public static double PushDistance;
+        public static double PushDistance=1.;
         
         public static double AlgaeScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after aligning to the algae pose
 
