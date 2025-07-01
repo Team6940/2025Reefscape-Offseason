@@ -412,6 +412,8 @@ public class Constants {
         public static final double AlgaeScoreDistanceThreshold = 0;
 
         public static final double AutomaticallyAttachDistanceThreshold = 0;
+
+        public static final double ArmClimbPositionDegs = 0;
     }
 
     public static void initializeConstants() {
