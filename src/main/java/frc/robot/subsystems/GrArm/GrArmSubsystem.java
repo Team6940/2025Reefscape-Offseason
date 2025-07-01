@@ -42,12 +42,12 @@ public class GrArmSubsystem extends SubsystemBase {
      * @param position radians
      */
     public void setPosition(double position) {
-        targetPosition = MUtils.numberLimit(GrArmConstants.MinRadians, GrArmConstants.MaxRadians, position);
+        targetPosition = MUtils.numberLimit(GrArmConstants.MinDegs, GrArmConstants.MaxDegs, position);
         io.setPosition(targetPosition);
     }
 
     boolean IsAtTargetPositon() {
-        return MathUtil.isNear(targetPosition, inputs.GrArmPositionRadians, GrArmConstants.GrArmPositionToleranceRadians);
+        return MathUtil.isNear(targetPosition, inputs.GrArmPositionRadians, GrArmConstants.GrArmPositionToleranceDegs);
     }
 
     public double getTargetPosition() {

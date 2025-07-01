@@ -1,6 +1,8 @@
 package frc.robot;
 
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -131,14 +133,17 @@ public class Constants {
         public static final double kS = 0.15;
         public static final double kG = 0.0; // gravity
         public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
-        public static final double ArmRatio = 50. / 24.; // LCY: 50. :24. //GY: 20. : 10.
         public static final double MaxVelocity = 0.5; // RPS
         public static final double Acceleration = 0.5; // RPS^2
 
-        public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
-        public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
-        public static final double ArmPositionToleranceRadians = 0.;
-        public static final double DroppingPosition = 0;
+        public static final double MinDegs = -90.; // CCW Positive
+        public static final double MaxDegs = 90.; 
+        public static final double ArmPositionToleranceDegs = 0.;
+        public static final double DroppingPositionDegs = 0;
+
+        public static final int ArmEncoderID = 0;
+        public static final double EncoderOffsetDegrees = 0.;
+        public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.CounterClockwise_Positive; //TODO
     }
 
     public static final class GrArmConstants {
@@ -157,9 +162,9 @@ public class Constants {
 
 
 
-        public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
-        public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
-        public static final double GrArmPositionToleranceRadians = 0.;
+        public static final double MinDegs = -90.; //degrees CCW Positive
+        public static final double MaxDegs = 90.; 
+        public static final double GrArmPositionToleranceDegs = 0.;
         public static final double RetractedPosition = 0.;
         public static final double ExtendedPosition = 1.6;
     }
