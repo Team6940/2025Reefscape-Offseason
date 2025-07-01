@@ -19,7 +19,7 @@ public class ShooterSubsystem extends SubsystemBase{
 
     private double targetRPS = 0;
 
-    private ShooterState state;
+    public ShooterState state;
 
     public ShooterSubsystem() {
         if(Robot.isReal()){
