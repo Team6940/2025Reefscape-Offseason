@@ -21,6 +21,7 @@ import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
+import frc.robot.commands.Initialization;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SuperStructure extends SubsystemBase{
@@ -166,8 +167,8 @@ public class SuperStructure extends SubsystemBase{
         }//Otherwise when the distance is too far, it will use the operator's selected reef face
     }
 
-    public Command getHybridAlgaeScoreCommand(Button executionButton) {
-        return new AlgaeHybridScoring(executionButton);
+    public Command getHybridAlgaeScoreCommand(Button triggeringButton, Button executionButton) {
+        return new AlgaeHybridScoring(triggeringButton, executionButton);
     }
 
     public Command getHybridAlgaeIntakeCommand(Button executionButton) {
@@ -179,6 +180,10 @@ public class SuperStructure extends SubsystemBase{
             return new CoralAlignSequence();
         }
         else return null;
+    }
+    
+    public Command getInitializationCommand(Button toggleButton){
+        return new Initialization(toggleButton);
     }
 
 
