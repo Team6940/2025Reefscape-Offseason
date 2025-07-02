@@ -110,15 +110,13 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterFreeSpinCurrentThreshold = 5.;
-
-        public static final double ShooterReadyCurrentThreshold = 5.; //FREE SPINNING
-
-        public static final double ShooterGrabbingCoralCurrentThreshold = 5.; 
-        public static final double ShooterGrabbingAlgaeCurrentThreshold = 5.; 
-        //GOT HOLD OF STUFF //TODO: should add 2 thresholds for the coral and the algae
+        public static final double ShooterIntakeCurrentThreshold = 0;//TODO
 
         public static final double DroppingRPS = 0;
+
+        public static final int CurrentFilterTaps = 5;
+
+        public static final double ShooterDebouncerTime = 0.5;
 
 
     }
