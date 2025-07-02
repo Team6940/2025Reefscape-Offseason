@@ -1,27 +1,44 @@
 package frc.robot.subsystems.Arm;
 
 import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.util.Units;
+
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.MagnetHealthValue;
+
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Library.team1678.math.Conversions;
+import frc.robot.Library.team1706.MathUtils;
+import frc.robot.subsystems.Arm.ArmIO.ArmIOInputs.EncoderMagnetHealth;
 
 public class ArmIOPhoenix6 implements ArmIO {
     private static TalonFX motor;
+    private static CANcoder encoder;
+    private static double m_offset = 0.;
 
     private static MotionMagicVoltage m_request = new MotionMagicVoltage(0.);
 
     public ArmIOPhoenix6() {
-        motorConfig();
+        encoderConfig();
+        motorConfig();      //Motor is better configured after encoder because it might be attached to the encoder;
     }
 
     private void motorConfig() {
         motor = new TalonFX(ArmConstants.ArmMotorID, "rio");
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        config.Feedback.SensorToMechanismRatio = ArmConstants.ArmRatio;
+
+        //U no longer needs ratio because u paid for the encoder
+
         config.Voltage.PeakForwardVoltage = 12.0;
         config.Voltage.PeakReverseVoltage = -12.0;
         config.Slot0.kP = ArmConstants.kP;
@@ -31,16 +48,26 @@ public class ArmIOPhoenix6 implements ArmIO {
         config.Slot0.kS = ArmConstants.kS;
         config.Slot0.kG = ArmConstants.kG;
 
-        config.MotorOutput.Inverted = ArmConstants.Inverted;
+        //U no longer needs InvertedValue because u paid for the encoder, see encoderConfig()
 
         config.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
 
         config.MotionMagic.MotionMagicCruiseVelocity = ArmConstants.MaxVelocity;
         config.MotionMagic.MotionMagicAcceleration = ArmConstants.Acceleration;
 
+        config.Feedback.FeedbackRemoteSensorID = ArmConstants.ArmEncoderID;
+
         motor.getConfigurator().apply(config);
 
         zeroArmPostion();
+    }
+
+    private void encoderConfig() {
+        encoder = new CANcoder(ArmConstants.ArmEncoderID, "rio");
+        CANcoderConfiguration config = new CANcoderConfiguration();
+        config.MagnetSensor.MagnetOffset = ArmConstants.EncoderOffsetDegrees;
+        config.MagnetSensor.SensorDirection = ArmConstants.EncoderDirection;
+        encoder.getConfigurator().apply(config);
     }
 
     @Override
@@ -49,32 +76,55 @@ public class ArmIOPhoenix6 implements ArmIO {
     }
 
     @Override
+    /**
+     * @param position in degrees
+     */
     public void setPosition(double position) {
-        // if (position == 0) {
-        //     motor.stopMotor();
-        // }
-        motor.setControl(m_request.withPosition(position));
+        motor.setControl(m_request.withPosition(Units.degreesToRotations(position)));
     }
 
     @Override
-    public void rotateArm(double rotation) {
-        double position = motor.getPosition().getValueAsDouble();
-        position += rotation;
-        position = Math.max(ArmConstants.MinRadians, Math.min(ArmConstants.MaxRadians, position));
-        setPosition(position);
+    public void resetPosition(double position) {
+        encoder.setPosition(Units.degreesToRotations(position));
+    }
+
+    @Override
+    public void zeroArmPostion() {
+        encoder.setPosition(0.);
     }
 
     public void updateInputs(ArmIOInputs ArmInputs) {
         ArmInputs.motorConnected = BaseStatusSignal.refreshAll(
-                motor.getMotorVoltage(),
-                motor.getSupplyCurrent(),
-                motor.getVelocity()).isOK();
+            motor.getMotorVoltage(),
+            motor.getSupplyCurrent(),
+            motor.getVelocity()
+        ).isOK();
+
+        ArmInputs.encoderConnected = BaseStatusSignal.refreshAll(
+            encoder.getAbsolutePosition(),
+            encoder.getMagnetHealth()
+        ).isOK();
+
+        switch (encoder.getMagnetHealth().getValue()) {
+            case Magnet_Green:
+                ArmInputs.encoderMagnetHealth = EncoderMagnetHealth.GOOD;
+                break;
+            case Magnet_Orange:
+                ArmInputs.encoderMagnetHealth = EncoderMagnetHealth.RISKY;
+                break;
+            case Magnet_Red:
+                ArmInputs.encoderMagnetHealth = EncoderMagnetHealth.BAD;
+                break;
+            case Magnet_Invalid:
+                ArmInputs.encoderMagnetHealth = EncoderMagnetHealth.INVALID;
+                break;
+            default:
+                break;
+        }
 
         ArmInputs.motorVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
         ArmInputs.motorCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
-        ArmInputs.ArmRotationDegrees = motor.getPosition().getValueAsDouble();
-        ArmInputs.ArmPositionRadians = ArmInputs.ArmRotationDegrees * Math.PI / 180.0;
-
+        ArmInputs.ArmPositionDegs = Units.rotationsToDegrees(motor.getPosition().getValueAsDouble());
+        
     }
-
 }

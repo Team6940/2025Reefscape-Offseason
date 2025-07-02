@@ -84,7 +84,7 @@ public class SemiAutoClimbCommand extends Command{
 
     private void extend() {
         climber.setPosition(ClimberConstants.ClimberExtensionPos);
-        arm.setPosition(FieldConstants.armAngles[4]); //for keeping balance while climbing //TODO set height / clockwise or conter_clockwise
+        arm.setPosition(FieldConstants.ArmClimbPositionDegs); //for keeping balance while climbing //TODO set height / clockwise or conter_clockwise
         chassis.driveFieldCentric(controller, DriveConstants.defaultDrivePower);
         if(climber.isAtTargetRotation() && controller.getButton(toggleButton)){
         // pushTransform=pushTransform.rotateBy(Rotation2d.k180deg);//2025.3.14 rotatethe push and pull transform
