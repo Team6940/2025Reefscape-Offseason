@@ -42,6 +42,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void setRPS(double rps) {
         targetRPS = rps;
         io.setRPS(rps);
+        state = ShooterState.DUTY;
     }
 
     public boolean IsAtTargetRps() {
@@ -60,23 +61,23 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public enum ShooterState {
         IDLE,
-        GRABBING
+        DUTY,
+        READY
     }
 
     public ShooterState getShooterState() {
         return state;
     }
 
-    public boolean isGrabbing() {
-        return getShooterState() == ShooterState.GRABBING;
-    }
-
     public void shooterStateUpdate() {
         double rawCurrent = inputs.motorCurrentAmps;
         double filteredCurrent = currentFilter.calculate(rawCurrent);// get the filtered current
 
-        if (currentDebouncer.calculate(filteredCurrent > ShooterConstants.ShooterIntakeCurrentThreshold)) {
-            state = ShooterState.GRABBING;
+        boolean spikeDetected = currentDebouncer.calculate(
+                filteredCurrent > ShooterConstants.ShooterIntakeCurrentThreshold);
+
+        if (spikeDetected) {
+            state = ShooterState.READY;
         } else {
             state = ShooterState.IDLE;
         }
@@ -89,7 +90,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        shooterStateUpdate();
+        if (state == ShooterState.DUTY || state == ShooterState.READY) {
+            shooterStateUpdate();
+        }
         processLog();
         processDashboard();
 
