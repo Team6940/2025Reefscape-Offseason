@@ -110,7 +110,7 @@ public class AlgaeHybridScoring extends Command {
         shooter.setRPS(ShooterConstants.AlgaeScoringRPS); // TODO 'level' here indicates the fifth line of
         // ShoooterShootRPS(constants.java) ,which is the speed for shooting the
         // algae
-        if (shooter.getShooterState() == ShooterState.FREE_SPINNING) {
+        if (shooter.getShooterState() == ShooterState.IDLE) {
             SmartDashboard.putString("ALGAE hybrid Scoring State", "SCORING complete, moving to DEPARTING");
             state = ScoringState.DEPARTING;
         } else {
@@ -136,7 +136,7 @@ public class AlgaeHybridScoring extends Command {
     public void end(boolean interrupted) {
         if (interrupted)
             SmartDashboard.putString("ALGAE hybrid Scoring State", "END due to interruption");
-        arm.stop();
+        arm.reset();
         elevator.setHeight(0);
         shooter.stop();
     }
