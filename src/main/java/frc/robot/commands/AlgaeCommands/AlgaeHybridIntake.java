@@ -108,7 +108,7 @@ public class AlgaeHybridIntake extends Command {
 
     public void intake() {
         shooter.setRPS(ShooterConstants.AlgaeIntakingRPS);
-        if (shooter.getShooterState() == ShooterState.GRABBING) {
+        if (shooter.getShooterState() == ShooterState.READY) {
             state = IntakeState.DEPARTING;
         }
     }
