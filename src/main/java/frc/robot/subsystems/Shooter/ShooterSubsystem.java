@@ -7,27 +7,34 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ShooterConstants;
+import edu.wpi.first.math.filter.LinearFilter;
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 
-public class ShooterSubsystem extends SubsystemBase{
+public class ShooterSubsystem extends SubsystemBase {
     public static ShooterSubsystem m_Instance;
-    public static ShooterSubsystem getInstance(){
-        return m_Instance == null? m_Instance = new ShooterSubsystem() : m_Instance;
+
+    public static ShooterSubsystem getInstance() {
+        return m_Instance == null ? m_Instance = new ShooterSubsystem() : m_Instance;
     }
 
     private final ShooterIO io;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
+    private final LinearFilter currentFilter = LinearFilter.movingAverage(ShooterConstants.CurrentFilterTaps);
+    private final Debouncer currentDebouncer = new Debouncer(ShooterConstants.ShooterDebouncerTime,
+            DebounceType.kRising);// detects the current rapid risings
+
     private double targetRPS = 0;
 
-    public ShooterState state;
+    public ShooterState state = ShooterState.IDLE;
 
     public ShooterSubsystem() {
-        if(Robot.isReal()){
+        if (Robot.isReal()) {
             io = new ShooterIOPhoenix6();
-            //io = new ShooterIOEmpty();
-        }
-        else{
-            //TODO: Implement simulation code here
+            // io = new ShooterIOEmpty();
+        } else {
+            // TODO: Implement simulation code here
             io = new ShooterIOPhoenix6();
         }
     }
@@ -35,6 +42,7 @@ public class ShooterSubsystem extends SubsystemBase{
     public void setRPS(double rps) {
         targetRPS = rps;
         io.setRPS(rps);
+        state = ShooterState.DUTY;
     }
 
     public boolean IsAtTargetRps() {
@@ -51,47 +59,43 @@ public class ShooterSubsystem extends SubsystemBase{
         io.setVoltage(voltage);
     }
 
-    public enum ShooterState{
+    public enum ShooterState {
         IDLE,
-        FREE_SPINNING,
-        READY,
-        GRABBING
+        DUTY,
+        READY
     }
 
     public ShooterState getShooterState() {
-       return state;
-   }
-
-    public boolean isReady() {
-        return getShooterState() == ShooterState.READY;
+        return state;
     }
 
-    public void shooterStateUpdate(){
-        double current = inputs.motorCurrentAmps;
-        if(current<ShooterConstants.ShooterFreeSpinCurrentThreshold){
-            state=ShooterState.IDLE;
-        }
-        else if(current<ShooterConstants.ShooterReadyCurrentThreshold){
-            state=ShooterState.FREE_SPINNING;
-        }
-        else if(current<ShooterConstants.ShooterGrabbingCoralCurrentThreshold){
-            state=ShooterState.READY;
-        }
-        else if(current<ShooterConstants.ShooterGrabbingAlgaeCurrentThreshold){
-            state=ShooterState.READY;
-        }
-        else{
-            state=ShooterState.GRABBING;
-        }
+    public void shooterStateUpdate() {
+        double rawCurrent = inputs.motorCurrentAmps;
+        double filteredCurrent = currentFilter.calculate(rawCurrent);// get the filtered current
 
+        boolean spikeDetected = currentDebouncer.calculate(
+                filteredCurrent > ShooterConstants.ShooterIntakeCurrentThreshold);
+
+        if (spikeDetected) {
+            state = ShooterState.READY;
+        } else {
+            state = ShooterState.IDLE;
+        }
+    }
+
+    public void resetShooterState() {
+        state = ShooterState.IDLE;
+        currentDebouncer.calculate(false); // Reset debouncer
     }
 
     @Override
     public void periodic() {
-        shooterStateUpdate();
+        if (state == ShooterState.DUTY || state == ShooterState.READY) {
+            shooterStateUpdate();
+        }
         processLog();
         processDashboard();
-        
+
         SmartDashboard.putString("status", getShooterState().toString());
     }
 
@@ -103,11 +107,11 @@ public class ShooterSubsystem extends SubsystemBase{
     }
 
     private void processDashboard() {
-        //TODO: Implement dashboard code here
+        // TODO: Implement dashboard code here
 
     }
 
-    public double getShootRPS(){
+    public double getShootRPS() {
         return inputs.shooterVelocityRPS;
     }
 

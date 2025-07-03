@@ -126,7 +126,7 @@ public class AlgaeHybridIntake extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        arm.stop();
+        arm.reset();
         elevator.setHeight(0);
         shooter.stop();
 

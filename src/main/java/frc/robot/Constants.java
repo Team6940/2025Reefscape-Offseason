@@ -1,6 +1,8 @@
 package frc.robot;
 
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -108,15 +110,13 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterFreeSpinCurrentThreshold = 5.;
-
-        public static final double ShooterReadyCurrentThreshold = 5.; //FREE SPINNING
-
-        public static final double ShooterGrabbingCoralCurrentThreshold = 5.; 
-        public static final double ShooterGrabbingAlgaeCurrentThreshold = 5.; 
-        //GOT HOLD OF STUFF //TODO: should add 2 thresholds for the coral and the algae
+        public static final double ShooterIntakeCurrentThreshold = 0;//TODO
 
         public static final double DroppingRPS = 0;
+
+        public static final int CurrentFilterTaps = 5;
+
+        public static final double ShooterDebouncerTime = 0.1;
 
 
     }
@@ -131,14 +131,17 @@ public class Constants {
         public static final double kS = 0.15;
         public static final double kG = 0.0; // gravity
         public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
-        public static final double ArmRatio = 50. / 24.; // LCY: 50. :24. //GY: 20. : 10.
         public static final double MaxVelocity = 0.5; // RPS
         public static final double Acceleration = 0.5; // RPS^2
 
-        public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
-        public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
-        public static final double ArmPositionToleranceRadians = 0.;
-        public static final double DroppingPosition = 0;
+        public static final double MinDegs = -90.; // CCW Positive
+        public static final double MaxDegs = 90.; 
+        public static final double ArmPositionToleranceDegs = 0.;
+        public static final double DroppingPositionDegs = 0;
+
+        public static final int ArmEncoderID = 0;
+        public static final double EncoderOffsetDegrees = 0.;
+        public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.CounterClockwise_Positive; //TODO
     }
 
     public static final class GrArmConstants {
@@ -157,9 +160,9 @@ public class Constants {
 
 
 
-        public static final double MinRadians = Units.degreesToRadians(-90.); // -90 degrees
-        public static final double MaxRadians = Units.degreesToRadians(90.); // 90 degrees
-        public static final double GrArmPositionToleranceRadians = 0.;
+        public static final double MinDegs = -90.; //degrees CCW Positive
+        public static final double MaxDegs = 90.; 
+        public static final double GrArmPositionToleranceDegs = 0.;
         public static final double RetractedPosition = 0.;
         public static final double ExtendedPosition = 1.6;
     }
@@ -327,7 +330,7 @@ public class Constants {
 
         public static final int BlueFirstChuteTranslationX = 0;
 
-        public static final double BargeHeight = 20.; //TODO: this is a placeholder value, should be replaced with the actual barge height
+        public static final double BargeHeight = 3.; //TODO: this is a placeholder value, should be replaced with the actual barge height
 
         public static final double BargeAngle = 4.; //TODO: this is a placeholder value, should be replaced with the actual barge angle
         
@@ -407,6 +410,8 @@ public class Constants {
         public static final double AlgaeScoreDistanceThreshold = 0;
 
         public static final double AutomaticallyAttachDistanceThreshold = 0;
+
+        public static final double ArmClimbPositionDegs = 0;
     }
 
     public static void initializeConstants() {

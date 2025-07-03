@@ -37,7 +37,7 @@ public class ClimberSubsystem extends SubsystemBase{
         double current = inputs.lockMotorCurrentAmps;
         targetLockRPS = rps;
         io.setLockRPS(targetLockRPS); //TODO: Implement lock motor control
-        if(current<ShooterConstants.ShooterFreeSpinCurrentThreshold){
+        if(current<ClimberConstants.LockMotorCurrentThreshold){
             new Rumble(RumbleType.kLeftRumble, 1).withTimeout(0.2).schedule(); //TODO rumble type
             io.setLockRPS(0.0); //TODO: stop lock motor
         }

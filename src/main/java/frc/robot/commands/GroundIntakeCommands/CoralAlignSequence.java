@@ -73,7 +73,7 @@ public class CoralAlignSequence extends Command {
     public void end(boolean interrupted) {
         shooter.stop();
         elevator.setHeight(0);
-        arm.stop();
+        arm.reset();
         indexer.stop();
     }
 

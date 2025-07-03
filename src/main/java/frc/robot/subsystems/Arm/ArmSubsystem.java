@@ -38,15 +38,15 @@ public class ArmSubsystem extends SubsystemBase {
 
     /**
      * 
-     * @param position radians
+     * @param position degs
      */
     public void setPosition(double position) {
-        targetPosition = MUtils.numberLimit(ArmConstants.MinRadians, ArmConstants.MaxRadians, position);
+        targetPosition = MUtils.numberLimit(ArmConstants.MinDegs, ArmConstants.MaxDegs, position);
         io.setPosition(targetPosition);
     }
 
     public boolean isAtTargetPositon() {
-        return MathUtil.isNear(targetPosition, inputs.ArmPositionRadians, ArmConstants.ArmPositionToleranceRadians);
+        return MathUtil.isNear(targetPosition, inputs.ArmPositionDegs, ArmConstants.ArmPositionToleranceDegs);
     }
 
     public double getTargetPosition() {
@@ -61,12 +61,39 @@ public class ArmSubsystem extends SubsystemBase {
         io.setVoltage(voltage);
     }
 
+
+    /**
+     * The current position of the arm in degrees.
+     * @return the current position of the arm in degrees.
+     */
     public double getArmPosition() {
-        return inputs.ArmPositionRadians;
+        return inputs.ArmPositionDegs;
     }
 
-    public void rotateArm(double rotation) {
-        io.rotateArm(rotation);
+    /**
+     * Rotates the arm by the specified amount, CCW positive.
+     * @param angleDegs in degrees
+     */
+    public void rotateArm(double angleDegs) {
+        double position = inputs.ArmPositionDegs + angleDegs;
+        setPosition(position);
+    }
+
+    /**
+     * Try to stay at the exact position the time this method is called.
+     * In effect, this equals to setPosition(getArmPosition()).
+     * @see #stop()
+     */
+    public void stay(){
+        setPosition(getArmPosition());
+    }
+
+    /** Try to stop the arm from moving.
+     * Does <b>not</b> prevent swinging.
+     * @see #stay()
+     */
+    public void stop(){
+        io.setVoltage(0);
     }
 
     public void processLog() {

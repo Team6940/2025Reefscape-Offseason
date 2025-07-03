@@ -44,7 +44,7 @@ public class Initialization extends Command {
         grArm.setPosition(GrArmConstants.ExtendedPosition);
 
         elevator.setHeight(ElevatorConstants.DroppingHeight);
-        arm.setPosition(ArmConstants.DroppingPosition);
+        arm.setPosition(ArmConstants.DroppingPositionDegs);
         shooter.setRPS(ShooterConstants.DroppingRPS);
 
         intaker.setRPS(IntakerConstants.ReversingRPS); // push the coral out of the intaker
