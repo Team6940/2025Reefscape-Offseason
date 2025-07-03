@@ -16,7 +16,7 @@ public class AutoGenerator{
             case 2:
                 return new Mid1Coral();
             case 3:
-                return new Down3Corals();
+                return new Down4Corals();
             default:
                 break;
         }

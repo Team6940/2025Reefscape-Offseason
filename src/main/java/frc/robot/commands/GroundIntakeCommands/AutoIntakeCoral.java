@@ -11,8 +11,12 @@ import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem.IndexerState;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.GrArmConstants;
+import frc.robot.Constants.IntakerConstants;
+import frc.robot.subsystems.GrArm.GrArmSubsystem;
+import frc.robot.subsystems.Intaker.IntakerSubsystem;
 
-public class CoralAlignSequence extends Command {
+public class AutoIntakeCoral extends Command {
     enum IntakeState {
         ALIGNING,
         GRABBING,
@@ -25,9 +29,11 @@ public class CoralAlignSequence extends Command {
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     ArmSubsystem arm = ArmSubsystem.getInstance();
     IndexerSubsystem indexer = IndexerSubsystem.getInstance();
+    GrArmSubsystem grArm = GrArmSubsystem.getInstance();
+    IntakerSubsystem intaker = IntakerSubsystem.getInstance();
 
-    public CoralAlignSequence() {
-        addRequirements(shooter, elevator, arm, indexer);
+    public AutoIntakeCoral() {
+        addRequirements(shooter, elevator, arm, indexer, grArm, intaker);
     }
 
     @Override
@@ -35,6 +41,9 @@ public class CoralAlignSequence extends Command {
         state = IntakeState.ALIGNING;
         arm.setPosition(0); // Adjust as necessary for your arm's initial position
         shooter.setRPS(0);
+        elevator.setHeight(0);//TODO;
+        grArm.setPosition(GrArmConstants.ExtendedPosition);
+        intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
     }
 
     @Override
@@ -61,12 +70,11 @@ public class CoralAlignSequence extends Command {
     }
 
     private void grab() {
-        arm.reset();
         elevator.zeroHeight();
         if (shooter.getShooterState() == ShooterState.READY) {
-            shooter.setRPS(ShooterConstants.HoldingCoralRPS); //get hold of the coral in case the robot throws it out accidently
-            elevator.setHeight(0);//TODO
             state = IntakeState.END;
+            shooter.setRPS(ShooterConstants.HoldingCoralRPS); // get hold of the coral in case the robot throws it out
+                                                              // accidently
         }
 
     }
@@ -74,7 +82,8 @@ public class CoralAlignSequence extends Command {
     @Override
     public void end(boolean interrupted) {
         shooter.stop();
-        elevator.setHeight(0);//TODO : ALL ELEVATOR SET HEIGHT 0 SHOULD BE CHANGED TO SET HEIGHT IDLE_HEIGHT, ENSURING NO CONFLICTING WITH INDEXER
+        elevator.setHeight(0);// TODO : ALL ELEVATOR SET HEIGHT 0 SHOULD BE CHANGED TO SET HEIGHT IDLE_HEIGHT,
+                              // ENSURING NO CONFLICTING WITH INDEXER
         arm.reset();
         indexer.stop();
     }
