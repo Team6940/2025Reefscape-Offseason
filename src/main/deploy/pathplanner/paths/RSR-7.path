@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.7450284090909092,
+        "y": 0.8041761363636374
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.543273684548428,
+        "y": 1.6169195490450623
+      },
+      "isLocked": false,
+      "linkedName": "RSR"
+    },
+    {
+      "anchor": {
+        "x": 3.4910907623170204,
+        "y": 2.636864742465974
+      },
+      "prevControl": {
+        "x": 2.8031496421994997,
+        "y": 1.9416476396641178
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "7"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 59.62765257921544
+  },
+  "reversed": false,
+  "folder": "Down4Corals",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 51.88204438110528
+  },
+  "useDefaultConstraints": false
+}
