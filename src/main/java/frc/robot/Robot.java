@@ -18,7 +18,7 @@ import frc.robot.commands.Autos.*;
 public class Robot extends LoggedRobot { //TODO
 
   private Command m_autonomousCommand;
-  public Command autoCommand = new Down3Corals();
+  public Command autoCommand = new Down4Corals();
   private int autoChoice = 3; 
 
   private final RobotContainer m_robotContainer;
