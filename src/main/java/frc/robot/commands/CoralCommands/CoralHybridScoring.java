@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
@@ -57,7 +58,7 @@ public class CoralHybridScoring extends Command {
         targetHeight = FieldConstants.ElevatorHeights[m_targetReefLevelIndex];
         targetAngle = FieldConstants.ArmAngles[m_targetReefLevelIndex];
         targetRotation = FieldConstants.ReefRotationAdjustmentRange[m_targetReefLevelIndex];
-        elevator.setHeight(0);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
 
     }
 
@@ -155,7 +156,7 @@ public class CoralHybridScoring extends Command {
         if (interrupted)
             SmartDashboard.putString("CORAL hybrid Scoring State", "END due to interruption");
         arm.reset();
-        elevator.setHeight(0);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         shooter.stop();
     }
 

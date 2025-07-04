@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
@@ -99,6 +100,7 @@ public class AlgaeHybridIntake extends Command {
         Pose2d pushPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
                 currentPose.getRotation());
         // Move to push position
+        shooter.setRPS(ShooterConstants.AlgaeIntakingRPS);
         chassis.autoMoveToPose(pushPose);
 
         if (chassis.isAtPose(pushPose) && driverController.getButton(m_executionButton)) {
@@ -127,8 +129,7 @@ public class AlgaeHybridIntake extends Command {
     @Override
     public void end(boolean interrupted) {
         arm.reset();
-        elevator.setHeight(0);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         shooter.stop();
-
     }
 }

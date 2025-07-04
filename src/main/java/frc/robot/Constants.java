@@ -239,7 +239,8 @@ public class Constants {
 
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
         public static final double IntakingHeight = 0.3;
-        public static final double DroppingHeight = 0;
+        public static final double DroppingHeight = 0.;
+        public static final double IdleHeight = 0.3;//TODO
 
     }
 

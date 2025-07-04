@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
@@ -58,7 +59,7 @@ public class AlgaeHybridScoring extends Command {
         targetPose = chassis.generateAlgaeScorePose(currentPose);
         targetHeight = m_targetBargeLevel;
         targetAngle = m_targetBargeAngle;
-        elevator.setHeight(0);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
 
     }
 
@@ -125,7 +126,7 @@ public class AlgaeHybridScoring extends Command {
         // When in position, reset systems and end
         if (chassis.isAtPose(targetPose)) {
             arm.setPosition(0);
-            elevator.setHeight(0);
+            elevator.setHeight(ElevatorConstants.IdleHeight);
             shooter.stop();
             state = ScoringState.END;
             SmartDashboard.putString("ALGAE hybrid Scoring State", "DEPARTING complete, moving to END");
@@ -137,7 +138,7 @@ public class AlgaeHybridScoring extends Command {
         if (interrupted)
             SmartDashboard.putString("ALGAE hybrid Scoring State", "END due to interruption");
         arm.reset();
-        elevator.setHeight(0);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         shooter.stop();
     }
 
