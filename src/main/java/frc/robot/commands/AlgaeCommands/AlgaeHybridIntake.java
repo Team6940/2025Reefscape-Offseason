@@ -30,7 +30,6 @@ public class AlgaeHybridIntake extends Command {
     }
 
     private int m_targetReefFaceIndex;
-    private int m_targetAlgaeHeightIndex;
     private Button m_executionButton;
     IntakeState state;
 
@@ -44,9 +43,8 @@ public class AlgaeHybridIntake extends Command {
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
-    public AlgaeHybridIntake(int targetReefFaceIndex, int targetAlgaeHeightIndex, Button executionButton) {
+    public AlgaeHybridIntake(int targetReefFaceIndex, Button executionButton) {
         addRequirements(elevator, shooter, chassis, arm);
-        m_targetAlgaeHeightIndex = targetAlgaeHeightIndex;
         m_targetReefFaceIndex = targetReefFaceIndex;
         m_executionButton = executionButton;
     }
@@ -55,9 +53,9 @@ public class AlgaeHybridIntake extends Command {
     public void initialize() {
         state = IntakeState.ALIGNING;
         targetPose = chassis.generateAlgaeIntakePose(m_targetReefFaceIndex);
-        targetHeight = FieldConstants.ElevatorAlgaeIntakeHeight[m_targetAlgaeHeightIndex];
-        targetAngle = FieldConstants.ArmIntakePosition[m_targetAlgaeHeightIndex];
-        elevator.setHeight(0);
+        targetHeight = FieldConstants.ElevatorAlgaeIntakeHeight[m_targetReefFaceIndex];
+        targetAngle = FieldConstants.ArmIntakePosition[m_targetReefFaceIndex];
+        elevator.setHeight(ElevatorConstants.IdleHeight);
     }
 
     @Override
@@ -119,7 +117,7 @@ public class AlgaeHybridIntake extends Command {
         chassis.autoMoveToPose(targetPose);
         if (chassis.isAtPose(targetPose)) {
             arm.setPosition(FieldConstants.ArmAlgaeStowPosition);
-            elevator.setHeight(0);
+            elevator.setHeight(ElevatorConstants.IdleHeight);
             // shooter.stop();
             shooter.setRPS(ShooterConstants.HoldingAlgaeRPS); //get hold of the coral in case the robot throws it out accidently
             state = IntakeState.END;

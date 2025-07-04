@@ -14,7 +14,7 @@ public class AutoGenerator{
             case 1:
                 return new Up3Corals();
             case 2:
-                return new Mid1Coral();
+                return new Mid2Algae();
             case 3:
                 return new Down4Corals();
             default:

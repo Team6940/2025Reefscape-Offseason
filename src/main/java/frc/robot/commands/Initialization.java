@@ -56,7 +56,7 @@ public class Initialization extends Command {
         if (!driverController.getButton(m_toggleButton)){
             shooter.stop();
             arm.setPosition(0);//TODO
-            elevator.setHeight(0);
+            elevator.setHeight(ElevatorConstants.IdleHeight);
 
             intaker.setRPS(0);
             indexer.setRPS(0);

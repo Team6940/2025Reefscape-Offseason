@@ -41,7 +41,7 @@ public class AutoIntakeCoral extends Command {
         state = IntakeState.ALIGNING;
         arm.setPosition(0); // Adjust as necessary for your arm's initial position
         shooter.setRPS(0);
-        elevator.setHeight(0);//TODO;
+        elevator.setHeight(ElevatorConstants.IdleHeight);//TODO;
         grArm.setPosition(GrArmConstants.ExtendedPosition);
         intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
     }
@@ -82,7 +82,7 @@ public class AutoIntakeCoral extends Command {
     @Override
     public void end(boolean interrupted) {
         shooter.stop();
-        elevator.setHeight(0);// TODO : ALL ELEVATOR SET HEIGHT 0 SHOULD BE CHANGED TO SET HEIGHT IDLE_HEIGHT,
+        elevator.setHeight(ElevatorConstants.IdleHeight);// TODO : ALL ELEVATOR SET HEIGHT 0 SHOULD BE CHANGED TO SET HEIGHT IDLE_HEIGHT,
                               // ENSURING NO CONFLICTING WITH INDEXER
         arm.reset();
         indexer.stop();

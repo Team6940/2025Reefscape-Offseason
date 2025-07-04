@@ -74,7 +74,7 @@ public class CoralAlignSequence extends Command {
     @Override
     public void end(boolean interrupted) {
         shooter.stop();
-        elevator.setHeight(0);//TODO : ALL ELEVATOR SET HEIGHT 0 SHOULD BE CHANGED TO SET HEIGHT IDLE_HEIGHT, ENSURING NO CONFLICTING WITH INDEXER
+        elevator.setHeight(ElevatorConstants.IdleHeight);//TODO : ALL ELEVATOR SET HEIGHT 0 SHOULD BE CHANGED TO SET HEIGHT IDLE_HEIGHT, ENSURING NO CONFLICTING WITH INDEXER
         arm.reset();
         indexer.stop();
     }
