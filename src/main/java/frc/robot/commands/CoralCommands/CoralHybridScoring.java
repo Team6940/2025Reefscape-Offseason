@@ -144,7 +144,7 @@ public class CoralHybridScoring extends Command {
         // When in position, reset systems and end
         if (chassis.isAtPose(departPose)) {
             arm.setPosition(0);
-            elevator.setHeight(0);
+            elevator.setHeight(ElevatorConstants.IdleHeight);
             shooter.stop();
             state = ScoringState.END;
             SmartDashboard.putString("CORAL hybrid Scoring State", "DEPARTING complete, moving to END");

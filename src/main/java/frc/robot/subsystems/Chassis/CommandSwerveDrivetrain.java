@@ -628,7 +628,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         Rotation2d r = new Rotation2d(Math.PI);
         Rotation2d dr = Rotation2d.fromDegrees(
-                (double)(index+1) * 60.
+                (double)(index) * 60.//TODO here
         );
         r=r.plus(dr);//rotation here
 

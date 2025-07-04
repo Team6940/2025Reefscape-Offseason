@@ -12,6 +12,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -129,6 +130,7 @@ public class RobotContainer {
          * **                      7,8 -> FaceIndex 3
          * **                     9,10 -> FaceIndex 4
          * **                    11,12 -> FaceIndex 5     TODO needed here, decide whether it's 0-5 or 1-6
+         *                                                Decided, FaceIndex should be 1-6
          * 
          * LB: Select Left          
          * RB: Select Right
@@ -146,6 +148,18 @@ public class RobotContainer {
          * Y: Teleop Select L4
         */
 
+        // W           W       A       RRRRRR    N     N    IIIII    N     N     GGGGGG
+        // W           W      A A      R     R   NN    N      I      NN    N    G       
+        // W     W     W     A   A     RRRRRR    N N   N      I      N N   N   G   GGG   
+        // W  W  W  W  W    AAAAAAA    R   R     N  N  N      I      N  N  N   G       G   
+        // W     W     W   A       A   R    R    N   N N    IIIII    N   N N    GGGGGG    
+        
+        
+        //PLEASE DISABLE ALL OTHER FUNCTIONS WHEN STARTING TO TEST ONE FUNC.
+
+
+
+
 
         /* ---------------------------------------- DRIVER CONTROLLER ----------------------------------------*/
         /* Sticks */  
@@ -156,7 +170,7 @@ public class RobotContainer {
         driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralScoreCommand(Button.kRightBumper)));
         driverController.b().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeScoreCommand(Button.kB,Button.kRightTrigger)));
         driverController.leftBumper().toggleOnTrue(new ToggleIntake(grArm, intaker));
-        driverController.leftBumper().toggleOnFalse(superStructure.runOnce(() -> superStructure.getCoralAlignSequenceCommand()));
+        driverController.leftBumper().whileTrue(superStructure.runOnce(() -> superStructure.getCoralAlignSequenceCommand()));
         driverController.leftTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeIntakeCommand(Button.kLeftTrigger)));
 
         /* Buttons */

@@ -295,7 +295,11 @@ public class Constants {
 
         public static final double ArmIntakePosition[]={
             0,
-            0
+            0,
+            0,
+            0,
+            0,
+            0,
         };
 
         public static final double AlgaeAlignmentDistanceThreshold=1.5;
@@ -337,7 +341,11 @@ public class Constants {
         
         public static final double ElevatorAlgaeIntakeHeight[]={ //TODO tuning
             10.,
-            20.
+            20.,
+            10.,
+            20.,
+            10.,
+            20.,
         };
 
         public static final double ElevatorHeights[] = {
