@@ -124,24 +124,25 @@ public class Constants {
     public static final class ArmConstants {
         public static final int ArmMotorID = 18;
         public static final double ArmVelocityToleranceRPS = 0.2;
-        public static final double kP = 0.2;
+        public static final double kP = 0.5;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kV = 0.22;
         public static final double kS = 0.15;
-        public static final double kG = 0.0; // gravity
+        public static final double kG = 0.45; // gravity
         public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
         public static final double MaxVelocity = 0.5; // RPS
         public static final double Acceleration = 0.5; // RPS^2
 
-        public static final double MinDegs = -90.; // CCW Positive
-        public static final double MaxDegs = 90.; 
-        public static final double ArmPositionToleranceDegs = 0.;
+        public static final double MinDegs = -120.; // CCW Positive
+        public static final double MaxDegs = 120.; 
+        public static final double ArmPositionToleranceDegs = 5.;
         public static final double DroppingPositionDegs = 0;
 
         public static final int ArmEncoderID = 0;
         public static final double EncoderOffsetDegrees = 0.;
         public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.CounterClockwise_Positive; //TODO
+        public static final double SecuredPosition = 0;
     }
 
     public static final class GrArmConstants {

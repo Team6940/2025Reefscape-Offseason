@@ -49,6 +49,10 @@ public class ArmSubsystem extends SubsystemBase {
         return MathUtil.isNear(targetPosition, inputs.ArmPositionDegs, ArmConstants.ArmPositionToleranceDegs);
     }
 
+    public boolean isAtSecuredPosition() {
+        return Math.abs(getArmPosition()) > ArmConstants.SecuredPosition;// TODO
+    }
+
     public double getTargetPosition() {
         return targetPosition;
     }
@@ -61,9 +65,9 @@ public class ArmSubsystem extends SubsystemBase {
         io.setVoltage(voltage);
     }
 
-
     /**
      * The current position of the arm in degrees.
+     * 
      * @return the current position of the arm in degrees.
      */
     public double getArmPosition() {
@@ -72,6 +76,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     /**
      * Rotates the arm by the specified amount, CCW positive.
+     * 
      * @param angleDegs in degrees
      */
     public void rotateArm(double angleDegs) {
@@ -82,17 +87,20 @@ public class ArmSubsystem extends SubsystemBase {
     /**
      * Try to stay at the exact position the time this method is called.
      * In effect, this equals to setPosition(getArmPosition()).
+     * 
      * @see #stop()
      */
-    public void stay(){
+    public void stay() {
         setPosition(getArmPosition());
     }
 
-    /** Try to stop the arm from moving.
+    /**
+     * Try to stop the arm from moving.
      * Does <b>not</b> prevent swinging.
+     * 
      * @see #stay()
      */
-    public void stop(){
+    public void stop() {
         io.setVoltage(0);
     }
 
