@@ -111,10 +111,10 @@ public class RobotContainer {
          * A: (Auto) Confirm Coral Scoring Position Selection   
          * B: Drive To Net Scoring Point   ///(written in command)
          *  
-         * povDown: (Auto) ReefLevelIndex - 1  ///
-         * povUP: (Auto) ReefLevelIndex + 1    ///
-         * povLeft: (Auto) ReefPoseIndex - 1    ///
-         * povRight: (Auto) ReefPoseIndex + 1   ///
+         * povDown: (Auto) Select Mid2Algae ///
+         * povUP: None    ///
+         * povLeft: (Auto) Select Up4Corals   ///
+         * povRight: (Auto) Select Down4Corals   ///
          */
 
         /* Operator Controller: 
@@ -125,12 +125,12 @@ public class RobotContainer {
          * 
          * **   The 'FaceIndex' refers to the different 'sides' of the hexogonal reef,
          * **   which are numbered 0-5, going clockwise,
-         * **   e.g, ReefPoseIndex 1,2 -> FaceIndex 0
-         * **                      3,4 -> FaceIndex 1
-         * **                      5,6 -> FaceIndex 2
-         * **                      7,8 -> FaceIndex 3
-         * **                     9,10 -> FaceIndex 4
-         * **                    11,12 -> FaceIndex 5     TODO needed here, decide whether it's 0-5 or 1-6
+         * **   e.g, ReefPoseIndex 1,2 -> FaceIndex 1
+         * **                      3,4 -> FaceIndex 2
+         * **                      5,6 -> FaceIndex 3
+         * **                      7,8 -> FaceIndex 4
+         * **                     9,10 -> FaceIndex 5
+         * **                    11,12 -> FaceIndex 6     TODO needed here, decide whether it's 0-5 or 1-6
          *                                                Decided, FaceIndex should be 1-6
          * 
          * LB: Select Left          
