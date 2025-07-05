@@ -1,0 +1,55 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LBM-2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2-LSL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LSL-4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4-LSL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LSL-3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3-LSL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LSL-5"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
