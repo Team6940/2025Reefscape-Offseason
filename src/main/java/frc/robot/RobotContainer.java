@@ -214,9 +214,9 @@ public class RobotContainer {
         // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
         // driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
         
-        driverController.a().whileTrue(new ToggleArmTest(arm, 90.));
-        driverController.b().whileTrue(new ToggleArmTest(arm, 120.));
-        driverController.x().whileTrue(new ToggleArmTest(arm, 150.));
+        driverController.a().whileTrue(new ToggleArmTest(arm, 30.));
+        driverController.b().whileTrue(new ToggleArmTest(arm, 60.));
+        driverController.x().whileTrue(new ToggleArmTest(arm, 90.));
         driverController.y().whileTrue(new ToggleArmTest(arm, 0.));
 
         driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
