@@ -82,8 +82,10 @@ public class AlgaeHybridIntake extends Command {
 
     public void align() {
         if (chassis.getToPoseDistance(targetPose) < FieldConstants.AlgaeAlignmentDistanceThreshold) {
-            elevator.setHeight(targetHeight);
             arm.setPosition(targetAngle);
+            if(arm.isAtSecuredPosition()){
+                elevator.setHeight(targetHeight);
+            }
         }
         if (chassis.isAtTargetPose() && driverController.getButton(m_executionButton)) {
             state = IntakeState.PUSHING;
