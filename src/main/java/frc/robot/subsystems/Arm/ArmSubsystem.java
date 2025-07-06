@@ -108,7 +108,7 @@ public class ArmSubsystem extends SubsystemBase {
         io.updateInputs(inputs);
         Logger.processInputs("Arm", inputs);
         Logger.recordOutput("Arm/TargetPosition", targetPosition);
-        Logger.recordOutput("Arm/Position", inputs.ArmPositionDegs);
+        Logger.recordOutput("Arm/Position", inputs.armPositionDegs);
         // TODO Logger
     }
 
