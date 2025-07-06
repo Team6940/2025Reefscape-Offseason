@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.Library.MUtils;
 import frc.robot.commands.Rumble;
 
@@ -17,7 +16,7 @@ public class ClimberSubsystem extends SubsystemBase{
     private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
 
     private double targetRotation = 0.;
-    private double targetLockRPS = 0.;
+    // private double targetLockRPS = 0.;
 
     public static ClimberSubsystem getInstance() {
         return m_Instance == null ? m_Instance = new ClimberSubsystem() : m_Instance;
@@ -33,15 +32,15 @@ public class ClimberSubsystem extends SubsystemBase{
         }
     };
 
-    public void lockMotorSetRPS(double rps){
-        double current = inputs.lockMotorCurrentAmps;
-        targetLockRPS = rps;
-        io.setLockRPS(targetLockRPS); //TODO: Implement lock motor control
-        if(current<ClimberConstants.LockMotorCurrentThreshold){
-            new Rumble(RumbleType.kLeftRumble, 1).withTimeout(0.2).schedule(); //TODO rumble type
-            io.setLockRPS(0.0); //TODO: stop lock motor
-        }
-    }
+    // public void lockMotorSetRPS(double rps){
+    //     double current = inputs.lockMotorCurrentAmps;
+    //     targetLockRPS = rps;
+    //     io.setLockRPS(targetLockRPS); //TODO: Implement lock motor control
+    //     if(current<ClimberConstants.LockMotorCurrentThreshold){
+    //         new Rumble(RumbleType.kLeftRumble, 1).withTimeout(0.2).schedule(); //TODO rumble type
+    //         io.setLockRPS(0.0); //TODO: stop lock motor
+    //     }
+    // }
 
     public void setPosition(double rotation){
         rotation = MUtils.numberLimit(ClimberConstants.ClimberMinPos, ClimberConstants.ClimberMaxPos, rotation);

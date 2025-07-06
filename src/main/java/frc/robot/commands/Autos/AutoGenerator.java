@@ -12,7 +12,7 @@ public class AutoGenerator{
     public static Command generate(int firstChoice){
         switch(firstChoice){
             case 1:
-                return new Up3Corals();
+                return new Up4Corals();
             case 2:
                 return new Mid1Coral();
             case 3:

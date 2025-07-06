@@ -6,20 +6,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.*;
 import frc.robot.Library.MUtils;
-import frc.robot.subsystems.*;
-import frc.robot.subsystems.Arm.ArmSubsystem;
-import frc.robot.commands.*;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Climber.ClimberSubsystem;
-import frc.robot.subsystems.Elevator.ElevatorSubsystem;
-import frc.robot.subsystems.GrArm.GrArmSubsystem;
-import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
 import frc.robot.commands.CoralCommands.ReversedCoralHybridScoring;
 import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
-import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
+// import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
 import frc.robot.commands.Initialization;
@@ -45,44 +38,21 @@ public class SuperStructure extends SubsystemBase{
     Selection driverSelection = Selection.RIGHT;
 
     /** Subsystems */
-    private CommandSwerveDrivetrain chassis;
-    private ArmSubsystem Arm; 
-    private ShooterSubsystem shooter;
-    private ElevatorSubsystem elevator;
-    private ClimberSubsystem climber; 
-    private GrArmSubsystem grArm = GrArmSubsystem.getInstance();
+    private CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     private IntakerSubsystem intaker = IntakerSubsystem.getInstance();
-    
-
-    /** Joysticks */
-    private ImprovedCommandXboxController driverController;
-    private ImprovedCommandXboxController operatorController;
 
     /** Variables */ //TODO
     private int m_targetReefPoseIndex = 1;
     private int m_targetReefLevelIndex = 4;
     private int m_targetStationPoseIndex = 1;
     private int m_operatorReefFaceIndex = 3;
-    private int m_targetStationLevelIndex = 1; //TODO
+    // private int m_targetStationLevelIndex = 1; //TODO
     private int m_targetALgaeIntakeLevelIndex = 1; //TODO
     private Field2d targetPoseField2d = new Field2d();
     private Field2d generatedPoseField2d = new Field2d();
     private Field2d targetStationPoseField2d = new Field2d();
     private Field2d TEMP_stationCenterPose = new Field2d();
     private Field2d operatorTargetPoseField2d = new Field2d();
-
-    public SuperStructure() {
-        chassis = CommandSwerveDrivetrain.getInstance();
-        Arm= ArmSubsystem.getInstance();
-        shooter = ShooterSubsystem.getInstance();
-        elevator = ElevatorSubsystem.getInstance();
-        climber = ClimberSubsystem.getInstance();
-        grArm = GrArmSubsystem.getInstance();
-        intaker = IntakerSubsystem.getInstance();
-        driverController = new ImprovedCommandXboxController(0);
-        operatorController = new ImprovedCommandXboxController(1);
-
-    }
 
     public void setDriverSelection(Selection selection){
         this.driverSelection = selection;
