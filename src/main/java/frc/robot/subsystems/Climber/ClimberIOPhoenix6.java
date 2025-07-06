@@ -12,7 +12,7 @@ import frc.robot.Constants.ClimberConstants;
 
 public class ClimberIOPhoenix6 implements ClimberIO{
     private static TalonFX liftMotor = new TalonFX(ClimberConstants.ClimberliftMotorID, "rio"); //TODO change to canivore
-    private static TalonFX lockMotor = new TalonFX(ClimberConstants.ClimberlockMotorID, "rio"); //TODO change to canivore
+    // private static TalonFX lockMotor = new TalonFX(ClimberConstants.ClimberlockMotorID, "rio"); //TODO change to canivore
 
     private static final MotionMagicVoltage positionVoltage = new MotionMagicVoltage(0.);
     private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
@@ -20,7 +20,7 @@ public class ClimberIOPhoenix6 implements ClimberIO{
     ClimberIOPhoenix6(){
         motorConfig();
         liftMotor.setPosition(0.);
-        lockMotor.setPosition(0.); //TODO
+        // lockMotor.setPosition(0.); //TODO
     }
 
     private void motorConfig(){
@@ -46,7 +46,7 @@ public class ClimberIOPhoenix6 implements ClimberIO{
         configs.MotionMagic.MotionMagicCruiseVelocity = ClimberConstants.ClimberMaxVelocity;
 
         liftMotor.getConfigurator().apply(configs);
-        lockMotor.getConfigurator().apply(configs);
+        // lockMotor.getConfigurator().apply(configs);
     }
 
     @Override
@@ -64,10 +64,10 @@ public class ClimberIOPhoenix6 implements ClimberIO{
         resetRotation(0);
     }
 
-    @Override
-    public void setLockRPS(double rps){
-        lockMotor.setControl(dutycycle.withVelocity(rps)); //TODO
-    }
+    // @Override
+    // public void setLockRPS(double rps){
+    //     lockMotor.setControl(dutycycle.withVelocity(rps)); //TODO
+    // }
 
     @Override
     public void updateInputs(ClimberIOInputs inputs){
@@ -81,14 +81,14 @@ public class ClimberIOPhoenix6 implements ClimberIO{
         inputs.liftMotorPositionRotations = liftMotor.getPosition().getValueAsDouble();
         inputs.liftMotorVoltageVolts = liftMotor.getMotorVoltage().getValueAsDouble();
 
-        inputs.lockMotorConnected = BaseStatusSignal.refreshAll(
-            lockMotor.getVelocity(),
-            lockMotor.getMotorVoltage(),
-            lockMotor.getPosition()
-        ).isOK();
+        // inputs.lockMotorConnected = BaseStatusSignal.refreshAll(
+        //     lockMotor.getVelocity(),
+        //     lockMotor.getMotorVoltage(),
+        //     lockMotor.getPosition()
+        // ).isOK();
 
-        inputs.lockMotorVelocityRPS = lockMotor.getVelocity().getValueAsDouble();
-        inputs.lockMotorPositionRotations = lockMotor.getPosition().getValueAsDouble();
-        inputs.lockMotorVoltageVolts = lockMotor.getMotorVoltage().getValueAsDouble();
+        // inputs.lockMotorVelocityRPS = lockMotor.getVelocity().getValueAsDouble();
+        // inputs.lockMotorPositionRotations = lockMotor.getPosition().getValueAsDouble();
+        // inputs.lockMotorVoltageVolts = lockMotor.getMotorVoltage().getValueAsDouble();
     }
 }

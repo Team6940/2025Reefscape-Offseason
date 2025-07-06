@@ -1,6 +1,6 @@
 {
   "java.configuration.updateBuildConfiguration": "automatic",
-  "java.server.launchMode": "Standard",
+  "java.server.launchMode": "Hybrid",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -26,7 +26,7 @@
     },
   ],
   "java.test.defaultConfig": "WPIlibUnitTests",
-  "java.import.gradle.annotationProcessing.enabled": false,
+  "java.import.gradle.annotationProcessing.enabled": true,
   "java.completion.favoriteStaticMembers": [
     "org.junit.Assert.*",
     "org.junit.Assume.*",
@@ -56,5 +56,7 @@
     "edu.wpi.first.math.proto.*",
     "edu.wpi.first.math.**.proto.*",
     "edu.wpi.first.math.**.struct.*",
-  ]
+  ],
+  "java.jdt.ls.vmargs": "",
+  "java.debug.settings.onBuildFailureProceed": true
 }

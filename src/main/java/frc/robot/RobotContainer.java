@@ -86,11 +86,12 @@ public class RobotContainer {
         chassis.registerTelemetry(logger::telemeterize);
 
         chassis.setDefaultCommand(
+                    // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
             // chassis will execute this command periodically
             chassis.applyRequest(() -> drive
-                    .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.)    //TODO: change speed here
-                    .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.)  //TODO: change speed here
-                    .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.)//TODO: change speed here
+                    .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.)
+                    .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.)
+                    .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.)
             ));//Left Stick
 
         /**
@@ -99,17 +100,17 @@ public class RobotContainer {
          * Right Stick: Rotation
          * 
          * Left bumper: Hybrid Intake (deploy the ground intake and stop after releasing the bumper)
-         * Left trigger: Algae Intake   ///
-         * Right Bumper: Hybrid Scoring   ///
-         * Right Trigger: Algae Scoring   ///
+         * Left trigger: Algae Intake
+         * Right Bumper: Hybrid Scoring
+         * Right Trigger: Algae Scoring
          * 
-         * Left Stick Pressed: Extend Climber (toggle command) & Climb Release (press again)   ///
-         * Right Stick Pressed: Retract Climber   ///
+         * Left Stick Pressed: Extend Climber (toggle command) & Climb Release (press again)
+         * Right Stick Pressed: Retract Climber
          * 
-         * X: Reset Gyro   ///
-         * Y: System Initialize (Reset All Subsystems)   ///TODO
+         * X: Reset Gyro
+         * Y: System Initialize (Reset All Subsystems)
          * A: (Auto) Confirm Coral Scoring Position Selection   
-         * B: Drive To Net Scoring Point   ///(written in command)
+         * B: Drive To Net Scoring Point
          *  
          * povDown: (Auto) Select Mid2Algae ///
          * povUP: None    ///
@@ -157,15 +158,13 @@ public class RobotContainer {
         
         
         //PLEASE DISABLE ALL OTHER FUNCTIONS WHEN STARTING TO TEST ONE FUNC.
-
-
-
+        //PLEASE COMMENT OUT ALL CODES FOR TESTING AFTER TEST IS ALL DONE.
 
 
         // /* ---------------------------------------- DRIVER CONTROLLER ----------------------------------------*/
         // /* Sticks */  
         // // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
-        // driverController.leftStick().toggleOnTrue(new SemiAutoClimbCommand(Button.kLeftStick,Button.kRightStick)); // TODO change configure bindings
+        // driverController.leftStick().toggleOnTrue(new SemiAutoClimbCommand(Button.kLeftStick,Button.kRightStick)); // TODO change configure bindin
 
         // /* Bumpers & Triggers */
         // driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralScoreCommand(Button.kRightBumper)));
@@ -206,8 +205,7 @@ public class RobotContainer {
         // operatorController.povRight().onTrue(superStructure.runOnce(() -> superStructure.changeOperatorReefFaceIndex(Selection.RIGHT)));
 
 
-        ///THOSE ARE FOR TESTING.-------------------------------------------------------------------------------------------
-        
+        ///THOSE ARE FOR TESTING.-------------------------------------------------------------------------------------------    
 
         // driverController.leftTrigger().whileTrue(new ToggleIntake(grArm, intaker)); 
         // driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));//This needs to be changed
@@ -222,7 +220,7 @@ public class RobotContainer {
         driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
         driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));
         driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[3]));
-        driverController.povDown().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[4]));
+        driverController.povDow().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[4]));
         //------------------------------------------------------------------------------------------------------------------
     }
 

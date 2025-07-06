@@ -21,11 +21,11 @@ public interface ClimberIO {
         public double liftMotorPositionRotations;
         public double liftMotorVelocityRPS;
 
-        public double lockMotorCurrentAmps;
-        public boolean lockMotorConnected;
-        public double lockMotorVoltageVolts;
-        public double lockMotorPositionRotations;
-        public double lockMotorVelocityRPS;
+        // public double lockMotorCurrentAmps;
+        // public boolean lockMotorConnected;
+        // public double lockMotorVoltageVolts;
+        // public double lockMotorPositionRotations;
+        // public double lockMotorVelocityRPS;
 
         // public double ClimberHeight;
         // public double ClimberVelocity;

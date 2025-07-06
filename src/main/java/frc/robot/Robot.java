@@ -60,9 +60,9 @@ public class Robot extends LoggedRobot { //TODO
   public void disabledPeriodic() {
       /*
        * for cycle selecting through 3 auto choices and select the autonomous command:
-       * 1. Up3Corals
+       * 1. Up4Corals
        * 2. Mid1Coral
-       * 3. Down3Corals
+       * 3. Down4Corals
        * 
        * (for more info look up in AutoGenerator.java)
        * autoChoice : keep track of the current selection.

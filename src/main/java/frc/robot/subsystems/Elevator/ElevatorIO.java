@@ -4,7 +4,6 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface ElevatorIO {
 
-    /* PUT INITIALIZES HERE */
     public void setHeight(double targetHeight);
 
     public void resetHeight(double _height);

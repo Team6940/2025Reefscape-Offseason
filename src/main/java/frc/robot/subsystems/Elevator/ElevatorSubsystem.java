@@ -69,13 +69,11 @@ public class ElevatorSubsystem extends SubsystemBase{
         io.updateInputs(inputs);
         Logger.processInputs("Elevator", inputs);
         Logger.recordOutput("Elevator/TargetHeight", targetHeight);
-        //TODO Logger
     }
 
     public void processDashboard(){
         SmartDashboard.putNumber("Elevator/Height", inputs.ElevatorHeight);
         SmartDashboard.putNumber("Elevator/Rotation", inputs.leftMotorPositionRotations);
-        //TODO SmartDashboard
     }
 
     @Override
