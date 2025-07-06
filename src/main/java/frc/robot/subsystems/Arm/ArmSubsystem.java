@@ -46,7 +46,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isAtTargetPositon() {
-        return MathUtil.isNear(targetPosition, inputs.ArmPositionDegs, ArmConstants.ArmPositionToleranceDegs);
+        return MathUtil.isNear(targetPosition, inputs.armPositionDegs, ArmConstants.ArmPositionToleranceDegs);
     }
 
     public boolean isAtSecuredPosition() {
@@ -71,7 +71,7 @@ public class ArmSubsystem extends SubsystemBase {
      * @return the current position of the arm in degrees.
      */
     public double getArmPosition() {
-        return inputs.ArmPositionDegs;
+        return inputs.armPositionDegs;
     }
 
     /**
@@ -80,7 +80,7 @@ public class ArmSubsystem extends SubsystemBase {
      * @param angleDegs in degrees
      */
     public void rotateArm(double angleDegs) {
-        double position = inputs.ArmPositionDegs + angleDegs;
+        double position = inputs.armPositionDegs + angleDegs;
         setPosition(position);
     }
 
