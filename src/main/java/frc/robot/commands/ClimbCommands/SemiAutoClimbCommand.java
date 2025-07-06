@@ -84,14 +84,15 @@ public class SemiAutoClimbCommand extends Command{
 
     private void extend() {
         climber.setPosition(ClimberConstants.ClimberExtensionPos);
+        elevator.setHeight(FieldConstants.ElevatorClimbHeight); //for keeping balance
         arm.setPosition(FieldConstants.ArmClimbPositionDegs); //for keeping balance while climbing //TODO set height / clockwise or conter_clockwise
         chassis.driveFieldCentric(controller, DriveConstants.defaultDrivePower);
         if(climber.isAtTargetRotation() && controller.getButton(toggleButton)){
-        // pushTransform=pushTransform.rotateBy(Rotation2d.k180deg);//2025.3.14 rotatethe push and pull transform
+        // pushTransform=pushTransform.rotateBy(Rotation2d.k180deg);//rotate the push and pull transform
         // retreatTransform=pushTransform.rotateBy(Rotation2d.k180deg);
             poseToPush = new Pose2d(
                     chassis.getPose().getTranslation().plus(pushTransform),
-                    DriverStation.getAlliance().get() == Alliance.Red? Rotation2d.kZero : Rotation2d.k180deg//2025.3.14
+                    DriverStation.getAlliance().get() == Alliance.Red? Rotation2d.kZero : Rotation2d.k180deg
             );
             poseToRetreat = new Pose2d(
                     chassis.getPose().getTranslation().plus(retreatTransform),
@@ -103,7 +104,7 @@ public class SemiAutoClimbCommand extends Command{
 
     private void push(){
         chassis.hybridMoveToPose(poseToPush, controller, 0.15, 15.); //TODO need to change position
-        climber.lockMotorSetRPS(ClimberConstants.LockMotorRPS);
+        // climber.lockMotorSetRPS(ClimberConstants.LockMotorRPS);
         if( controller.getButton(retractButton) ){ //if retract button is pressed, retract
             state = ClimbState.RETRACTING;
         };
@@ -124,7 +125,7 @@ public class SemiAutoClimbCommand extends Command{
         chassis.brake();
         // climber.setPosition(ClimberConstants.ClimberExtensionPos);
         climber.setPosition(ClimberConstants.ClimberDefaultPos);
-        climber.lockMotorSetRPS(0.0); //TODO: stop lock motor
+        // climber.lockMotorSetRPS(0.0); //TODO: stop lock motor
         // elevator.setHeight(0);
     }
 
