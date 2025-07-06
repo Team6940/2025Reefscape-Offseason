@@ -225,7 +225,7 @@ public class RobotContainer {
         driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
         driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));
         driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[3]));
-        driverController.povDow().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[4]));
+        driverController.povDown().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[4]));
         //------------------------------------------------------------------------------------------------------------------
     }
 
