@@ -1,5 +1,6 @@
-package frc.robot.commands;
+package frc.robot.commands.TestCommands;
 
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,7 +22,7 @@ public class ToggleElevatorTest extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        elevator.setHeight(0);
+        elevator.setHeight(ElevatorConstants.IdleHeight); // Reset to idle height when command ends
     }
 
     public boolean isFinished(){

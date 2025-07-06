@@ -133,6 +133,7 @@ public class SuperStructure extends SubsystemBase{
             if(!chassis.isFacingReefCenter())
             {
                 return new ReversedCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton).withSelection(driverSelection);
+                //If the robot is not facing directly at the reef, it should do a reversed score to avoid its arm hitting the reef
             }
             else{
                 return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton).withSelection(driverSelection);
@@ -148,7 +149,7 @@ public class SuperStructure extends SubsystemBase{
     }
 
     public Command getHybridAlgaeIntakeCommand(Button executionButton) {
-        return new AlgaeHybridIntake(chassis.generateAlgaeIntakeIndex(), m_targetALgaeIntakeLevelIndex, executionButton); //TODO
+        return new AlgaeHybridIntake(chassis.generateAlgaeIntakeIndex(), executionButton); //TODO
     }
 
     public Command getCoralAlignSequenceCommand() {

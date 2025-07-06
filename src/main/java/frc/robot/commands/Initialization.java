@@ -56,7 +56,7 @@ public class Initialization extends Command {
         if (!driverController.getButton(m_toggleButton)){
             shooter.stop();
             arm.setPosition(0);//TODO
-            elevator.setHeight(0);
+            elevator.setHeight(ElevatorConstants.IdleHeight);
 
             intaker.setRPS(0);
             indexer.setRPS(0);
@@ -66,7 +66,7 @@ public class Initialization extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        elevator.setHeight(0);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         arm.setPosition(0);
         shooter.setRPS(0);
         grArm.setPosition(Constants.GrArmConstants.RetractedPosition);

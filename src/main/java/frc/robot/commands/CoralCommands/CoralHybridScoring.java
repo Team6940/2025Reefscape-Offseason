@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
@@ -57,7 +58,7 @@ public class CoralHybridScoring extends Command {
         targetHeight = FieldConstants.ElevatorHeights[m_targetReefLevelIndex];
         targetAngle = FieldConstants.ArmAngles[m_targetReefLevelIndex];
         targetRotation = FieldConstants.ReefRotationAdjustmentRange[m_targetReefLevelIndex];
-        elevator.setHeight(0);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
 
     }
 
@@ -87,9 +88,13 @@ public class CoralHybridScoring extends Command {
     public void align() {
         SmartDashboard.putString("CORAL Hybrid Scoring State", "ALIGNING");
         if (chassis.isAtTargetPose() && driverController.getButton(m_executionButton)) { // TODO
-            elevator.setHeight(targetHeight);
             arm.setPosition(targetAngle);
-            state = ScoringState.PUSHING;
+            if (arm.isAtSecuredPosition()) {
+                elevator.setHeight(targetHeight);
+            }
+            if (elevator.isAtTargetHeight()) {
+                state = ScoringState.PUSHING;
+            }
             SmartDashboard.putString("CORAL hybrid Scoring State", "ALIGNING complete, moving to PUSHING");
         }
     }
@@ -143,7 +148,7 @@ public class CoralHybridScoring extends Command {
         // When in position, reset systems and end
         if (chassis.isAtPose(departPose)) {
             arm.setPosition(0);
-            elevator.setHeight(0);
+            elevator.setHeight(ElevatorConstants.IdleHeight);
             shooter.stop();
             state = ScoringState.END;
             SmartDashboard.putString("CORAL hybrid Scoring State", "DEPARTING complete, moving to END");
@@ -155,7 +160,7 @@ public class CoralHybridScoring extends Command {
         if (interrupted)
             SmartDashboard.putString("CORAL hybrid Scoring State", "END due to interruption");
         arm.reset();
-        elevator.setHeight(0);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         shooter.stop();
     }
 

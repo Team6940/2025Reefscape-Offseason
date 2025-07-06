@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
@@ -29,7 +30,6 @@ public class AlgaeHybridIntake extends Command {
     }
 
     private int m_targetReefFaceIndex;
-    private int m_targetAlgaeHeightIndex;
     private Button m_executionButton;
     IntakeState state;
 
@@ -43,9 +43,8 @@ public class AlgaeHybridIntake extends Command {
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
-    public AlgaeHybridIntake(int targetReefFaceIndex, int targetAlgaeHeightIndex, Button executionButton) {
+    public AlgaeHybridIntake(int targetReefFaceIndex, Button executionButton) {
         addRequirements(elevator, shooter, chassis, arm);
-        m_targetAlgaeHeightIndex = targetAlgaeHeightIndex;
         m_targetReefFaceIndex = targetReefFaceIndex;
         m_executionButton = executionButton;
     }
@@ -54,9 +53,9 @@ public class AlgaeHybridIntake extends Command {
     public void initialize() {
         state = IntakeState.ALIGNING;
         targetPose = chassis.generateAlgaeIntakePose(m_targetReefFaceIndex);
-        targetHeight = FieldConstants.ElevatorAlgaeIntakeHeight[m_targetAlgaeHeightIndex];
-        targetAngle = FieldConstants.ArmIntakePosition[m_targetAlgaeHeightIndex];
-        elevator.setHeight(0);
+        targetHeight = FieldConstants.ElevatorAlgaeIntakeHeight[m_targetReefFaceIndex];
+        targetAngle = FieldConstants.ArmIntakePosition[m_targetReefFaceIndex];
+        elevator.setHeight(ElevatorConstants.IdleHeight);
     }
 
     @Override
@@ -83,8 +82,10 @@ public class AlgaeHybridIntake extends Command {
 
     public void align() {
         if (chassis.getToPoseDistance(targetPose) < FieldConstants.AlgaeAlignmentDistanceThreshold) {
-            elevator.setHeight(targetHeight);
             arm.setPosition(targetAngle);
+            if(arm.isAtSecuredPosition()){
+                elevator.setHeight(targetHeight);
+            }
         }
         if (chassis.isAtTargetPose() && driverController.getButton(m_executionButton)) {
             state = IntakeState.PUSHING;
@@ -99,6 +100,7 @@ public class AlgaeHybridIntake extends Command {
         Pose2d pushPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
                 currentPose.getRotation());
         // Move to push position
+        shooter.setRPS(ShooterConstants.AlgaeIntakingRPS);
         chassis.autoMoveToPose(pushPose);
 
         if (chassis.isAtPose(pushPose) && driverController.getButton(m_executionButton)) {
@@ -117,7 +119,7 @@ public class AlgaeHybridIntake extends Command {
         chassis.autoMoveToPose(targetPose);
         if (chassis.isAtPose(targetPose)) {
             arm.setPosition(FieldConstants.ArmAlgaeStowPosition);
-            elevator.setHeight(0);
+            elevator.setHeight(ElevatorConstants.IdleHeight);
             // shooter.stop();
             shooter.setRPS(ShooterConstants.HoldingAlgaeRPS); //get hold of the coral in case the robot throws it out accidently
             state = IntakeState.END;
@@ -127,8 +129,7 @@ public class AlgaeHybridIntake extends Command {
     @Override
     public void end(boolean interrupted) {
         arm.reset();
-        elevator.setHeight(0);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         shooter.stop();
-
     }
 }
