@@ -3,3 +3,13 @@
     OPERATOR CONTROLLER
 2.COMMANDS(ALGAE+GROUND INTAKE) + ROBOT CONTAINER//Ground Intake finished on 6.22
 3.AUTOS //TODO
+
+// TODO: it's possible to use HybridCommands directly instead of FollowPath in
+    // order to save time
+    // TODO: This needs to be determined after tests
+
+    // TODO: Some FollowPath Poses needs to be carefully calculated to make sure
+    // it is exactly the same as what CoralHybridScoring calculates
+
+    // TODO: Some Paths' contraints should be removed or modified to make the bot
+    // run faster

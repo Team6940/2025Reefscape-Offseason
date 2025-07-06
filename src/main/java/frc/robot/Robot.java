@@ -60,26 +60,26 @@ public class Robot extends LoggedRobot { //TODO
   public void disabledPeriodic() {
       /*
        * for cycle selecting through 3 auto choices and select the autonomous command:
-       * 1. Up3Corals
+       * 1. Up4Corals
        * 2. Mid1Coral
-       * 3. Down3Corals
+       * 3. Down4Corals
        * 
        * (for more info look up in AutoGenerator.java)
        * autoChoice : keep track of the current selection.
        * The autoCommand variable is updated with the new command based on the autoChoice.
       */
-    if(RobotContainer.traditionalDriverController.getXButtonPressed()){
+    if(RobotContainer.traditionalDriverController.getPOV() == 90){
       autoChoice = MUtils.cycleNumber(autoChoice, 1, 3, -1);
       autoCommand = AutoGenerator.generate(autoChoice);
       /*
-       * press X and autoChoice -1 
+       * press povRight and autoChoice -1 
       */
     }
-    if(RobotContainer.traditionalDriverController.getBButtonPressed()){
+    if(RobotContainer.traditionalDriverController.getPOV()==270){
       autoChoice = MUtils.cycleNumber(autoChoice, 1, 3, 1);
       autoCommand = AutoGenerator.generate(autoChoice);
       /*
-       * press B and autoChoice +1
+       * press povLeft and autoChoice +1
       */
     }
     switch(autoChoice){
@@ -87,13 +87,13 @@ public class Robot extends LoggedRobot { //TODO
       //Display autoChoice on your SmartDashboard
 
       case 1:
-        SmartDashboard.putString("AutoType", "Up3Corals");
+        SmartDashboard.putString("AutoType", "Up4Corals");
         break;
       case 2:
-        SmartDashboard.putString("AutoType", "Mid1Coral");
+        SmartDashboard.putString("AutoType", "Mid2Algae");
         break;
       case 3:
-        SmartDashboard.putString("AutoType", "Down3Corals");
+        SmartDashboard.putString("AutoType", "Down4Corals");
         break;
     }
     
@@ -106,7 +106,7 @@ public class Robot extends LoggedRobot { //TODO
   public void autonomousInit() {
       // if(autoAlreadyRan = true) return;
       autoCommand.withTimeout(15.).schedule();
-      RobotContainer.chassis.followPPPath("1").withTimeout(3).schedule();
+      // RobotContainer.chassis.followPPPath("1").withTimeout(3).schedule();
   }
 
   @Override

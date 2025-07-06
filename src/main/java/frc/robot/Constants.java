@@ -365,6 +365,14 @@ public class Constants {
                 1.39// these data needs to be tuned
         };
 
+        public static final double ArmAnglesReversed[] = {
+            0.,
+            0.53,
+            0.475,
+            0.82,
+            1.39// these data needs to be tuned
+        };
+
         public static final double ReefRotationAdjustmentRange[] = {
                 0,
                 0,
@@ -379,14 +387,6 @@ public class Constants {
             0.475,
             0.82,
             1.39
-        };
-
-        public static final double ArmAnglesReversed[] = {
-            0.,
-            0.53,
-            0.475,
-            0.82,
-            1.39// these data needs to be tuned
         };
 
         public static final double ReefRotationAdjustmentRangeReversed[] = {
@@ -404,10 +404,11 @@ public class Constants {
 
 
         //THESE ARE FOR THE CLIMBING  //COPIED FROM 2025 REEFSCAPE
+        
         public static final double ClimbPushDis = 0.48;                             //0.48
         public static final double ClimbRetreatToDis = 0.4;        //0.272         //0.40
                                                  
-        public static final double elevatorClimbHeight = 0.29;
+        public static final double ElevatorClimbHeight = 0.; //TODO
                                                  
         public static final Pose2d BlueClimbPoses[] = {
             new Pose2d(8.3, 7.15, Rotation2d.k180deg),
@@ -415,13 +416,13 @@ public class Constants {
             new Pose2d(0, 0, Rotation2d.k180deg)
         };
 
-        public static final double AlgaeScoreTransalationX = 0;
+        public static final double AlgaeScoreTransalationX = 0; //TODO
 
-        public static final double AlgaeScoreDistanceThreshold = 0;
+        public static final double AlgaeScoreDistanceThreshold = 0; //TODO
 
-        public static final double AutomaticallyAttachDistanceThreshold = 0;
+        public static final double AutomaticallyAttachDistanceThreshold = 0; //TODO
 
-        public static final double ArmClimbPositionDegs = 0;
+        public static final double ArmClimbPositionDegs = 0; //TODO
     }
 
     public static void initializeConstants() {
