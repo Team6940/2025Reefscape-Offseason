@@ -152,8 +152,8 @@ public class RobotContainer {
         // W       W       A       RRRRRR    N     N    IIIII    N     N     GGGGGG
         // W       W      A A      R     R   NN    N      I      NN    N    G       
         // W   W   W     A   A     RRRRRR    N N   N      I      N N   N   G     GGG   
-        // W W W W W    AAAAAAA    R   R     N  N  N      I      N  N  N    G       G   
-        // W   W   W   A       A   R    R    N   N N    IIIII    N   N N     GGGGGG    
+        // W W   W W    AAAAAAA    R   R     N  N  N      I      N  N  N    G       G   
+        // W       W   A       A   R    R    N   N N    IIIII    N   N N     GGGGGG    
         
         
         //PLEASE DISABLE ALL OTHER FUNCTIONS WHEN STARTING TO TEST ONE FUNC.
@@ -214,10 +214,15 @@ public class RobotContainer {
         // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
         // driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
         
-        driverController.a().whileTrue(new ToggleArmTest(arm, 30.));
-        driverController.b().whileTrue(new ToggleArmTest(arm, 60.));
-        driverController.x().whileTrue(new ToggleArmTest(arm, 90.));
+        driverController.a().whileTrue(new ToggleArmTest(arm, -30.));
+        driverController.b().whileTrue(new ToggleArmTest(arm, -60.));
+        driverController.x().whileTrue(new ToggleArmTest(arm, -90.));
         driverController.y().whileTrue(new ToggleArmTest(arm, 0.));
+        driverController.leftBumper().whileTrue(new InstantCommand(() -> arm.zeroArmPostion()));
+        driverController.leftTrigger().whileTrue(new InstantCommand(()-> shooter.setRPS(10)));
+        driverController.rightTrigger().whileTrue(new InstantCommand(()->shooter.setRPS(-10)));
+        driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(0)));
+
 
         driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
         driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));

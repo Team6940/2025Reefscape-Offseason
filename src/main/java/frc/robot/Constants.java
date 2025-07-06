@@ -76,7 +76,7 @@ public class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int ShooterMotorID = 17;
+        public static final int ShooterMotorID = 16;
 
         public static final double kP = 0.2;
         public static final double kI = 0;
@@ -122,9 +122,9 @@ public class Constants {
     }
 
     public static final class ArmConstants {
-        public static final int ArmMotorID = 18;
+        public static final int ArmMotorID = 17;
         public static final double ArmVelocityToleranceRPS = 0.2;
-        public static final double kP = 0.5;
+        public static final double kP = 5;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kV = 0.22;
@@ -134,12 +134,12 @@ public class Constants {
         public static final double MaxVelocity = 0.5; // RPS
         public static final double Acceleration = 0.5; // RPS^2
 
-        public static final double MinDegs = -120.; // CCW Positive
-        public static final double MaxDegs = 120.; 
+        public static final double MinDegs = -15.; // CCW Positive
+        public static final double MaxDegs = 180.; 
         public static final double ArmPositionToleranceDegs = 5.;
         public static final double DroppingPositionDegs = 0;
 
-        public static final int ArmEncoderID = 0;
+        public static final int ArmEncoderID = 18;
         public static final double EncoderOffsetDegrees = 0.;
         public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.CounterClockwise_Positive; //TODO
         public static final double SecuredPosition = 0;
