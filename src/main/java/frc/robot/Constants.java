@@ -21,7 +21,28 @@ public class Constants {
     public static class GlobalConstants {
         public final static float INF = (float) Math.pow(10, 6); // this was defined for the 1690 lib
     }
-
+    public enum UpperStructureState {
+        ScoreL1(0.05, 0.99),
+        ScoreL2(0.05, 0.99),
+        ScoreL3(0.05, 0.99),
+        ScoreL4(0.05, 0.99),
+        PrepareScoreL1(0.05, 0.99),
+        PrepareScoreL2(0.05, 0.99),
+        PrepareScoreL3(0.05, 0.99),
+        PrepareScoreL4(0.05, 0.99),
+        IdleDown(0,0),
+        
+        IdleGrab(0,0),
+        IdleUp(0,0);
+  
+        public final double elevator_height;
+        public final double arm_Angle;
+  
+        UpperStructureState(double elevator_height, double arm_theta) {
+          this.elevator_height = elevator_height;
+          this.arm_Angle = arm_theta;
+        }
+    }
     public static class DriveConstants {
         public final static double kInnerDeadband = 0.004;
         public final static double kOuterDeadband = 0.98; // these were defined for the 1706 lib;
