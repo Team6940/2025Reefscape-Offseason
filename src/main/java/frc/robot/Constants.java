@@ -264,6 +264,7 @@ public class Constants {
         public static final double IntakingHeight = 0.3;
         public static final double DroppingHeight = 0.;
         public static final double IdleHeight = 0.3;//TODO
+        public static final double GrabbingHeight = 0;
 
     }
 
@@ -329,7 +330,7 @@ public class Constants {
 
         public static final double AlgaeIntakePushDistance=1.5;
 
-        public static final double ArmAlgaeStowPosition=0.;//TODO
+        public static final double ArmStowPosition=0.;//TODO
 
         public static final double PushDistance=1.;
         
