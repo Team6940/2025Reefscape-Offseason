@@ -5,6 +5,7 @@ import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Arm.ArmSubsystem;
@@ -12,7 +13,7 @@ import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem.IndexerState;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class CoralAlignSequence extends Command {
+public class NewCoralAlignSequence extends Command {
     enum IntakeState {
         ALIGNING,
         GRABBING,
@@ -26,7 +27,7 @@ public class CoralAlignSequence extends Command {
     ArmSubsystem arm = ArmSubsystem.getInstance();
     IndexerSubsystem indexer = IndexerSubsystem.getInstance();
 
-    public CoralAlignSequence() {
+    public NewCoralAlignSequence() {
         addRequirements(shooter, elevator, arm, indexer);
     }
 
@@ -63,11 +64,14 @@ public class CoralAlignSequence extends Command {
 
     private void grab() {
         arm.reset();
-        elevator.zeroHeight();
+        elevator.setHeight(ElevatorConstants.GrabbingHeight);;
         if (shooter.getShooterState() == ShooterState.READY) {
-            shooter.setRPS(ShooterConstants.HoldingCoralRPS); //get hold of the coral in case the robot throws it out accidently
-            elevator.setHeight(0);//TODO
-            state = IntakeState.END;
+            shooter.stop();; //get hold of the coral in case the robot throws it out accidently
+            arm.setPosition(FieldConstants.ArmStowPosition);
+            if(arm.isAtSecuredPosition()){
+                elevator.setHeight(0);
+            }
+            state=IntakeState.END;
         }
 
     }

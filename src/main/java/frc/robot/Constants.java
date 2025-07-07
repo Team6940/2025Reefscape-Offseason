@@ -153,24 +153,24 @@ public class Constants {
     public static final class ArmConstants {
         public static final int ArmMotorID = 17;
         public static final double ArmVelocityToleranceRPS = 0.2;
-        public static final double kP = 11.;
+        public static final double kP = 64.;
         public static final double kI = 0.;
-        public static final double kD = 0.1;
+        public static final double kD = 0.;
         public static final double kV = 0.;
-        public static final double kS = 0.8;
-        public static final double kG = 2.1; // gravity
-        public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
-        public static final double MaxVelocity = 0.5; // RPS
-        public static final double Acceleration = 0.5; // RPS^2
+        public static final double kS = 0.32;
+        public static final double kG = 0.66; // gravity
+        public static final InvertedValue Inverted = InvertedValue.CounterClockwise_Positive;
+        public static final double MaxVelocity = 0.3; // RPS
+        public static final double Acceleration = 1; // RPS^2
 
-        public static final double MinDegs = -180; // CCW Positive
-        public static final double MaxDegs = 180.; 
+        public static final double MinDegs = -240.; // CCW Positive
+        public static final double MaxDegs = -80.; 
         public static final double ArmPositionToleranceDegs = 5.;
-        public static final double DroppingPositionDegs = 0;
+        public static final double DroppingPositionDegs = 0.;
 
         public static final int ArmEncoderID = 18;
-        public static final double EncoderOffsetDegrees = -88.857 - 90.;
-        public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.CounterClockwise_Positive; //TODO
+        public static final double EncoderOffsetDegrees = 1.3;
+        public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.Clockwise_Positive; //TODO
         public static final double SecuredPosition = 0;
         public static final double encoderToMechanismRatio=1.;
     }
@@ -272,6 +272,7 @@ public class Constants {
         public static final double IntakingHeight = 0.3;
         public static final double DroppingHeight = 0.;
         public static final double IdleHeight = 0.3;//TODO
+        public static final double GrabbingHeight = 0;
 
     }
 
@@ -337,7 +338,7 @@ public class Constants {
 
         public static final double AlgaeIntakePushDistance=1.5;
 
-        public static final double ArmAlgaeStowPosition=0.;//TODO
+        public static final double ArmStowPosition=0.;//TODO
 
         public static final double PushDistance=1.;
         

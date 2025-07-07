@@ -147,7 +147,7 @@ public class CoralHybridScoring extends Command {
         shooter.setRPS(ShooterConstants.CoralScoringRPS);
         // When in position, reset systems and end
         if (chassis.isAtPose(departPose)) {
-            arm.setPosition(0);
+            arm.reset();
             elevator.setHeight(ElevatorConstants.IdleHeight);
             shooter.stop();
             state = ScoringState.END;
