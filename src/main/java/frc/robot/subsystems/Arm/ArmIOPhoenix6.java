@@ -24,7 +24,6 @@ import frc.robot.subsystems.Arm.ArmIO.ArmIOInputs.EncoderMagnetHealth;
 public class ArmIOPhoenix6 implements ArmIO {
     private static TalonFX motor;
     private static CANcoder encoder;
-    private static double m_offset = 0.;
 
     private static MotionMagicVoltage m_request = new MotionMagicVoltage(0.);
 
@@ -63,13 +62,12 @@ public class ArmIOPhoenix6 implements ArmIO {
 
         motor.getConfigurator().apply(config);
 
-        zeroArmPostion();
     }
 
     private void encoderConfig() {
         encoder = new CANcoder(ArmConstants.ArmEncoderID, "rio");
         CANcoderConfiguration config = new CANcoderConfiguration();
-        config.MagnetSensor.MagnetOffset = ArmConstants.EncoderOffsetDegrees;
+        config.MagnetSensor.MagnetOffset = Units.degreesToRotations(ArmConstants.EncoderOffsetDegrees);
         config.MagnetSensor.SensorDirection = ArmConstants.EncoderDirection;
         encoder.getConfigurator().apply(config);
     }
@@ -130,7 +128,7 @@ public class ArmIOPhoenix6 implements ArmIO {
         ArmInputs.motorCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
         ArmInputs.armPositionDegs = Units.rotationsToDegrees(motor.getPosition().getValueAsDouble());
 
-        ArmInputs.encoderPositionDegs = encoder.getPosition().getValueAsDouble();
+        ArmInputs.encoderPositionDegs = Units.rotationsToDegrees(encoder.getPosition().getValueAsDouble());
         
     }
 }

@@ -41,7 +41,7 @@ public class Down4Corals extends SequentialCommandGroup {
                     .resetPose(chassis.generatePPPath("RBM-9").flipPath().getStartingHolonomicPose().get())));
         } // set the orignal pose
 
-        addCommands(chassis.followPPPath("RMB-9"));
+        addCommands(chassis.followPPPath("RBM-9"));
         addCommands(new CoralHybridScoring(9, 4, Button.kAutoButton).withTimeout(1));// score 9
 
         addCommands(chassis.followPPPath("9-RSR").raceWith(new AutoIntakeCoral()));// intake

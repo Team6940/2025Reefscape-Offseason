@@ -51,14 +51,14 @@ public class RobotContainer {
     public static final ImprovedCommandXboxController operatorController = new ImprovedCommandXboxController(1);
     public static final XboxController traditionalDriverController = new XboxController(0);
 
-    public static final SuperStructure superStructure = SuperStructure.getInstance();
+    // public static final SuperStructure superStructure = SuperStructure.getInstance();
     public static final CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     public static final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     public static final ArmSubsystem arm = ArmSubsystem.getInstance();
     public static final ShooterSubsystem shooter = ShooterSubsystem.getInstance();
-    public static final ClimberSubsystem climber = ClimberSubsystem.getInstance();
-    public static final GrArmSubsystem grArm = GrArmSubsystem.getInstance();
-    public static final IntakerSubsystem intaker = IntakerSubsystem.getInstance();
+    // public static final ClimberSubsystem climber = ClimberSubsystem.getInstance();
+    // public static final GrArmSubsystem grArm = GrArmSubsystem.getInstance();
+    // public static final IntakerSubsystem intaker = IntakerSubsystem.getInstance();
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -85,14 +85,14 @@ public class RobotContainer {
         /* DEFAULT COMMANDS */  // TODO
         chassis.registerTelemetry(logger::telemeterize);
 
-        chassis.setDefaultCommand(
-                    // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
-            // chassis will execute this command periodically
-            chassis.applyRequest(() -> drive
-                    .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.)
-                    .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.)
-                    .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.)
-            ));//Left Stick
+        // chassis.setDefaultCommand(
+        //             // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
+        //     // chassis will execute this command periodically
+        //     chassis.applyRequest(() -> drive
+        //             .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.)
+        //             .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.)
+        //             .withRotationalRate(-driverController.getRightX() * MaxAngularRate / 1.)
+        //     ));//Left Stick
 
         /**
          * Driver Controller:
@@ -153,8 +153,8 @@ public class RobotContainer {
         // W       W       A       RRRRRR    N     N    IIIII    N     N     GGGGGG
         // W       W      A A      R     R   NN    N      I      NN    N    G       
         // W   W   W     A   A     RRRRRR    N N   N      I      N N   N   G     GGG   
-        // W W W W W    AAAAAAA    R   R     N  N  N      I      N  N  N    G       G   
-        // W   W   W   A       A   R    R    N   N N    IIIII    N   N N     GGGGGG    
+        // W W   W W    AAAAAAA    R   R     N  N  N      I      N  N  N    G       G   
+        // W       W   A       A   R    R    N   N N    IIIII    N   N N     GGGGGG    
         
         
         //PLEASE DISABLE ALL OTHER FUNCTIONS WHEN STARTING TO TEST ONE FUNC.
@@ -212,15 +212,20 @@ public class RobotContainer {
         // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
         // driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
         
-        driverController.a().whileTrue(new ToggleArmTest(arm, 30.));
-        driverController.b().whileTrue(new ToggleArmTest(arm, 60.));
-        driverController.x().whileTrue(new ToggleArmTest(arm, 90.));
-        driverController.y().whileTrue(new ToggleArmTest(arm, 0.));
 
-        driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
-        driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));
-        driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[3]));
-        driverController.povDow().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[4]));
+        //driverController.leftTrigger().whileTrue(new InstantCommand(()-> shooter.setRPS(10)));
+        // driverController.rightTrigger().whileTrue(new InstantCommand(()->shooter.setRPS(-20)));
+        // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(0)));
+
+        //driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-80.)));
+        driverController.b().whileTrue(new InstantCommand(()->arm.setPosition(-80.)));
+        driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-90.)));
+        driverController.x().whileTrue(new InstantCommand(()->arm.setPosition(-110.)));
+
+        // driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
+        // driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));
+        // driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[3]));
+        // driverController.povDown().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[4]));
         //------------------------------------------------------------------------------------------------------------------
     }
 
