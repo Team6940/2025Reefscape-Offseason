@@ -33,7 +33,7 @@ public class CoralAlignSequence extends Command {
     @Override
     public void initialize() {
         state = IntakeState.ALIGNING;
-        arm.setPosition(0); // Adjust as necessary for your arm's initial position
+        arm.reset(); // Adjust as necessary for your arm's initial position
         shooter.setRPS(0);
     }
 

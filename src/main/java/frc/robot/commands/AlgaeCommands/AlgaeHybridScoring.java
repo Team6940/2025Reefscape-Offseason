@@ -127,7 +127,7 @@ public class AlgaeHybridScoring extends Command {
         chassis.autoMoveToPose(targetPose);
         // When in position, reset systems and end
         if (chassis.isAtPose(targetPose)) {
-            arm.setPosition(0);
+            arm.reset();
             elevator.setHeight(ElevatorConstants.IdleHeight);
             shooter.stop();
             state = ScoringState.END;
