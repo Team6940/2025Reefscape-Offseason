@@ -6,10 +6,12 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.UpperStructureState;
 import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
@@ -34,8 +36,10 @@ public class NewReversedCoralHybridScoring extends Command {
     ScoringState state;
 
     Pose2d targetPose;
-    double targetHeight;
-    double targetAngle;
+    double aimHeight;
+    double aimAngle;
+    double scoreHeight;
+    double scoreAngle;
     double targetRotation;
 
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
@@ -56,10 +60,11 @@ public class NewReversedCoralHybridScoring extends Command {
     public void initialize() {
         state = ScoringState.ALIGNING;
         targetPose = chassis.generateReefPoseReversed(m_targetReefPoseIndex);
-        targetHeight = FieldConstants.ElevatorHeightsReversed[m_targetReefLevelIndex];
-        targetAngle = FieldConstants.ArmAnglesReversed[m_targetReefLevelIndex];
+        aimHeight = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).elevator_height;
+        aimAngle = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).arm_Angle;
+        scoreHeight=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).elevator_height;
+        scoreAngle=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).arm_Angle;
         targetRotation = FieldConstants.ReefRotationAdjustmentRangeReversed[m_targetReefLevelIndex];
-        elevator.setHeight(ElevatorConstants.IdleHeight);
     }
 
     @Override
@@ -82,15 +87,16 @@ public class NewReversedCoralHybridScoring extends Command {
     }
 
     public void align() {
-        elevator.setHeight(targetHeight);
-        arm.setPosition(targetAngle);
+        elevator.setHeight(aimHeight);
+        arm.setPosition(aimAngle);
         if (arm.isAtTargetPositon()) {
             state = ScoringState.SCORING;
         }
     }
 
     public void score() {
-        arm.rotateArm(targetAngle);
+        arm.setPosition(scoreAngle);
+        elevator.setHeight(scoreHeight);
     }
 
     public void depart() {
@@ -104,8 +110,8 @@ public class NewReversedCoralHybridScoring extends Command {
         chassis.autoMoveToPose(departPose);// Move to retreat position
 
         if (shooter.getShooterState() == ShooterState.IDLE) {
-            arm.setPosition(0);
-            elevator.setHeight(ElevatorConstants.IdleHeight);
+            arm.setPosition(UpperStructureState.IdleDown.arm_Angle);
+            elevator.setHeight(UpperStructureState.IdleDown.elevator_height);
             shooter.stop();
             state = ScoringState.END;
             SmartDashboard.putString("CORAL hybrid Scoring State", "DEPARTING complete, moving to END");
