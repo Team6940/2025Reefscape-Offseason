@@ -19,7 +19,7 @@ import frc.robot.subsystems.SuperStructure.Selection;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 
-public class CoralHybridScoring extends Command {
+public class NewCoralHybridScoring extends Command {
     enum ScoringState {
         ALIGNING,
         PUSHING,
@@ -44,7 +44,7 @@ public class CoralHybridScoring extends Command {
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
-    public CoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button executionButton) {
+    public NewCoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button executionButton) {
         addRequirements(elevator, shooter, chassis, arm);
         m_targetReefPoseIndex = targetReefPoseIndex;
         m_targetReefLevelIndex = targetReefLevelIndex;
@@ -147,7 +147,7 @@ public class CoralHybridScoring extends Command {
         shooter.setRPS(ShooterConstants.CoralScoringRPS);
         // When in position, reset systems and end
         if (chassis.isAtPose(departPose)) {
-            arm.reset();
+            arm.setPosition(0);
             elevator.setHeight(ElevatorConstants.IdleHeight);
             shooter.stop();
             state = ScoringState.END;

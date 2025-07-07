@@ -11,7 +11,7 @@ import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
 import frc.robot.commands.CoralCommands.ReversedCoralHybridScoring;
-import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
+import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
 // import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
@@ -154,7 +154,7 @@ public class SuperStructure extends SubsystemBase{
 
     public Command getCoralAlignSequenceCommand() {
         if(intaker.isReady()){
-            return new CoralAlignSequence();
+            return new NewCoralAlignSequence();
         }
         else return null;
     }

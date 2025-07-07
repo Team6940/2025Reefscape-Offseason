@@ -58,7 +58,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void reset() {
-        setPosition(0.);
+        setPosition(-90.);// set pos vertical
     }
 
     public void setVoltage(double voltage) {
