@@ -218,9 +218,10 @@ public class RobotContainer {
         // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(0)));
 
         //driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-80.)));
-        driverController.b().whileTrue(new InstantCommand(()->arm.setPosition(-80.)));
+        driverController.b().whileTrue(new InstantCommand(()->arm.setPosition(-240.)));
         driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-90.)));
-        driverController.x().whileTrue(new InstantCommand(()->arm.setPosition(-110.)));
+        driverController.x().whileTrue(new InstantCommand(()->arm.setPosition(-135.)));
+        driverController.y().whileTrue(new InstantCommand(()->arm.setPosition(-180.)));
 
         // driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
         // driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));
