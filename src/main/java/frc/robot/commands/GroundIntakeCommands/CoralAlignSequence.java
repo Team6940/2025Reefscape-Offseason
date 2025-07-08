@@ -63,7 +63,7 @@ public class CoralAlignSequence extends Command {
 
     private void grab() {
         arm.reset();
-        elevator.zeroHeight();
+        elevator.setHeight(ElevatorConstants.GrabbingHeight);
         if (shooter.getShooterState() == ShooterState.READY) {
             shooter.setRPS(ShooterConstants.HoldingCoralRPS); //get hold of the coral in case the robot throws it out accidently
             elevator.setHeight(0);//TODO

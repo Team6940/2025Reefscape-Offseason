@@ -157,14 +157,14 @@ boolean m_isReversed;
         shooter.stop();
     }
 
-    public CoralHybridScoring withSelection(Selection selection) {
+    public NewCoralHybridScoring withSelection(Selection selection) {
         switch (selection) {
             case LEFT:
-                return new CoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 1, m_targetReefLevelIndex,
-                        m_executionButton);
+                return new NewCoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 1, m_targetReefLevelIndex,
+                        m_executionButton, m_isReversed);
             case RIGHT:
-                return new CoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 2, m_targetReefLevelIndex,
-                        m_executionButton);
+                return new NewCoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 2, m_targetReefLevelIndex,
+                        m_executionButton, m_isReversed);
 
             default:
                 return null;

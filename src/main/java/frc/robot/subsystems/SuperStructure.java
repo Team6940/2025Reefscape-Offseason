@@ -11,6 +11,9 @@ import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
 import frc.robot.commands.CoralCommands.ReversedCoralHybridScoring;
+import frc.robot.commands.CoralCommands.NewReversedCoralHybridScoring;
+import frc.robot.commands.CoralCommands.NewCoralHybridScoring;
+import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
 // import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
@@ -18,48 +21,57 @@ import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
 import frc.robot.commands.Initialization;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SuperStructure extends SubsystemBase{
+public class SuperStructure extends SubsystemBase {
 
     private static SuperStructure m_Instance = null;
+
     public static SuperStructure getInstance() {
         return m_Instance == null ? m_Instance = new SuperStructure() : m_Instance;
     }
 
-    public enum ControlState {
-        HYBRID,
-        MANUAL
+    public enum ScoreMode {
+        PUSH,
+        STOW
     }
+
     public enum Selection {
         LEFT,
         RIGHT
     }
 
-    private ControlState controlState = ControlState.HYBRID;
+    public enum RobotStatus {
+        HOLDING_CORAL,
+        HOLDING_ALGAE,
+        IDLE
+    }
+
+    private RobotStatus robotStatus = RobotStatus.IDLE;
+    private ScoreMode scoreMode = ScoreMode.STOW;
     Selection driverSelection = Selection.RIGHT;
 
     /** Subsystems */
     private CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     private IntakerSubsystem intaker = IntakerSubsystem.getInstance();
 
-    /** Variables */ //TODO
+    /** Variables */ // TODO
     private int m_targetReefPoseIndex = 1;
     private int m_targetReefLevelIndex = 4;
     private int m_targetStationPoseIndex = 1;
     private int m_operatorReefFaceIndex = 3;
     // private int m_targetStationLevelIndex = 1; //TODO
-    private int m_targetALgaeIntakeLevelIndex = 1; //TODO
+    private int m_targetALgaeIntakeLevelIndex = 1; // TODO
     private Field2d targetPoseField2d = new Field2d();
     private Field2d generatedPoseField2d = new Field2d();
     private Field2d targetStationPoseField2d = new Field2d();
     private Field2d TEMP_stationCenterPose = new Field2d();
     private Field2d operatorTargetPoseField2d = new Field2d();
 
-    public void setDriverSelection(Selection selection){
+    public void setDriverSelection(Selection selection) {
         this.driverSelection = selection;
     }
 
-    public void setControlState(ControlState newState){
-        controlState = newState;
+    public void setControlState(ScoreMode newScoreMode) {
+        scoreMode = newScoreMode;
     }
 
     public int getTargetReefLevelIndex() {
@@ -79,44 +91,49 @@ public class SuperStructure extends SubsystemBase{
     }
 
     public void setTargetAlgaeIntakeLevelIndex(int index) {
-        m_targetALgaeIntakeLevelIndex = MUtils.numberLimit(0, 1, index); //TODO 0-1
+        m_targetALgaeIntakeLevelIndex = MUtils.numberLimit(0, 1, index); // TODO 0-1
     }
 
-    public void setOperatorReefFaceIndex(int index){
+    public void setOperatorReefFaceIndex(int index) {
         m_operatorReefFaceIndex = MUtils.numberLimit(1, 6, index);
     }
 
     public void changeTargetAlgaeIntakeHeightIndex(int delta) {
-        m_targetALgaeIntakeLevelIndex = MUtils.numberLimit(0, 1, delta); //TODO 0-1
+        m_targetALgaeIntakeLevelIndex = MUtils.numberLimit(0, 1, delta); // TODO 0-1
     }
-
 
     public void changeTargetReefPoseIndex(int delta) {
-        m_targetReefPoseIndex = MUtils.numberLimit(1, 12, delta); //TODO 1-12
+        m_targetReefPoseIndex = MUtils.numberLimit(1, 12, delta); // TODO 1-12
     }
 
-    public void changeOperatorReefFaceIndex(Selection direction){ //TODO
+    public void changeOperatorReefFaceIndex(Selection direction) { // TODO
         switch (direction) {
             case LEFT:
-                switch(m_operatorReefFaceIndex){
-                    case 5: case 6:
+                switch (m_operatorReefFaceIndex) {
+                    case 5:
+                    case 6:
                         m_operatorReefFaceIndex = MUtils.cycleNumber(m_operatorReefFaceIndex, 1, 6, 1);
                         break;
-                    case 1: case 2:
+                    case 1:
+                    case 2:
                         break;
-                    case 3: case 4:
+                    case 3:
+                    case 4:
                         --m_operatorReefFaceIndex;
                         break;
                 }
                 break;
             case RIGHT:
-                switch(m_operatorReefFaceIndex){
-                    case 1: case 6:
+                switch (m_operatorReefFaceIndex) {
+                    case 1:
+                    case 6:
                         m_operatorReefFaceIndex = MUtils.cycleNumber(m_operatorReefFaceIndex, 1, 6, -1);
                         break;
-                    case 5: case 4:
+                    case 5:
+                    case 4:
                         break;
-                    case 2: case 3:
+                    case 2:
+                    case 3:
                         ++m_operatorReefFaceIndex;
                         break;
                 }
@@ -128,46 +145,93 @@ public class SuperStructure extends SubsystemBase{
         m_targetReefLevelIndex = MUtils.numberLimit(1, 4, m_targetReefLevelIndex + delta);
     }
 
-    public Command getHybridCoralScoreCommand(Button executionButton) {
-        if(chassis.getToReefCenterDistance() <= FieldConstants.AutomaticallyAttachDistanceThreshold){
-            if(!chassis.isFacingReefCenter())
-            {
-                return new ReversedCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton).withSelection(driverSelection);
-                //If the robot is not facing directly at the reef, it should do a reversed score to avoid its arm hitting the reef
+    public Command getTraditionalHybridCoralScoreCommand(Button executionButton) {
+        if (chassis.getToReefCenterDistance() <= FieldConstants.AutomaticallyAttachDistanceThreshold) {
+            if (!chassis.isFacingReefCenter()) {
+                return new ReversedCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex,
+                        executionButton).withSelection(driverSelection);
+                // If the robot is not facing directly at the reef, it should do a reversed
+                // score to avoid its arm hitting the reef
+            } else {
+                return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton)
+                        .withSelection(driverSelection);
             }
-            else{
-                return new CoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton).withSelection(driverSelection);
-            }
-        }//If the bot is near the reef, it will automatically attach to the nearest reef 'face'
+        } // If the bot is near the reef, it will automatically attach to the nearest reef
+          // 'face'
         else {
-            return new CoralHybridScoring(m_operatorReefFaceIndex * 2 - (driverSelection == Selection.LEFT ? 1 : 0), m_targetReefLevelIndex, executionButton);
-        }//Otherwise when the distance is too far, it will use the operator's selected reef face
-    }
+            return new CoralHybridScoring(m_operatorReefFaceIndex * 2 - (driverSelection == Selection.LEFT ? 1 : 0),
+                    m_targetReefLevelIndex, executionButton);
+        } // Otherwise when the distance is too far, it will use the operator's selected
+          // reef face
+    }// This Command returns a CoralScore Command with push, so multiple factors
+     // decide the way of method.
 
-    public Command getHybridAlgaeScoreCommand(Button triggeringButton, Button executionButton) {
-        return new AlgaeHybridScoring(triggeringButton, executionButton);
+    public Command getNewHybridCoralScoreCommand(Button executionButton) {
+        if (!chassis.isFacingReefCenter()) {
+            return new NewCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton, true)
+                    .withSelection(driverSelection);
+            // reversed scoring
+        } else {
+            return new NewCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton,
+                    false).withSelection(driverSelection);
+            // non-reversed scoring
+        }
     }
+    // This command returns a CoralScore Command with no push since the bot is
+    // already in STOW mode,
+    // it should go directly to the scoring point despite its facing.
 
-    public Command getHybridAlgaeIntakeCommand(Button executionButton) {
-        return new AlgaeHybridIntake(chassis.generateAlgaeIntakeIndex(), executionButton); //TODO
+    public Command getHyrbidCoralScoreCommand(Button executionButton) {
+        if (robotStatus == RobotStatus.HOLDING_CORAL) {
+            robotStatus = RobotStatus.IDLE;
+            if (scoreMode == ScoreMode.STOW) {
+                return getNewHybridCoralScoreCommand(executionButton);
+            } else {
+                return getTraditionalHybridCoralScoreCommand(executionButton);
+            }
+        } else
+            return null;
     }
 
     public Command getCoralAlignSequenceCommand() {
-        if(intaker.isReady()){
-            return new NewCoralAlignSequence();
+        if (robotStatus == RobotStatus.IDLE) {
+            robotStatus = RobotStatus.HOLDING_CORAL;
+            if (scoreMode == ScoreMode.STOW) {
+                return new NewCoralAlignSequence();
+            } else {
+                return new CoralAlignSequence();
+            }
+        } else
+            return null;
+    }
+
+    public Command getHybridAlgaeScoreCommand(Button triggeringButton, Button executionButton) {
+        if (robotStatus == RobotStatus.HOLDING_ALGAE) {
+            robotStatus = RobotStatus.IDLE;
+            return new AlgaeHybridScoring(triggeringButton, executionButton);
+        } else
+            return null;
+    }
+
+    public Command getHybridAlgaeIntakeCommand(Button executionButton) {
+        if(robotStatus == RobotStatus.IDLE) {
+            robotStatus = RobotStatus.HOLDING_ALGAE;
+            return new AlgaeHybridIntake(chassis.generateAlgaeIntakeIndex(), executionButton); // TODO
         }
         else return null;
     }
-    
-    public Command getInitializationCommand(Button toggleButton){
+
+    public Command getInitializationCommand(Button toggleButton) {
+        robotStatus = RobotStatus.IDLE;
         return new Initialization(toggleButton);
     }
 
-
-    public void periodic(){
-        // Add any periodic tasks here, such as updating telemetry or checking subsystem states
+    public void periodic() {
+        // Add any periodic tasks here, such as updating telemetry or checking subsystem
+        // states
         SmartDashboard.putNumber("SuperStructure/targetLevelIndex", m_targetReefLevelIndex);
-        // SmartDashboard.putNumber("SuperStructure/operatorLevelIndex", m_operatorLevelIndex);
+        // SmartDashboard.putNumber("SuperStructure/operatorLevelIndex",
+        // m_operatorLevelIndex);
 
         SmartDashboard.putData("SuperStructure/targetPose", targetPoseField2d);
 
@@ -183,9 +247,10 @@ public class SuperStructure extends SubsystemBase{
         // TEMP_stationCenterPose.setRobotPose(chassis.generateStationPose());
         SmartDashboard.putData("SuperStructure/TEMPStationPose", TEMP_stationCenterPose);
 
-        SmartDashboard.putBoolean("isHybrid", controlState == ControlState.HYBRID);
+        SmartDashboard.putBoolean("is STOW", scoreMode == ScoreMode.STOW);
 
-        operatorTargetPoseField2d.setRobotPose(chassis.generateReefPose(m_operatorReefFaceIndex * 2 - (driverSelection == Selection.LEFT ? 1 : 0)));
-        SmartDashboard.putData("SuperStructure/operatorPose", operatorTargetPoseField2d);    
+        operatorTargetPoseField2d.setRobotPose(
+                chassis.generateReefPose(m_operatorReefFaceIndex * 2 - (driverSelection == Selection.LEFT ? 1 : 0)));
+        SmartDashboard.putData("SuperStructure/operatorPose", operatorTargetPoseField2d);
     }
 }
