@@ -33,6 +33,8 @@ import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
+import frc.robot.commands.SetStateIdleDown;
+import frc.robot.commands.ZeroElevator;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.ClimbCommands.SemiAutoClimbCommand;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
@@ -222,6 +224,8 @@ public class RobotContainer {
         driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-90.)));
         driverController.x().whileTrue(new InstantCommand(()->arm.setPosition(-135.)));
         driverController.y().whileTrue(new InstantCommand(()->arm.setPosition(-180.)));
+        driverController.leftTrigger().whileTrue(new ZeroElevator());
+        driverController.rightTrigger().whileTrue(new SetStateIdleDown());
 
         // driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
         // driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));
