@@ -60,16 +60,16 @@ public class Constants {
     }
 
     public static class IntakerConstants {
-        public static final int IntakerMotorID = 0;
+        public static final int IntakerMotorID = 20;
 
-        public static final double kP = 0.2;
+        public static final double kP = 0.3;
         public static final double kI = 0.;
         public static final double kD = 0.;
-        public static final double kV = 0.22;
-        public static final double kS = 0.15;
+        public static final double kV = 0.55;
+        public static final double kS = 0.227;
 
         public static final InvertedValue IntakerInverted = InvertedValue.Clockwise_Positive;
-        public static final double IntakerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
+        public static final double IntakerRatio = 50./12.; // LCY: 50. :24. // GY: 20. : 10.
 
         public static final double IntakerVelocityToleranceRPS = 0.5;
 
@@ -176,26 +176,27 @@ public class Constants {
     }
 
     public static final class GrArmConstants {
-        public static final int GrArmMotorID = 0;
+        public static final int GrArmMotorID = 19;
         public static final double GrArmVelocityToleranceRPS = 0.2;
-        public static final double kP = 0.2;
-        public static final double kI = 0;
-        public static final double kD = 0;
-        public static final double kV = 0.22;
-        public static final double kS = 0.15;
-        public static final double kG = 0.0; // gravity
-        public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
-        public static final double GrArmRatio = 50. / 24.; // LCY: 50. :24. //GY: 20. : 10.
-        public static final double MaxVelocity = 0.5; // RPS
-        public static final double Acceleration = 0.5; // RPS^2
+        public static final double kP = 40.;
+        public static final double kI = 0.;
+        public static final double kD = 0.1;
+        public static final double kV = 0.;
+        public static final double kS = 0.26;
+        public static final double kG = 0.1; // gravity
+        public static final InvertedValue Inverted = InvertedValue.CounterClockwise_Positive;
+        public static final double GrArmRatio = 20. / 54.; // LCY: 50. :24. //GY: 20. : 10.
+        public static final double MaxVelocity = 0.2; // RPS
+        public static final double Acceleration = 1.; // RPS^2
 
 
 
-        public static final double MinDegs = -90.; //degrees CCW Positive
+        public static final double MinDegs = 0.; //degrees CCW Positive
         public static final double MaxDegs = 90.; 
-        public static final double GrArmPositionToleranceDegs = 0.;
+        public static final double GrArmPositionToleranceDegs = 3.;
         public static final double RetractedPosition = 0.;
         public static final double ExtendedPosition = 1.6;
+        public static final double Deadband = 0.24;
     }
 
     public static final class PoseEstimatorConstants {
@@ -259,8 +260,8 @@ public class Constants {
         public static final double kS = 0.2;
         public static final double kV = 0.06;
         public static final double kG = 0.8;
-        public static final double Acceleration = 130.; // 102.
-        public static final double MaxVelocity = 32.5; // 32.5
+        public static final double Acceleration = 102.; // 102.
+        public static final double MaxVelocity = 16.5; // 32.5
         public static final double MaxHeight = 1.39;
 
         public static final double MotorToRollerRatio = 3;

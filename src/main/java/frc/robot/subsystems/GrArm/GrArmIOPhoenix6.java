@@ -7,6 +7,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import frc.robot.Constants.GrArmConstants;
+import edu.wpi.first.math.util.Units;
+import com.ctre.phoenix6.hardware.core.CoreTalonFX;
 
 public class GrArmIOPhoenix6 implements GrArmIO {
     private static TalonFX motor;
@@ -37,10 +39,11 @@ public class GrArmIOPhoenix6 implements GrArmIO {
 
         config.MotionMagic.MotionMagicCruiseVelocity = GrArmConstants.MaxVelocity;
         config.MotionMagic.MotionMagicAcceleration = GrArmConstants.Acceleration;
-
+        config.MotorOutput.DutyCycleNeutralDeadband = GrArmConstants.Deadband;
+        motor.setPosition(90.);
         motor.getConfigurator().apply(config);
 
-        zeroGrArmPostion();
+            //zeroGrArmPostion();
     }
 
     @Override
