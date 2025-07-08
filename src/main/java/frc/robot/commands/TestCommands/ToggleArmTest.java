@@ -22,7 +22,7 @@ public class ToggleArmTest extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        arm.setPosition(0); // Reset to idle height when command ends
+        arm.setPosition(-90.); // Reset to idle height when command ends
     }
 
     public boolean isFinished() {

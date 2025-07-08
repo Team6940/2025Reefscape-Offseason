@@ -28,8 +28,9 @@ public interface ArmIO {
         public double motorVoltageVolts;
         public double motorCurrentAmps;
 
+        public double encoderPositionDegs = 0.0;
+
         public boolean encoderConnected = false;
-        public double encoderPositionDegrees;
         public enum EncoderMagnetHealth {
             GOOD,
             RISKY,
@@ -38,7 +39,7 @@ public interface ArmIO {
         }
 
         public EncoderMagnetHealth encoderMagnetHealth = EncoderMagnetHealth.BAD;
-        public double ArmPositionDegs = 0.0;
+        public double armPositionDegs = 0.0;
     }
 
     default public void updateInputs(ArmIOInputs inputs) {

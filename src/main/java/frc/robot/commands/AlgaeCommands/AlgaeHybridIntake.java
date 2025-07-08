@@ -87,7 +87,7 @@ public class AlgaeHybridIntake extends Command {
                 elevator.setHeight(targetHeight);
             }
         }
-        if (chassis.isAtTargetPose() && driverController.getButton(m_executionButton)) {
+        if (chassis.isAtTargetPose()) {
             state = IntakeState.PUSHING;
         }
     }
@@ -103,25 +103,24 @@ public class AlgaeHybridIntake extends Command {
         shooter.setRPS(ShooterConstants.AlgaeIntakingRPS);
         chassis.autoMoveToPose(pushPose);
 
-        if (chassis.isAtPose(pushPose) && driverController.getButton(m_executionButton)) {
+        if (chassis.isAtPose(pushPose)) {
             state = IntakeState.INTAKING;
         }
     }
 
     public void intake() {
-        shooter.setRPS(ShooterConstants.AlgaeIntakingRPS);
         if (shooter.getShooterState() == ShooterState.READY) {
             state = IntakeState.DEPARTING;
         }
     }
 
     public void depart() {
+        shooter.setRPS(ShooterConstants.HoldingAlgaeRPS); //get hold of the coral in case the robot throws it out accidently
         chassis.autoMoveToPose(targetPose);
         if (chassis.isAtPose(targetPose)) {
-            arm.setPosition(FieldConstants.ArmAlgaeStowPosition);
+            arm.setPosition(FieldConstants.ArmStowPosition);
             elevator.setHeight(ElevatorConstants.IdleHeight);
             // shooter.stop();
-            shooter.setRPS(ShooterConstants.HoldingAlgaeRPS); //get hold of the coral in case the robot throws it out accidently
             state = IntakeState.END;
         }
     }

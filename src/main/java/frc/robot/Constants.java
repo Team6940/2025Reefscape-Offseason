@@ -21,7 +21,36 @@ public class Constants {
     public static class GlobalConstants {
         public final static float INF = (float) Math.pow(10, 6); // this was defined for the 1690 lib
     }
-
+    public enum UpperStructureState {
+        ScoreL1(0.05, 0.99),
+        ScoreL2(0.05, 0.99),
+        ScoreL3(0.05, 0.99),
+        ScoreL4(0.05, 0.99),
+        PrepareScoreL1(0.05, 0.99),
+        PrepareScoreL2(0.05, 0.99),
+        PrepareScoreL3(0.05, 0.99),
+        PrepareScoreL4(0.05, 0.99),
+        RScoreL1(0.05, 0.99),
+        RScoreL2(0.05, 0.99),
+        RScoreL3(0.05, 0.99),
+        RScoreL4(0.05, 0.99),
+        RPrepareScoreL1(0.05, 0.99),
+        RPrepareScoreL2(0.05, 0.99),
+        RPrepareScoreL3(0.05, 0.99),
+        RPrepareScoreL4(0.05, 0.99),
+        IdleDown(0,0),
+        
+        IdleGrab(0,0),
+        IdleUp(0,0);
+  
+        public final double elevator_height;
+        public final double arm_Angle;
+  
+        UpperStructureState(double elevator_height, double arm_theta) {
+          this.elevator_height = elevator_height;
+          this.arm_Angle = arm_theta;
+        }
+    }
     public static class DriveConstants {
         public final static double kInnerDeadband = 0.004;
         public final static double kOuterDeadband = 0.98; // these were defined for the 1706 lib;
@@ -31,7 +60,7 @@ public class Constants {
     }
 
     public static class IntakerConstants {
-        public static final int IntakerMotorID = 16;
+        public static final int IntakerMotorID = 0;
 
         public static final double kP = 0.2;
         public static final double kI = 0.;
@@ -54,8 +83,8 @@ public class Constants {
     }
 
     public static class IndexerConstants {
-        public static final int IndexerLeftMotorID = 16;
-        public static final int IndexerRghtMotorID = 16;
+        public static final int IndexerLeftMotorID = 0;
+        public static final int IndexerRghtMotorID = 0;
 
         public static final double kP = 0.2;
         public static final double kI = 0;
@@ -76,13 +105,13 @@ public class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int ShooterMotorID = 17;
+        public static final int ShooterMotorID = 16;
 
-        public static final double kP = 0.2;
-        public static final double kI = 0;
-        public static final double kD = 0;
-        public static final double kV = 0.22;
-        public static final double kS = 0.15;
+        public static final double kP = 0.3;
+        public static final double kI = 0.;
+        public static final double kD = 0.;
+        public static final double kV = 0.215;
+        public static final double kS = 0.4;
 
         public static final double ShooterShootRPSs[] = new double[] {
                 0., //These four are for coral scoring
@@ -122,31 +151,32 @@ public class Constants {
     }
 
     public static final class ArmConstants {
-        public static final int ArmMotorID = 18;
+        public static final int ArmMotorID = 17;
         public static final double ArmVelocityToleranceRPS = 0.2;
-        public static final double kP = 0.5;
-        public static final double kI = 0;
-        public static final double kD = 0;
-        public static final double kV = 0.22;
-        public static final double kS = 0.15;
-        public static final double kG = 0.45; // gravity
-        public static final InvertedValue Inverted = InvertedValue.Clockwise_Positive;
-        public static final double MaxVelocity = 0.5; // RPS
-        public static final double Acceleration = 0.5; // RPS^2
+        public static final double kP = 64.;
+        public static final double kI = 0.;
+        public static final double kD = 0.;
+        public static final double kV = 0.;
+        public static final double kS = 0.32;
+        public static final double kG = 0.66; // gravity
+        public static final InvertedValue Inverted = InvertedValue.CounterClockwise_Positive;
+        public static final double MaxVelocity = 0.3; // RPS
+        public static final double Acceleration = 1; // RPS^2
 
-        public static final double MinDegs = -120.; // CCW Positive
-        public static final double MaxDegs = 120.; 
+        public static final double MinDegs = -240.; // CCW Positive
+        public static final double MaxDegs = -80.; 
         public static final double ArmPositionToleranceDegs = 5.;
-        public static final double DroppingPositionDegs = 0;
+        public static final double DroppingPositionDegs = 0.;
 
-        public static final int ArmEncoderID = 0;
-        public static final double EncoderOffsetDegrees = 0.;
-        public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.CounterClockwise_Positive; //TODO
+        public static final int ArmEncoderID = 18;
+        public static final double EncoderOffsetDegrees = 1.3;
+        public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.Clockwise_Positive; //TODO
         public static final double SecuredPosition = 0;
+        public static final double encoderToMechanismRatio=1.;
     }
 
     public static final class GrArmConstants {
-        public static final int GrArmMotorID = 21;
+        public static final int GrArmMotorID = 0;
         public static final double GrArmVelocityToleranceRPS = 0.2;
         public static final double kP = 0.2;
         public static final double kI = 0;
@@ -242,6 +272,7 @@ public class Constants {
         public static final double IntakingHeight = 0.3;
         public static final double DroppingHeight = 0.;
         public static final double IdleHeight = 0.3;//TODO
+        public static final double GrabbingHeight = 0;
 
     }
 
@@ -250,8 +281,8 @@ public class Constants {
         public static final InvertedValue ClimberInverted = InvertedValue.CounterClockwise_Positive;
         public static final InvertedValue LockMotorInverted = InvertedValue.CounterClockwise_Positive;
 
-        public static final int ClimberliftMotorID = 17; //TODO
-        public static final int ClimberlockMotorID = 18; //TODO
+        public static final int ClimberliftMotorID = 0; //TODO
+        public static final int ClimberlockMotorID = 0; //TODO
 
         public static final double ClimberkP = 14.;
         public static final double ClimberkI = 0.;
@@ -307,7 +338,7 @@ public class Constants {
 
         public static final double AlgaeIntakePushDistance=1.5;
 
-        public static final double ArmAlgaeStowPosition=0.;//TODO
+        public static final double ArmStowPosition=0.;//TODO
 
         public static final double PushDistance=1.;
         

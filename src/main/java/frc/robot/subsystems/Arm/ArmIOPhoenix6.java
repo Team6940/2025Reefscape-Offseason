@@ -12,6 +12,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.MagnetHealthValue;
 
@@ -23,7 +24,6 @@ import frc.robot.subsystems.Arm.ArmIO.ArmIOInputs.EncoderMagnetHealth;
 public class ArmIOPhoenix6 implements ArmIO {
     private static TalonFX motor;
     private static CANcoder encoder;
-    private static double m_offset = 0.;
 
     private static MotionMagicVoltage m_request = new MotionMagicVoltage(0.);
 
@@ -55,17 +55,19 @@ public class ArmIOPhoenix6 implements ArmIO {
         config.MotionMagic.MotionMagicCruiseVelocity = ArmConstants.MaxVelocity;
         config.MotionMagic.MotionMagicAcceleration = ArmConstants.Acceleration;
 
+        config.Feedback.SensorToMechanismRatio = ArmConstants.encoderToMechanismRatio;
+
+        config.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
         config.Feedback.FeedbackRemoteSensorID = ArmConstants.ArmEncoderID;
 
         motor.getConfigurator().apply(config);
 
-        zeroArmPostion();
     }
 
     private void encoderConfig() {
         encoder = new CANcoder(ArmConstants.ArmEncoderID, "rio");
         CANcoderConfiguration config = new CANcoderConfiguration();
-        config.MagnetSensor.MagnetOffset = ArmConstants.EncoderOffsetDegrees;
+        config.MagnetSensor.MagnetOffset = Units.degreesToRotations(ArmConstants.EncoderOffsetDegrees);
         config.MagnetSensor.SensorDirection = ArmConstants.EncoderDirection;
         encoder.getConfigurator().apply(config);
     }
@@ -124,7 +126,9 @@ public class ArmIOPhoenix6 implements ArmIO {
 
         ArmInputs.motorVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
         ArmInputs.motorCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
-        ArmInputs.ArmPositionDegs = Units.rotationsToDegrees(motor.getPosition().getValueAsDouble());
+        ArmInputs.armPositionDegs = Units.rotationsToDegrees(motor.getPosition().getValueAsDouble());
+
+        ArmInputs.encoderPositionDegs = Units.rotationsToDegrees(encoder.getPosition().getValueAsDouble());
         
     }
 }

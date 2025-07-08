@@ -104,7 +104,7 @@ public class ReversedCoralHybridScoring extends Command {
         chassis.autoMoveToPose(departPose);// Move to retreat position
 
         if (shooter.getShooterState() == ShooterState.IDLE) {
-            arm.setPosition(0);
+            arm.reset();
             elevator.setHeight(ElevatorConstants.IdleHeight);
             shooter.stop();
             state = ScoringState.END;

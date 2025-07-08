@@ -32,8 +32,9 @@ public class CoralAlignSequence extends Command {
 
     @Override
     public void initialize() {
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         state = IntakeState.ALIGNING;
-        arm.setPosition(0); // Adjust as necessary for your arm's initial position
+        arm.reset(); // Adjust as necessary for your arm's initial position
         shooter.setRPS(0);
     }
 
@@ -62,7 +63,7 @@ public class CoralAlignSequence extends Command {
 
     private void grab() {
         arm.reset();
-        elevator.zeroHeight();
+        elevator.setHeight(ElevatorConstants.GrabbingHeight);
         if (shooter.getShooterState() == ShooterState.READY) {
             shooter.setRPS(ShooterConstants.HoldingCoralRPS); //get hold of the coral in case the robot throws it out accidently
             elevator.setHeight(0);//TODO
