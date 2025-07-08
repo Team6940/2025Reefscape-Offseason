@@ -3,11 +3,14 @@ package frc.robot.commands.GroundIntakeCommands;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem.IndexerState;
@@ -21,14 +24,19 @@ public class NewCoralAlignSequence extends Command {
     }
 
     private IntakeState state;
+    private ImprovedCommandXboxController driverController = RobotContainer.driverController;
+
+    /**This works as an emergency continue button, in case the sensor is <b>not</b> working properly. */
+    private Button m_toggleButton;
 
     ShooterSubsystem shooter = ShooterSubsystem.getInstance();
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     ArmSubsystem arm = ArmSubsystem.getInstance();
     IndexerSubsystem indexer = IndexerSubsystem.getInstance();
 
-    public NewCoralAlignSequence() {
+    public NewCoralAlignSequence(Button toggleButton) {
         addRequirements(shooter, elevator, arm, indexer);
+        m_toggleButton = toggleButton;
     }
 
     @Override
@@ -57,16 +65,19 @@ public class NewCoralAlignSequence extends Command {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
         indexer.setRPS(IndexerConstants.IntakingRPS);
-        if (indexer.getIndexerState() == IndexerState.FREE_SPINNING) {
+        if (indexer.getIndexerState() == IndexerState.READY || driverController.getButton(m_toggleButton)) {
             state = IntakeState.GRABBING;
         }
+        // if (indexer.getIndexerState() == IndexerState.FREE_SPINNING) {
+        //     state = IntakeState.GRABBING;
+        // }
     }
 
     private void grab() {
         arm.reset();
         elevator.setHeight(ElevatorConstants.GrabbingHeight);;
         if (shooter.getShooterState() == ShooterState.READY) {
-            shooter.stop();; //get hold of the coral in case the robot throws it out accidently
+            shooter.stop();; //TODO decide whether it's necessary to spin the shooter for getting hold of the coral in case the robot throws it out accidently
             arm.setPosition(FieldConstants.ArmStowPosition);
             if(arm.isAtSecuredPosition()){
                 elevator.setHeight(0);

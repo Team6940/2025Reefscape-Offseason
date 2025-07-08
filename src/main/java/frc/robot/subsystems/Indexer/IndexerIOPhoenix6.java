@@ -6,11 +6,15 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.IndexerConstants;
 
 public class IndexerIOPhoenix6 implements IndexerIO {
     private static final TalonFX leftMotor = new TalonFX(IndexerConstants.IndexerLeftMotorID, "canivore");
     private static final TalonFX rghtMotor = new TalonFX(IndexerConstants.IndexerRghtMotorID, "canivore");
+
+    /**This is the photoelectric gate sensor that detects whether the coral has entered the indexer successfully.*/
+    private static final DigitalInput sensor = new DigitalInput(IndexerConstants.SensorID);
 
     private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
     double leftCurrentAmps = leftMotor.getSupplyCurrent().getValueAsDouble();
@@ -89,6 +93,8 @@ public class IndexerIOPhoenix6 implements IndexerIO {
 
         inputs.leftVelocityRPS = leftMotor.getVelocity().getValueAsDouble();
         inputs.rghtVelocityRPS = rghtMotor.getVelocity().getValueAsDouble();
+
+        inputs.sensorGet = sensor.get() ^ IndexerConstants.SensorInverted;
     }
 
 }

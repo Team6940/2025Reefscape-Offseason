@@ -64,9 +64,12 @@ public class AutoIntakeCoral extends Command {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
         indexer.setRPS(IndexerConstants.IntakingRPS);
-        if (indexer.getIndexerState() == IndexerState.FREE_SPINNING) {
+        if (indexer.getIndexerState() == IndexerState.READY) {
             state = IntakeState.GRABBING;
         }
+        // if (indexer.getIndexerState() == IndexerState.FREE_SPINNING) { //TODO
+        //     state = IntakeState.GRABBING;
+        // }
     }
 
     private void grab() {

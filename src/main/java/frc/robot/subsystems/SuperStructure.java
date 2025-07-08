@@ -193,13 +193,13 @@ public class SuperStructure extends SubsystemBase {
             return null;
     }
 
-    public Command getCoralAlignSequenceCommand() {
+    public Command getCoralAlignSequenceCommand(Button toggleButton) {
         if (robotStatus == RobotStatus.IDLE) {
             robotStatus = RobotStatus.HOLDING_CORAL;
             if (scoreMode == ScoreMode.STOW) {
-                return new NewCoralAlignSequence();
+                return new NewCoralAlignSequence(toggleButton);
             } else {
-                return new CoralAlignSequence();
+                return new CoralAlignSequence(toggleButton);
             }
         } else
             return null;

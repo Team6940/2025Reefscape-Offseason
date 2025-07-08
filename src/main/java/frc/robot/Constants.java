@@ -85,7 +85,7 @@ public class Constants {
     public static class IndexerConstants {
         public static final int IndexerLeftMotorID = 0;
         public static final int IndexerRghtMotorID = 0;
-
+        public static final int SensorID = 0;
         public static final double kP = 0.2;
         public static final double kI = 0;
         public static final double kD = 0;
@@ -94,6 +94,7 @@ public class Constants {
 
         public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
+        public static final boolean SensorInverted = true; //TODO: this is a placeholder value, should be replaced with the actual sensor inverted value
         public static final double IndexerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
         public static final double IndexerVelocityToleranceRPS = 0.5;
