@@ -87,7 +87,7 @@ public class CoralHybridScoring extends Command {
 
     public void align() {
         SmartDashboard.putString("CORAL Hybrid Scoring State", "ALIGNING");
-        if (chassis.isAtTargetPose() && driverController.getButton(m_executionButton)) { // TODO
+        if (chassis.isAtTargetPose()) { // TODO
             arm.setPosition(targetAngle);
             if (arm.isAtSecuredPosition()) {
                 elevator.setHeight(targetHeight);
@@ -112,7 +112,7 @@ public class CoralHybridScoring extends Command {
         chassis.autoMoveToPose(pushPose);
 
         // When in position, transition to scoring
-        if (chassis.isAtPose(pushPose) && driverController.getButton(m_executionButton)) {
+        if (chassis.isAtPose(pushPose)) {
             state = ScoringState.SCORING;
             SmartDashboard.putString("CORAL hybrid Scoring State", "PUSHING complete, moving to SCORING");
         }
