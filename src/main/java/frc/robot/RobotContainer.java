@@ -59,8 +59,8 @@ public class RobotContainer {
     public static final ArmSubsystem arm = ArmSubsystem.getInstance();
     public static final ShooterSubsystem shooter = ShooterSubsystem.getInstance();
     // public static final ClimberSubsystem climber = ClimberSubsystem.getInstance();
-    // public static final GrArmSubsystem grArm = GrArmSubsystem.getInstance();
-    // public static final IntakerSubsystem intaker = IntakerSubsystem.getInstance();
+    public static final GrArmSubsystem grArm = GrArmSubsystem.getInstance();
+    public static final IntakerSubsystem intaker = IntakerSubsystem.getInstance();
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -219,8 +219,12 @@ public class RobotContainer {
         // driverController.rightTrigger().whileTrue(new InstantCommand(()->shooter.setRPS(-20)));
         // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(0)));
 
-        //driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-80.)));
-        //driverController.b().whileTrue(new InstantCommand(()->arm.setPosition(-240.)));
+        // driverController.a().onTrue(new InstantCommand(()->grArm.setPosition(60.)));
+        // driverController.b().onTrue(new InstantCommand(()->grArm.setPosition(30.)));
+        // driverController.a().onTrue(new InstantCommand(()->intaker.setRPS(10)));
+        // driverController.b().onTrue(new InstantCommand(()->intaker.setRPS(0)));
+        //driverController.x().onTrue(new InstantCommand(()->intaker.setRPS(-10)));
+        // driverController.y().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
         //driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-90.)));
         //driverController.x().whileTrue(new InstantCommand(()->arm.setPosition(-135.)));
         //driverController.y().whileTrue(new InstantCommand(()->arm.setPosition(-180.)));

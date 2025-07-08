@@ -17,13 +17,13 @@ public class IntakerSubsystem extends SubsystemBase{
         return m_instance == null? m_instance = new IntakerSubsystem() : m_instance;
     }
 
-    private IntakerState state;
+    // private IntakerState state;
 
-    public enum IntakerState {
-        IDLE,
-        READY,
-        GRABBING
-    }
+    // public enum IntakerState {
+    //     IDLE,
+    //     READY,
+    //     GRABBING
+    // }
 
     private final IntakerIO io;
     private final IntakerIOInputsAutoLogged inputs = new IntakerIOInputsAutoLogged();
@@ -40,26 +40,26 @@ public class IntakerSubsystem extends SubsystemBase{
         }
     }
 
-    public IntakerState getIntakerState() {
-        return state;
-    }
+    // public IntakerState getIntakerState() {
+    //     return state;
+    // }
 
-    public boolean isReady(){
-        return getIntakerState() == IntakerState.READY;
-    }
+    // public boolean isReady(){
+    //     return getIntakerState() == IntakerState.READY;
+    // }
 
-        public void intakerStateUpdate(){
-        double current = inputs.motorCurrentAmps;
-        if(current<IntakerConstants.IntakerFreeSpinCurrentThreshold){
-            state=IntakerState.IDLE;
-        }
-        else if(current<IntakerConstants.IntakerHoldingCurrentThreshold){
-            state=IntakerState.READY;
-        }
-        else{
-            state=IntakerState.GRABBING;
-        }
-    }
+    //     public void intakerStateUpdate(){
+    //     double current = inputs.motorCurrentAmps;
+    //     if(current<IntakerConstants.IntakerFreeSpinCurrentThreshold){
+    //         state=IntakerState.IDLE;
+    //     }
+    //     else if(current<IntakerConstants.IntakerHoldingCurrentThreshold){
+    //         state=IntakerState.READY;
+    //     }
+    //     else{
+    //         state=IntakerState.GRABBING;
+    //     }
+    // }
 
     public void setRPS(double rps){
         targetRPS = rps;
