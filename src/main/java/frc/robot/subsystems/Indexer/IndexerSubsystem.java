@@ -24,8 +24,9 @@ public class IndexerSubsystem extends SubsystemBase {
 
     public enum IndexerState {
         IDLE,
-        ALIGNING,
-        FREE_SPINNING
+        // ALIGNING,
+        // FREE_SPINNING,
+        READY
     }
 
     public IndexerState getIndexerState() {
@@ -67,15 +68,20 @@ public class IndexerSubsystem extends SubsystemBase {
         io.setVoltage(voltage);
     }
 
-    public void indexerStateUpdate(){
-        double avgCurrent= (inputs.leftCurrentAmps + inputs.rghtCurrentAmps) / 2.0;
-        if (avgCurrent < IndexerConstants.IndexerFreeSpinCurrentThreshold) {
+    public void indexerStateUpdate(){      
+        if (inputs.sensorGet) {
+            state = IndexerState.READY;
+        } else{
             state = IndexerState.IDLE;
-        } else if (avgCurrent < IndexerConstants.IndexerAligningCurrentThreshold) {
-            state = IndexerState.FREE_SPINNING;
-        } else {
-            state = IndexerState.ALIGNING;
         }
+        // double avgCurrent= (inputs.leftCurrentAmps + inputs.rghtCurrentAmps) / 2.0;
+        // if (avgCurrent < IndexerConstants.IndexerFreeSpinCurrentThreshold) {
+        //     state = IndexerState.IDLE;
+        // } else if (avgCurrent < IndexerConstants.IndexerAligningCurrentThreshold) {
+        //     state = IndexerState.FREE_SPINNING;
+        // } else {
+        //     state = IndexerState.ALIGNING;
+        // }
     }
 
     @Override

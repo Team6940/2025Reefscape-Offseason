@@ -114,10 +114,10 @@ public class RobotContainer {
          * A: (Auto) Confirm Coral Scoring Position Selection   
          * B: Drive To Net Scoring Point
          *  
-         * povDown: (Auto) Select Mid2Algae ///
-         * povUP: None    ///
-         * povLeft: (Auto) Select Up4Corals   ///
-         * povRight: (Auto) Select Down4Corals   ///
+         * povDown: (Auto) Select Mid2Algae
+         * povUP: None
+         * povLeft: (Auto) Select Up4Corals
+         * povRight: (Auto) Select Down4Corals
          */
 
         /* Operator Controller: 
@@ -166,19 +166,19 @@ public class RobotContainer {
         // /* ---------------------------------------- DRIVER CONTROLLER ----------------------------------------*/
         // /* Sticks */  
         // // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
-        // driverController.leftStick().toggleOnTrue(new SemiAutoClimbCommand(Button.kLeftStick,Button.kRightStick)); // TODO change configure bindin
+        // driverController.leftStick().toggleOnTrue(new SemiAutoClimbCommand(Button.kLeftStick,Button.kRightStick));
 
         // /* Bumpers & Triggers */
         // driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralScoreCommand(Button.kRightBumper)));
         // driverController.b().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeScoreCommand(Button.kB,Button.kRightTrigger)));
         // driverController.leftBumper().toggleOnTrue(new ToggleIntake(grArm, intaker));
-        // driverController.leftBumper().whileTrue(superStructure.runOnce(() -> superStructure.getCoralAlignSequenceCommand()));
+        // driverController.leftBumper().whileTrue(superStructure.runOnce(() -> superStructure.getCoralAlignSequenceCommand(Button.kLeftBumper))); //TODO bindings
         // driverController.leftTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeIntakeCommand(Button.kLeftTrigger)));
 
         // /* Buttons */
         
         // driverController.b().whileTrue(chassis.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
-        // driverController.x().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric())); // TODO seed field-centric heading
+        // driverController.x().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric()));
         // driverController.y().onTrue(superStructure.runOnce(() -> superStructure.getInitializationCommand(Button.kY)));
 
         // /* Povs */

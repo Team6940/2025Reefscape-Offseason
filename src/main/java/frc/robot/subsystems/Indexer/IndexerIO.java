@@ -20,7 +20,7 @@ public interface IndexerIO {
         public double leftVelocityRPS;
         public double rghtVelocityRPS;
 
-
+        public boolean sensorGet = false;
     }
     default public void updateInputs(IndexerIOInputs inputs){}
 }
