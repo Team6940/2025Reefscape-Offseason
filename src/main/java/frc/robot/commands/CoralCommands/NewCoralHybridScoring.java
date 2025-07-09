@@ -63,7 +63,6 @@ boolean m_isReversed;
         targetPose = chassis.generateReefPose(m_targetReefPoseIndex);
         if(m_isReversed)
         {
-            targetPose = chassis.generateReefPoseReversed(m_targetReefLevelIndex);
      aimHeight = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).elevator_height;
         aimAngle = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).arm_Angle;
         scoreHeight=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).elevator_height;
@@ -72,7 +71,6 @@ boolean m_isReversed;
         targetPose = chassis.generateReefPoseReversed(m_targetReefPoseIndex);
         }
         else{
-            targetPose = chassis.generateReefPose(m_targetReefPoseIndex);
             aimHeight = Constants.UpperStructureState.valueOf("PrepareScoreL"+m_targetReefLevelIndex).elevator_height;
                aimAngle = Constants.UpperStructureState.valueOf("PrepareScoreL"+m_targetReefLevelIndex).arm_Angle;
                scoreHeight=Constants.UpperStructureState.valueOf("ScoreL"+m_targetReefLevelIndex).elevator_height;
