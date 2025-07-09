@@ -179,6 +179,7 @@ public class Constants {
     public static final class GrArmConstants {
         public static final int GrArmMotorID = 19;
         public static final double GrArmVelocityToleranceRPS = 0.2;
+
         public static final double kP = 75.;
         public static final double kI = 0.;
         public static final double kD = 0.;
@@ -193,12 +194,14 @@ public class Constants {
 
 
         public static final double MinDegs = -60.; //degrees CCW Positive
+
         public static final double MaxDegs = 90.; 
         public static final double GrArmPositionToleranceDegs = 3.;
         public static final double RetractedPosition = 0.;
         public static final double ExtendedPosition = 1.6;
+
         //public static final double Deadband = 0.24;
-    }
+
 
     public static final class PoseEstimatorConstants {
         public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.3, 0.3, 0.1);

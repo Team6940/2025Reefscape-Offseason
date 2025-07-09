@@ -220,6 +220,7 @@ public class RobotContainer {
         // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(0)));
 
 
+
         driverController.x().onTrue(new InstantCommand(()->grArm.setPosition(90.)));
         driverController.y().onTrue(new InstantCommand(()->grArm.setPosition(-60.)));
 
@@ -228,6 +229,7 @@ public class RobotContainer {
         driverController.leftBumper().onTrue(new InstantCommand(()->intaker.setRPS(9)));
         driverController.rightBumper().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
         driverController.a().onTrue(new InstantCommand(()->intaker.setRPS(0)));
+
         // driverController.y().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
         //driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-90.)));
         //driverController.x().whileTrue(new InstantCommand(()->arm.setPosition(-135.)));
