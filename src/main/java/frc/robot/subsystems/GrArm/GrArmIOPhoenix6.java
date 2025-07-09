@@ -14,7 +14,6 @@ public class GrArmIOPhoenix6 implements GrArmIO {
     private static TalonFX motor;
 
     private static MotionMagicVoltage m_request = new MotionMagicVoltage(0.);
-
     public GrArmIOPhoenix6() {
         motorConfig();
     }
@@ -39,8 +38,8 @@ public class GrArmIOPhoenix6 implements GrArmIO {
 
         config.MotionMagic.MotionMagicCruiseVelocity = GrArmConstants.MaxVelocity;
         config.MotionMagic.MotionMagicAcceleration = GrArmConstants.Acceleration;
-        config.MotorOutput.DutyCycleNeutralDeadband = GrArmConstants.Deadband;
-        motor.setPosition(90.);
+        //config.MotorOutput.DutyCycleNeutralDeadband = GrArmConstants.Deadband;
+        motor.setPosition(0.25);//1/4rotation, which means 90degs
         motor.getConfigurator().apply(config);
 
             //zeroGrArmPostion();
@@ -56,7 +55,7 @@ public class GrArmIOPhoenix6 implements GrArmIO {
         // if (position == 0) {
         //     motor.stopMotor();
         // }
-        motor.setControl(m_request.withPosition(position * GrArmConstants.GrArmRatio));
+        motor.setControl(m_request.withPosition(Units.degreesToRotations(position)));
     }
 
     public void updateInputs(GrArmIOInputs GrArmInputs) {
@@ -67,8 +66,8 @@ public class GrArmIOPhoenix6 implements GrArmIO {
 
         GrArmInputs.motorVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
         GrArmInputs.motorCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
-        GrArmInputs.GrArmRotationDegrees = motor.getPosition().getValueAsDouble();
-        GrArmInputs.GrArmPositionRadians = GrArmInputs.GrArmRotationDegrees * Math.PI / 180.0;
+        GrArmInputs.GrArmRotationDegrees = Units.rotationsToDegrees(motor.getPosition().getValueAsDouble());
+        //GrArmInputs.GrArmPositionRadians = GrArmInputs.GrArmRotationDegrees * Math.PI / 180.0;
 
     }
 
