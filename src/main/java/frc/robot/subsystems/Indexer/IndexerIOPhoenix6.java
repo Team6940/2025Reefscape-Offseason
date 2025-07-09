@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.IndexerConstants;
 
 public class IndexerIOPhoenix6 implements IndexerIO {
-    private static final TalonFX leftMotor = new TalonFX(IndexerConstants.IndexerLeftMotorID, "rio");
-    private static final TalonFX rghtMotor = new TalonFX(IndexerConstants.IndexerRghtMotorID, "rio");
+    private static final TalonFX leftMotor = new TalonFX(IndexerConstants.IndexerLeftMotorID, "canivore");
+    private static final TalonFX rghtMotor = new TalonFX(IndexerConstants.IndexerRghtMotorID, "canivore");
 
     /**This is the photoelectric gate sensor that detects whether the coral has entered the indexer successfully.*/
     private static final DigitalInput sensor = new DigitalInput(IndexerConstants.SensorID);

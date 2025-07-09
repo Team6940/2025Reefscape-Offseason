@@ -101,7 +101,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private void processLog() {
         io.updateInputs(inputs);
-        inputs.state= getShooterState();
         Logger.processInputs("Shooter", inputs);
         Logger.recordOutput("Shooter/TargetRPS", targetRPS);
         Logger.recordOutput("Shooter/IsAtTargetRPS", IsAtTargetRps());
