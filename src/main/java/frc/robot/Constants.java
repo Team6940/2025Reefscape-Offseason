@@ -179,22 +179,20 @@ public class Constants {
     public static final class GrArmConstants {
         public static final int GrArmMotorID = 19;
         public static final double GrArmVelocityToleranceRPS = 0.2;
-
-        public static final double kP = 75.;
+        public static final double kP = 40.;
         public static final double kI = 0.;
-        public static final double kD = 0.;
+        public static final double kD = 0.1;
         public static final double kV = 0.;
-        public static final double kS = 0.31;
-        public static final double kG = 0.19; // gravity
+        public static final double kS = 0.26;
+        public static final double kG = 0.1; // gravity
         public static final InvertedValue Inverted = InvertedValue.CounterClockwise_Positive;
-        public static final double GrArmRatio = 4606./65.; // LCY: 50. :24. //GY: 20. : 10.////--->(8. / 56. * 20. / 56.) ^ (-1)
-        public static final double MaxVelocity = 4.; // RPS
-        public static final double Acceleration = 3.; // RPS^2
+        public static final double GrArmRatio = 20. / 54.; // LCY: 50. :24. //GY: 20. : 10.
+        public static final double MaxVelocity = 0.2; // RPS
+        public static final double Acceleration = 1.; // RPS^2
 
 
 
-        public static final double MinDegs = -60.; //degrees CCW Positive
-
+        public static final double MinDegs = 0.; //degrees CCW Positive
         public static final double MaxDegs = 90.; 
         public static final double GrArmPositionToleranceDegs = 3.;
 
