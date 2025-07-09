@@ -219,17 +219,11 @@ public class RobotContainer {
         // driverController.rightTrigger().whileTrue(new InstantCommand(()->shooter.setRPS(-20)));
         // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(0)));
 
-
-
-        driverController.x().onTrue(new InstantCommand(()->grArm.setPosition(90.)));
-        driverController.y().onTrue(new InstantCommand(()->grArm.setPosition(-60.)));
-
+        // driverController.a().onTrue(new InstantCommand(()->grArm.setPosition(60.)));
+        // driverController.b().onTrue(new InstantCommand(()->grArm.setPosition(30.)));
         // driverController.a().onTrue(new InstantCommand(()->intaker.setRPS(10)));
         // driverController.b().onTrue(new InstantCommand(()->intaker.setRPS(0)));
-        driverController.leftBumper().onTrue(new InstantCommand(()->intaker.setRPS(9)));
-        driverController.rightBumper().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
-        driverController.a().onTrue(new InstantCommand(()->intaker.setRPS(0)));
-
+        //driverController.x().onTrue(new InstantCommand(()->intaker.setRPS(-10)));
         // driverController.y().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
         //driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-90.)));
         //driverController.x().whileTrue(new InstantCommand(()->arm.setPosition(-135.)));
