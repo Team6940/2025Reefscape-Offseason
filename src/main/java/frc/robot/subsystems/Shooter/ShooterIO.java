@@ -2,8 +2,6 @@ package frc.robot.subsystems.Shooter;
 
 import org.littletonrobotics.junction.AutoLog;
 
-import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
-
 public interface ShooterIO {
 
     @AutoLog
@@ -12,7 +10,6 @@ public interface ShooterIO {
         public double motorVoltageVolts;
         public double motorCurrentAmps;
         public double shooterVelocityRPS;
-        public ShooterState state;
     }
 
     default public void updateInputs(ShooterIOInputs inputs) {}
