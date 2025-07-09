@@ -201,7 +201,7 @@ public class Constants {
         public static final double RetractedPosition = 90.;
         public static final double ExtendedPosition = -60.;
         //public static final double Deadband = 0.24;
-
+    }
 
     public static final class PoseEstimatorConstants {
         public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.3, 0.3, 0.1);
