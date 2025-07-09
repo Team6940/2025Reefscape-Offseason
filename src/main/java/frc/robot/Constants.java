@@ -83,14 +83,14 @@ public class Constants {
     }
 
     public static class IndexerConstants {
-        public static final int IndexerLeftMotorID = 0;
-        public static final int IndexerRghtMotorID = 0;
+        public static final int IndexerLeftMotorID = 22;
+        public static final int IndexerRghtMotorID = 21;
         public static final int SensorID = 0;
         public static final double kP = 0.2;
         public static final double kI = 0;
-        public static final double kD = 0;
-        public static final double kV = 0.22;
-        public static final double kS = 0.15;
+        public static final double kD = 0.;
+        public static final double kV = 0.23;
+        public static final double kS = 0.6;
 
         public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
@@ -140,13 +140,13 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterIntakeCurrentThreshold = 0;//TODO
+        public static final double ShooterIntakeCurrentThreshold = 20;//TODO
 
         public static final double DroppingRPS = 0;
 
-        public static final int CurrentFilterTaps = 5;
+        public static final int CurrentFilterTaps = 3;
 
-        public static final double ShooterDebouncerTime = 0.1;
+        public static final double ShooterDebouncerTime = 0.05;
 
 
     }
@@ -154,18 +154,18 @@ public class Constants {
     public static final class ArmConstants {
         public static final int ArmMotorID = 17;
         public static final double ArmVelocityToleranceRPS = 0.2;
-        public static final double kP = 64.;
+        public static final double kP = 78.;
         public static final double kI = 0.;
         public static final double kD = 0.;
         public static final double kV = 0.;
         public static final double kS = 0.32;
         public static final double kG = 0.66; // gravity
         public static final InvertedValue Inverted = InvertedValue.CounterClockwise_Positive;
-        public static final double MaxVelocity = 0.3; // RPS
-        public static final double Acceleration = 1; // RPS^2
+        public static final double MaxVelocity = 1.6; // RPS
+        public static final double Acceleration = 1.3; // RPS^2
 
         public static final double MinDegs = -240.; // CCW Positive
-        public static final double MaxDegs = -80.; 
+        public static final double MaxDegs = -90.; 
         public static final double ArmPositionToleranceDegs = 5.;
         public static final double DroppingPositionDegs = 0.;
 
@@ -197,9 +197,9 @@ public class Constants {
 
         public static final double MaxDegs = 90.; 
         public static final double GrArmPositionToleranceDegs = 3.;
-        public static final double RetractedPosition = 0.;
-        public static final double ExtendedPosition = 1.6;
 
+        public static final double RetractedPosition = 90.;
+        public static final double ExtendedPosition = -60.;
         //public static final double Deadband = 0.24;
 
 
