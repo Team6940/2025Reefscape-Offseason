@@ -83,14 +83,14 @@ public class Constants {
     }
 
     public static class IndexerConstants {
-        public static final int IndexerLeftMotorID = 0;
-        public static final int IndexerRghtMotorID = 0;
+        public static final int IndexerLeftMotorID = 22;
+        public static final int IndexerRghtMotorID = 21;
         public static final int SensorID = 0;
         public static final double kP = 0.2;
         public static final double kI = 0;
-        public static final double kD = 0;
-        public static final double kV = 0.22;
-        public static final double kS = 0.15;
+        public static final double kD = 0.;
+        public static final double kV = 0.23;
+        public static final double kS = 0.6;
 
         public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
