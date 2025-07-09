@@ -226,6 +226,15 @@ public class SuperStructure extends SubsystemBase {
         return new Initialization(toggleButton);
     }
 
+    public void switchScoreMode() {
+        if(scoreMode==ScoreMode.PUSH){
+            scoreMode = ScoreMode.STOW;
+        }
+        else {
+            scoreMode = ScoreMode.PUSH;
+        }
+    }
+
     public void periodic() {
         // Add any periodic tasks here, such as updating telemetry or checking subsystem
         // states
