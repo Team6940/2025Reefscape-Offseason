@@ -38,8 +38,10 @@ public class GrArmIOPhoenix6 implements GrArmIO {
 
         config.MotionMagic.MotionMagicCruiseVelocity = GrArmConstants.MaxVelocity;
         config.MotionMagic.MotionMagicAcceleration = GrArmConstants.Acceleration;
+
         //config.MotorOutput.DutyCycleNeutralDeadband = GrArmConstants.Deadband;
         motor.setPosition(0.25);//1/4rotation, which means 90degs
+
         motor.getConfigurator().apply(config);
 
             //zeroGrArmPostion();
