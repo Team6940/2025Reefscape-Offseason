@@ -174,7 +174,7 @@ public class RobotContainer {
         // /* Bumpers & Triggers */
         // driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralScoreCommand(Button.kRightBumper)));
         // driverController.b().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeScoreCommand(Button.kB,Button.kRightTrigger)));
-        // driverController.leftBumper().toggleOnTrue(new ToggleIntake(grArm, intaker));
+        driverController.leftBumper().whileTrue(new ToggleIntake(grArm, intaker));
         // driverController.leftBumper().whileTrue(superStructure.runOnce(() -> superStructure.getCoralAlignSequenceCommand(Button.kLeftBumper))); //TODO bindings
         // driverController.leftTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeIntakeCommand(Button.kLeftTrigger)));
 
@@ -224,21 +224,29 @@ public class RobotContainer {
 
 
 
-        
-        driverController.x().onTrue(new InstantCommand(()->grArm.setPosition(90.)));
-        driverController.y().onTrue(new InstantCommand(()->grArm.setPosition(-60.)));
-        driverController.leftTrigger().onTrue(new InstantCommand(()->intaker.setRPS(8)));
-        driverController.rightTrigger().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
-        driverController.leftTrigger().onTrue(new InstantCommand(()->indexer.setRPS(-6)));
-        driverController.rightTrigger().onTrue(new InstantCommand(() -> indexer.setRPS(3)));
-        driverController.a().onTrue(new InstantCommand(()->indexer.setRPS(0)));
-        driverController.a().onTrue(new InstantCommand(() -> intaker.setRPS(0)));
 
-        driverController.leftBumper().onTrue(new InstantCommand(()->shooter.setRPS(-10)));
-        driverController.rightBumper().onTrue(new InstantCommand(()->shooter.setRPS(0)));
+
+
+
+        // driverController.x().onTrue(new InstantCommand(()->grArm.setPosition(90.)));
+        // driverController.y().onTrue(new InstantCommand(()->grArm.setPosition(-60.)));
+        // driverController.leftTrigger().onTrue(new InstantCommand(()->intaker.setRPS(10)));
+        // driverController.rightTrigger().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
+        driverController.leftBumper().onTrue(new InstantCommand(()->indexer.setRghtRPS(-9.)));
+        driverController.leftBumper().onTrue(new InstantCommand(()->indexer.setLeftRPS(-7.)));
+        driverController.leftBumper().onFalse(new InstantCommand(()->indexer.setRPS(0)));
+        // driverController.a().onTrue(new InstantCommand(() -> indexer.setRPS(0)));
+        // driverController.x().onTrue(new InstantCommand(()->indexer.setRPS(2)));
+        // driverController.a().onTrue(new InstantCommand(()->indexer.setRPS(0)));
+        // driverController.a().onTrue(new InstantCommand(() -> intaker.setRPS(0)));
+
+        // driverController.leftBumper().onTrue(new InstantCommand(()->shooter.setRPS(-40)));
+        // driverController.rightBumper().onTrue(new InstantCommand(()->shooter.setRPS(0)));
 
         // driverController.povDown().onTrue(new InstantCommand(()->arm.setPosition(-90.)));
-        // driverController.povLeft().onTrue(new InstantCommand(() -> arm.setPosition(-180.)));
+        // driverController.povLeft().onTrue(new InstantCommand(() -> arm.setPosition(-165.)));
+
+
 
 
 
