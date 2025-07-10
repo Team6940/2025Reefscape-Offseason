@@ -73,10 +73,11 @@ public class ShooterSubsystem extends SubsystemBase {
         double rawCurrent = inputs.motorCurrentAmps;
         double filteredCurrent = currentFilter.calculate(rawCurrent);// get the filtered current
 
-        boolean spikeDetected = currentDebouncer.calculate(
-                filteredCurrent > ShooterConstants.ShooterIntakeCurrentThreshold);
 
-        if (spikeDetected) {
+        boolean rising = filteredCurrent > ShooterConstants.ShooterIntakeCurrentThreshold;
+        boolean spikeDetected = currentDebouncer.calculate(rising);
+
+        if (rising && spikeDetected) {
             state = ShooterState.READY;
         } else {
             state = ShooterState.IDLE;
