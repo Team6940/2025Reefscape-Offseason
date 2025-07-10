@@ -144,7 +144,7 @@ public class Constants {
 
         public static final double DroppingRPS = 0;
 
-        public static final int CurrentFilterTaps = 3;
+        public static final int CurrentFilterTaps = 5;
 
         public static final double ShooterDebouncerTime = 0.05;
 
