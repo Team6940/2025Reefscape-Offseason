@@ -47,13 +47,13 @@ public class RobotContainer {
     /* INITIALIZE */
 
     private final Telemetry logger = new Telemetry(TunerConstants.kSpeedAt12Volts.in(MetersPerSecond));
-    public static final String m_Limelight = "limelight-front";
+    public static final String m_Limelight = "limelight_front";
 
     public static final ImprovedCommandXboxController driverController = new ImprovedCommandXboxController(0);
     public static final ImprovedCommandXboxController operatorController = new ImprovedCommandXboxController(1);
     public static final XboxController traditionalDriverController = new XboxController(0);
 
-    // public static final SuperStructure superStructure = SuperStructure.getInstance();
+    public static final SuperStructure superStructure = SuperStructure.getInstance();
     public static final CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     public static final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     public static final ArmSubsystem arm = ArmSubsystem.getInstance();
@@ -87,7 +87,7 @@ public class RobotContainer {
 
         /* DEFAULT COMMANDS */  // TODO
         chassis.registerTelemetry(logger::telemeterize);
-
+        chassis.setDefaultCommand(chassis.run(() -> chassis.driveFieldCentric(driverController, DriveConstants.defaultDrivePower))); //Field centric init.
         chassis.setDefaultCommand(
                     // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
             // chassis will execute this command periodically

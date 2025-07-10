@@ -21,8 +21,8 @@ public class ElevatorIOPhoenix6 implements ElevatorIO{
 
     private void motorConfig() {
      
-        leftMotor = new TalonFX(ElevatorConstants.leftMotorID, "rio");
-        rghtMotor = new TalonFX(ElevatorConstants.rghtMotorID, "rio");
+        leftMotor = new TalonFX(ElevatorConstants.leftMotorID, "canivore");
+        rghtMotor = new TalonFX(ElevatorConstants.rghtMotorID, "canivore");
 
         TalonFXConfiguration configs = new TalonFXConfiguration();
 

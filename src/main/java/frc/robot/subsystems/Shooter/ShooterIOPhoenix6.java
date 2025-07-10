@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterIOPhoenix6 implements ShooterIO{
-    private static final TalonFX motor = new TalonFX(ShooterConstants.ShooterMotorID, "rio");
+    private static final TalonFX motor = new TalonFX(ShooterConstants.ShooterMotorID, "canivore");
     private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
 
     public ShooterIOPhoenix6() {

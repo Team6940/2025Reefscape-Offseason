@@ -33,7 +33,7 @@ public class ArmIOPhoenix6 implements ArmIO {
     }
 
     private void motorConfig() {
-        motor = new TalonFX(ArmConstants.ArmMotorID, "rio");
+        motor = new TalonFX(ArmConstants.ArmMotorID, "canivore");
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
