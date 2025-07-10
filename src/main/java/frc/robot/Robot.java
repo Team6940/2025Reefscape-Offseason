@@ -7,6 +7,7 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -46,6 +47,11 @@ public class Robot extends LoggedRobot { //TODO
     Logger.start();
     ///This is copied from advantagekit.org documentation.
 
+  }
+
+  @Override
+  public void robotInit() {
+    CameraServer.startAutomaticCapture();
   }
 
   @Override
