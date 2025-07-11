@@ -188,11 +188,12 @@ public class SuperStructure extends SubsystemBase {
 
     public Command getHyrbidCoralScoreCommand(Button executionButton) {
         if (robotStatus == RobotStatus.HOLDING_CORAL) {
-            robotStatus = RobotStatus.IDLE;
             if (scoreMode == ScoreMode.STOW) {
-                return getNewHybridCoralScoreCommand(executionButton);
+                return getNewHybridCoralScoreCommand(executionButton)
+                        .andThen(() -> robotStatus = RobotStatus.IDLE);
             } else {
-                return getTraditionalHybridCoralScoreCommand(executionButton);
+                return getTraditionalHybridCoralScoreCommand(executionButton)
+                        .andThen(() -> robotStatus = RobotStatus.IDLE);
             }
         } else
             return null;
@@ -200,11 +201,10 @@ public class SuperStructure extends SubsystemBase {
 
     public Command getCoralAlignSequenceCommand(Button toggleButton) {
         if (robotStatus == RobotStatus.IDLE) {
-            robotStatus = RobotStatus.HOLDING_CORAL;
             if (scoreMode == ScoreMode.STOW) {
-                return new NewCoralAlignSequence(toggleButton);
+                return new NewCoralAlignSequence(toggleButton).andThen(() -> robotStatus = RobotStatus.HOLDING_CORAL);
             } else {
-                return new CoralAlignSequence(toggleButton);
+                return new CoralAlignSequence(toggleButton).andThen(() -> robotStatus = RobotStatus.HOLDING_CORAL);
             }
         } else
             return null;
@@ -212,13 +212,14 @@ public class SuperStructure extends SubsystemBase {
 
     public Command getHybridAlgaeScoreCommand(Button triggeringButton, Button executionButton) {
         if (robotStatus == RobotStatus.HOLDING_ALGAE) {
-            robotStatus = RobotStatus.IDLE;
-            return new AlgaeHybridScoring(triggeringButton, executionButton);
+            return new AlgaeHybridScoring(triggeringButton, executionButton)
+                    .andThen(() -> robotStatus = RobotStatus.IDLE);
         } else
             return null;
     }
 
     public Command getHybridAlgaeIntakeCommand(Button executionButton) {
+
         if(robotStatus == RobotStatus.IDLE) {
             robotStatus = RobotStatus.HOLDING_ALGAE;
             SmartDashboard.putString("SuperStructure/generateAlgaeIntakeIndex()",String.valueOf(chassis.generateAlgaeIntakeIndex()));  // TODO
@@ -228,15 +229,13 @@ public class SuperStructure extends SubsystemBase {
     }
 
     public Command getInitializationCommand(Button toggleButton) {
-        robotStatus = RobotStatus.IDLE;
-        return new Initialization(toggleButton);
+        return new Initialization(toggleButton).andThen(() -> robotStatus = RobotStatus.IDLE);
     }
 
     public void switchScoreMode() {
-        if(scoreMode==ScoreMode.PUSH){
+        if (scoreMode == ScoreMode.PUSH) {
             scoreMode = ScoreMode.STOW;
-        }
-        else {
+        } else {
             scoreMode = ScoreMode.PUSH;
         }
     }
@@ -258,10 +257,11 @@ public class SuperStructure extends SubsystemBase {
 
         // targetStationPoseField2d.setRobotPose(chassis.generateStationPose());
 
+
         // SmartDashboard.putNumber("SuperStructure/targetStationPoseIndex", m_targetStationPoseIndex);
-
+      
         // SmartDashboard.putData("SuperStructure/targetStationPoseField2d", targetStationPoseField2d);
-
+      
         // TEMP_stationCenterPose.setRobotPose(chassis.generateAlignedStationPose());
 
         // TEMP_stationCenterPose.setRobotPose(chassis.generateStationPose());
@@ -289,5 +289,6 @@ public class SuperStructure extends SubsystemBase {
         // SmartDashboard.putData("SuperStructure/generateAlgaeIntakePose()",); //TODO
 
         SmartDashboard.putString("SuperStructure/generateAlgaeIntakeIndex()",String.valueOf(chassis.generateAlgaeIntakeIndex()));
+
     }
 }
