@@ -264,8 +264,8 @@ public class Constants {
         public static final double kS = 0.2;
         public static final double kV = 0.06;
         public static final double kG = 0.8;
-        public static final double Acceleration = 102.; // 102.
-        public static final double MaxVelocity = 16.5; // 32.5
+        public static final double Acceleration = 20.; // 102.
+        public static final double MaxVelocity = 10.; // 32.5
         public static final double MaxHeight = 1.39;
 
         public static final double MotorToRollerRatio = 3;
