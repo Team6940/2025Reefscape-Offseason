@@ -37,6 +37,11 @@ public class ElevatorSubsystem extends SubsystemBase{
         io.setHeight(targetHeight);
     }
 
+    public void liftHeight(double _Height){
+        targetHeight = MUtils.numberLimit(0, ElevatorConstants.MaxHeight, inputs.ElevatorHeight + _Height);
+        io.setHeight(targetHeight);
+    }
+
     public double getHeight(){
         return inputs.ElevatorHeight;
     }
