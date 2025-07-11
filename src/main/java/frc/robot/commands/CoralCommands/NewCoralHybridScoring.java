@@ -138,6 +138,7 @@ boolean m_isReversed;
         // Move to retreat position
         targetPose = departPose;
         chassis.autoMoveToPose(targetPose);
+        // SmartDashboard.putstring("pose",);
 
         shooter.setRPS(ShooterConstants.CoralScoringRPS);
         // When in position, reset systems and end
