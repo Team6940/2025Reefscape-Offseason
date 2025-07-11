@@ -27,6 +27,8 @@ public class AlgaeHybridScoring extends Command {
         END
     }
 
+    
+
     Pose2d currentPose;
     private double m_targetBargeLevel = Constants.FieldConstants.BargeHeight;
     private double m_targetBargeAngle = Constants.FieldConstants.BargeAngle;
