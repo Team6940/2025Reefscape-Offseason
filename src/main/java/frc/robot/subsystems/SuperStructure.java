@@ -1,9 +1,5 @@
 package frc.robot.subsystems;
 
-import org.littletonrobotics.junction.AutoLog;
-
-import org.littletonrobotics.junction.AutoLog;
-
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -53,7 +49,7 @@ public class SuperStructure extends SubsystemBase {
 
     private RobotStatus robotStatus = RobotStatus.IDLE;
     private ScoreMode scoreMode = ScoreMode.STOW;
-    Selection driverSelection = Selection.RIGHT;
+    Selection driverSelection = Selection.LEFT;
 
 
 
@@ -62,18 +58,21 @@ public class SuperStructure extends SubsystemBase {
     private IntakerSubsystem intaker = IntakerSubsystem.getInstance();
 
     /** Variables */
-    private int m_targetReefPoseIndex = 1;
     private int m_targetReefLevelIndex = 4;
-    // private int m_targetStationPoseIndex = 1;
     private int m_operatorReefFaceIndex = 3;
+    // private int m_targetReefPoseIndex = 1;
+    // private int m_targetStationPoseIndex = 1;
     // private int m_targetStationLevelIndex = 1; //TODO
-    private int m_targetALgaeIntakeLevelIndex = 1;
+    //private int m_targetAlgaeIntakeLevelIndex = 1;
     // private Field2d targetPoseField2d = new Field2d();
-    private Field2d generatedPoseField2d = new Field2d();
     // private Field2d targetStationPoseField2d = new Field2d();
     // private Field2d TEMP_stationCenterPose = new Field2d();
-    private Field2d operatorTargetPoseField2d = new Field2d();
-    private int targetReefFaceIndex_forString ;
+    private Field2d generatedReefPoseField2d = new Field2d();
+    private Field2d generatedReefPoseReversedField2d = new Field2d();
+    private Field2d generatedAlgaeScorePoseField2d = new Field2d();
+    private Field2d generatedAlgaeIntakePoseField2d = new Field2d();
+
+
 
     public void setDriverSelection(Selection selection) {
         this.driverSelection = selection;
@@ -87,33 +86,33 @@ public class SuperStructure extends SubsystemBase {
         return m_targetReefLevelIndex;
     }
 
-    public int getTargetReefPoseIndex() {
-        return m_targetReefPoseIndex;
-    }
+    // public int getTargetReefPoseIndex() {
+    //     return m_targetReefPoseIndex;
+    // }
 
-    public int getTargetAlgaeIntakeLevelIndex() {
-        return m_targetALgaeIntakeLevelIndex;
-    }
+    // public int getTargetAlgaeIntakeLevelIndex() {
+    //     return m_targetALgaeIntakeLevelIndex;
+    // }
 
     public void setTargetReefLevelIndex(int index) {
         m_targetReefLevelIndex = index;
     }
 
-    public void setTargetAlgaeIntakeLevelIndex(int index) {
-        m_targetALgaeIntakeLevelIndex = MUtils.numberLimit(0, 1, index); // TODO 0-1
-    }
+    // public void setTargetAlgaeIntakeLevelIndex(int index) {
+    //     m_targetALgaeIntakeLevelIndex = MUtils.numberLimit(0, 1, index); // TODO 0-1
+    // }
 
     public void setOperatorReefFaceIndex(int index) {
         m_operatorReefFaceIndex = MUtils.numberLimit(1, 6, index);
     }
 
-    public void changeTargetAlgaeIntakeHeightIndex(int delta) {
-        m_targetALgaeIntakeLevelIndex = MUtils.numberLimit(0, 1, delta); // TODO 0-1
-    }
+    // public void changeTargetAlgaeIntakeHeightIndex(int delta) {
+    //     m_targetALgaeIntakeLevelIndex = MUtils.numberLimit(0, 1, delta); // TODO 0-1
+    // }
 
-    public void changeTargetReefPoseIndex(int delta) {
-        m_targetReefPoseIndex = MUtils.numberLimit(1, 12, delta); // TODO 1-12
-    }
+    // public void changeTargetReefPoseIndex(int delta) {
+    //     m_targetReefPoseIndex = MUtils.numberLimit(1, 12, delta); // TODO 1-12
+    // }
 
     public void changeOperatorReefFaceIndex(Selection direction) { // TODO
         switch (direction) {
@@ -226,8 +225,8 @@ public class SuperStructure extends SubsystemBase {
 
         if(robotStatus == RobotStatus.IDLE) {
             robotStatus = RobotStatus.HOLDING_ALGAE;
-            SmartDashboard.putString("SuperStructure/generateAlgaeIntakeIndex()",String.valueOf(chassis.generateAlgaeIntakeIndex()));  // TODO
-            return new AlgaeHybridIntake(chassis.generateAlgaeIntakeIndex(), executionButton);
+            return new AlgaeHybridIntake(chassis.generateAlgaeIntakeIndex(), executionButton).andThen(
+                    () -> robotStatus = RobotStatus.HOLDING_ALGAE);
         }
         else return null;
     }
@@ -248,14 +247,19 @@ public class SuperStructure extends SubsystemBase {
     public void periodic() {
         // Add any periodic tasks here, such as updating telemetry or checking subsystem states
 
-        SmartDashboard.putNumber("SuperStructure/targetLevelIndex", m_targetReefLevelIndex);
         // SmartDashboard.putNumber("SuperStructure/operatorLevelIndex",m_operatorLevelIndex);
 
         // SmartDashboard.putData("SuperStructure/targetPoseField2d", targetPoseField2d);
 
         // generatedPoseField2d.setRobotPose(chassis.generateReefPose(chassis.generateReefIndex())); //TODO
 
+        SmartDashboard.putNumber("SuperStructure/targetReefLevelIndex", m_targetReefLevelIndex);
+
         SmartDashboard.putNumber("SuperStructure/chassis.generateReefIndex()", chassis.generateReefIndex());
+
+        SmartDashboard.putNumber("SuperStructure/generateAlgaeIntakeIndex()",chassis.generateAlgaeIntakeIndex());  // TODO
+
+        SmartDashboard.putBoolean("SuperStructure/isFacingReefCenter()", chassis.isFacingReefCenter());
 
         // SmartDashboard.putData("SuperStructure/generatedPoseField2d", generatedPoseField2d); //TODO
 
@@ -274,11 +278,15 @@ public class SuperStructure extends SubsystemBase {
 
         // SmartDashboard.putBoolean("is STOW", scoreMode == ScoreMode.STOW);
 
-        operatorTargetPoseField2d.setRobotPose(chassis.generateReefPose(m_operatorReefFaceIndex * 2 - (driverSelection == Selection.LEFT ? 1 : 0)));
+        generatedReefPoseField2d.setRobotPose(chassis.generateReefPose(((chassis.generateReefIndex() - 1) / 2 * 2 + (driverSelection == Selection.LEFT ? 1 : 2))));
 
-        SmartDashboard.putData("SuperStructure/generateReefPose",operatorTargetPoseField2d); //TODO
+        generatedReefPoseReversedField2d.setRobotPose(chassis.generateReefPoseReversed(((chassis.generateReefIndex() - 1) / 2 * 2 + (driverSelection == Selection.LEFT ? 1 : 2))));
+        
+        generatedAlgaeIntakePoseField2d.setRobotPose(chassis.generateAlgaeIntakePose(chassis.generateAlgaeIntakeIndex()));
 
-        // SmartDashboard.putData("SuperStructure/operatorPose(operatorTargetPoseField2d)", operatorTargetPoseField2d);
+        generatedAlgaeScorePoseField2d.setRobotPose(chassis.generateAlgaeScorePose());
+
+        // SmartDashboard.putData("SuperStructure/operatorPose(generatedReefPosField2d)", generatedReefPosField2d);
 
         SmartDashboard.putString("SuperStructure/RobotStatus", robotStatus.toString());
 
@@ -288,11 +296,14 @@ public class SuperStructure extends SubsystemBase {
 
         // SmartDashboard.putString("SuperStructure/m_operatorReefFaceIndex(targetReefFace)",String.valueOf(m_operatorReefFaceIndex)); //TODO
 
-        SmartDashboard.putBoolean("SuperStructure/isFacingReefCenter", chassis.isFacingReefCenter());
-
         // SmartDashboard.putData("SuperStructure/generateAlgaeIntakePose()",); //TODO
 
-        SmartDashboard.putString("SuperStructure/generateAlgaeIntakeIndex()",String.valueOf(chassis.generateAlgaeIntakeIndex()));
+        SmartDashboard.putData("SuperStructure/generateReefPose()",generatedReefPoseField2d); //TODO
 
+        SmartDashboard.putData("SuperStructure/generateReefPoseReversed()",generatedReefPoseReversedField2d); //TODO
+
+        SmartDashboard.putData("SuperStructure/generateAlgaeIntakePose()", generatedAlgaeIntakePoseField2d); //TODO
+
+        SmartDashboard.putData("SuperStructure/generateAlgaeScorePose()", generatedAlgaeScorePoseField2d); //TODO
     }
 }

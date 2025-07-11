@@ -57,8 +57,7 @@ public class AlgaeHybridScoring extends Command {
     @Override
     public void initialize() {
         state = ScoringState.ALIGNING;
-        currentPose = chassis.getPose();
-        targetPose = chassis.generateAlgaeScorePose(currentPose);
+        targetPose = chassis.generateAlgaeScorePose();
         targetHeight = m_targetBargeLevel;
         targetAngle = m_targetBargeAngle;
         elevator.setHeight(ElevatorConstants.IdleHeight);

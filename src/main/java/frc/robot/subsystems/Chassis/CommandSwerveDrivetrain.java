@@ -678,7 +678,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return res;
     }
 
-    public Pose2d generateAlgaeScorePose(Pose2d currentPose) {
+    public Pose2d generateAlgaeScorePose() {
+        Pose2d currentPose = getPose();
         Translation2d t = new Translation2d(FieldConstants.AlgaeScoreTransalationX, currentPose.getY());
         Pose2d res = new Pose2d(t, new Rotation2d(Math.PI));// todo, decide which direction the robot is facing.
         if (DriverStation.getAlliance().get() == Alliance.Red) {
