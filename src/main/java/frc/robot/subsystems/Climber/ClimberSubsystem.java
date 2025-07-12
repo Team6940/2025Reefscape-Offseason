@@ -24,7 +24,8 @@ public class ClimberSubsystem extends SubsystemBase{
 
     ClimberSubsystem(){
         if(Robot.isReal()){
-            io = new ClimberIOPhoenix6();
+            // io = new ClimberIOPhoenix6();
+            io = new ClimberIOEmpty();
         }
         else {
             //TODO implement simulation
