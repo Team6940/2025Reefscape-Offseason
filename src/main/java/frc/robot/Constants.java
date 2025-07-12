@@ -94,7 +94,7 @@ public class Constants {
 
         public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
-        public static final boolean SensorInverted = false; //TODO: this is a placeholder value, should be replaced with the actual sensor inverted value
+        public static final boolean SensorInverted = true; //TODO: this is a placeholder value, should be replaced with the actual sensor inverted value
         public static final double IndexerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
         public static final double IndexerVelocityToleranceRPS = 0.5;
@@ -140,13 +140,13 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterIntakeCurrentThreshold = 20;//TODO
+        public static final double ShooterIntakeCurrentThreshold = 10;//TODO
 
         public static final double DroppingRPS = 0;
 
-        public static final int CurrentFilterTaps = 5;
+        public static final int CurrentFilterTaps = 10;
 
-        public static final double ShooterDebouncerTime = 0.05;
+        public static final double ShooterDebouncerTime = 0.1;
 
 
     }
@@ -164,7 +164,7 @@ public class Constants {
         public static final double MaxVelocity = 1.6; // RPS
         public static final double Acceleration = 1.3; // RPS^2
 
-        public static final double MinDegs = -240.; // CCW Positive
+        public static final double MinDegs = -270.; // CCW Positive
         public static final double MaxDegs = -90.; 
         public static final double ArmPositionToleranceDegs = 5.;
         public static final double DroppingPositionDegs = 0.;
@@ -172,7 +172,7 @@ public class Constants {
         public static final int ArmEncoderID = 18;
         public static final double EncoderOffsetDegrees = 1.3;
         public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.Clockwise_Positive; //TODO
-        public static final double SecuredPosition = 0;
+        public static final double SecuredPosition = -260;
         public static final double encoderToMechanismRatio=1.;
     }
 
@@ -266,7 +266,8 @@ public class Constants {
         public static final double kG = 0.8;
         public static final double Acceleration = 20.; // 102.
         public static final double MaxVelocity = 10.; // 32.5
-        public static final double MaxHeight = 1.39;
+        public static final double MaxHeight = 1.;
+        public static final double MinHeight = -0.3;
 
         public static final double MotorToRollerRatio = 3;
 
@@ -274,10 +275,10 @@ public class Constants {
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
 
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
-        public static final double IntakingHeight = 0.3;
+        public static final double IntakingHeight = 0.1;
         public static final double DroppingHeight = 0.;
-        public static final double IdleHeight = 0.3;//TODO
-        public static final double GrabbingHeight = 0;
+        public static final double IdleHeight = 0.15;//TODO
+        public static final double GrabbingHeight = 0.;
 
     }
 
@@ -343,7 +344,7 @@ public class Constants {
 
         public static final double AlgaeIntakePushDistance=1.5;
 
-        public static final double ArmStowPosition=0.;//TODO
+        public static final double ArmStowPosition=-270.;//TODO
 
         public static final double PushDistance=1.;
         

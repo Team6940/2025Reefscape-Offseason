@@ -75,11 +75,16 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
         boolean rising = filteredCurrent > ShooterConstants.ShooterIntakeCurrentThreshold;
+        // boolean rising = rawCurrent > ShooterConstants.ShooterIntakeCurrentThreshold;
         boolean spikeDetected = currentDebouncer.calculate(rising);
 
-        if (rising && spikeDetected) {
+        // state = ShooterState.IDLE;
+
+        // if (rising || spikeDetected) {
+        if (rising) {
             state = ShooterState.READY;
-        } else {
+        } 
+        else {
             state = ShooterState.IDLE;
         }
     }
@@ -91,9 +96,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (state == ShooterState.DUTY || state == ShooterState.READY) {
-            shooterStateUpdate();
-        }
+        // if (state == ShooterState.DUTY || state == ShooterState.READY) {
+        //     shooterStateUpdate();
+        // }
+        shooterStateUpdate();
         processLog();
         processDashboard();
 

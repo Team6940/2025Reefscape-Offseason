@@ -95,6 +95,7 @@ public class IndexerIOPhoenix6 implements IndexerIO {
         inputs.rghtVelocityRPS = rghtMotor.getVelocity().getValueAsDouble();
 
         inputs.sensorGet = sensor.get() ^ IndexerConstants.SensorInverted;
+        // inputs.sensorGet = sensor.get();
     }
 
 }
