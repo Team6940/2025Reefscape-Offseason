@@ -251,17 +251,16 @@ public class RobotContainer {
         // driverController.povRight().onTrue(new InstantCommand(()->arm.setPosition(-90.)));
         // driverController.povLeft().onTrue(new InstantCommand(() -> arm.setPosition(-165.)));
 
-        // driverController.povUp().onTrue(new InstantCommand(()->elevator.liftHeight(0.05)));
-        // driverController.povDown().onTrue(new InstantCommand(()->elevator.liftHeight(-0.05)));
+        driverController.povUp().onTrue(new InstantCommand(()->elevator.liftHeight(0.05)));
+        driverController.povDown().onTrue(new InstantCommand(()->elevator.liftHeight(-0.05)));
 
+        // // driverController.y().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
+        // driverController.rightTrigger().whileTrue(new InstantCommand(()->arm.setPosition(-90.)));
+        // driverController.rightBumper().whileTrue(new InstantCommand(()->arm.setPosition(-271.)));
+        // // driverController.leftTrigger().whileTrue(new ZeroElevator());
+        // // driverController.rightTrigger().whileTrue(new SetStateIdleDown());
 
-
-        // driverController.y().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
-        //driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-90.)));
-        //driverController.x().whileTrue(new InstantCommand(()->arm.setPosition(-135.)));
-        //driverController.y().whileTrue(new InstantCommand(()->arm.setPosition(-180.)));
-        // driverController.leftTrigger().whileTrue(new ZeroElevator());
-        // driverController.rightTrigger().whileTrue(new SetStateIdleDown());
+        // driverController.a().onTrue(new InstantCommand(()->elevator.setHeight(-0.2)));//TODO MOVE INTO CONSTANTS
 
         // driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
         // driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));

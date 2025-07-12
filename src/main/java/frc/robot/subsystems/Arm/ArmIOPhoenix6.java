@@ -65,7 +65,7 @@ public class ArmIOPhoenix6 implements ArmIO {
     }
 
     private void encoderConfig() {
-        encoder = new CANcoder(ArmConstants.ArmEncoderID, "rio");
+        encoder = new CANcoder(ArmConstants.ArmEncoderID, "canivore");
         CANcoderConfiguration config = new CANcoderConfiguration();
         config.MagnetSensor.MagnetOffset = Units.degreesToRotations(ArmConstants.EncoderOffsetDegrees);
         config.MagnetSensor.SensorDirection = ArmConstants.EncoderDirection;

@@ -119,6 +119,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     private void processDashboard() {
+        SmartDashboard.putBoolean("isAtSecuredPosition()",isAtSecuredPosition());
         // TODO: Implement dashboard code here
     }
 

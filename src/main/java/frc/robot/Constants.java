@@ -140,7 +140,7 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterIntakeCurrentThreshold = 30;//TODO
+        public static final double ShooterIntakeCurrentThreshold = 10;//TODO
 
         public static final double DroppingRPS = 0;
 
@@ -164,7 +164,7 @@ public class Constants {
         public static final double MaxVelocity = 1.6; // RPS
         public static final double Acceleration = 1.3; // RPS^2
 
-        public static final double MinDegs = -240.; // CCW Positive
+        public static final double MinDegs = -270.; // CCW Positive
         public static final double MaxDegs = -90.; 
         public static final double ArmPositionToleranceDegs = 5.;
         public static final double DroppingPositionDegs = 0.;
@@ -172,7 +172,7 @@ public class Constants {
         public static final int ArmEncoderID = 18;
         public static final double EncoderOffsetDegrees = 1.3;
         public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.Clockwise_Positive; //TODO
-        public static final double SecuredPosition = -172;
+        public static final double SecuredPosition = -260;
         public static final double encoderToMechanismRatio=1.;
     }
 
@@ -266,7 +266,8 @@ public class Constants {
         public static final double kG = 0.8;
         public static final double Acceleration = 20.; // 102.
         public static final double MaxVelocity = 10.; // 32.5
-        public static final double MaxHeight = 1.39;
+        public static final double MaxHeight = 1.;
+        public static final double MinHeight = -0.3;
 
         public static final double MotorToRollerRatio = 3;
 
@@ -276,8 +277,8 @@ public class Constants {
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
         public static final double IntakingHeight = 0.1;
         public static final double DroppingHeight = 0.;
-        public static final double IdleHeight = 0.3;//TODO
-        public static final double GrabbingHeight = 0.02;
+        public static final double IdleHeight = 0.15;//TODO
+        public static final double GrabbingHeight = 0.;
 
     }
 

@@ -81,15 +81,16 @@ public class NewCoralAlignSequence extends Command {
         arm.reset();
         elevator.setHeight(ElevatorConstants.GrabbingHeight);
         if (shooter.getShooterState() == ShooterState.READY) {
+            // indexer.stop();
             shooter.stop(); //TODO decide whether it's necessary to spin the shooter for getting hold of the coral in case the robot throws it out accidently
             elevator.setHeight(ElevatorConstants.IdleHeight);
             arm.setPosition(FieldConstants.ArmStowPosition);
-            if(arm.isAtSecuredPosition()){
-                elevator.setHeight(-0.27); //TODO MOVE INTO CONSTANTS
-            }
-            state=IntakeState.END;
+        //     if(arm.isAtSecuredPosition()){
+                elevator.setHeight(0.1);//TODO MOVE INTO CONSTANTS
+        //     } 
+        //     // elevator.setHeight(0.1);//TODO MOVE INTO CONSTANTS
         }
-
+        state=IntakeState.END;
     }
 
     @Override
