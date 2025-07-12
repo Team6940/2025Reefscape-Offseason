@@ -23,7 +23,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final LinearFilter currentFilter = LinearFilter.movingAverage(ShooterConstants.CurrentFilterTaps);
     private final Debouncer currentDebouncer = new Debouncer(ShooterConstants.ShooterDebouncerTime,
-            DebounceType.kRising);// detects the current rapid risings
+            DebounceType.kBoth);// detects the current rapid risings TODO kRising time Taps
 
     private double targetRPS = 0;
 
@@ -74,12 +74,17 @@ public class ShooterSubsystem extends SubsystemBase {
         double filteredCurrent = currentFilter.calculate(rawCurrent);// get the filtered current
 
 
-        boolean rising = filteredCurrent > ShooterConstants.ShooterIntakeCurrentThreshold;
-        boolean spikeDetected = currentDebouncer.calculate(rising);
+        // boolean rising = filteredCurrent > ShooterConstants.ShooterIntakeCurrentThreshold;
+        boolean rising = rawCurrent > ShooterConstants.ShooterIntakeCurrentThreshold;
+        // boolean spikeDetected = currentDebouncer.calculate(rising);
 
-        if (rising && spikeDetected) {
+        // state = ShooterState.IDLE;
+
+        // if (rising || spikeDetected) {
+        if (rising) {
             state = ShooterState.READY;
-        } else {
+        } 
+        else {
             state = ShooterState.IDLE;
         }
     }

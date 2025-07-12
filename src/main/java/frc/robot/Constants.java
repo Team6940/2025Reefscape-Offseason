@@ -94,7 +94,7 @@ public class Constants {
 
         public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
         public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
-        public static final boolean SensorInverted = false; //TODO: this is a placeholder value, should be replaced with the actual sensor inverted value
+        public static final boolean SensorInverted = true; //TODO: this is a placeholder value, should be replaced with the actual sensor inverted value
         public static final double IndexerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
         public static final double IndexerVelocityToleranceRPS = 0.5;
@@ -140,13 +140,13 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterIntakeCurrentThreshold = 20;//TODO
+        public static final double ShooterIntakeCurrentThreshold = 5;//TODO
 
         public static final double DroppingRPS = 0;
 
-        public static final int CurrentFilterTaps = 5;
+        public static final int CurrentFilterTaps = 10;
 
-        public static final double ShooterDebouncerTime = 0.05;
+        public static final double ShooterDebouncerTime = 0.1;
 
 
     }

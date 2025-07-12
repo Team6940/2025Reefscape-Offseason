@@ -64,11 +64,11 @@ public class RobotContainer {
     public static final IndexerSubsystem indexer = IndexerSubsystem.getInstance();
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.4).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     // TODO: change deadband here
-    public static final double driveDeadband = 0.04;
-    public static final double rotateDeadband = 0.04;
+    public static final double driveDeadband = 0.9;
+    public static final double rotateDeadband = 0.9;
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -76,7 +76,7 @@ public class RobotContainer {
             .withDriveRequestType(DriveRequestType.Velocity); // Use open-loop control for drive 
             
     // private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+    // private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
 
     public RobotContainer() {
@@ -87,15 +87,17 @@ public class RobotContainer {
 
         /* DEFAULT COMMANDS */  // TODO
         chassis.registerTelemetry(logger::telemeterize);
-        chassis.setDefaultCommand(chassis.run(() -> chassis.driveFieldCentric(driverController, DriveConstants.defaultDrivePower))); //Field centric init.
-        chassis.setDefaultCommand(
-                    // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
-            // chassis will execute this command periodically
-            chassis.applyRequest(() -> drive
-                    .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 1.)
-                    .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 1.)
-                    .withRotationalRate(driverController.getRightX() * MaxAngularRate / 1.)
-            ));//Left Stick
+        // chassis.setDefaultCommand(chassis.run(() -> chassis.driveFieldCentric(driverController, DriveConstants.defaultDrivePower))); //Field centric init.
+
+        // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
+        // chassis will execute this command periodically
+        // chassis.setDefaultCommand(
+            
+        //     chassis.applyRequest(() -> drive
+        //             .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed / 0.1)
+        //             .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed / 0.1)
+        //             .withRotationalRate(driverController.getRightX() * MaxAngularRate / 0.1)
+        //     ));//Left Stick
 
 
 
@@ -212,13 +214,12 @@ public class RobotContainer {
 
         ///THOSE ARE FOR TESTING.-------------------------------------------------------------------------------------------    
 
-        // driverController.leftTrigger().whileTrue(new ToggleIntake(grArm, intaker)); 
         // driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));//This needs to be changed
         // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
         // driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
         
 
-        //driverController.leftTrigger().whileTrue(new InstantCommand(()-> shooter.setRPS(10)));
+        // driverController.leftTrigger().whileTrue(new InstantCommand(()-> shooter.setRPS(10)));
         // driverController.rightTrigger().whileTrue(new InstantCommand(()->shooter.setRPS(-20)));
         // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(0)));
 
@@ -226,25 +227,30 @@ public class RobotContainer {
         // driverController.y().onTrue(new InstantCommand(()->grArm.setPosition(-60.)));
         // driverController.leftTrigger().onTrue(new InstantCommand(()->intaker.setRPS(10)));
         // driverController.rightTrigger().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
-        //driverController.leftBumper().onTrue(new InstantCommand(()->indexer.setRghtRPS(-9.)));
-        //driverController.leftBumper().onTrue(new InstantCommand(()->indexer.setLeftRPS(-6.)));
-        //driverController.leftBumper().onFalse(new InstantCommand(()->indexer.setRPS(0)));
+
+        // driverController.y().whileTrue(new ToggleIntake(grArm, intaker));
+        // driverController.y().onTrue(new InstantCommand(()->indexer.setRghtRPS(-9.)));
+        // driverController.y().onTrue(new InstantCommand(()->indexer.setLeftRPS(-6.)));
+        // driverController.y().onFalse(new InstantCommand(()->indexer.setRPS(0)));
+
         // driverController.a().onTrue(new InstantCommand(() -> indexer.setRPS(0)));
         // driverController.x().onTrue(new InstantCommand(()->indexer.setRPS(2)));
         // driverController.a().onTrue(new InstantCommand(()->indexer.setRPS(0)));
         // driverController.a().onTrue(new InstantCommand(() -> intaker.setRPS(0)));
 
-        driverController.leftBumper().onTrue(new InstantCommand(()->shooter.setRPS(-40)));
-        driverController.a().onTrue(new InstantCommand(()->shooter.setRPS(0)));
+        driverController.leftBumper().onTrue(new InstantCommand(()->shooter.setRPS(-60)));
+        driverController.leftBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
+        // driverController.a().onTrue(new InstantCommand(()->shooter.setRPS(0)));
         driverController.rightBumper().onTrue(new InstantCommand(()->shooter.setRPS(20)));
+        driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
+
+        // driverController.povRight().onTrue(new InstantCommand(()->arm.setPosition(-90.)));
+        // driverController.povLeft().onTrue(new InstantCommand(() -> arm.setPosition(-165.)));
+
+        // driverController.povUp().onTrue(new InstantCommand(()->elevator.liftHeight(0.05)));
+        // driverController.povDown().onTrue(new InstantCommand(()->elevator.liftHeight(-0.05)));
 
 
-
-        //driverController.povDown().onTrue(new InstantCommand(()->arm.setPosition(-90.)));
-        //driverController.povLeft().onTrue(new InstantCommand(() -> arm.setPosition(-165.)));
-
-        driverController.povUp().onTrue(new InstantCommand(()->elevator.liftHeight(0.01)));
-        driverController.povRight().onTrue(new InstantCommand(()->elevator.liftHeight(-0.01)));
 
         // driverController.y().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
         //driverController.a().whileTrue(new InstantCommand(()->arm.setPosition(-90.)));
