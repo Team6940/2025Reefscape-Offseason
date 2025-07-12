@@ -37,6 +37,8 @@ import frc.robot.commands.SetStateIdleDown;
 import frc.robot.commands.ZeroElevator;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.ClimbCommands.SemiAutoClimbCommand;
+import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
+import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.TestCommands.ToggleElevatorTest;
 import frc.robot.commands.TestCommands.ToggleArmTest;
@@ -183,7 +185,7 @@ public class RobotContainer {
         // /* Buttons */
         
         // driverController.b().whileTrue(chassis.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
-        driverController.b().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric()));
+        // driverController.b().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric()));
         // driverController.y().onTrue(superStructure.runOnce(() -> superStructure.getInitializationCommand(Button.kY)));
 
         // /* Povs */
@@ -229,6 +231,8 @@ public class RobotContainer {
         // driverController.rightTrigger().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
 
         // driverController.y().whileTrue(new ToggleIntake(grArm, intaker));
+        driverController.y().onTrue(new NewCoralAlignSequence(Button.kA));
+
         // driverController.y().onTrue(new InstantCommand(()->indexer.setRghtRPS(-9.)));
         // driverController.y().onTrue(new InstantCommand(()->indexer.setLeftRPS(-6.)));
         // driverController.y().onFalse(new InstantCommand(()->indexer.setRPS(0)));
@@ -238,11 +242,11 @@ public class RobotContainer {
         // driverController.a().onTrue(new InstantCommand(()->indexer.setRPS(0)));
         // driverController.a().onTrue(new InstantCommand(() -> intaker.setRPS(0)));
 
-        driverController.leftBumper().onTrue(new InstantCommand(()->shooter.setRPS(-60)));
-        driverController.leftBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
-        // driverController.a().onTrue(new InstantCommand(()->shooter.setRPS(0)));
-        driverController.rightBumper().onTrue(new InstantCommand(()->shooter.setRPS(20)));
-        driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
+        // driverController.leftBumper().onTrue(new InstantCommand(()->shooter.setRPS(-60)));
+        // driverController.leftBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
+        // // driverController.a().onTrue(new InstantCommand(()->shooter.setRPS(0)));
+        // driverController.rightBumper().onTrue(new InstantCommand(()->shooter.setRPS(20)));
+        // driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
 
         // driverController.povRight().onTrue(new InstantCommand(()->arm.setPosition(-90.)));
         // driverController.povLeft().onTrue(new InstantCommand(() -> arm.setPosition(-165.)));

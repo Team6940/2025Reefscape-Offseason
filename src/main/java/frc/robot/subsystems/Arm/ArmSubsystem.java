@@ -50,7 +50,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isAtSecuredPosition() {
-        return Math.abs(getArmPosition()) > ArmConstants.SecuredPosition;// TODO
+        return getArmPosition() < ArmConstants.SecuredPosition;// TODO
     }
 
     public double getTargetPosition() {

@@ -64,8 +64,12 @@ public class NewCoralAlignSequence extends Command {
     private void align() {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
-        indexer.setRPS(IndexerConstants.IntakingRPS);
-        if (indexer.getIndexerState() == IndexerState.READY || driverController.getButton(m_toggleButton)) {
+        indexer.setRghtRPS(-9.);
+        indexer.setLeftRPS(-6.);
+        // indexer.setRPS(IndexerConstants.IntakingRPS);
+        // if (indexer.getIndexerState() == IndexerState.READY || driverController.getButton(m_toggleButton)) {
+        if (driverController.getButton(m_toggleButton)) {
+
             state = IntakeState.GRABBING;
         }
         // if (indexer.getIndexerState() == IndexerState.FREE_SPINNING) {
@@ -75,12 +79,13 @@ public class NewCoralAlignSequence extends Command {
 
     private void grab() {
         arm.reset();
-        elevator.setHeight(ElevatorConstants.GrabbingHeight);;
+        elevator.setHeight(ElevatorConstants.GrabbingHeight);
         if (shooter.getShooterState() == ShooterState.READY) {
-            shooter.stop();; //TODO decide whether it's necessary to spin the shooter for getting hold of the coral in case the robot throws it out accidently
+            shooter.stop(); //TODO decide whether it's necessary to spin the shooter for getting hold of the coral in case the robot throws it out accidently
+            elevator.setHeight(ElevatorConstants.IdleHeight);
             arm.setPosition(FieldConstants.ArmStowPosition);
             if(arm.isAtSecuredPosition()){
-                elevator.setHeight(0);
+                elevator.setHeight(-0.27); //TODO MOVE INTO CONSTANTS
             }
             state=IntakeState.END;
         }

@@ -23,7 +23,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final LinearFilter currentFilter = LinearFilter.movingAverage(ShooterConstants.CurrentFilterTaps);
     private final Debouncer currentDebouncer = new Debouncer(ShooterConstants.ShooterDebouncerTime,
-            DebounceType.kBoth);// detects the current rapid risings TODO kRising time Taps
+            DebounceType.kRising);// detects the current rapid risings
 
     private double targetRPS = 0;
 
@@ -74,9 +74,9 @@ public class ShooterSubsystem extends SubsystemBase {
         double filteredCurrent = currentFilter.calculate(rawCurrent);// get the filtered current
 
 
-        // boolean rising = filteredCurrent > ShooterConstants.ShooterIntakeCurrentThreshold;
-        boolean rising = rawCurrent > ShooterConstants.ShooterIntakeCurrentThreshold;
-        // boolean spikeDetected = currentDebouncer.calculate(rising);
+        boolean rising = filteredCurrent > ShooterConstants.ShooterIntakeCurrentThreshold;
+        // boolean rising = rawCurrent > ShooterConstants.ShooterIntakeCurrentThreshold;
+        boolean spikeDetected = currentDebouncer.calculate(rising);
 
         // state = ShooterState.IDLE;
 
@@ -96,9 +96,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (state == ShooterState.DUTY || state == ShooterState.READY) {
-            shooterStateUpdate();
-        }
+        // if (state == ShooterState.DUTY || state == ShooterState.READY) {
+        //     shooterStateUpdate();
+        // }
+        shooterStateUpdate();
         processLog();
         processDashboard();
 
