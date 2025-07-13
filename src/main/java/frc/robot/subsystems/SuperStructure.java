@@ -1,19 +1,16 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.*;
 import frc.robot.Library.MUtils;
-import frc.robot.Library.team3476.net.editing.LiveEditableValue;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
 import frc.robot.commands.CoralCommands.ReversedCoralHybridScoring;
-import frc.robot.commands.CoralCommands.NewReversedCoralHybridScoring;
 import frc.robot.commands.CoralCommands.NewCoralHybridScoring;
 import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
@@ -84,6 +81,10 @@ public class SuperStructure extends SubsystemBase {
 
     public int getTargetReefLevelIndex() {
         return m_targetReefLevelIndex;
+    }
+
+    public void setRobotStatus(RobotStatus status){
+        this.robotStatus = status;
     }
 
     // public int getTargetReefPoseIndex() {
@@ -245,6 +246,9 @@ public class SuperStructure extends SubsystemBase {
 
     @Override
     public void periodic() {
+
+        maintainStatus();
+
         // Add any periodic tasks here, such as updating telemetry or checking subsystem states
 
         // SmartDashboard.putNumber("SuperStructure/operatorLevelIndex",m_operatorLevelIndex);
@@ -305,5 +309,18 @@ public class SuperStructure extends SubsystemBase {
         SmartDashboard.putData("SuperStructure/generateAlgaeIntakePose()", generatedAlgaeIntakePoseField2d); //TODO
 
         SmartDashboard.putData("SuperStructure/generateAlgaeScorePose()", generatedAlgaeScorePoseField2d); //TODO
+    }
+
+    private void maintainStatus() {
+        // if(isUnderCommand){
+        //    return; 
+        // }
+        // switch(robotStatus){
+        //     case HOLDING_CORAL:
+        //         setArmUp();
+        //         setElevDown();
+        //         break;
+            
+        // }
     }
 }

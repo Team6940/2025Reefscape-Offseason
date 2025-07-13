@@ -97,7 +97,7 @@ public class ReversedCoralHybridScoring extends Command {
         shooter.setRPS(ShooterConstants.CoralScoringRPS);
 
         Pose2d currentPose = chassis.getPose();
-        Translation2d transformTranslation2d = new Translation2d(FieldConstants.CoralScorePushDistance,
+        Translation2d transformTranslation2d = new Translation2d(FieldConstants.CoralScoreRetreatDistance,
                 currentPose.getRotation());
         Pose2d departPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
                 currentPose.getRotation());

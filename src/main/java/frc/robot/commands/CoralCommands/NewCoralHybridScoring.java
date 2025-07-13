@@ -23,7 +23,7 @@ import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 
 public class NewCoralHybridScoring extends Command {
     enum ScoringState {
-        ALIGNING,
+        AIMING,
         SCORING,
         DEPARTING,
         END
@@ -39,7 +39,7 @@ public class NewCoralHybridScoring extends Command {
     double aimAngle;
     double scoreHeight;
     double scoreAngle;
-boolean m_isReversed;
+    boolean m_isReversed;
     double targetRotation;
 
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
@@ -59,26 +59,21 @@ boolean m_isReversed;
 
     @Override
     public void initialize() {
-        state = ScoringState.ALIGNING;
-        targetPose = chassis.generateReefPose(m_targetReefPoseIndex);
+        state = ScoringState.AIMING;
         if(m_isReversed)
         {
-            targetPose = chassis.generateReefPoseReversed(m_targetReefLevelIndex);
-     aimHeight = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).elevator_height;
-        aimAngle = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).arm_Angle;
-        scoreHeight=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).elevator_height;
-        scoreAngle=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).arm_Angle;
-        targetRotation = FieldConstants.ReefRotationAdjustmentRange[m_targetReefLevelIndex];
-        targetPose = chassis.generateReefPoseReversed(m_targetReefPoseIndex);
+            aimHeight = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
+            aimAngle = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).armAngleDegs;
+            scoreHeight=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
+            scoreAngle=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).armAngleDegs;
+            targetPose = chassis.generateReefPoseReversed(m_targetReefPoseIndex);
         }
         else{
+            aimHeight = Constants.UpperStructureState.valueOf("PrepareScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
+            aimAngle = Constants.UpperStructureState.valueOf("PrepareScoreL"+m_targetReefLevelIndex).armAngleDegs;
+            scoreHeight=Constants.UpperStructureState.valueOf("ScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
+            scoreAngle=Constants.UpperStructureState.valueOf("ScoreL"+m_targetReefLevelIndex).armAngleDegs;
             targetPose = chassis.generateReefPose(m_targetReefPoseIndex);
-            aimHeight = Constants.UpperStructureState.valueOf("PrepareScoreL"+m_targetReefLevelIndex).elevator_height;
-               aimAngle = Constants.UpperStructureState.valueOf("PrepareScoreL"+m_targetReefLevelIndex).arm_Angle;
-               scoreHeight=Constants.UpperStructureState.valueOf("ScoreL"+m_targetReefLevelIndex).elevator_height;
-               scoreAngle=Constants.UpperStructureState.valueOf("ScoreL"+m_targetReefLevelIndex).arm_Angle;
-               targetRotation = FieldConstants.ReefRotationAdjustmentRange[m_targetReefLevelIndex];
-               targetPose = chassis.generateReefPose(m_targetReefPoseIndex);
 
         }
 
@@ -90,8 +85,8 @@ boolean m_isReversed;
                 FieldConstants.reefTranslationAdjustmentRange, FieldConstants.reefRotationAdjustmentRangeDegs);
         SmartDashboard.putString("CORAL hybrid Scoring State", state.toString());
         switch (state) {
-            case ALIGNING:
-                align();
+            case AIMING:
+                aim();
                 break;
             case SCORING:
                 score();
@@ -104,10 +99,10 @@ boolean m_isReversed;
         }
     }
 
-    public void align() {
+    public void aim() {
         elevator.setHeight(aimHeight);
         arm.setPosition(aimAngle);
-        if (arm.isAtTargetPositon()) {
+        if (arm.isAtTargetPositon() && chassis.isAtTargetPose() && elevator.isAtTargetHeight()) {
             state = ScoringState.SCORING;
         }
     }
@@ -129,22 +124,24 @@ boolean m_isReversed;
         SmartDashboard.putString("CORAL hybrid Scoring State", "DEPARTING");
 
         // Calculate retreat position (move backward)
-        Pose2d currentPose = targetPose;
-        Translation2d transformTranslation2d = new Translation2d(FieldConstants.CoralScorePushDistance,
-                currentPose.getRotation());
-        Pose2d departPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
-                currentPose.getRotation());
+        // Pose2d currentPose = targetPose;
+        // Translation2d transformTranslation2d = new Translation2d(FieldConstants.CoralScorePushDistance,
+        //         currentPose.getRotation());
+        // Pose2d departPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
+        //         currentPose.getRotation());
+
+        Transform2d retreatTransform2d = new Transform2d(FieldConstants.CoralScoreRetreatDistance, 0, Rotation2d.kZero);
+        // Transform2d retreatTransform2d = new Transform2d(0, FieldConstants.CoralScorePushDistance, Rotation2d.kZero);
+        Pose2d departPose = targetPose.plus(retreatTransform2d);
 
         // Move to retreat position
         targetPose = departPose;
-        chassis.autoMoveToPose(targetPose);
-        // SmartDashboard.putstring("pose",);
 
         shooter.setRPS(ShooterConstants.CoralScoringRPS);
         // When in position, reset systems and end
         if (shooter.getShooterState() == ShooterState.IDLE) {
-            arm.setPosition(UpperStructureState.IdleDown.arm_Angle);
-            elevator.setHeight(UpperStructureState.IdleDown.elevator_height);
+            arm.setPosition(UpperStructureState.IdleDown.armAngleDegs);
+            elevator.setHeight(UpperStructureState.IdleDown.elevatorHeightMeters);
             shooter.stop();
             state = ScoringState.END;
             SmartDashboard.putString("CORAL hybrid Scoring State", "DEPARTING complete, moving to END");
@@ -155,8 +152,8 @@ boolean m_isReversed;
     public void end(boolean interrupted) {
         if (interrupted)
             SmartDashboard.putString("CORAL hybrid Scoring State", "END due to interruption");
-            arm.setPosition(UpperStructureState.IdleDown.arm_Angle);
-            elevator.setHeight(UpperStructureState.IdleDown.elevator_height);
+            arm.setPosition(UpperStructureState.IdleDown.armAngleDegs);
+            elevator.setHeight(UpperStructureState.IdleDown.elevatorHeightMeters);
         shooter.stop();
     }
 

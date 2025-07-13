@@ -104,7 +104,7 @@ public class CoralHybridScoring extends Command {
 
         // Get current pose and add small forward offset (e.g. 0.2 meters)
         Pose2d currentPose = targetPose;
-        Translation2d transformTranslation2d = new Translation2d(-FieldConstants.CoralScorePushDistance,
+        Translation2d transformTranslation2d = new Translation2d(-FieldConstants.CoralScoreRetreatDistance,
                 currentPose.getRotation());
         Pose2d pushPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
                 currentPose.getRotation());
@@ -135,7 +135,7 @@ public class CoralHybridScoring extends Command {
 
         // Calculate retreat position (move backward)
         Pose2d currentPose = targetPose;
-        Translation2d transformTranslation2d = new Translation2d(FieldConstants.CoralScorePushDistance,
+        Translation2d transformTranslation2d = new Translation2d(FieldConstants.CoralScoreRetreatDistance,
                 currentPose.getRotation());
         Pose2d departPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
                 currentPose.getRotation());

@@ -44,7 +44,7 @@ public class Robot extends LoggedRobot { //TODO
       Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
     }
 
-    Logger.start();
+    // Logger.start();
     ///This is copied from advantagekit.org documentation.
 
   }
