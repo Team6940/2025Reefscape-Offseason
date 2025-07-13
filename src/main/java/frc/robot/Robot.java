@@ -51,7 +51,8 @@ public class Robot extends LoggedRobot { //TODO
 
   @Override
   public void robotInit() {
-    CameraServer.startAutomaticCapture();
+    // CameraServer.startAutomaticCapture();
+    // CameraServer.putVideo("limelight_front", 640, 480);
   }
 
   @Override
