@@ -14,7 +14,7 @@ public class SetStateIdleDown extends Command{
     }
 
     public void initialize() {
-        arm.setPosition(UpperStructureState.IdleDown.arm_Angle);
-        elevator.setHeight(UpperStructureState.IdleDown.elevator_height);
+        arm.setPosition(UpperStructureState.IdleDown.armAngleDegs);
+        elevator.setHeight(UpperStructureState.IdleDown.elevatorHeightMeters);
     }
 }

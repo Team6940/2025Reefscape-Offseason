@@ -6,19 +6,12 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.signals.SensorDirectionValue;
-
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
-import com.ctre.phoenix6.signals.MagnetHealthValue;
-
 import frc.robot.Constants.ArmConstants;
-import frc.robot.Library.team1678.math.Conversions;
-import frc.robot.Library.team1706.MathUtils;
 import frc.robot.subsystems.Arm.ArmIO.ArmIOInputs.EncoderMagnetHealth;
 
 public class ArmIOPhoenix6 implements ArmIO {

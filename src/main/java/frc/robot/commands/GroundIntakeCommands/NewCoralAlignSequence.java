@@ -4,6 +4,7 @@ import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.subsystems.SuperStructure;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
@@ -19,20 +20,26 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class NewCoralAlignSequence extends Command {
     enum IntakeState {
         ALIGNING,
+        DROPPING,
         GRABBING,
+        RETRACTING,
         END
     }
 
     private IntakeState state;
     private ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
-    /**This works as an emergency continue button, in case the sensor is <b>not</b> working properly. */
+    /**
+     * This works as an emergency continue button, in case the sensor is <b>not</b>
+     * working properly.
+     */
     private Button m_toggleButton;
 
     ShooterSubsystem shooter = ShooterSubsystem.getInstance();
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     ArmSubsystem arm = ArmSubsystem.getInstance();
     IndexerSubsystem indexer = IndexerSubsystem.getInstance();
+    SuperStructure robot = SuperStructure.getInstance();
 
     public NewCoralAlignSequence(Button toggleButton) {
         addRequirements(shooter, elevator, arm, indexer);
@@ -42,9 +49,9 @@ public class NewCoralAlignSequence extends Command {
     @Override
     public void initialize() {
         elevator.setHeight(ElevatorConstants.IdleHeight);
-        state = IntakeState.ALIGNING;
         arm.reset(); // Adjust as necessary for your arm's initial position
         shooter.setRPS(0);
+        state = IntakeState.ALIGNING;
     }
 
     @Override
@@ -53,8 +60,14 @@ public class NewCoralAlignSequence extends Command {
             case ALIGNING:
                 align();
                 break;
+            case DROPPING:
+                drop();
+                break;
             case GRABBING:
                 grab();
+                break;
+            case RETRACTING:
+                retract();
                 break;
             case END:
                 break;
@@ -66,38 +79,48 @@ public class NewCoralAlignSequence extends Command {
         elevator.setHeight(ElevatorConstants.IntakingHeight);
         indexer.setRghtRPS(-9.);
         indexer.setLeftRPS(-6.);
-        // indexer.setRPS(IndexerConstants.IntakingRPS);
-        // if (indexer.getIndexerState() == IndexerState.READY || driverController.getButton(m_toggleButton)) {
-        if (driverController.getButton(m_toggleButton)) {
+        if (indexer.getIndexerState() == IndexerState.READY ||
+        driverController.getButton(m_toggleButton)) {
+        // if (driverController.getButton(m_toggleButton)) {
 
-            state = IntakeState.GRABBING;
+            state = IntakeState.DROPPING;
         }
-        // if (indexer.getIndexerState() == IndexerState.FREE_SPINNING) {
-        //     state = IntakeState.GRABBING;
-        // }
+    }
+
+    private void drop() {
+        elevator.setHeight(ElevatorConstants.GrabbingHeight);
+        if (shooter.isShooterReady()) {
+            state = IntakeState.GRABBING;
+            
+        }
     }
 
     private void grab() {
-        arm.reset();
-        elevator.setHeight(ElevatorConstants.GrabbingHeight);
-        if (shooter.getShooterState() == ShooterState.READY) {
-            // indexer.stop();
-            shooter.stop(); //TODO decide whether it's necessary to spin the shooter for getting hold of the coral in case the robot throws it out accidently
-            elevator.setHeight(ElevatorConstants.IdleHeight);
-            arm.setPosition(FieldConstants.ArmStowPosition);
-        //     if(arm.isAtSecuredPosition()){
-                elevator.setHeight(0.1);//TODO MOVE INTO CONSTANTS
-        //     } 
-        //     // elevator.setHeight(0.1);//TODO MOVE INTO CONSTANTS
+        indexer.stop();
+        shooter.stop();
+        elevator.setHeight(ElevatorConstants.IdleHeight);
+        arm.setPosition(FieldConstants.ArmStowPosition);
+        if (arm.isAtSecuredPosition()) {
+            state = IntakeState.RETRACTING;
         }
-        state=IntakeState.END;
+        // if(arm.isAtSecuredPosition()){
+        // elevator.setHeight(0.1);//TODO MOVE INTO CONSTANTS
+        // }
+        // // elevator.setHeight(0.1);//TODO MOVE INTO CONSTANTS
+        // state = IntakeState.END;
+    }
+
+    private void retract() {
+        elevator.setHeight(-0.28);
+        state = IntakeState.END;
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooter.stop();
-        elevator.setHeight(ElevatorConstants.IdleHeight);//TODO : ALL ELEVATOR SET HEIGHT 0 SHOULD BE CHANGED TO SET HEIGHT IDLE_HEIGHT, ENSURING NO CONFLICTING WITH INDEXER
-        arm.reset();
+        // shooter.stop();
+        // elevator.setHeight(ElevatorConstants.IdleHeight);// TODO : ALL ELEVATOR SET HEIGHT 0 SHOULD BE CHANGED TO SET
+        //                                                  // HEIGHT IDLE_HEIGHT, ENSURING NO CONFLICTING WITH INDEXER
+        // arm.reset();
         indexer.stop();
     }
 
