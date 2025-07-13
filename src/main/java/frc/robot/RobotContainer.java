@@ -89,7 +89,7 @@ public class RobotContainer {
 
         /* DEFAULT COMMANDS */  // TODO
         chassis.registerTelemetry(logger::telemeterize);
-        // chassis.setDefaultCommand(chassis.run(() -> chassis.driveFieldCentric(driverController, DriveConstants.defaultDrivePower))); //Field centric init.
+        chassis.setDefaultCommand(chassis.run(() -> chassis.driveFieldCentric(driverController, DriveConstants.defaultDrivePower))); //Field centric init.
 
         // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
         // chassis will execute this command periodically
@@ -185,7 +185,7 @@ public class RobotContainer {
         // /* Buttons */
         
         // driverController.b().whileTrue(chassis.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
-        driverController.b().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric()));
+        driverController.povUp().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric()));
         // driverController.y().onTrue(superStructure.runOnce(() -> superStructure.getInitializationCommand(Button.kY)));
 
         // /* Povs */
