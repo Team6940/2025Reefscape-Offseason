@@ -111,7 +111,7 @@ public class NewCoralHybridScoring extends Command {
         SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING");
         arm.setPosition(scoreAngle);
         elevator.setHeight(scoreHeight);
-        if (shooter.getShooterState() == ShooterState.IDLE) {
+        if (arm.isAtTargetPositon() && elevator.isAtTargetHeight()) {
             SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING complete, moving to DEPARTING");
             state = ScoringState.DEPARTING;
         } else {
@@ -135,13 +135,13 @@ public class NewCoralHybridScoring extends Command {
         Pose2d departPose = targetPose.plus(retreatTransform2d);
 
         // Move to retreat position
+        shooter.setRPS(ShooterConstants.CoralScoringRPS);
         targetPose = departPose;
 
-        shooter.setRPS(ShooterConstants.CoralScoringRPS);
         // When in position, reset systems and end
-        if (shooter.getShooterState() == ShooterState.IDLE) {
-            arm.setPosition(UpperStructureState.IdleDown.armAngleDegs);
-            elevator.setHeight(UpperStructureState.IdleDown.elevatorHeightMeters);
+        if (chassis.isAtTargetPose()) {
+            arm.reset();
+            elevator.setHeight(ElevatorConstants.IdleHeight);
             shooter.stop();
             state = ScoringState.END;
             SmartDashboard.putString("CORAL hybrid Scoring State", "DEPARTING complete, moving to END");
@@ -152,8 +152,8 @@ public class NewCoralHybridScoring extends Command {
     public void end(boolean interrupted) {
         if (interrupted)
             SmartDashboard.putString("CORAL hybrid Scoring State", "END due to interruption");
-            arm.setPosition(UpperStructureState.IdleDown.armAngleDegs);
-            elevator.setHeight(UpperStructureState.IdleDown.elevatorHeightMeters);
+        arm.reset();
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         shooter.stop();
     }
 
