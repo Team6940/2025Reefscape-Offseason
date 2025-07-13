@@ -181,4 +181,8 @@ public class MUtils {
     public static Pose2d transformFieldRelative(Pose2d p, Transform2d t){
         return new Pose2d(p.getTranslation().plus(t.getTranslation()), p.getRotation().plus(t.getRotation()));
     }
+
+    public static Pose2d transformRobotRelative(Pose2d p, Transform2d t){
+        return p.plus(t);
+    }
 }

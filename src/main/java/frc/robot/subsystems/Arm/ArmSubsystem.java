@@ -8,7 +8,6 @@ import frc.robot.Robot;
 import frc.robot.Library.MUtils;
 import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.MathUtil;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -58,7 +57,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void reset() {
-        setPosition(-90.);// set pos vertical
+        setPosition(-91.5);// set pos vertical
     }
 
     public void setVoltage(double voltage) {

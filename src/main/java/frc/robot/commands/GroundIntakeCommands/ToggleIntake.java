@@ -29,6 +29,7 @@ public class ToggleIntake extends Command {
     public void end(boolean interrupted) {
         grArm.setPosition(GrArmConstants.RetractedPosition);
         intaker.setRPS(0);
+        
     }
 
     public boolean isFinished() {

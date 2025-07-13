@@ -5,8 +5,6 @@ import static edu.wpi.first.units.Units.*;
 import java.util.function.Supplier;
 
 import org.littletonrobotics.junction.Logger;
-import org.opencv.core.RotatedRect;
-
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
@@ -527,10 +525,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                         * (DriverStation.getAlliance().get() == Alliance.Blue ? -1. : +1.),
                 driverController.getLeftX() * translationAdjustmentRange
                         * (DriverStation.getAlliance().get() == Alliance.Blue ? -1. : +1.),
-                Rotation2d.fromDegrees(-driverController.getRightX() * rotationAdjustmentRangeDegs));
+                Rotation2d.fromDegrees(-driverController.getRightX() * rotationAdjustmentRangeDegs)
+        );
 
-        // pose=pose.plus(adjustment);
-        pose = MUtils.transformFieldRelative(pose, adjustment); // TODO
+        pose = MUtils.transformFieldRelative(pose, adjustment);
         m_targetPose2d = pose;
 
         m_rotationController.setSetpoint(pose.getRotation().getRadians());

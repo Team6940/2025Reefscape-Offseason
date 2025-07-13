@@ -231,7 +231,8 @@ public class RobotContainer {
         // driverController.rightTrigger().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
 
         // driverController.y().whileTrue(new ToggleIntake(grArm, intaker));
-        driverController.y().onTrue(new NewCoralAlignSequence(Button.kA));
+        driverController.leftBumper().onTrue(new NewCoralAlignSequence(Button.kA));
+        driverController.leftBumper().whileTrue(new ToggleIntake(grArm, intaker));
 
         // driverController.y().onTrue(new InstantCommand(()->indexer.setRghtRPS(-9.)));
         // driverController.y().onTrue(new InstantCommand(()->indexer.setLeftRPS(-6.)));
@@ -251,12 +252,12 @@ public class RobotContainer {
         // driverController.povRight().onTrue(new InstantCommand(()->arm.setPosition(-90.)));
         // driverController.povLeft().onTrue(new InstantCommand(() -> arm.setPosition(-165.)));
 
-        driverController.povUp().onTrue(new InstantCommand(()->elevator.liftHeight(0.05)));
-        driverController.povDown().onTrue(new InstantCommand(()->elevator.liftHeight(-0.05)));
+        //driverController.povUp().onTrue(new InstantCommand(()->elevator.liftHeight(0.05)));
+        //driverController.povDown().onTrue(new InstantCommand(()->elevator.liftHeight(-0.05)));
 
         // // driverController.y().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
-        // driverController.rightTrigger().whileTrue(new InstantCommand(()->arm.setPosition(-90.)));
-        // driverController.rightBumper().whileTrue(new InstantCommand(()->arm.setPosition(-271.)));
+        //driverController.rightTrigger().onTrue(new InstantCommand(()->arm.setPosition(-90.)));
+        //driverController.rightBumper().onTrue(new InstantCommand(()->arm.setPosition(-271.)));
         // // driverController.leftTrigger().whileTrue(new ZeroElevator());
         // // driverController.rightTrigger().whileTrue(new SetStateIdleDown());
 

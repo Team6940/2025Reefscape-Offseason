@@ -69,6 +69,10 @@ public class ShooterSubsystem extends SubsystemBase {
         return state;
     }
 
+    public boolean isShooterReady() {
+        return state == ShooterState.READY;
+    }
+
     public void shooterStateUpdate() {
         double rawCurrent = inputs.motorCurrentAmps;
         double filteredCurrent = currentFilter.calculate(rawCurrent);// get the filtered current
@@ -112,6 +116,7 @@ public class ShooterSubsystem extends SubsystemBase {
         Logger.processInputs("Shooter", inputs);
         Logger.recordOutput("Shooter/TargetRPS", targetRPS);
         Logger.recordOutput("Shooter/IsAtTargetRPS", IsAtTargetRps());
+        Logger.recordOutput("Shooter/isShooterReady",isShooterReady());
     }
 
     private void processDashboard() {

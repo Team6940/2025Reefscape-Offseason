@@ -60,10 +60,10 @@ public class NewReversedCoralHybridScoring extends Command {
     public void initialize() {
         state = ScoringState.ALIGNING;
         targetPose = chassis.generateReefPoseReversed(m_targetReefPoseIndex);
-        aimHeight = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).elevator_height;
-        aimAngle = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).arm_Angle;
-        scoreHeight=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).elevator_height;
-        scoreAngle=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).arm_Angle;
+        aimHeight = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
+        aimAngle = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).armAngleDegs;
+        scoreHeight=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
+        scoreAngle=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).armAngleDegs;
         targetRotation = FieldConstants.ReefRotationAdjustmentRangeReversed[m_targetReefLevelIndex];
     }
 
@@ -103,15 +103,15 @@ public class NewReversedCoralHybridScoring extends Command {
         shooter.setRPS(ShooterConstants.CoralScoringRPS);
 
         Pose2d currentPose = chassis.getPose();
-        Translation2d transformTranslation2d = new Translation2d(FieldConstants.CoralScorePushDistance,
+        Translation2d transformTranslation2d = new Translation2d(FieldConstants.CoralScoreRetreatDistance,
                 currentPose.getRotation());
         Pose2d departPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
                 currentPose.getRotation());
         chassis.autoMoveToPose(departPose);// Move to retreat position
 
         if (shooter.getShooterState() == ShooterState.IDLE) {
-            arm.setPosition(UpperStructureState.IdleDown.arm_Angle);
-            elevator.setHeight(UpperStructureState.IdleDown.elevator_height);
+            arm.setPosition(UpperStructureState.IdleDown.armAngleDegs);
+            elevator.setHeight(UpperStructureState.IdleDown.elevatorHeightMeters);
             shooter.stop();
             state = ScoringState.END;
             SmartDashboard.putString("CORAL hybrid Scoring State", "DEPARTING complete, moving to END");

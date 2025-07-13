@@ -43,12 +43,17 @@ public class Constants {
         IdleGrab(0,0),
         IdleUp(0,0);
   
-        public final double elevator_height;
-        public final double arm_Angle;
-  
+        public final double elevatorHeightMeters;
+        public final double armAngleDegs;
+
+
+        /**
+         * @param elevator_height in meters
+         * @param arm_theta in degrees
+         */
         UpperStructureState(double elevator_height, double arm_theta) {
-          this.elevator_height = elevator_height;
-          this.arm_Angle = arm_theta;
+          this.elevatorHeightMeters = elevator_height;
+          this.armAngleDegs = arm_theta;
         }
     }
     public static class DriveConstants {
@@ -128,7 +133,7 @@ public class Constants {
 
         public static final double ShooterSpeedTolerence = 0.5;
 
-        public static final double CoralIntakingRPS = -10.;
+        public static final double CoralIntakingRPS = -20.;
 
         public static final double CoralScoringRPS = 18.;
 
@@ -172,7 +177,7 @@ public class Constants {
         public static final int ArmEncoderID = 18;
         public static final double EncoderOffsetDegrees = 1.3;
         public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.Clockwise_Positive; //TODO
-        public static final double SecuredPosition = -260;
+        public static final double SecuredPosition = -150.;
         public static final double encoderToMechanismRatio=1.;
     }
 
@@ -277,8 +282,8 @@ public class Constants {
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
         public static final double IntakingHeight = 0.1;
         public static final double DroppingHeight = 0.;
-        public static final double IdleHeight = 0.15;//TODO
-        public static final double GrabbingHeight = 0.;
+        public static final double IdleHeight = 0.12;//TODO
+        public static final double GrabbingHeight = 0.01;
 
     }
 
@@ -319,9 +324,12 @@ public class Constants {
         public static final Translation2d FieldCenter = new Translation2d(17.548225 / 2, 8.0518 / 2.);
 
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
-        public static final Translation2d DReefTranslation12 = new Translation2d(1.31, 0.161);
+        public static final Translation2d DReefTranslation12 = new Translation2d(1.6, 0.161);
         public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.31, -0.161);
         public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
+        public static final double CoralScoreRetreatDistance = 0.1; // meters, this is the distance the robot will push
+                                                                    // forward after
+        // aligning to the reef pose
 
         public static final double reefTranslationAdjustmentRange = 0.15;
         public static final double reefRotationAdjustmentRangeDegs = 20;
@@ -344,7 +352,7 @@ public class Constants {
 
         public static final double AlgaeIntakePushDistance=1.5;
 
-        public static final double ArmStowPosition=-270.;//TODO
+        public static final double ArmStowPosition=-250.;//TODO
 
         public static final double PushDistance=1.;
         
@@ -434,10 +442,6 @@ public class Constants {
             0
         };
 
-        public static final double CoralScorePushDistance = 0.2; // meters, this is the distance the robot will push forward after
-                                                       // aligning to the reef pose
-        public static final double DepartDistance = 0.1; // meters, this is the distance the robot will move forward
-                                                         // after scoring
 
 
         //THESE ARE FOR THE CLIMBING  //COPIED FROM 2025 REEFSCAPE
