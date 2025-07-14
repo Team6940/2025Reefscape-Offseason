@@ -59,7 +59,7 @@ public class NewReversedCoralHybridScoring extends Command {
     @Override
     public void initialize() {
         state = ScoringState.ALIGNING;
-        targetPose = chassis.generateReefPoseReversed(m_targetReefPoseIndex);
+        targetPose = chassis.generateReefPoseReversed(m_targetReefPoseIndex,m_targetReefLevelIndex);
         aimHeight = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
         aimAngle = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).armAngleDegs;
         scoreHeight=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;

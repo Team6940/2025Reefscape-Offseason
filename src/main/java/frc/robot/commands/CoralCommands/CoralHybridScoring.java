@@ -54,7 +54,7 @@ public class CoralHybridScoring extends Command {
     @Override
     public void initialize() {
         state = ScoringState.ALIGNING;
-        targetPose = chassis.generateReefPose(m_targetReefPoseIndex);
+        targetPose = chassis.generateReefPose(m_targetReefPoseIndex,4);
         targetHeight = FieldConstants.ElevatorHeights[m_targetReefLevelIndex];
         targetAngle = FieldConstants.ArmAngles[m_targetReefLevelIndex];
         targetRotation = FieldConstants.ReefRotationAdjustmentRange[m_targetReefLevelIndex];

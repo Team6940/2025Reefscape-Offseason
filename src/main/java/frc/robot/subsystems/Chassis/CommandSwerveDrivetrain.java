@@ -593,9 +593,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return AutoBuilder.followPath(generatePPPath(pathName));
     }
 
-    public Pose2d generateReefPose(int index) {
+    public Pose2d generateReefPose(int index,int level) {
         Translation2d t = FieldConstants.BlueReefCenterPos;
         Translation2d dt = FieldConstants.DReefTranslation12;
+        
+        if(level<=2){dt=new Translation2d(dt.getX()+FieldConstants.L2Fix,dt.getY());}
         if (index % 2 == 1) {
             dt = new Translation2d(dt.getX(), -dt.getY());
         }
@@ -623,9 +625,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return res;
     }
 
-    public Pose2d generateReefPoseReversed(int index) {
+    public Pose2d generateReefPoseReversed(int index,int Level) {
         Translation2d t = FieldConstants.BlueReefCenterPos;
         Translation2d dt = FieldConstants.DReefTranslation12Reversed;
+        if(Level<=2)dt=new Translation2d(dt.getX()+FieldConstants.L2Fix,dt.getY());
         if (index % 2 == 1) {
             dt = new Translation2d(dt.getX(), -dt.getY());
         }

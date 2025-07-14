@@ -25,20 +25,21 @@ public class Constants {
         //prepare->aim; score->score
         ScoreL1(0.05, 0.99),
         ScoreL2(0.05, 0.99),
-        ScoreL3(0.05, 0.99),
-        ScoreL4(0.05, 0.99),
+        ScoreL3(0.05, -280),
+        ScoreL4(0.6, -190),
         PrepareScoreL1(0.05, 0.99),
         PrepareScoreL2(0.05, 0.99),
-        PrepareScoreL3(0.05, 0.99),
-        PrepareScoreL4(0.05, 0.99),
+        PrepareScoreL3(-0.1, -250),
+        PrepareScoreL4(0.6, -250),
         RScoreL1(0.05, 0.99),
-        RScoreL2(0.05, 0.99),
-        RScoreL3(0.05, 0.99),
-        RScoreL4(0.05, 0.99),
-        RPrepareScoreL1(0.05, 0.99),
-        RPrepareScoreL2(0.05, 0.99),
-        RPrepareScoreL3(0.05, 0.99),
-        RPrepareScoreL4(0.05, 0.99),
+        RScoreL2(-0.28, -210),
+        RScoreL3(-0.05, -207),
+        RScoreL4(0.6, -190),
+        RPrepareScoreL1(0, 0.99),
+        RPrepareScoreL2(-0.28, -250),
+        RPrepareScoreL3(-0.05, -250),
+
+        RPrepareScoreL4(0.6, -250),
         IdleDown(0,0),
         
         IdleGrab(0,0),
@@ -82,7 +83,7 @@ public class Constants {
         public static final double IntakerHoldingCurrentThreshold = 5.;
         public static final double IntakerFreeSpinCurrentThreshold = 5.;
 
-        public static final double IntakerIntakingRPS= 10.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
+        public static final double IntakerIntakingRPS= 20.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
         public static final double ReversingRPS = 0;
 
@@ -134,9 +135,9 @@ public class Constants {
 
         public static final double ShooterSpeedTolerence = 0.5;
 
-        public static final double CoralIntakingRPS = -20.;
+        public static final double CoralIntakingRPS = -60.;
 
-        public static final double CoralScoringRPS = 25.;
+        public static final double CoralScoringRPS = 20.;
 
         public static final double AlgaeIntakingRPS = -10.;
 
@@ -146,7 +147,7 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterIntakeCurrentThreshold = 10;//TODO
+        public static final double ShooterIntakeCurrentThreshold = 20;//TODO
 
         public static final double DroppingRPS = 0;
 
@@ -246,7 +247,7 @@ public class Constants {
         public static final double moveToPoseRotationkD = 0.; // TODO
 
         public static final double moveToPoseRotationToleranceRadians = Units.degreesToRadians(3.);
-        public static final double moveToPoseTranslationToleranceMeters = 0.02;
+        public static final double moveToPoseTranslationToleranceMeters = 0.04;
 
         public static final double maxMoveToSpeed = 3.8;
         public static final double maxMoveToAngularVelocity = Units.degreesToRadians(230.);
@@ -323,12 +324,12 @@ public class Constants {
     public static final class FieldConstants {
 
         public static final Translation2d FieldCenter = new Translation2d(17.548225 / 2, 8.0518 / 2.);
-
+        public static final double L2Fix=0.1;
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
-        public static final Translation2d DReefTranslation12 = new Translation2d(1.6, 0.161);
+        public static final Translation2d DReefTranslation12 = new Translation2d(2.3, 0.131);
         public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.31, -0.161);
         public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
-        public static final double CoralScoreRetreatDistance = 0.1; // meters, this is the distance the robot will push
+        public static final double CoralScoreRetreatDistance = 0.3; // meters, this is the distance the robot will push
                                                                     // forward after
         // aligning to the reef pose
 
