@@ -32,7 +32,7 @@ public class AlgaeManualIntake extends Command {
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
     public AlgaeManualIntake(int targetReefFaceIndex, Button executionButton) {
-        addRequirements(elevator, shooter, chassis, arm);
+        addRequirements(elevator, shooter, arm);
     }
 
     @Override
@@ -49,7 +49,8 @@ public class AlgaeManualIntake extends Command {
     public void end(boolean interrupted) {
         elevator.setHeight(ElevatorConstants.MinHeight);
         arm.setPosition(FieldConstants.ArmStowPosition);
-        shooter.stop();
+        //arm.reset();
+        shooter.setRPS(-60.);
     }
 
     public boolean isFinished() {

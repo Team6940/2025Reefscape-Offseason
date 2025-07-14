@@ -38,7 +38,6 @@ public class Constants {
         RPrepareScoreL1(0, 0.99),
         RPrepareScoreL2(-0.28, -250),
         RPrepareScoreL3(-0.05, -250),
-
         RPrepareScoreL4(0.6, -250),
         IdleDown(0,0),
         
@@ -139,7 +138,7 @@ public class Constants {
 
         public static final double CoralScoringRPS = 20.;
 
-        public static final double AlgaeIntakingRPS = -10.;
+        public static final double AlgaeIntakingRPS = -80.;
 
         public static final double AlgaeScoringRPS = 19.;
 
@@ -324,9 +323,9 @@ public class Constants {
     public static final class FieldConstants {
 
         public static final Translation2d FieldCenter = new Translation2d(17.548225 / 2, 8.0518 / 2.);
-        public static final double L2Fix=0.1;
+        public static final double L2Fix=0.07;
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
-        public static final Translation2d DReefTranslation12 = new Translation2d(2.3, 0.131);
+        public static final Translation2d DReefTranslation12 = new Translation2d(2.3, 0.135);
         public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.31, -0.161);
         public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
         public static final double CoralScoreRetreatDistance = 0.3; // meters, this is the distance the robot will push
@@ -342,12 +341,12 @@ public class Constants {
         public static final Rotation2d DStationRotationRSL = Rotation2d.fromRadians(0.935);
 
         public static final double ArmIntakePosition[]={
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            -180.,
+            -180.,
+            -180.,
+            -180.,
+            -180.,
+            -180.,
         };
 
         public static final double AlgaeAlignmentDistanceThreshold=1.5;
@@ -388,12 +387,12 @@ public class Constants {
         public static final double BargeAngle = 4.; //TODO: this is a placeholder value, should be replaced with the actual barge angle
         
         public static final double ElevatorAlgaeIntakeHeight[]={ //TODO tuning
-            10.,
-            20.,
-            10.,
-            20.,
-            10.,
-            20.,
+            0.03,
+            0.38,
+            0.03,
+            0.38,
+            0.03,
+            0.38,
         };
 
         public static final double ElevatorHeights[] = {
