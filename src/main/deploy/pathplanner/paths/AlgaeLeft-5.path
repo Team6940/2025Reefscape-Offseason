@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.19970079787234,
-        "y": 6.183743351063828
+        "x": 1.2193982712765956,
+        "y": 5.857014627659574
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.059521348964708,
-        "y": 5.9805993779194395
+        "x": 2.1122047149651744,
+        "y": 4.977107368368948
       },
       "isLocked": false,
-      "linkedName": "LBM"
+      "linkedName": "AlgaeLeft"
     },
     {
       "anchor": {
-        "x": 5.1695705871979385,
-        "y": 5.514056818020411
+        "x": 2.868776761280679,
+        "y": 4.170505898524928
       },
       "prevControl": {
-        "x": 4.951759908079343,
-        "y": 5.391343705184428
+        "x": 2.660733656907953,
+        "y": 4.376388502112145
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "2"
+      "linkedName": "5"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -120.3290860419838
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Up4Corals",
+  "folder": "Up4Corals New",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 178.42090623134706
+    "rotation": 8.426969021480673
   },
   "useDefaultConstraints": true
 }
