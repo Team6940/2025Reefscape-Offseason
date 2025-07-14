@@ -22,6 +22,7 @@ public class Constants {
         public final static float INF = (float) Math.pow(10, 6); // this was defined for the 1690 lib
     }
     public enum UpperStructureState {
+        //prepare->aim; score->score
         ScoreL1(0.05, 0.99),
         ScoreL2(0.05, 0.99),
         ScoreL3(0.05, 0.99),
@@ -135,7 +136,7 @@ public class Constants {
 
         public static final double CoralIntakingRPS = -20.;
 
-        public static final double CoralScoringRPS = 18.;
+        public static final double CoralScoringRPS = 25.;
 
         public static final double AlgaeIntakingRPS = -10.;
 
@@ -272,7 +273,7 @@ public class Constants {
         public static final double Acceleration = 20.; // 102.
         public static final double MaxVelocity = 10.; // 32.5
         public static final double MaxHeight = 1.;
-        public static final double MinHeight = -0.3;
+        public static final double MinHeight = -0.28;
 
         public static final double MotorToRollerRatio = 3;
 

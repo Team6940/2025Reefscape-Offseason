@@ -3,23 +3,30 @@ package frc.robot.commands.GroundIntakeCommands;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.subsystems.GrArm.GrArmSubsystem;
+import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.subsystems.SuperStructure;
+import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.FieldConstants;
+import frc.robot.Constants.GrArmConstants;
 import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.IntakerConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem.IndexerState;
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.GrArmConstants;
-import frc.robot.Constants.IntakerConstants;
-import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
+import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoIntakeCoral extends Command {
     enum IntakeState {
         ALIGNING,
+        DROPPING,
         GRABBING,
+        RETRACTING,
         END
     }
 
@@ -29,21 +36,22 @@ public class AutoIntakeCoral extends Command {
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     ArmSubsystem arm = ArmSubsystem.getInstance();
     IndexerSubsystem indexer = IndexerSubsystem.getInstance();
+    SuperStructure robot = SuperStructure.getInstance();
     GrArmSubsystem grArm = GrArmSubsystem.getInstance();
     IntakerSubsystem intaker = IntakerSubsystem.getInstance();
 
     public AutoIntakeCoral() {
-        addRequirements(shooter, elevator, arm, indexer, grArm, intaker);
+        addRequirements(shooter, elevator, arm, indexer);
     }
 
     @Override
     public void initialize() {
-        state = IntakeState.ALIGNING;
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         arm.reset(); // Adjust as necessary for your arm's initial position
         shooter.setRPS(0);
-        elevator.setHeight(ElevatorConstants.IdleHeight);//TODO;
         grArm.setPosition(GrArmConstants.ExtendedPosition);
         intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
+        state = IntakeState.ALIGNING;
     }
 
     @Override
@@ -52,8 +60,14 @@ public class AutoIntakeCoral extends Command {
             case ALIGNING:
                 align();
                 break;
+            case DROPPING:
+                drop();
+                break;
             case GRABBING:
                 grab();
+                break;
+            case RETRACTING:
+                retract();
                 break;
             case END:
                 break;
@@ -63,32 +77,50 @@ public class AutoIntakeCoral extends Command {
     private void align() {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
-        indexer.setRPS(IndexerConstants.IntakingRPS);
+        indexer.setRghtRPS(-9.);
+        indexer.setLeftRPS(-6.);
         if (indexer.getIndexerState() == IndexerState.READY) {
-            state = IntakeState.GRABBING;
+            // if (driverController.getButton(m_toggleButton)) {
+
+            state = IntakeState.DROPPING;
         }
-        // if (indexer.getIndexerState() == IndexerState.FREE_SPINNING) { //TODO
-        //     state = IntakeState.GRABBING;
-        // }
+    }
+
+    private void drop() {
+        elevator.setHeight(ElevatorConstants.GrabbingHeight);
+        if (shooter.isShooterReady()) {
+            state = IntakeState.GRABBING;
+
+        }
     }
 
     private void grab() {
-        elevator.zeroHeight();
-        if (shooter.getShooterState() == ShooterState.READY) {
-            state = IntakeState.END;
-            shooter.setRPS(ShooterConstants.HoldingCoralRPS); // get hold of the coral in case the robot throws it out
-                                                              // accidently
+        indexer.stop();
+        shooter.stop();
+        elevator.setHeight(ElevatorConstants.IdleHeight);
+        arm.setPosition(FieldConstants.ArmStowPosition);
+        if (arm.isAtSecuredPosition()) {
+            state = IntakeState.RETRACTING;
         }
+        // if(arm.isAtSecuredPosition()){
+        // elevator.setHeight(0.1);//TODO MOVE INTO CONSTANTS
+        // }
+        // // elevator.setHeight(0.1);//TODO MOVE INTO CONSTANTS
+        // state = IntakeState.END;
+    }
 
+    private void retract() {
+        elevator.setHeight(ElevatorConstants.MinHeight);
+        grArm.setPosition(GrArmConstants.RetractedPosition);
+        intaker.setRPS(0);
+        state = IntakeState.END;
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooter.stop();
-        elevator.setHeight(ElevatorConstants.IdleHeight);// TODO : ALL ELEVATOR SET HEIGHT 0 SHOULD BE CHANGED TO SET HEIGHT IDLE_HEIGHT,
-                              // ENSURING NO CONFLICTING WITH INDEXER
-        arm.reset();
         indexer.stop();
+        grArm.setPosition(GrArmConstants.RetractedPosition);
+        intaker.setRPS(0);
     }
 
 }
