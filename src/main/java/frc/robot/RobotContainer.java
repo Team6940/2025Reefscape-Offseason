@@ -36,6 +36,7 @@ import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.commands.SetStateIdleDown;
 import frc.robot.commands.ZeroElevator;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
+import frc.robot.commands.AlgaeCommands.AlgaeManualIntake;
 import frc.robot.commands.ClimbCommands.SemiAutoClimbCommand;
 import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
@@ -205,6 +206,7 @@ public class RobotContainer {
         // /* Buttons */
         driverController.povUp().whileTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(3)));
         driverController.povDown().whileTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(2)));
+        driverController.b().whileTrue(superStructure.runOnce(()->superStructure.setTargetReefLevelIndex(4)));
         // /* Povs */
         // operatorController.povUp().onTrue(superStructure.runOnce(() -> superStructure.setOperatorReefFaceIndex(6)));
         // operatorController.povDown().onTrue(superStructure.runOnce(() -> superStructure.setOperatorReefFaceIndex(3)));
@@ -231,6 +233,7 @@ public class RobotContainer {
         // driverController.y().whileTrue(new ToggleIntake(grArm, intaker));
         driverController.leftBumper().onTrue(new NewCoralAlignSequence(Button.kA));
         driverController.leftBumper().whileTrue(new ToggleIntake(grArm, intaker));
+        driverController.leftTrigger().whileTrue(new AlgaeManualIntake(chassis.generateAlgaeIntakeIndex(), Button.kA));
 
         // driverController.y().whileTrue(Command.defer(()->));
         // driverController.y().onTrue(new InstantCommand(()->indexer.setLeftRPS(-6.)));
