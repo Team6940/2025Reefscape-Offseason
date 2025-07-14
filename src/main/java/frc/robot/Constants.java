@@ -273,7 +273,7 @@ public class Constants {
         public static final double Acceleration = 20.; // 102.
         public static final double MaxVelocity = 10.; // 32.5
         public static final double MaxHeight = 1.;
-        public static final double MinHeight = -0.3;
+        public static final double MinHeight = -0.28;
 
         public static final double MotorToRollerRatio = 3;
 

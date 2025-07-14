@@ -111,7 +111,7 @@ public class NewCoralAlignSequence extends Command {
     }
 
     private void retract() {
-        elevator.setHeight(-0.28);
+        elevator.setHeight(ElevatorConstants.MinHeight);
         state = IntakeState.END;
     }
 
