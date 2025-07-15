@@ -199,13 +199,13 @@ public class Constants {
 
 
 
-        public static final double MinDegs = -60.; //degrees CCW Positive
+        public static final double MinDegs = -66.; //degrees CCW Positive
 
         public static final double MaxDegs = 90.; 
         public static final double GrArmPositionToleranceDegs = 3.;
 
         public static final double RetractedPosition = 90.;
-        public static final double ExtendedPosition = -62.;
+        public static final double ExtendedPosition = -66.;
         //public static final double Deadband = 0.24;
     }
 
@@ -326,7 +326,7 @@ public class Constants {
         public static final double L2Fix=0.07;
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
         public static final Translation2d DReefTranslation12 = new Translation2d(2.3, 0.135);
-        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.31, -0.161);
+        public static final Translation2d DReefTranslation12Reversed = new Translation2d(2.3, 0.135);
         public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
         public static final double CoralScoreRetreatDistance = 0.3; // meters, this is the distance the robot will push
                                                                     // forward after
@@ -465,6 +465,7 @@ public class Constants {
         public static final double AutomaticallyAttachDistanceThreshold = 0; //TODO
 
         public static final double ArmClimbPositionDegs = 0; //TODO
+        public static final double ElevatorAlgaeScoreHeight = 0.7;
     }
 
     public static void initializeConstants() {

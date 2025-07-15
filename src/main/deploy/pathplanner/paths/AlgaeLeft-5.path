@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.868776761280679,
-        "y": 4.170505898524928
+        "x": 2.589,
+        "y": 4.16
       },
       "prevControl": {
-        "x": 2.660733656907953,
-        "y": 4.376388502112145
+        "x": 2.380956895627274,
+        "y": 4.365882603587218
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Up4Corals New",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 8.426969021480673
+    "rotation": 166.50611335583773
   },
   "useDefaultConstraints": true
 }
