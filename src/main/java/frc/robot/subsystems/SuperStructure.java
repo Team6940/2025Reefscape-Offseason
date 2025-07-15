@@ -19,6 +19,7 @@ import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
 // import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
+import frc.robot.commands.AlgaeCommands.AlgaeManualIntake;
 import frc.robot.commands.Initialization;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -85,7 +86,7 @@ public class SuperStructure extends SubsystemBase {
         return m_targetReefLevelIndex;
     }
 
-    public void setRobotStatus(RobotStatus status){
+    public void forcelySetRobotStatus(RobotStatus status){
         this.robotStatus = status;
     }
 
@@ -180,13 +181,13 @@ public class SuperStructure extends SubsystemBase {
     public Command getNewHybridCoralScoreCommand(Button executionButton) {
         if (!chassis.isFacingReefCenter()) {
             return new NewCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton, true)
-                    .withSelection(driverSelection);
+                    .withSelection(driverSelection).andThen(() -> robotStatus = RobotStatus.IDLE);
             // reversed scoring
         } else {
             if(m_targetReefLevelIndex>=3)
             {
                 return new NewCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton,
-                    false).withSelection(driverSelection);
+                    false).withSelection(driverSelection).andThen(() -> robotStatus = RobotStatus.IDLE);
             }
             else
             {
@@ -234,7 +235,6 @@ public class SuperStructure extends SubsystemBase {
     public Command getHybridAlgaeIntakeCommand(Button executionButton) {
 
         if(robotStatus == RobotStatus.IDLE) {
-            robotStatus = RobotStatus.HOLDING_ALGAE;
             return new AlgaeHybridIntake(chassis.generateAlgaeIntakeIndex(), executionButton).andThen(
                     () -> robotStatus = RobotStatus.HOLDING_ALGAE);
         }

@@ -1,5 +1,7 @@
 package frc.robot.commands.AlgaeCommands;
 
+import java.util.concurrent.ExecutionException;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -103,36 +105,24 @@ public class AlgaeHybridScoring extends Command {
         SmartDashboard.putString("Hybrid Scoring State", "PUSHING");
 
         // Get current pose and add small forward offset (e.g. 0.2 meters)
-        Pose2d currentPose = chassis.getPose();
-        Translation2d transformTranslation2d = new Translation2d(-FieldConstants.AlgaeScorePushDistance,
-                currentPose.getRotation());
-        Pose2d pushPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
-                currentPose.getRotation());
-        // Move to push position
-        chassis.autoMoveToPose(pushPose);
         shooter.setRPS(ShooterConstants.AlgaeScoringRPS); // TODO 'level' here indicates the fifth line of
         // ShoooterShootRPS(constants.java) ,which is the speed for shooting the
         // algae
-        if (shooter.getShooterState() == ShooterState.IDLE) {
+        if (!driverController.getButton(m_executionButton)) {
             SmartDashboard.putString("ALGAE hybrid Scoring State", "SCORING complete, moving to DEPARTING");
             state = ScoringState.DEPARTING;
-        } else {
-            SmartDashboard.putString("ALGAE hybrid Scoring State", "SCORING in progress");
         }
     }
 
     public void depart() {
         SmartDashboard.putString("ALGAE hybrid Scoring State", "DEPARTING");
 
-        chassis.autoMoveToPose(targetPose);
-        // When in position, reset systems and end
-        if (chassis.isAtPose(targetPose)) {
-            arm.reset();
-            elevator.setHeight(ElevatorConstants.IdleHeight);
-            shooter.stop();
-            state = ScoringState.END;
-            SmartDashboard.putString("ALGAE hybrid Scoring State", "DEPARTING complete, moving to END");
-        }
+       
+        arm.setPosition(FieldConstants.ArmStowPosition);
+        elevator.setHeight(ElevatorConstants.MinHeight);
+        shooter.stop();
+        state = ScoringState.END;
+        SmartDashboard.putString("ALGAE hybrid Scoring State", "DEPARTING complete, moving to END");
     }
 
     @Override
