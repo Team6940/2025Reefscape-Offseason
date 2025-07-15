@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6861535904233604,
-        "y": 7.140591755314863
+        "x": 2.1042091836734698,
+        "y": 6.550797193877551
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4069719891204056,
-        "y": 6.565801863181617
+        "x": 2.4445585575968236,
+        "y": 6.352405588658243
       },
       "isLocked": false,
       "linkedName": "LSL"
     },
     {
       "anchor": {
-        "x": 3.8266183050473357,
-        "y": 5.519478537565546
+        "x": 3.456,
+        "y": 6.085
       },
       "prevControl": {
-        "x": 3.0504414391145773,
-        "y": 6.132779298675367
+        "x": 2.5887959601632433,
+        "y": 6.58109689547309
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.53445508054018
+    "rotation": 119.99999999999999
   },
   "reversed": false,
   "folder": "Up4Corals",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -54.1623470457216
+    "rotation": 143.49855887949366
   },
   "useDefaultConstraints": true
 }

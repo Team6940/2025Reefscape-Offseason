@@ -77,8 +77,8 @@ public class AutoIntakeCoral extends Command {
     private void align() {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
-        indexer.setRghtRPS(-9.);
-        indexer.setLeftRPS(-6.);
+        indexer.setRghtRPS(-10.);
+        indexer.setLeftRPS(-5.);
         if (indexer.getIndexerState() == IndexerState.READY) {
             // if (driverController.getButton(m_toggleButton)) {
 
@@ -97,6 +97,8 @@ public class AutoIntakeCoral extends Command {
     private void grab() {
         indexer.stop();
         shooter.stop();
+        grArm.setPosition(GrArmConstants.RetractedPosition);
+        intaker.setRPS(0);
         elevator.setHeight(ElevatorConstants.IdleHeight);
         arm.setPosition(FieldConstants.ArmStowPosition);
         if (arm.isAtSecuredPosition()) {
@@ -111,8 +113,6 @@ public class AutoIntakeCoral extends Command {
 
     private void retract() {
         elevator.setHeight(ElevatorConstants.MinHeight);
-        grArm.setPosition(GrArmConstants.RetractedPosition);
-        intaker.setRPS(0);
         state = IntakeState.END;
     }
 

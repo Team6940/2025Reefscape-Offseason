@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.StadiaController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -37,6 +38,7 @@ import frc.robot.commands.SetStateIdleDown;
 import frc.robot.commands.ZeroElevator;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeManualIntake;
+import frc. robot. commands.AlgaeCommands.AlgaeManualScoring;
 import frc.robot.commands.ClimbCommands.SemiAutoClimbCommand;
 import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
@@ -204,9 +206,9 @@ public class RobotContainer {
         // operatorController.leftTrigger().onTrue(superStructure.runOnce(() -> superStructure.setTargetAlgaeIntakeLevelIndex(0)));
         // operatorController.rightTrigger().onTrue(superStructure.runOnce(() -> superStructure.setTargetAlgaeIntakeLevelIndex(1)));
         // /* Buttons */
-        driverController.povUp().whileTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(3)));
-        driverController.povDown().whileTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(2)));
-        driverController.b().whileTrue(superStructure.runOnce(()->superStructure.setTargetReefLevelIndex(4)));
+        // driverController.povUp().whileTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(3)));
+        // driverController.povDown().whileTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(2)));
+        // driverController.b().whileTrue(superStructure.runOnce(()->superStructure.setTargetReefLevelIndex(4)));
         // /* Povs */
         // operatorController.povUp().onTrue(superStructure.runOnce(() -> superStructure.setOperatorReefFaceIndex(6)));
         // operatorController.povDown().onTrue(superStructure.runOnce(() -> superStructure.setOperatorReefFaceIndex(3)));
@@ -217,6 +219,9 @@ public class RobotContainer {
         ///THOSE ARE FOR TESTING.-------------------------------------------------------------------------------------------    
 
         driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));//This needs to be changed
+
+        //driverController.povLeft().onTrue(new InstantCommand(() -> chassis.resetPose(chassis.generatePPPath("LBM-2").flipPath().getStartingHolonomicPose().get())));
+
         // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
         // driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
         
@@ -232,8 +237,14 @@ public class RobotContainer {
 
         // driverController.y().whileTrue(new ToggleIntake(grArm, intaker));
         driverController.leftBumper().onTrue(new NewCoralAlignSequence(Button.kA));
-        driverController.leftBumper().whileTrue(new ToggleIntake(grArm, intaker));
+        //driverController.leftBumper().whileTrue(new ToggleIntake(grArm, intaker));
         driverController.leftTrigger().whileTrue(new AlgaeManualIntake(chassis.generateAlgaeIntakeIndex(), Button.kA));
+        driverController.b().whileTrue(new AlgaeManualScoring(Button.kB));
+
+        // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("LBM-2"));
+        // driverController.b().whileTrue(RobotContainer.chassis.followPPPath("2-AlgaeLeft"));
+        // driverController.x().whileTrue(RobotContainer.chassis.followPPPath("AlgaeLeft-5"));
+    
 
         // driverController.y().whileTrue(Command.defer(()->));
         // driverController.y().onTrue(new InstantCommand(()->indexer.setLeftRPS(-6.)));
@@ -249,9 +260,9 @@ public class RobotContainer {
         // driverController.a().onTrue(new InstantCommand(()->chassis.resetPose(new Pose2d())));
         // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(20)));
         // driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
-        driverController.y().whileTrue(Commands.defer(()->superStructure.getNewHybridCoralScoreCommand(Button.kRightTrigger),Set.of(arm,elevator,shooter,chassis)));
-        driverController.povLeft().onTrue(new InstantCommand(()->superStructure.setDriverSelection(Selection.LEFT)));
-        driverController.povRight().onTrue(new InstantCommand(()->superStructure.setDriverSelection(Selection.RIGHT)));
+        //driverController.y().whileTrue(Commands.defer(()->superStructure.getNewHybridCoralScoreCommand(Button.kRightTrigger),Set.of(arm,elevator,shooter,chassis)));
+        //driverController.povLeft().onTrue(new InstantCommand(()->superStructure.setDriverSelection(Selection.LEFT)));
+        //driverController.povRight().onTrue(new InstantCommand(()->superStructure.setDriverSelection(Selection.RIGHT)));
         
 
         // driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
