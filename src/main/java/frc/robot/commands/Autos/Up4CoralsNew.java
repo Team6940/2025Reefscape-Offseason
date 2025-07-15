@@ -19,7 +19,7 @@ import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.commands.CoralCommands.NewCoralHybridScoring;
 
-public class Up4Corals extends SequentialCommandGroup {
+public class Up4CoralsNew extends SequentialCommandGroup {
     // TODO: it's possible to use HybridCommands directly instead of FollowPath in
     // order to save time
     // TODO: This needs to be determined after tests
@@ -27,7 +27,7 @@ public class Up4Corals extends SequentialCommandGroup {
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     ShooterSubsystem shooter = ShooterSubsystem.getInstance();
 
-    public Up4Corals() {
+    public Up4CoralsNew() {
         if (DriverStation.getAlliance().get() == Alliance.Blue) {
             addCommands(new InstantCommand(
                     () -> chassis.resetPose(chassis.generatePPPath("LBM-2").getStartingHolonomicPose().get())));
@@ -39,19 +39,19 @@ public class Up4Corals extends SequentialCommandGroup {
         addCommands(chassis.followPPPath("LBM-2"));
         addCommands(new NewCoralHybridScoring(2, 4, Button.kAutoButton, true).withTimeout(1));// score 2
 
-        addCommands(chassis.followPPPath("2-LSL").raceWith(new AutoIntakeCoral()));// intake
+        addCommands(chassis.followPPPath("2-AlgaeLeft").raceWith(new AutoIntakeCoral()));// intake
 
-        addCommands(chassis.followPPPath("LSL-4"));
-        addCommands(new NewCoralHybridScoring(4, 4, Button.kAutoButton,true).withTimeout(1));// score 4
+        addCommands(chassis.followPPPath("AlgaeLeft-5"));
+        addCommands(new NewCoralHybridScoring(5, 4, Button.kAutoButton, true).withTimeout(1));// score 4
 
-        addCommands(chassis.followPPPath("4-LSL").raceWith(new AutoIntakeCoral()));// intake
+        addCommands(chassis.followPPPath("5-AlgaeMid").raceWith(new AutoIntakeCoral()));// intake
 
-        addCommands(chassis.followPPPath("LSL-3"));
-        addCommands(new NewCoralHybridScoring(3, 4, Button.kAutoButton,true).withTimeout(1));// score 3
+        addCommands(chassis.followPPPath("AlgaeMid-6"));
+        addCommands(new NewCoralHybridScoring(6, 4, Button.kAutoButton, true).withTimeout(1));// score 3
 
-        addCommands(chassis.followPPPath("3-LSL").raceWith(new AutoIntakeCoral()));// intake
+        addCommands(chassis.followPPPath("6-AlgaeRight").raceWith(new AutoIntakeCoral()));// intake
 
-        addCommands(chassis.followPPPath("LSL-5"));
-        addCommands(new NewCoralHybridScoring(5, 4, Button.kAutoButton,true).withTimeout(1));// score 5
+        addCommands(chassis.followPPPath("AlgaeRight-7"));
+        addCommands(new NewCoralHybridScoring(7, 4, Button.kAutoButton, true).withTimeout(1));// score 5
     }
 }

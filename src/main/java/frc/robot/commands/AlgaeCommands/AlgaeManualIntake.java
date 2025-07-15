@@ -13,12 +13,14 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.subsystems.SuperStructure;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
+import frc.robot.subsystems.SuperStructure.RobotStatus;
 
 public class AlgaeManualIntake extends Command {
     private int m_targetReefFaceIndex;
@@ -30,6 +32,7 @@ public class AlgaeManualIntake extends Command {
     ArmSubsystem arm = ArmSubsystem.getInstance();
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
+    SuperStructure superStructure = SuperStructure.getInstance();
 
     public AlgaeManualIntake(int targetReefFaceIndex, Button executionButton) {
         addRequirements(elevator, shooter, arm);
@@ -49,8 +52,10 @@ public class AlgaeManualIntake extends Command {
     public void end(boolean interrupted) {
         elevator.setHeight(ElevatorConstants.MinHeight);
         arm.setPosition(FieldConstants.ArmStowPosition);
+        superStructure.forcelySetRobotStatus(RobotStatus.HOLDING_ALGAE);
         //arm.reset();
-        shooter.setRPS(-60.);
+        // shooter.setRPS(-60.);
+        shooter.setRPS(0.);
     }
 
     public boolean isFinished() {
