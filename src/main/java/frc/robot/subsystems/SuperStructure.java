@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -181,8 +183,15 @@ public class SuperStructure extends SubsystemBase {
                     .withSelection(driverSelection);
             // reversed scoring
         } else {
-            return new NewCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton,
+            if(m_targetReefLevelIndex>=3)
+            {
+                return new NewCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton,
                     false).withSelection(driverSelection);
+            }
+            else
+            {
+                return null;//for safety issues
+            }
             // non-reversed scoring
         }
     }
@@ -282,16 +291,16 @@ public class SuperStructure extends SubsystemBase {
 
         // SmartDashboard.putBoolean("is STOW", scoreMode == ScoreMode.STOW);
 
-        generatedReefPoseField2d.setRobotPose(chassis.generateReefPose(((chassis.generateReefIndex() - 1) / 2 * 2 + (driverSelection == Selection.LEFT ? 1 : 2))));
+        // generatedReefPoseField2d.setRobotPose(chassis.generateReefPose(((chassis.generateReefIndex() - 1) / 2 * 2 + (driverSelection == Selection.LEFT ? 1 : 2))));
 
-        generatedReefPoseReversedField2d.setRobotPose(chassis.generateReefPoseReversed(((chassis.generateReefIndex() - 1) / 2 * 2 + (driverSelection == Selection.LEFT ? 1 : 2))));
+        // generatedReefPoseReversedField2d.setRobotPose(chassis.generateReefPoseReversed(((chassis.generateReefIndex() - 1) / 2 * 2 + (driverSelection == Selection.LEFT ? 1 : 2))));
         
         generatedAlgaeIntakePoseField2d.setRobotPose(chassis.generateAlgaeIntakePose(chassis.generateAlgaeIntakeIndex()));
 
         generatedAlgaeScorePoseField2d.setRobotPose(chassis.generateAlgaeScorePose());
 
         // SmartDashboard.putData("SuperStructure/operatorPose(generatedReefPosField2d)", generatedReefPosField2d);
-
+        // Logger.recordOutput("GeneratedPose",chassis.generateReefPose(((chassis.generateReefIndex() - 1) / 2 * 2 + (driverSelection == Selection.LEFT ? 1 : 2))));
         SmartDashboard.putString("SuperStructure/RobotStatus", robotStatus.toString());
 
         SmartDashboard.putString("SuperStructure/driverSelection",driverSelection.toString());

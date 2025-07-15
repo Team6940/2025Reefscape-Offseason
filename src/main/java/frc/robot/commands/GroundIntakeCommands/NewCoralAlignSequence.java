@@ -77,8 +77,11 @@ public class NewCoralAlignSequence extends Command {
     private void align() {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
-        indexer.setRghtRPS(-9.);
-        indexer.setLeftRPS(-6.);
+        indexer.setRghtRPS(-10.);
+        if(!driverController.getButton(Button.kRightTrigger))
+        indexer.setLeftRPS(-5);
+        else
+        indexer.setLeftRPS(20);
         if (indexer.getIndexerState() == IndexerState.READY ||
         driverController.getButton(m_toggleButton)) {
         // if (driverController.getButton(m_toggleButton)) {
@@ -111,7 +114,7 @@ public class NewCoralAlignSequence extends Command {
     }
 
     private void retract() {
-        elevator.setHeight(-0.28);
+        elevator.setHeight(ElevatorConstants.MinHeight);
         state = IntakeState.END;
     }
 
