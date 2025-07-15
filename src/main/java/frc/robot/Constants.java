@@ -294,7 +294,7 @@ public class Constants {
         public static final InvertedValue LockMotorInverted = InvertedValue.CounterClockwise_Positive;
 
         public static final int ClimberliftMotorID = 0; //TODO
-        public static final int ClimberlockMotorID = 0; //TODO
+        // public static final int ClimberlockMotorID = 0; 
 
         public static final double ClimberkP = 14.;
         public static final double ClimberkI = 0.;

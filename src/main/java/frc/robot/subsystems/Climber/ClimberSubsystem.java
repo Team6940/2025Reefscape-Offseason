@@ -24,11 +24,9 @@ public class ClimberSubsystem extends SubsystemBase{
 
     ClimberSubsystem(){
         if(Robot.isReal()){
-            // io = new ClimberIOPhoenix6();
-            io = new ClimberIOEmpty();
+            io = new ClimberIOPhoenix6();
         }
         else {
-            //TODO implement simulation
             io = new ClimberIOPhoenix6();
         }
     };
@@ -50,7 +48,7 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     public boolean isAtTargetRotation(){
-        return Math.abs(targetRotation - inputs.liftMotorPositionRotations) < ClimberConstants.ClimberRotationTolerence;
+        return Math.abs(targetRotation - inputs.liftMotorPositionRotations) < ClimberConstants.ClimberRotationTolerence; //TODO delta < tolerance
     }
 
     public void resetPosition(double rotation){
