@@ -38,14 +38,37 @@ public class AlgaeManualIntake extends Command {
         addRequirements(elevator, shooter, arm);
     }
 
+    enum IntakingState{
+        INIT,
+        INTAKING
+    }
+
+    IntakingState state;
+
     @Override
     public void initialize() {
         m_targetReefFaceIndex = chassis.generateAlgaeIntakeIndex();
         m_targetHeight = FieldConstants.ElevatorAlgaeIntakeHeight[m_targetReefFaceIndex];
         m_targetAngle = FieldConstants.ArmIntakePosition[m_targetReefFaceIndex];
-        elevator.setHeight(m_targetHeight);
-        arm.setPosition(m_targetAngle);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         shooter.setRPS(ShooterConstants.AlgaeIntakingRPS);
+        state = IntakingState.INIT;
+    }
+
+    @Override
+    public void execute() {
+        if(elevator.isAtTargetHeight()){
+            state = IntakingState.INTAKING;
+        }
+
+        switch (state) {
+            case INIT:
+                break;
+            case INTAKING:
+                elevator.setHeight(m_targetHeight);
+                arm.setPosition(m_targetAngle);
+                break;
+        }
     }
 
     @Override
@@ -55,7 +78,7 @@ public class AlgaeManualIntake extends Command {
         superStructure.forcelySetRobotStatus(RobotStatus.HOLDING_ALGAE);
         //arm.reset();
         // shooter.setRPS(-60.);
-        shooter.setRPS(0.);
+        shooter.setRPS(-10.);
     }
 
     public boolean isFinished() {
