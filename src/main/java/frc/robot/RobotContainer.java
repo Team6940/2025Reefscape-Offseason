@@ -66,6 +66,7 @@ public class RobotContainer {
     public static final GrArmSubsystem grArm = GrArmSubsystem.getInstance();
     public static final IntakerSubsystem intaker = IntakerSubsystem.getInstance();
     public static final IndexerSubsystem indexer = IndexerSubsystem.getInstance();
+    public static final ClimberSubsystem climber = ClimberSubsystem.getInstance();
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -115,7 +116,7 @@ public class RobotContainer {
          * Right Bumper: Hybrid Scoring
          * Right Trigger: Algae Scoring
          * 
-         * Left Stick Pressed: Extend Climber (toggle command) & Climb Release (press again)
+         * Left Stick Pressed: Extend Climber (toggle command)
          * Right Stick Pressed: Retract Climber
          * 
          * X: Reset Gyro
@@ -219,6 +220,9 @@ public class RobotContainer {
 
         driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));//This needs to be changed
 
+        driverController.leftStick().toggleOnTrue(new InstantCommand(() -> climber.setPosition(1.)));//This needs to be changed
+        driverController.leftStick().toggleOnFalse(new InstantCommand(() -> climber.setPosition(0.)));//This needs to be changed
+
         //driverController.povLeft().onTrue(new InstantCommand(() -> chassis.resetPose(chassis.generatePPPath("LBM-2").flipPath().getStartingHolonomicPose().get())));
 
         // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
@@ -235,17 +239,10 @@ public class RobotContainer {
         // driverController.rightTrigger().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
 
         // driverController.y().whileTrue(new ToggleIntake(grArm, intaker));
-        //driverController.leftBumper().onTrue(new NewCoralAlignSequence(Button.kA));
-        //driverController.leftBumper().whileTrue(new ToggleIntake(grArm, intaker));
-        driverController.leftTrigger().whileTrue(new AlgaeManualIntake(1, Button.kA));
-        driverController.b().whileTrue(new AlgaeManualScoring(Button.kRightBumper));
-        // chassis.generateAlgaeIntakeIndex()
-
-
-        // driverController.povUp().onTrue(superStructure.runOnce(()-> superStructure.setTargetReefLevelIndex(4)));
-        // driverController.povDown().onTrue(superStructure.runOnce(()-> superStructure.setTargetReefLevelIndex(3)));
-        // driverController.y().onTrue(superStructure.runOnce(()-> superStructure.setTargetReefLevelIndex(2)));
-        // driverController.a().onTrue(superStructure.runOnce(()-> superStructure.setTargetReefLevelIndex(1)));
+        // driverController.leftBumper().onTrue(new NewCoralAlignSequence(Button.kA));
+        // //driverController.leftBumper().whileTrue(new ToggleIntake(grArm, intaker));
+        // driverController.leftTrigger().whileTrue(new AlgaeManualIntake(chassis.generateAlgaeIntakeIndex(), Button.kA));
+        // driverController.b().whileTrue(new AlgaeManualScoring(Button.kB));
 
         // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("LBM-2"));
         // driverController.b().whileTrue(RobotContainer.chassis.followPPPath("2-AlgaeLeft"));
