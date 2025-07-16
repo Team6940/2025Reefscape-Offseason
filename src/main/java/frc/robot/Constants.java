@@ -31,11 +31,11 @@ public class Constants {
         PrepareScoreL2(-0.28, 0.99),
         PrepareScoreL3(-0.05, -290),
         PrepareScoreL4(0.6, -290),
-        RScoreL1(0.15, -120.),
+        RScoreL1(-0.28, -190.),
         RScoreL2(-0.28, -210),
         RScoreL3(-0.05, -207),
         RScoreL4(0.6, -190),
-        RPrepareScoreL1(0.15, -120.),
+        RPrepareScoreL1(-0.28, -190.),
         RPrepareScoreL2(-0.28, -250),
         RPrepareScoreL3(-0.05, -250),
         RPrepareScoreL4(0.6, -250),
@@ -138,7 +138,7 @@ public class Constants {
 
         public static final double CoralScoringRPS = 20.;
 
-        public static final double AlgaeIntakingRPS = -60.;
+        public static final double AlgaeIntakingRPS = -45.;
 
         public static final double AlgaeScoringRPS = 19.;
 
@@ -388,11 +388,11 @@ public class Constants {
         
         public static final double ElevatorAlgaeIntakeHeight[]={ //TODO tuning
             0.03,
-            0.38,
+            0.33,
             0.03,
-            0.38,
+            0.33,
             0.03,
-            0.38,
+            0.33,
         };
 
         public static final double ElevatorHeights[] = {

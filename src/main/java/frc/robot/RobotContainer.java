@@ -263,7 +263,7 @@ public class RobotContainer {
         // driverController.a().onTrue(new InstantCommand(()->chassis.resetPose(new Pose2d())));
         // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(20)));
         // driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
-        //driverController.y().whileTrue(Commands.defer(()->superStructure.getNewHybridCoralScoreCommand(Button.kRightTrigger),Set.of(arm,elevator,shooter,chassis)));
+        //driverController.rightTrigger().whileTrue(Commands.defer(()->superStructure.getNewHybridCoralScoreCommand(Button.kRightTrigger),Set.of(arm,elevator,shooter,chassis)));
         //driverController.povLeft().onTrue(new InstantCommand(()->superStructure.setDriverSelection(Selection.LEFT)));
         //driverController.povRight().onTrue(new InstantCommand(()->superStructure.setDriverSelection(Selection.RIGHT)));
         

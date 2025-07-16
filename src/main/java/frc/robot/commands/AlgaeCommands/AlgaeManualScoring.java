@@ -67,6 +67,7 @@ public class AlgaeManualScoring extends Command{
     public void end(boolean interrupted) {
         arm.setPosition(FieldConstants.ArmStowPosition);
         elevator.setHeight(ElevatorConstants.MinHeight);
+        shooter.stop();
     }
 }
 

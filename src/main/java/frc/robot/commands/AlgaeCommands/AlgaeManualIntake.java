@@ -36,6 +36,7 @@ public class AlgaeManualIntake extends Command {
 
     public AlgaeManualIntake(int targetReefFaceIndex, Button executionButton) {
         addRequirements(elevator, shooter, arm);
+        m_targetReefFaceIndex = targetReefFaceIndex;
     }
 
     enum IntakingState{
@@ -47,7 +48,6 @@ public class AlgaeManualIntake extends Command {
 
     @Override
     public void initialize() {
-        m_targetReefFaceIndex = chassis.generateAlgaeIntakeIndex();
         m_targetHeight = FieldConstants.ElevatorAlgaeIntakeHeight[m_targetReefFaceIndex];
         m_targetAngle = FieldConstants.ArmIntakePosition[m_targetReefFaceIndex];
         elevator.setHeight(ElevatorConstants.IdleHeight);
