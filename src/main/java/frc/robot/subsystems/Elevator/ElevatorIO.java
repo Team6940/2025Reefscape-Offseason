@@ -4,15 +4,21 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface ElevatorIO {
 
-    public void setHeight(double targetHeight);
+    default public void setHeight(double targetHeight){
 
-    public void resetHeight(double _height);
+    }
+
+    default public void resetHeight(double _height){
+
+    }
 
     default public void zeroHeight() {
         resetHeight(0.);
-    };
+    }
 
-    public void setVoltage(double voltage);
+    default public void setVoltage(double voltage){
+            
+    }
 
     @AutoLog
     public class ElevatorIOInputs {
@@ -32,5 +38,5 @@ public interface ElevatorIO {
         public double ElevatorVelocity;
 
     }
-    public void updateInputs(ElevatorIOInputs inputs);
+    default public void updateInputs(ElevatorIOInputs inputs){}
 }

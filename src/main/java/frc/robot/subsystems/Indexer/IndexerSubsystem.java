@@ -38,7 +38,7 @@ public class IndexerSubsystem extends SubsystemBase {
             io = new IndexerIOPhoenix6();
         } else {
             // TODO: Implement simulation code here
-            io = new IndexerIOPhoenix6();
+            io = new IndexerIO(){};
         }
     }
 

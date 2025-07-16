@@ -27,7 +27,7 @@ public class ArmSubsystem extends SubsystemBase {
             io = new ArmIOPhoenix6();
         } else {
             // TODO: Implement simulation code here
-            io = new ArmIOPhoenix6();
+            io = new ArmIO(){};
         }
     }
 
