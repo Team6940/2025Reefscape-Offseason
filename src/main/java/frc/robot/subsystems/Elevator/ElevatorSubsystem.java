@@ -26,10 +26,9 @@ public class ElevatorSubsystem extends SubsystemBase{
             io = new ElevatorIOPhoenix6();
         }
         else {
-            //TODO implement simulation
-            io = new ElevatorIOPhoenix6();
-        }
-    };
+            io = new ElevatorIO(){};
+    }
+    }
 
     public void setHeight(double _Height){
         _Height = MUtils.numberLimit(ElevatorConstants.MinHeight, ElevatorConstants.MaxHeight, _Height);

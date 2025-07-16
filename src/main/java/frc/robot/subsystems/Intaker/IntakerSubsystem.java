@@ -36,7 +36,7 @@ public class IntakerSubsystem extends SubsystemBase{
         }
         else{
             //TODO: Implement simulation code here
-            io = new IntakerIOPhoenix6();
+            io = new IntakerIO(){};
         }
     }
 

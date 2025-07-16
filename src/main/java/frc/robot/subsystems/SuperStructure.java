@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
+import org.ironmaple.simulation.SimulatedArena;
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -302,8 +304,13 @@ public class SuperStructure extends SubsystemBase {
 
     @Override
     public void periodic() {
+        // Get the positions of the notes (both on the field and in the air)
+    //   Pose3d[] StackPoses = SimulatedArena.getInstance()
+    //         .getGamePiecesArrayByType("CoralAlgaeStacks");
+      // Publish to telemetry using AdvantageKit
+    //   Logger.recordOutput("FieldSimulation/CoralAlgaeStacksPositions", StackPoses);
 
-        maintainStatus();
+        // maintainStatus();
 
         // Add any periodic tasks here, such as updating telemetry or checking subsystem
         // states
@@ -379,16 +386,16 @@ public class SuperStructure extends SubsystemBase {
         SmartDashboard.putData("SuperStructure/generateAlgaeScorePose()", generatedAlgaeScorePoseField2d); // TODO
     }
 
-    private void maintainStatus() {
-        // if(isUnderCommand){
-        // return;
-        // }
-        // switch(robotStatus){
-        // case HOLDING_CORAL:
-        // setArmUp();
-        // setElevDown();
-        // break;
+    // private void maintainStatus() {
+    //     // if(isUnderCommand){
+    //     // return;
+    //     // }
+    //     // switch(robotStatus){
+    //     // case HOLDING_CORAL:
+    //     // setArmUp();
+    //     // setElevDown();
+    //     // break;
 
-        // }
-    }
+    //     // }
+    // }
 }
