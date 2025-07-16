@@ -31,11 +31,11 @@ public class Constants {
         PrepareScoreL2(-0.28, 0.99),
         PrepareScoreL3(-0.05, -290),
         PrepareScoreL4(0.6, -290),
-        RScoreL1(0.15, -120.),
+        RScoreL1(0.15, -135.),
         RScoreL2(-0.28, -210),
         RScoreL3(-0.05, -207),
         RScoreL4(0.6, -190),
-        RPrepareScoreL1(0.15, -120.),
+        RPrepareScoreL1(0.2, -150.),
         RPrepareScoreL2(-0.28, -250),
         RPrepareScoreL3(-0.05, -250),
         RPrepareScoreL4(0.6, -250),
@@ -138,7 +138,7 @@ public class Constants {
 
         public static final double CoralScoringRPS = 20.;
 
-        public static final double AlgaeIntakingRPS = -60.;
+        public static final double AlgaeIntakingRPS = -120.;
 
         public static final double AlgaeScoringRPS = 19.;
 
@@ -146,13 +146,15 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterIntakeCurrentThreshold = 20;//TODO
+        public static final double ShooterIntakeCurrentThreshold = 35;//TODO
 
         public static final double DroppingRPS = 0;
 
         public static final int CurrentFilterTaps = 10;
 
         public static final double ShooterDebouncerTime = 0.1;
+
+        public static final double SupplyCurrentLimit = 50.;
 
 
     }
@@ -271,7 +273,7 @@ public class Constants {
         public static final double kV = 0.06;
         public static final double kG = 0.8;
         public static final double Acceleration = 20.; // 102.
-        public static final double MaxVelocity = 10.; // 32.5
+        public static final double MaxVelocity = 15.; // 32.5
         public static final double MaxHeight = 1.;
         public static final double MinHeight = -0.28;
 
@@ -291,9 +293,9 @@ public class Constants {
     public static final class ClimberConstants {
 
         public static final InvertedValue ClimberInverted = InvertedValue.CounterClockwise_Positive;
-        public static final InvertedValue LockMotorInverted = InvertedValue.CounterClockwise_Positive;
+        //public static final InvertedValue LockMotorInverted = InvertedValue.CounterClockwise_Positive;
 
-        public static final int ClimberliftMotorID = 0; //TODO
+        public static final int ClimberliftMotorID = 23; //TODO
         // public static final int ClimberlockMotorID = 0; 
 
         public static final double ClimberkP = 14.;
@@ -311,12 +313,12 @@ public class Constants {
         public static final double ClimberDefaultPos = 0.;
         public static final double ClimberMaxPos = 2.82;
         public static final double ClimberMinPos = -0.875;
-        public static final double ClimberExtensionPos = 2.74;
-        public static final double ClimberRetractionPos = -0.87;
+        public static final double ClimberExtensionPos = 2.64;
+        public static final double ClimberRetractionPos = -0.96;//tuning needed here
 
 
-        public static final double LockMotorRPS = 1.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
-        public static final double LockMotorCurrentThreshold = 0.;
+        //public static final double LockMotorRPS = 1.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
+        //public static final double LockMotorCurrentThreshold = 0.;
 
     }
 
@@ -326,13 +328,13 @@ public class Constants {
         public static final double L2Fix=0.07;
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
         public static final Translation2d DReefTranslation12 = new Translation2d(2.3, 0.135);
-        public static final Translation2d DReefTranslation12Reversed = new Translation2d(2.3, 0.135);
+        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.31, -0.161);
         public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
         public static final double CoralScoreRetreatDistance = 0.3; // meters, this is the distance the robot will push
                                                                     // forward after
         // aligning to the reef pose
 
-        public static final double reefTranslationAdjustmentRange = 0.15;
+        public static final double reefTranslationAdjustmentRange = 0.2;
         public static final double reefRotationAdjustmentRangeDegs = 20;
 
 
@@ -341,12 +343,12 @@ public class Constants {
         public static final Rotation2d DStationRotationRSL = Rotation2d.fromRadians(0.935);
 
         public static final double ArmIntakePosition[]={
-            -180.,
-            -180.,
-            -180.,
-            -180.,
-            -180.,
-            -180.,
+            -170.,
+            -170.,
+            -170.,
+            -170.,
+            -170.,
+            -170.,
         };
 
         public static final double AlgaeAlignmentDistanceThreshold=1.5;
@@ -387,12 +389,12 @@ public class Constants {
         public static final double BargeAngle = 4.; //TODO: this is a placeholder value, should be replaced with the actual barge angle
         
         public static final double ElevatorAlgaeIntakeHeight[]={ //TODO tuning
-            0.03,
-            0.38,
-            0.03,
-            0.38,
-            0.03,
-            0.38,
+            0.13,
+            0.45,
+            0.13,
+            0.45,
+            0.13,
+            0.45,
         };
 
         public static final double ElevatorHeights[] = {
@@ -464,8 +466,8 @@ public class Constants {
 
         public static final double AutomaticallyAttachDistanceThreshold = 0; //TODO
 
-        public static final double ArmClimbPositionDegs = 0; //TODO
-        public static final double ElevatorAlgaeScoreHeight = 0.7;
+        public static final double ArmClimbPositionDegs = -140.; //TODO
+        public static final double ElevatorAlgaeScoreHeight = 0.9;
     }
 
     public static void initializeConstants() {

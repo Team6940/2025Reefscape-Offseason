@@ -24,6 +24,7 @@ public class ShooterIOPhoenix6 implements ShooterIO{
         config.Feedback.SensorToMechanismRatio = ShooterConstants.ShooterRatio;
         config.Voltage.PeakForwardVoltage = 12.0;
         config.Voltage.PeakReverseVoltage = -12.0;
+        config.CurrentLimits.SupplyCurrentLimit=ShooterConstants.SupplyCurrentLimit;
         config.Slot0.kP = ShooterConstants.kP;
         config.Slot0.kI = ShooterConstants.kI;
         config.Slot0.kD = ShooterConstants.kD;

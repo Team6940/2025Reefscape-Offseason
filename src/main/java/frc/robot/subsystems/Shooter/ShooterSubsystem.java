@@ -97,6 +97,10 @@ public class ShooterSubsystem extends SubsystemBase {
         state = ShooterState.IDLE;
         currentDebouncer.calculate(false); // Reset debouncer
     }
+    public double getAmp()
+    {
+        return currentFilter.calculate(inputs.motorCurrentAmps);
+    }
 
     @Override
     public void periodic() {

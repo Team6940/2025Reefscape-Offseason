@@ -13,13 +13,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "11-RBM"
+            "pathName": "11-MBM"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MBM-11-Algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "11-Algae-RBM"
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "RBM-9-Algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "9-AlgaeIntake"
           }
         },
         {

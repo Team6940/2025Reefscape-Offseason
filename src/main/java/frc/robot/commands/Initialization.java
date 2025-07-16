@@ -40,7 +40,7 @@ public class Initialization extends Command {
     @Override
     public void initialize() {
         chassis.brake();
-        climber.setPosition(ClimberConstants.ClimberDefaultPos);
+        climber.setRotation(ClimberConstants.ClimberDefaultPos);
         grArm.setPosition(GrArmConstants.ExtendedPosition);
 
         elevator.setHeight(ElevatorConstants.DroppingHeight);

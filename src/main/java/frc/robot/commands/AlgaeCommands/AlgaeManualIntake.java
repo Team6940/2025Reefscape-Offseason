@@ -36,18 +36,19 @@ public class AlgaeManualIntake extends Command {
 
     public AlgaeManualIntake(int targetReefFaceIndex, Button executionButton) {
         addRequirements(elevator, shooter, arm);
+        m_targetReefFaceIndex = targetReefFaceIndex;
     }
 
     enum IntakingState{
         INIT,
-        INTAKING
+        INTAKING,
+        HOLDING
     }
-
+    
     IntakingState state;
 
     @Override
     public void initialize() {
-        m_targetReefFaceIndex = chassis.generateAlgaeIntakeIndex();
         m_targetHeight = FieldConstants.ElevatorAlgaeIntakeHeight[m_targetReefFaceIndex];
         m_targetAngle = FieldConstants.ArmIntakePosition[m_targetReefFaceIndex];
         elevator.setHeight(ElevatorConstants.IdleHeight);
@@ -65,12 +66,27 @@ public class AlgaeManualIntake extends Command {
             case INIT:
                 break;
             case INTAKING:
-                elevator.setHeight(m_targetHeight);
-                arm.setPosition(m_targetAngle);
+            intake();
+                break;
+            case HOLDING:
+            Hold();
                 break;
         }
     }
+    void intake()
+    {
+        elevator.setHeight(m_targetHeight);
+        arm.setPosition(m_targetAngle);
+        // if(shooter.getAmp()>=35)
+        // state=IntakingState.HOLDING;
 
+    }
+
+    void Hold()
+    {
+        elevator.setHeight(m_targetHeight+0.2);
+        arm.setPosition(m_targetAngle-10);
+    }
     @Override
     public void end(boolean interrupted) {
         elevator.setHeight(ElevatorConstants.MinHeight);
@@ -78,7 +94,7 @@ public class AlgaeManualIntake extends Command {
         superStructure.forcelySetRobotStatus(RobotStatus.HOLDING_ALGAE);
         //arm.reset();
         // shooter.setRPS(-60.);
-        shooter.setRPS(-10.);
+        shooter.setRPS(-7.);
     }
 
     public boolean isFinished() {

@@ -77,14 +77,14 @@ public class NewCoralAlignSequence extends Command {
     private void align() {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
-        indexer.setRghtRPS(-10.);
-        if(!driverController.getButton(Button.kRightTrigger))
-        indexer.setLeftRPS(-5);
-        else
-        indexer.setLeftRPS(20);
+        if (!driverController.getButton(Button.kRightTrigger)) {
+            indexer.setLeftRPS(-4.);
+            indexer.setRghtRPS(-8.);
+        } else
+            indexer.setRPS(10.);
         if (indexer.getIndexerState() == IndexerState.READY ||
-        driverController.getButton(m_toggleButton)) {
-        // if (driverController.getButton(m_toggleButton)) {
+                driverController.getButton(m_toggleButton)) {
+            // if (driverController.getButton(m_toggleButton)) {
 
             state = IntakeState.DROPPING;
         }
@@ -94,7 +94,7 @@ public class NewCoralAlignSequence extends Command {
         elevator.setHeight(ElevatorConstants.GrabbingHeight);
         if (shooter.isShooterReady()) {
             state = IntakeState.GRABBING;
-            
+
         }
     }
 
@@ -121,8 +121,9 @@ public class NewCoralAlignSequence extends Command {
     @Override
     public void end(boolean interrupted) {
         // shooter.stop();
-        // elevator.setHeight(ElevatorConstants.IdleHeight);// TODO : ALL ELEVATOR SET HEIGHT 0 SHOULD BE CHANGED TO SET
-        //                                                  // HEIGHT IDLE_HEIGHT, ENSURING NO CONFLICTING WITH INDEXER
+        // elevator.setHeight(ElevatorConstants.IdleHeight);// TODO : ALL ELEVATOR SET
+        // HEIGHT 0 SHOULD BE CHANGED TO SET
+        // // HEIGHT IDLE_HEIGHT, ENSURING NO CONFLICTING WITH INDEXER
         // arm.reset();
         indexer.stop();
     }

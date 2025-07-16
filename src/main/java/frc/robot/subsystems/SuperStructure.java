@@ -223,7 +223,10 @@ public class SuperStructure extends SubsystemBase {
         } else
             return null;
     }
-
+    public Command getManualAlgaeIntakeCommand()
+    {
+        return new AlgaeManualIntake(chassis.generateAlgaeIntakeIndex(),Button.kA);
+    }
     public Command getHybridAlgaeScoreCommand(Button triggeringButton, Button executionButton) {
         if (robotStatus == RobotStatus.HOLDING_ALGAE) {
             return new AlgaeHybridScoring(triggeringButton, executionButton)
