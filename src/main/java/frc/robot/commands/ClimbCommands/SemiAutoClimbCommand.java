@@ -83,7 +83,7 @@ public class SemiAutoClimbCommand extends Command{
     }
 
     private void extend() {
-        climber.setPosition(ClimberConstants.ClimberExtensionPos);
+        climber.setRotation(ClimberConstants.ClimberExtensionPos);
         elevator.setHeight(FieldConstants.ElevatorClimbHeight); //for keeping balance
         arm.setPosition(FieldConstants.ArmClimbPositionDegs); //for keeping balance while climbing //TODO set height / clockwise or conter_clockwise
         chassis.driveFieldCentric(controller, DriveConstants.defaultDrivePower);
@@ -111,7 +111,7 @@ public class SemiAutoClimbCommand extends Command{
     }
 
     private void retract() {
-        climber.setPosition(ClimberConstants.ClimberRetractionPos);
+        climber.setRotation(ClimberConstants.ClimberRetractionPos);
         // elevator.setHeight(FieldConstants.elevatorClimbHeight);
         chassis.hybridMoveToPose(poseToRetreat, controller, 0.24, 15.);
         if(climber.isAtTargetRotation()){
@@ -124,7 +124,7 @@ public class SemiAutoClimbCommand extends Command{
     public void end(boolean interrupted) {          //this shouldn't be called if climbed successfully
         chassis.brake();
         // climber.setPosition(ClimberConstants.ClimberExtensionPos);
-        climber.setPosition(ClimberConstants.ClimberDefaultPos);
+        climber.setRotation(ClimberConstants.ClimberDefaultPos);
         // climber.lockMotorSetRPS(0.0); //TODO: stop lock motor
         // elevator.setHeight(0);
     }

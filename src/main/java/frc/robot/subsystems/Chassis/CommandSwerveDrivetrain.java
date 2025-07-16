@@ -525,8 +525,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                         * (DriverStation.getAlliance().get() == Alliance.Blue ? -1. : +1.),
                 driverController.getLeftX() * translationAdjustmentRange
                         * (DriverStation.getAlliance().get() == Alliance.Blue ? -1. : +1.),
-                Rotation2d.fromDegrees(-driverController.getRightX() * rotationAdjustmentRangeDegs)
-        );
+                Rotation2d.fromDegrees(-driverController.getRightX() * rotationAdjustmentRangeDegs));
 
         pose = MUtils.transformFieldRelative(pose, adjustment);
         m_targetPose2d = pose;
@@ -593,11 +592,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return AutoBuilder.followPath(generatePPPath(pathName));
     }
 
-    public Pose2d generateReefPose(int index,int level) {
+    public Pose2d generateReefPose(int index, int level) {
         Translation2d t = FieldConstants.BlueReefCenterPos;
         Translation2d dt = FieldConstants.DReefTranslation12;
-        
-        if(level<=2){dt=new Translation2d(dt.getX()+FieldConstants.L2Fix,dt.getY());}
+
+        if (level <= 2) {
+            dt = new Translation2d(dt.getX() + FieldConstants.L2Fix, dt.getY());
+        }
         if (index % 2 == 1) {
             dt = new Translation2d(dt.getX(), -dt.getY());
         }
@@ -625,10 +626,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return res;
     }
 
-    public Pose2d generateReefPoseReversed(int index,int Level) {
+    public Pose2d generateReefPoseReversed(int index, int Level) {
         Translation2d t = FieldConstants.BlueReefCenterPos;
         Translation2d dt = FieldConstants.DReefTranslation12Reversed;
-        if(Level<=2)dt=new Translation2d(dt.getX()+FieldConstants.L2Fix,dt.getY());
+        if (Level == 2) {
+            dt = new Translation2d(dt.getX() + FieldConstants.L2Fix, dt.getY());
+        }
         if (index % 2 == 1) {
             dt = new Translation2d(dt.getX(), -dt.getY());
         }
@@ -862,7 +865,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             t.rotateBy(new Rotation2d(Math.PI));
         }
         double angle = t.getAngle().getDegrees();
-        int res = (int) Math.floor(angle / 60.) + 5;
+        int res = (int) Math.floor((angle -30) / 60.) + 5;
         return res % 6;
     }
 

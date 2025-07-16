@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.3194266290366965,
-        "y": 2.605565460685443
+        "x": 5.426030585106384,
+        "y": 2.44970079787234
       },
       "prevControl": {
-        "x": 5.878322343922697,
-        "y": 2.532863579074257
+        "x": 5.9849262999923845,
+        "y": 2.376998916261154
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 120.2964481762384
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "Mid2Algae",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": false
 }

@@ -41,7 +41,7 @@ public class ClimberSubsystem extends SubsystemBase{
     //     }
     // }
 
-    public void setPosition(double rotation){
+    public void setRotation(double rotation){
         rotation = MUtils.numberLimit(ClimberConstants.ClimberMinPos, ClimberConstants.ClimberMaxPos, rotation);
         targetRotation = rotation;
         io.setRotation(rotation);
@@ -51,7 +51,7 @@ public class ClimberSubsystem extends SubsystemBase{
         return Math.abs(targetRotation - inputs.liftMotorPositionRotations) < ClimberConstants.ClimberRotationTolerence; //TODO delta < tolerance
     }
 
-    public void resetPosition(double rotation){
+    public void resetRotation(double rotation){
         io.resetRotation(rotation);
     }
 
