@@ -1,9 +1,17 @@
 package frc.robot.commands.CoralCommands;
 
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveRequest;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -16,6 +24,7 @@ import frc.robot.Constants.UpperStructureState;
 import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Chassis.TunerConstants;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.SuperStructure.Selection;
@@ -49,6 +58,14 @@ public class NewCoralHybridScoring extends Command {
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
     
+    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+
+    public static final double driveDeadband = 0.045;
+    public static final double rotateDeadband = 0.045;
+    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+            .withDeadband(MaxSpeed * driveDeadband).withRotationalDeadband(MaxAngularRate * rotateDeadband)
+            .withDriveRequestType(DriveRequestType.Velocity); // Use open-loop control for drive 
 
     public NewCoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button executionButton, boolean isReversed) {
         addRequirements(elevator, shooter, chassis, arm);
@@ -61,6 +78,7 @@ public class NewCoralHybridScoring extends Command {
     @Override
     public void initialize() {
         state = ScoringState.AIMING;
+        // if(m_targetReefLevelIndex<=1)
         if(m_isReversed)
         {
             aimHeight = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
@@ -82,7 +100,8 @@ public class NewCoralHybridScoring extends Command {
 
     @Override
     public void execute() {
-        chassis.hybridMoveToPose(targetPose, driverController,
+        if(m_targetReefLevelIndex>=2)
+            chassis.hybridMoveToPose(targetPose, driverController,
                 FieldConstants.reefTranslationAdjustmentRange, FieldConstants.reefRotationAdjustmentRangeDegs);
         SmartDashboard.putString("CORAL hybrid Scoring State", state.toString());
         switch (state) {
@@ -105,14 +124,17 @@ public class NewCoralHybridScoring extends Command {
         arm.setPosition(aimAngle);
         if (
             // arm.isAtTargetPositon() && chassis.isAtTargetPose() && elevator.isAtTargetHeight()
-            driverController.getButton(Button.kRightBumper)
-        ) {
+            driverController.getButton(Button.kLeftTrigger)
+        ) 
+        {
             state = ScoringState.SCORING;
         }
+    
     }
 
     public void score() {
         SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING");
+        if(m_targetReefLevelIndex>=2){
         arm.setPosition(scoreAngle);
         elevator.setHeight(scoreHeight);
         if (arm.isAtTargetPositon() && elevator.isAtTargetHeight()) {
@@ -124,6 +146,10 @@ public class NewCoralHybridScoring extends Command {
             targetPose = departPose;
         } else {
             SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING in progress");
+        }}
+        else
+        {
+            shooter.setRPS(ShooterConstants.CoralScoringRPS);
         }
 
     }

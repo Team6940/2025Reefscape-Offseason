@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.10260665110009,
-        "y": 3.86
+        "x": 6.54624335106383,
+        "y": 4.0249999999999995
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.085839175302661,
-        "y": 3.327187813474688
+        "x": 6.958310574139041,
+        "y": 3.5592036458862037
       },
       "isLocked": false,
-      "linkedName": "11"
+      "linkedName": "11-AlgaeRetreat"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 1.8954288563829778
       },
       "prevControl": {
-        "x": 6.92702774773669,
-        "y": 2.0328902427561752
+        "x": 7.075666541669779,
+        "y": 2.1311806266159827
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 2.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Mid2Algae",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.32596310201552
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

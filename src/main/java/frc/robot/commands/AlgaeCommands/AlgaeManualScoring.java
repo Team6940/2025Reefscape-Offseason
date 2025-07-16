@@ -43,6 +43,7 @@ public class AlgaeManualScoring extends Command{
         addRequirements(elevator,shooter,arm);
         m_targetAngle = FieldConstants.ArmStowPosition;
         m_targetHeight = FieldConstants.ElevatorAlgaeScoreHeight;
+        m_executionButton=executionButton;
     }
 
     @Override
@@ -62,7 +63,11 @@ public class AlgaeManualScoring extends Command{
     private void score(){
         shooter.setRPS(ShooterConstants.AlgaeScoringRPS);
     }
-
+    @Override
+    public boolean isFinished()
+    {
+        return driverController.getHID().getRightStickButtonReleased();
+    }
     @Override
     public void end(boolean interrupted) {
         arm.setPosition(FieldConstants.ArmStowPosition);

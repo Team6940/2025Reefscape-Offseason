@@ -8,24 +8,40 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.310507459982361,
-        "y": 3.861211534788551
+        "x": 6.147190824468085,
+        "y": 4.0249999999999995
       },
       "isLocked": false,
       "linkedName": "MBM"
     },
     {
       "anchor": {
-        "x": 6.10260665110009,
-        "y": 3.86
+        "x": 6.207845744680851,
+        "y": 4.0249999999999995
       },
       "prevControl": {
-        "x": 6.731191534222686,
-        "y": 3.963896436500809
+        "x": 5.700115227730311,
+        "y": 4.0249999999999995
+      },
+      "nextControl": {
+        "x": 7.207845744680849,
+        "y": 4.0249999999999995
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.54624335106383,
+        "y": 4.0249999999999995
+      },
+      "prevControl": {
+        "x": 6.29624335106383,
+        "y": 4.0249999999999995
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "11"
+      "linkedName": "11-AlgaeRetreat"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +49,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -50,5 +66,5 @@
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

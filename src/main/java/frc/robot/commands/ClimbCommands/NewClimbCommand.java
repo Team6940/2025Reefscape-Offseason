@@ -9,20 +9,24 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.FieldConstants;
+import frc.robot.Constants.GrArmConstants;
 import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Climber.ClimberSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 
 public class NewClimbCommand extends Command{
 
-    ClimberSubsystem climber;
+    ClimberSubsystem climber = ClimberSubsystem.getInstance();
     ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     // CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ArmSubsystem arm = ArmSubsystem.getInstance();
+    GrArmSubsystem grArm = GrArmSubsystem.getInstance();
     ImprovedCommandXboxController controller = new ImprovedCommandXboxController(0);
 
     Button toggleButton;
@@ -33,11 +37,14 @@ public class NewClimbCommand extends Command{
         addRequirements(climber);
         // addRequirements(chassis);
         addRequirements(elevator);
+        
         addRequirements(arm);
+        addRequirements(grArm);
     }
 
     public enum ClimbState {
         EXTENDING,
+        DROPPING,
         RETRACTING,
         DONE
     }
@@ -55,6 +62,9 @@ public class NewClimbCommand extends Command{
             case EXTENDING:
                 extend();
                 break;
+            case DROPPING:
+                drop();
+                break;
             case RETRACTING:
                 retract();
                 break; 
@@ -66,17 +76,26 @@ public class NewClimbCommand extends Command{
     }
 
     private void extend() {
-        climber.setPosition(ClimberConstants.ClimberExtensionPos);
+        climber.setRotation(ClimberConstants.ClimberExtensionPos);
+        elevator.setHeight(ElevatorConstants.IdleHeight);
         // elevator.setHeight(FieldConstants.ElevatorClimbHeight); //for keeping balance
-        // arm.setPosition(FieldConstants.ArmClimbPositionDegs); //for keeping balance while climbing //TODO set height / clockwise or conter_clockwise
+        arm.setPosition(FieldConstants.ArmClimbPositionDegs); //for keeping balance while climbing //TODO set height / clockwise or conter_clockwise
+        grArm.setPosition(GrArmConstants.ExtendedPosition);
         // chassis.driveFieldCentric(controller, DriveConstants.defaultDrivePower);
-        if(climber.isAtTargetRotation() && controller.getButton(toggleButton)){ //TODO
+        if(arm.isAtTargetPositon()){ //TODO
+            state = ClimbState.DROPPING;
+        }
+    }
+
+    private void drop(){
+        elevator.setHeight(ElevatorConstants.MinHeight);
+        if(elevator.isAtTargetHeight()&&controller.getButton(toggleButton)) {
             state = ClimbState.RETRACTING;
         }
     }
 
     private void retract() {
-        climber.setPosition(ClimberConstants.ClimberRetractionPos);
+        climber.setRotation(ClimberConstants.ClimberRetractionPos);
         // elevator.setHeight(FieldConstants.elevatorClimbHeight);
         if(climber.isAtTargetRotation()){
             // chassis.brake();
@@ -87,7 +106,12 @@ public class NewClimbCommand extends Command{
     @Override
     public void end(boolean interrupted) {          //this shouldn't be called if climbed successfully
         // chassis.brake();
-        climber.setPosition(ClimberConstants.ClimberDefaultPos);
+        if(interrupted){
+            climber.setRotation(ClimberConstants.ClimberDefaultPos);
+            arm.setPosition(FieldConstants.ArmStowPosition);
+            elevator.setHeight(ElevatorConstants.MaxHeight);
+            grArm.setPosition(GrArmConstants.RetractedPosition);
+        }
         // climber.lockMotorSetRPS(0.0); //TODO: stop lock motor
         // elevator.setHeight(0);
     }

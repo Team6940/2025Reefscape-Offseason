@@ -11,7 +11,7 @@ public interface ClimberIO {
         resetRotation(0.);
     };
 
-    default public void setLockRPS(double rps){}
+    //default public void setLockRPS(double rps){}
 
     @AutoLog
     public class ClimberIOInputs{

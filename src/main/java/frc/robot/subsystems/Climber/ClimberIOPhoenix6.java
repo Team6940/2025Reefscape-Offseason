@@ -11,11 +11,11 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberIOPhoenix6 implements ClimberIO{
-    private static TalonFX liftMotor = new TalonFX(ClimberConstants.ClimberliftMotorID, "rio"); //TODO change to canivore
+    private static TalonFX liftMotor = new TalonFX(ClimberConstants.ClimberliftMotorID, "canivore"); //TODO change to canivore
     // private static TalonFX lockMotor = new TalonFX(ClimberConstants.ClimberlockMotorID, "rio"); //TODO change to canivore
 
     private static final MotionMagicVoltage positionVoltage = new MotionMagicVoltage(0.);
-    private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
+    //private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
 
     ClimberIOPhoenix6(){
         motorConfig();
