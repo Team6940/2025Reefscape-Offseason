@@ -664,11 +664,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         Translation2d dt = FieldConstants.DAlgaeTranslation6;
         t = t.plus(dt);// translation here
 
-        Rotation2d r = new Rotation2d(Math.PI);
+        Rotation2d r = new Rotation2d(0);
         Rotation2d dr = Rotation2d.fromDegrees(
-                (double) (index) * 60.// TODO here
+                (double) ((index + 2) % 6) * 60.// TODO here
         );
-        r = r.plus(dr);// rotation here
 
         t = t.rotateAround(FieldConstants.BlueReefCenterPos, dr);
         r = r.plus(dr);// constructing the final pose

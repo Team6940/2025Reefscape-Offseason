@@ -55,7 +55,7 @@ public class AlgaeManualScoring extends Command{
 
     @Override
     public void execute() {
-        if(driverController.getButton(m_executionButton)){
+        if(elevator.isAtTargetHeight()&&driverController.getButton(m_executionButton)){
             score();
         }
     }

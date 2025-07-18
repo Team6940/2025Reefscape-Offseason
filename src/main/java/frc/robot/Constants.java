@@ -353,7 +353,7 @@ public class Constants {
 
         public static final double AlgaeAlignmentDistanceThreshold=1.5;
 
-        public static final double AlgaeIntakePushDistance=1.5;
+        public static final double AlgaeIntakePushDistance=0.3;
 
         public static final double ArmStowPosition=-250.;//TODO
 

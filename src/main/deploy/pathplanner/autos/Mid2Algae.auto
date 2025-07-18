@@ -13,37 +13,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "11-MBM"
+            "pathName": "11-AlgaeIntake1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MBM-11-Algae"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "11-Algae-RBM"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RBM-9-Algae"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "9-AlgaeIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "9-Algae-RBM"
+            "pathName": "AlgaeIntake1-AlgaeScore1"
           }
         }
       ]

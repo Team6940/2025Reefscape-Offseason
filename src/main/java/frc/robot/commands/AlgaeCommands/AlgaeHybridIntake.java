@@ -2,7 +2,11 @@ package frc.robot.commands.AlgaeCommands;
 
 import java.lang.reflect.Field;
 
+import com.ctre.phoenix6.mechanisms.swerve.LegacySwerveRequest.FieldCentric;
+
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +19,8 @@ import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
+import frc.robot.subsystems.SuperStructure;
+import frc.robot.subsystems.SuperStructure.RobotStatus;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
@@ -23,14 +29,16 @@ import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 public class AlgaeHybridIntake extends Command {
     enum IntakeState {
         ALIGNING,
+        PREPARING,
         PUSHING,
-        INTAKING,
         DEPARTING,
+        RETRACTING,
         END
     }
 
     private int m_targetReefFaceIndex;
     private Button m_executionButton;
+        SuperStructure superStructure = SuperStructure.getInstance();
     IntakeState state;
 
     Pose2d targetPose;
@@ -51,10 +59,10 @@ public class AlgaeHybridIntake extends Command {
 
     @Override
     public void initialize() {
-        state = IntakeState.ALIGNING;
         targetPose = chassis.generateAlgaeIntakePose(m_targetReefFaceIndex);
         targetHeight = FieldConstants.ElevatorAlgaeIntakeHeight[m_targetReefFaceIndex];
         targetAngle = FieldConstants.ArmIntakePosition[m_targetReefFaceIndex];
+        shooter.setRPS(ShooterConstants.AlgaeIntakingRPS);
         elevator.setHeight(ElevatorConstants.IdleHeight);
     }
 
@@ -66,14 +74,17 @@ public class AlgaeHybridIntake extends Command {
             case ALIGNING:
                 align();
                 break;
+            case PREPARING:
+                prepare();
+                break;
             case PUSHING:
                 push();
                 break;
-            case INTAKING:
-                intake();
-                break;
             case DEPARTING:
                 depart();
+                break;
+            case RETRACTING:
+                retract();
                 break;
             case END:
                 break;
@@ -81,54 +92,49 @@ public class AlgaeHybridIntake extends Command {
     }
 
     public void align() {
-        if (chassis.getToPoseDistance(targetPose) < FieldConstants.AlgaeAlignmentDistanceThreshold) {
-            arm.setPosition(targetAngle);
-            if(arm.isAtSecuredPosition()){
-                elevator.setHeight(targetHeight);
-            }
+        if (elevator.isAtTargetHeight()) {
+            state=IntakeState.PREPARING;
         }
-        if (chassis.isAtTargetPose()) {
-            state = IntakeState.PUSHING;
+    }
+
+    public void prepare() {
+        arm.setPosition(targetAngle);
+        elevator.setHeight(targetHeight);
+        if(arm.isAtTargetPositon()&&chassis.isAtPose(targetPose)){
+            Transform2d pushTransform2d = new Transform2d(-FieldConstants.AlgaeIntakePushDistance, 0, Rotation2d.kZero);
+            Pose2d pushPose = targetPose.plus(pushTransform2d);
+            targetPose = pushPose; // Update target pose to the push position
+            state=IntakeState.PUSHING;
         }
     }
 
     public void push() {
-        // Get current pose and add small forward offset (e.g. 0.2 meters)
-        Pose2d currentPose = targetPose;
-        Translation2d transformTranslation2d = new Translation2d(-FieldConstants.AlgaeIntakePushDistance,
-                currentPose.getRotation());
-        Pose2d pushPose = new Pose2d(currentPose.getTranslation().plus(transformTranslation2d),
-                currentPose.getRotation());
-        // Move to push position
-        shooter.setRPS(ShooterConstants.AlgaeIntakingRPS);
-        chassis.autoMoveToPose(pushPose);
-
-        if (chassis.isAtPose(pushPose)) {
-            state = IntakeState.INTAKING;
-        }
-    }
-
-    public void intake() {
-        if (shooter.getShooterState() == ShooterState.READY) {
+        if (chassis.isAtPose(targetPose)) {
+            Transform2d departTransform2d = new Transform2d(FieldConstants.AlgaeIntakePushDistance, 0, Rotation2d.kZero);
+            Pose2d departPose = targetPose.plus(departTransform2d);
+            targetPose = departPose; // Update target pose to the depart position
             state = IntakeState.DEPARTING;
         }
     }
 
     public void depart() {
-        shooter.setRPS(ShooterConstants.HoldingAlgaeRPS); //get hold of the coral in case the robot throws it out accidently
-        chassis.autoMoveToPose(targetPose);
         if (chassis.isAtPose(targetPose)) {
-            arm.setPosition(FieldConstants.ArmStowPosition);
-            elevator.setHeight(ElevatorConstants.IdleHeight);
-            // shooter.stop();
-            state = IntakeState.END;
+           state= IntakeState.RETRACTING;
         }
+    }
+
+    public void retract() {
+        arm.setPosition(FieldConstants.ArmStowPosition);
+        elevator.setHeight(ElevatorConstants.MinHeight);
+        shooter.setRPS(-7.);
+        state = IntakeState.END;
     }
 
     @Override
     public void end(boolean interrupted) {
-        arm.reset();
-        elevator.setHeight(ElevatorConstants.IdleHeight);
-        shooter.stop();
+       elevator.setHeight(ElevatorConstants.MinHeight);
+        arm.setPosition(FieldConstants.ArmStowPosition);
+        superStructure.forcelySetRobotStatus(RobotStatus.HOLDING_ALGAE);
+        shooter.setRPS(-7.);
     }
 }
