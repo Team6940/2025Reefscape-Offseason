@@ -269,13 +269,13 @@ public class RobotContainer {
             
             
             
-                    driverController.rightBumper().onTrue(superStructure.getNewCoralAlignSequenceCommand(Button.kA));
-                    driverController.rightBumper().whileTrue(superStructure.getToggleIntakeCommand());
+                    driverController.rightBumper().onTrue(Commands.defer(()->superStructure.getNewCoralAlignSequenceCommand(Button.kA),Set.of(arm,elevator,shooter,indexer)));
+                    driverController.rightBumper().whileTrue(Commands.defer(()->superStructure.getToggleIntakeCommand(),Set.of(grArm,intaker)));
             
             
                     // driverController.leftTrigger().whileTrue(Commands.defer(()->));
                     driverController.b().whileTrue(Commands.defer(()->superStructure.getManualAlgaeIntakeCommand(),Set.of(arm,elevator,shooter)));
-                    driverController.a().onTrue(new AlgaeManualScoring(Button.kY));
+                    driverController.a().onTrue(Commands.defer(()->superStructure.getManualAlgaeScoreCommand(),Set.of(elevator,shooter,arm)));
                     // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("LBM-2"));
                     // driverController.b().whileTrue(RobotContainer.chassis.followPPPath("2-AlgaeLeft"));
                     // driverController.x().whileTrue(RobotContainer.chassis.followPPPath("AlgaeLeft-5"));
@@ -296,7 +296,7 @@ public class RobotContainer {
                     // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(20)));
                     // driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
                     driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(()->superStructure.getNewHybridCoralScoreCommand(Button.kRightTrigger),Set.of(arm,elevator,shooter,chassis)));
-                    driverController.leftBumper().and(isL1).whileTrue(Commands.defer(()->superStructure.getCoralL1ScoreCommand(),Set.of(arm,elevator,shooter)));
+                    driverController.leftBumper().and(isL1).whileTrue(Commands.defer(()->superStructure.getCoralL1ScoreCommand(),Set.of(elevator,shooter,arm)));
                     driverController.povDown().onTrue(superStructure.runOnce(()->superStructure.forcelySetRobotStatus(RobotStatus.IDLE)));
 
         
