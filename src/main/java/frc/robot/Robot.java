@@ -1,5 +1,9 @@
 package frc.robot;
 
+import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.gamepieces.GamePieceOnFieldSimulation;
+import org.ironmaple.simulation.seasonspecific.crescendo2024.CrescendoNoteOnField;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoralAlgaeStack;
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -8,6 +12,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,7 +24,7 @@ import frc.robot.commands.Autos.*;
 public class Robot extends LoggedRobot { //TODO
 
   private Command m_autonomousCommand;
-  public Command autoCommand = new Down4Corals();
+  public Command autoCommand;
   private int autoChoice = 3; 
 
   private final RobotContainer m_robotContainer;
@@ -144,6 +149,9 @@ public class Robot extends LoggedRobot { //TODO
 
   @Override
   public void simulationPeriodic() {
+    // SimulatedArena.getInstance().simulationPeriodic();
+    // SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(new Translation2d(3,3)));
+    // SimulatedArena.getInstance().clearGamePieces();
     //This method will be called once per scheduler run during simulation, not used in the real robot.
   }
 }

@@ -35,7 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
             // io = new ShooterIOEmpty();
         } else {
             // TODO: Implement simulation code here
-            io = new ShooterIOPhoenix6();
+            io = new ShooterIO(){};
         }
     }
 
