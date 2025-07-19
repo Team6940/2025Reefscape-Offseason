@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.857581609553835,
-        "y": 2.5170700369016425
+        "x": 3.6990359042553194,
+        "y": 2.2688331117021265
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.071143205888574,
-        "y": 1.8949058475592877
+        "x": 2.912597500590058,
+        "y": 1.6466689223597717
       },
       "isLocked": false,
       "linkedName": "8"
     },
     {
       "anchor": {
-        "x": 1.7450284090909092,
-        "y": 0.8041761363636374
+        "x": 2.1529089095744682,
+        "y": 1.2478058510638288
       },
       "prevControl": {
-        "x": 2.806899507806018,
-        "y": 1.6619622781566086
+        "x": 3.214780008289577,
+        "y": 2.1055919928568
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 51.88204438110528
+    "rotation": -148.24051991518718
   },
   "reversed": false,
   "folder": "Down4Corals",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.00699600772406
+    "rotation": -119.98864481644176
   },
   "useDefaultConstraints": false
 }

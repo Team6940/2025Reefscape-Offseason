@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.7450284090909092,
-        "y": 0.8041761363636374
+        "x": 2.1529089095744682,
+        "y": 1.2478058510638288
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8145113031914895,
-        "y": 2.6480718085106383
+        "x": 2.2223918036750483,
+        "y": 3.09170152321083
       },
       "isLocked": false,
       "linkedName": "RSR"
     },
     {
       "anchor": {
-        "x": 2.8013575182046098,
-        "y": 3.856607648923524
+        "x": 2.6196642287234044,
+        "y": 3.8791389627659565
       },
       "prevControl": {
-        "x": 1.8145113031914895,
-        "y": 3.599085771276595
+        "x": 1.6328180137102841,
+        "y": 3.6216170851190275
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 179.46414198625948
   },
   "reversed": false,
   "folder": "Down4Corals",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 51.88204438110528
+    "rotation": -148.24051991518718
   },
   "useDefaultConstraints": false
 }

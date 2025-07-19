@@ -232,6 +232,9 @@ public class RobotContainer {
                     operatorController.x().onTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(3)));
                     operatorController.y().onTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(4)));
                     
+                    operatorController.povDown().onTrue(superStructure.runOnce(()->superStructure.forcelySetRobotStatus(RobotStatus.IDLE)));
+                    operatorController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.forcelySetRobotStatus(RobotStatus.HOLDING_ALGAE)));
+                    operatorController.povRight().onTrue(superStructure.runOnce(() -> superStructure.forcelySetRobotStatus(RobotStatus.HOLDING_CORAL)));
                     // /* Povs */
                     // operatorController.povUp().onTrue(superStructure.runOnce(() -> superStructure.setOperatorReefFaceIndex(6)));
                     // operatorController.povDown().onTrue(superStructure.runOnce(() -> superStructure.setOperatorReefFaceIndex(3)));
@@ -297,7 +300,7 @@ public class RobotContainer {
                     // driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
                     driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(()->superStructure.getNewHybridCoralScoreCommand(Button.kRightTrigger),Set.of(arm,elevator,shooter,chassis)));
                     driverController.leftBumper().and(isL1).whileTrue(Commands.defer(()->superStructure.getCoralL1ScoreCommand(),Set.of(elevator,shooter,arm)));
-                    driverController.povDown().onTrue(superStructure.runOnce(()->superStructure.forcelySetRobotStatus(RobotStatus.IDLE)));
+                    //driverController.povDown().onTrue(superStructure.runOnce(()->superStructure.forcelySetRobotStatus(RobotStatus.IDLE)));
 
         
 

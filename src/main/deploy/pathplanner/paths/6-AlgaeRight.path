@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.8013575182046098,
-        "y": 3.856607648923524
+        "x": 2.6196642287234044,
+        "y": 3.8791389627659565
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.078792053543717,
-        "y": 3.0650960359175565
+        "x": 1.8970987640625117,
+        "y": 3.087627349759989
       },
       "isLocked": false,
       "linkedName": "6"
@@ -48,7 +48,7 @@
   "folder": "Up4Corals New",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 179.46414198625948
   },
   "useDefaultConstraints": true
 }

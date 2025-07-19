@@ -328,7 +328,7 @@ public class Constants {
         public static final double L2Fix=0.07;
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
         public static final Translation2d DReefTranslation12 = new Translation2d(2.3, 0.135);
-        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.31, -0.161);
+        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.31, 0.161);
         public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
         public static final double CoralScoreRetreatDistance = 0.3; // meters, this is the distance the robot will push
                                                                     // forward after

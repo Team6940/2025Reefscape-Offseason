@@ -37,18 +37,6 @@
                 "data": {
                   "pathName": "RSR-8"
                 }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "8-RSR"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "RSR-6"
-                }
               }
             ]
           }

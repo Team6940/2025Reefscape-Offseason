@@ -77,8 +77,8 @@ public class AutoIntakeCoral extends Command {
     private void align() {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
-        indexer.setRghtRPS(-10.);
-        indexer.setLeftRPS(-5.);
+        indexer.setRghtRPS(-8.);
+        indexer.setLeftRPS(-4.);
         if (indexer.getIndexerState() == IndexerState.READY) {
             // if (driverController.getButton(m_toggleButton)) {
 

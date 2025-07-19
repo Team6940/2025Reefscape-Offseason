@@ -33,18 +33,6 @@
           "data": {
             "pathName": "LSL-3"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "3-LSL"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "LSL-5"
-          }
         }
       ]
     }
