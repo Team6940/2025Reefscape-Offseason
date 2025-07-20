@@ -88,6 +88,10 @@ public class Robot extends LoggedRobot { //TODO
       /*
        * press povLeft and autoChoice +1
       */
+    if(RobotContainer.traditionalDriverController.getPOV()==0){
+      autoChoice=2;
+      autoCommand=AutoGenerator.generate(autoChoice);
+    }
     }
     switch(autoChoice){
 

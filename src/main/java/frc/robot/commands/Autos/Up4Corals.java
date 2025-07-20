@@ -37,21 +37,21 @@ public class Up4Corals extends SequentialCommandGroup {
         } // set the orignal pose
 
         addCommands(chassis.followPPPath("LBM-2"));
-        addCommands(new NewCoralHybridScoring(2, 4, Button.kAutoButton, true).withTimeout(1));// score 2
+        // addCommands(new NewCoralHybridScoring(2, 4, Button.kAutoButton, true).withTimeout(1));// score 2
 
-        addCommands(chassis.followPPPath("2-LSL").raceWith(new AutoIntakeCoral()));// intake
+        // addCommands(chassis.followPPPath("2-LSL").raceWith(new AutoIntakeCoral()));// intake
 
-        addCommands(chassis.followPPPath("LSL-4"));
-        addCommands(new NewCoralHybridScoring(4, 4, Button.kAutoButton,true).withTimeout(1));// score 4
+        // addCommands(chassis.followPPPath("LSL-4"));
+        // addCommands(new NewCoralHybridScoring(4, 4, Button.kAutoButton,true).withTimeout(1));// score 4
 
-        addCommands(chassis.followPPPath("4-LSL").raceWith(new AutoIntakeCoral()));// intake
+        // addCommands(chassis.followPPPath("4-LSL").raceWith(new AutoIntakeCoral()));// intake
 
-        addCommands(chassis.followPPPath("LSL-3"));
-        addCommands(new NewCoralHybridScoring(3, 4, Button.kAutoButton,true).withTimeout(1));// score 3
+        // addCommands(chassis.followPPPath("LSL-3"));
+        // addCommands(new NewCoralHybridScoring(3, 4, Button.kAutoButton,true).withTimeout(1));// score 3
 
-        addCommands(chassis.followPPPath("3-LSL").raceWith(new AutoIntakeCoral()));// intake
+        // addCommands(chassis.followPPPath("3-LSL").raceWith(new AutoIntakeCoral()));// intake
 
-        addCommands(chassis.followPPPath("LSL-5"));
-        addCommands(new NewCoralHybridScoring(5, 4, Button.kAutoButton,true).withTimeout(1));// score 5
+        // addCommands(chassis.followPPPath("LSL-5"));
+        // addCommands(new NewCoralHybridScoring(5, 4, Button.kAutoButton,true).withTimeout(1));// score 5
     }
 }

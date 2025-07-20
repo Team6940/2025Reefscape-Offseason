@@ -29,18 +29,18 @@ public class Mid2Algae extends SequentialCommandGroup {
         } // set original pose
 
         addCommands(chassis.followPPPath("MBM-11"));
-        addCommands(new CoralHybridScoring(11, 4, Button.kAutoButton));
+        // addCommands(new CoralHybridScoring(11, 4, Button.kAutoButton));
 
-        addCommands(new AlgaeHybridIntake(6, Button.kAutoButton));
+        // addCommands(new AlgaeHybridIntake(6, Button.kAutoButton));
 
-        addCommands(chassis.followPPPath("11-RBM"));
-        addCommands(new AlgaeHybridScoring(Button.kAutoButton, Button.kAutoButton));
+        // addCommands(chassis.followPPPath("11-RBM"));
+        // addCommands(new AlgaeHybridScoring(Button.kAutoButton, Button.kAutoButton));
 
-        addCommands(chassis.followPPPath("RBM-9-Algae"));
-        addCommands(new AlgaeHybridIntake(5, Button.kAutoButton));
+        // addCommands(chassis.followPPPath("RBM-9-Algae"));
+        // addCommands(new AlgaeHybridIntake(5, Button.kAutoButton));
 
-        addCommands(chassis.followPPPath("9-Algae-RBM"));
-        addCommands(new AlgaeHybridScoring(Button.kAutoButton, Button.kAutoButton));
+        // addCommands(chassis.followPPPath("9-Algae-RBM"));
+        // addCommands(new AlgaeHybridScoring(Button.kAutoButton, Button.kAutoButton));
 
     }
 

@@ -189,10 +189,10 @@ public class NewCoralHybridScoring extends Command {
 
     public NewCoralHybridScoring withSelection(Selection selection) {
         switch (selection) {
-            case RIGHT:
+            case LEFT:
                 return new NewCoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 1, m_targetReefLevelIndex,
                         m_executionButton, m_isReversed);
-            case LEFT:
+            case RIGHT:
                 return new NewCoralHybridScoring((m_targetReefPoseIndex - 1) / 2 * 2 + 2, m_targetReefLevelIndex,
                         m_executionButton, m_isReversed);
 
