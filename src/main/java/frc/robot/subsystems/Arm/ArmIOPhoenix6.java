@@ -60,7 +60,7 @@ public class ArmIOPhoenix6 implements ArmIO {
     private void encoderConfig() {
         encoder = new CANcoder(ArmConstants.ArmEncoderID, "canivore");
         CANcoderConfiguration config = new CANcoderConfiguration();
-        config.MagnetSensor.MagnetOffset = -0.48;
+        config.MagnetSensor.MagnetOffset = -0.8675;
         config.MagnetSensor.SensorDirection = ArmConstants.EncoderDirection;
         encoder.getConfigurator().apply(config);
     }

@@ -9,6 +9,7 @@ import java.util.Set;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.AutoPreparation;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
 import frc.robot.commands.GroundIntakeCommands.AutoIntakeCoral;
 // import frc.robot.commands.IntakeCommands.CentreCoralPos;
@@ -36,8 +37,8 @@ public class Up4Corals extends SequentialCommandGroup {
                     .resetPose(chassis.generatePPPath("LBM-2").flipPath().getStartingHolonomicPose().get())));
         } // set the orignal pose
 
-        addCommands(chassis.followPPPath("LBM-2"));
-        // addCommands(new NewCoralHybridScoring(2, 4, Button.kAutoButton, true).withTimeout(1));// score 2
+        addCommands(chassis.followPPPath("LBM-2").alongWith(new AutoPreparation()));
+        //addCommands(new NewCoralHybridScoring(2, 3, Button.kAutoButton, true).withTimeout(1));// score 2
 
         // addCommands(chassis.followPPPath("2-LSL").raceWith(new AutoIntakeCoral()));// intake
 

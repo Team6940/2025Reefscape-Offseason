@@ -5,6 +5,8 @@ import frc.robot.Constants.IntakerConstants;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
+import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.RobotContainer;
 
 import java.util.function.BooleanSupplier;
 
@@ -14,6 +16,7 @@ public class ToggleIntake extends Command {
     GrArmSubsystem grArm = GrArmSubsystem.getInstance();
     IntakerSubsystem intaker = IntakerSubsystem.getInstance();
     IndexerSubsystem indexer = IndexerSubsystem.getInstance();
+    private ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
     public ToggleIntake(GrArmSubsystem grArm, IntakerSubsystem intaker) {
         this.grArm = grArm;

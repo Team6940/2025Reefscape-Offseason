@@ -242,8 +242,6 @@ public class RobotContainer {
                     //driverController.a().onTrue(new InstantCommand(()-> climber.setRotation(ClimberConstants.ClimberDefaultPos)));
                     //driverController.b().onTrue(new InstantCommand(()-> climber.setRotation(ClimberConstants.ClimberExtensionPos)));
                     //driverController.x().onTrue(new InstantCommand(()-> climber.setRotation(ClimberConstants.ClimberRetractionPos)));
-                    driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));
-                    driverController.back().onTrue(new NewClimbCommand(Button.kStart));
                     //driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));//This needs to be changed
             
                     //driverController.leftStick().toggleOnTrue(new InstantCommand(() -> climber.setPosition(1.)));//This needs to be changed
@@ -267,14 +265,26 @@ public class RobotContainer {
                     // driverController.y().whileTrue(new ToggleIntake(grArm, intaker));
             
             
+
+
+
+                    driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));
+                    driverController.back().onTrue(new NewClimbCommand(Button.kStart));
             
-                    driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kA));
+                    driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightStick));
                     driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
             
-            
-                    // driverController.leftTrigger().whileTrue(Commands.defer(()->));
+        
                     driverController.b().whileTrue(Commands.defer(()->superStructure.getManualAlgaeIntakeCommand(),Set.of(arm,elevator,shooter)));
                     driverController.a().onTrue(new AlgaeManualScoring(Button.kY));
+                    driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(() -> superStructure.getNewHybridCoralScoreCommand(Button.kLeftTrigger),Set.of(arm, elevator, shooter, chassis)));
+                    driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());
+
+
+
+
+
+
                     // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("LBM-2"));
                     // driverController.b().whileTrue(RobotContainer.chassis.followPPPath("2-AlgaeLeft"));
                     // driverController.x().whileTrue(RobotContainer.chassis.followPPPath("AlgaeLeft-5"));
@@ -294,8 +304,7 @@ public class RobotContainer {
                     // driverController.a().onTrue(new InstantCommand(()->chassis.resetPose(new Pose2d())));
                     // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(20)));
                     // driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
-                    driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(()->superStructure.getNewHybridCoralScoreCommand(Button.kRightTrigger),Set.of(arm,elevator,shooter,chassis)));
-                    driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());
+                    
 
         
 
@@ -304,8 +313,8 @@ public class RobotContainer {
         // driverController.povRight().onTrue(new InstantCommand(()->arm.setPosition(-90.)));
         // driverController.povLeft().onTrue(new InstantCommand(() -> arm.setPosition(-165.)));
 
-        // driverController.povUp().onTrue(new InstantCommand(()->elevator.liftHeight(0.05)));
-        // driverController.povDown().onTrue(new InstantCommand(()->elevator.liftHeight(-0.05)));
+        //driverController.povUp().onTrue(new InstantCommand(()->elevator.liftHeight(0.1)));
+        //driverController.povDown().onTrue(new InstantCommand(()->elevator.liftHeight(-0.1)));
 
         // // driverController.y().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
         //driverController.rightTrigger().onTrue(new InstantCommand(()->arm.setPosition(-90.)));

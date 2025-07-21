@@ -146,7 +146,7 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterIntakeCurrentThreshold = 35;//TODO
+        public static final double ShooterIntakeCurrentThreshold = 15.;//TODO
 
         public static final double DroppingRPS = 0;
 
@@ -174,11 +174,11 @@ public class Constants {
 
         public static final double MinDegs = -270.; // CCW Positive
         public static final double MaxDegs = -90.; 
-        public static final double ArmPositionToleranceDegs = 5.;
+        public static final double ArmPositionToleranceDegs = 3.;
         public static final double DroppingPositionDegs = 0.;
 
         public static final int ArmEncoderID = 18;
-        public static final double EncoderOffsetDegrees = 1.3;
+        public static final double EncoderOffsetDegrees = -130.;
         public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.Clockwise_Positive; //TODO
         public static final double SecuredPosition = -150.;
         public static final double encoderToMechanismRatio=1.;
@@ -285,7 +285,7 @@ public class Constants {
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
         public static final double IntakingHeight = 0.1;
         public static final double DroppingHeight = 0.;
-        public static final double IdleHeight = 0.12;//TODO
+        public static final double IdleHeight = 0.15;//TODO
         public static final double GrabbingHeight = 0.01;
 
     }

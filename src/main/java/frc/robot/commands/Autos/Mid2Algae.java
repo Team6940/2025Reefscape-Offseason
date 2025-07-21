@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.AutoPreparation;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
@@ -28,10 +29,10 @@ public class Mid2Algae extends SequentialCommandGroup {
                     .resetPose(chassis.generatePPPath("MBM-11").flipPath().getStartingHolonomicPose().get())));
         } // set original pose
 
-        addCommands(chassis.followPPPath("MBM-11"));
+        addCommands(chassis.followPPPath("MBM-11").alongWith(new AutoPreparation()));
         // addCommands(new CoralHybridScoring(11, 4, Button.kAutoButton));
 
-        // addCommands(new AlgaeHybridIntake(6, Button.kAutoButton));
+        // addCommands(new AlgaeHybridIntake(6, Button.kAutoButton));w
 
         // addCommands(chassis.followPPPath("11-RBM"));
         // addCommands(new AlgaeHybridScoring(Button.kAutoButton, Button.kAutoButton));
