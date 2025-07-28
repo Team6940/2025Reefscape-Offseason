@@ -633,7 +633,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             dt = new Translation2d(dt.getX() + FieldConstants.L2Fix, dt.getY());
         }
         if (index % 2 == 1) {
-            dt = new Translation2d(dt.getX(), -dt.getY());
+            dt = new Translation2d(dt.getX(), -dt.getY()+0.05);
         }
         t = t.plus(dt);
 

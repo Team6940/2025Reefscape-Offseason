@@ -76,14 +76,14 @@ public class Robot extends LoggedRobot { //TODO
        * The autoCommand variable is updated with the new command based on the autoChoice.
       */
     if(RobotContainer.traditionalDriverController.getPOV() == 90){
-      autoChoice = MUtils.cycleNumber(autoChoice, 1, 3, -1);
+      autoChoice = MUtils.cycleNumber(autoChoice, 1, 4, -1);
       autoCommand = AutoGenerator.generate(autoChoice);
       /*
        * press povRight and autoChoice -1 
       */
     }
     if(RobotContainer.traditionalDriverController.getPOV()==270){
-      autoChoice = MUtils.cycleNumber(autoChoice, 1, 3, 1);
+      autoChoice = MUtils.cycleNumber(autoChoice, 1, 4, 1);
       autoCommand = AutoGenerator.generate(autoChoice);
       /*
        * press povLeft and autoChoice +1
@@ -105,6 +105,9 @@ public class Robot extends LoggedRobot { //TODO
         break;
       case 3:
         SmartDashboard.putString("AutoType", "Down4Corals");
+        break;
+      case 4:
+        SmartDashboard.putString("AutoType","LeftSide");
         break;
     }
     

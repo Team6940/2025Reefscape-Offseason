@@ -17,6 +17,8 @@ public class AutoGenerator{
                 return new Mid2Algae();
             case 3:
                 return new Down4Corals();
+            case 4:
+                return new LeftSide();
             default:
                 break;
         }

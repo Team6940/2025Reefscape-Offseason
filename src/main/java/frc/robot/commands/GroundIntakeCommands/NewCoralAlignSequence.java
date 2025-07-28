@@ -81,7 +81,8 @@ public class NewCoralAlignSequence extends Command {
             indexer.setLeftRPS(-4.);
             indexer.setRghtRPS(-8.);
         } else
-            indexer.setRPS(10.);
+            indexer.setLeftRPS(4.);
+            indexer.setRghtRPS(15.);
         if ((indexer.getIndexerState() == IndexerState.READY ||
                 driverController.getButton(m_toggleButton)) && arm.isAtTargetPositon()) {
             // if (driverController.getButton(m_toggleButton)) {
