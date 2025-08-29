@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -60.14817576939901
+    "rotation": 121.78029395339017
   },
   "reversed": false,
   "folder": "Down4Corals",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -2.1125808834501343
+    "rotation": -179.0759546472273
   },
   "useDefaultConstraints": false
 }
