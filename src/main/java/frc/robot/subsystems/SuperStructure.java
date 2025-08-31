@@ -182,15 +182,11 @@ public class SuperStructure extends SubsystemBase {
      // decide the way of method.
 
     public Command getNewHybridCoralScoreCommand(Button executionButton) {
-        if (robotStatus == RobotStatus.HOLDING_CORAL){
-            if (!chassis.isFacingReefCenter()) {
-                return new NewCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton,
-                        true)
-                        .withSelection(driverSelection).andThen(() -> robotStatus = RobotStatus.IDLE);
-            } else
-                return null;
-        }
-        else return null;
+        // if (!chassis.isFacingReefCenter()) {
+            return new NewCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton, true)
+                    .withSelection(driverSelection).andThen(() -> robotStatus = RobotStatus.IDLE);
+        // } else
+        //     return null;
         // reversed scoring
         // } else {
         // if(m_targetReefLevelIndex>=3)

@@ -99,7 +99,7 @@ public class Constants {
         public static final double kS = 0.6;
 
         public static final InvertedValue LeftInverted = InvertedValue.Clockwise_Positive;
-        public static final InvertedValue RghtInverted = InvertedValue.CounterClockwise_Positive;
+        public static final InvertedValue RghtInverted = InvertedValue.Clockwise_Positive;
         public static final boolean SensorInverted = true; //TODO: this is a placeholder value, should be replaced with the actual sensor inverted value
         public static final double IndexerRatio = 50. / 24.; // LCY: 50. :24. // GY: 20. : 10.
 
@@ -146,11 +146,11 @@ public class Constants {
 
         public static final double HoldingAlgaeRPS = 5.; //TODO: this is a placeholder value, should be replaced with the actual intake rps
 
-        public static final double ShooterIntakeCurrentThreshold = 35;//TODO
+        public static final double ShooterIntakeCurrentThreshold = 11.;//TODO
 
         public static final double DroppingRPS = 0;
 
-        public static final int CurrentFilterTaps = 10;
+        public static final int CurrentFilterTaps = 20;
 
         public static final double ShooterDebouncerTime = 0.1;
 
@@ -174,11 +174,11 @@ public class Constants {
 
         public static final double MinDegs = -270.; // CCW Positive
         public static final double MaxDegs = -90.; 
-        public static final double ArmPositionToleranceDegs = 5.;
+        public static final double ArmPositionToleranceDegs = 3.;
         public static final double DroppingPositionDegs = 0.;
 
         public static final int ArmEncoderID = 18;
-        public static final double EncoderOffsetDegrees = 1.3;
+        public static final double EncoderOffsetDegrees = -130.;
         public static final SensorDirectionValue EncoderDirection = SensorDirectionValue.Clockwise_Positive; //TODO
         public static final double SecuredPosition = -150.;
         public static final double encoderToMechanismRatio=1.;
@@ -285,7 +285,7 @@ public class Constants {
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
         public static final double IntakingHeight = 0.1;
         public static final double DroppingHeight = 0.;
-        public static final double IdleHeight = 0.12;//TODO
+        public static final double IdleHeight = 0.15;//TODO
         public static final double GrabbingHeight = 0.01;
 
     }
@@ -328,7 +328,7 @@ public class Constants {
         public static final double L2Fix=0.07;
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
         public static final Translation2d DReefTranslation12 = new Translation2d(2.3, 0.135);
-        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.31, -0.161);
+        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.34, 0.145);
         public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
         public static final double CoralScoreRetreatDistance = 0.3; // meters, this is the distance the robot will push
                                                                     // forward after

@@ -15,34 +15,18 @@ import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 // import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 // import frc.robot.subsystems.Shooter.ShooterSubsystem;
 
-public class Mid2Algae extends SequentialCommandGroup {
+public class LeftSide extends SequentialCommandGroup {
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
 
-    // ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
-    // ShooterSubsystem shooter = ShooterSubsystem.getInstance();
-    public Mid2Algae() {
+    public LeftSide() {
         if (DriverStation.getAlliance().get() == Alliance.Blue) {
             addCommands(new InstantCommand(
-                    () -> chassis.resetPose(chassis.generatePPPath("MBM-11").getStartingHolonomicPose().get())));
+                    () -> chassis.resetPose(chassis.generatePPPath("LBL-Front").getStartingHolonomicPose().get())));
         } else {
             addCommands(new InstantCommand(() -> chassis
-                    .resetPose(chassis.generatePPPath("MBM-11").flipPath().getStartingHolonomicPose().get())));
+                    .resetPose(chassis.generatePPPath("LBL-Front").flipPath().getStartingHolonomicPose().get())));
         } // set original pose
 
-        addCommands(chassis.followPPPath("MBM-11").alongWith(new AutoPreparation()));
-        // addCommands(new CoralHybridScoring(11, 4, Button.kAutoButton));
-
-        // addCommands(new AlgaeHybridIntake(6, Button.kAutoButton));w
-
-        // addCommands(chassis.followPPPath("11-RBM"));
-        // addCommands(new AlgaeHybridScoring(Button.kAutoButton, Button.kAutoButton));
-
-        // addCommands(chassis.followPPPath("RBM-9-Algae"));
-        // addCommands(new AlgaeHybridIntake(5, Button.kAutoButton));
-
-        // addCommands(chassis.followPPPath("9-Algae-RBM"));
-        // addCommands(new AlgaeHybridScoring(Button.kAutoButton, Button.kAutoButton));
-
+        addCommands(chassis.followPPPath("LBL-Front").alongWith(new AutoPreparation()));
     }
-
 }
