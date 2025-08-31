@@ -29,7 +29,7 @@ public class GrArmSubsystem extends SubsystemBase {
             io = new GrArmIOPhoenix6();
         } else {
             // TODO: Implement simulation code here
-            io = new GrArmIOPhoenix6();
+            io = new GrArmIO(){};
         }
     }
 
