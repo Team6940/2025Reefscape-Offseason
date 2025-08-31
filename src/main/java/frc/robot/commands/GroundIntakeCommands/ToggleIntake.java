@@ -3,8 +3,11 @@ package frc.robot.commands.GroundIntakeCommands;
 import frc.robot.Constants.GrArmConstants;
 import frc.robot.Constants.IntakerConstants;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
+import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
+import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.RobotContainer;
 
 import java.util.function.BooleanSupplier;
 
@@ -14,6 +17,7 @@ public class ToggleIntake extends Command {
     GrArmSubsystem grArm = GrArmSubsystem.getInstance();
     IntakerSubsystem intaker = IntakerSubsystem.getInstance();
     IndexerSubsystem indexer = IndexerSubsystem.getInstance();
+    private ImprovedCommandXboxController driverController = RobotContainer.driverController;
 
     public ToggleIntake(GrArmSubsystem grArm, IntakerSubsystem intaker) {
         this.grArm = grArm;
@@ -28,6 +32,16 @@ public class ToggleIntake extends Command {
         //indexer.setLeftRPS(-5.);
         //indexer.setRghtRPS(-10);
         
+    }
+
+    @Override
+    public void execute() {
+        if(driverController.getButton(Button.kRightTrigger)){
+            intaker.setRPS(-20);
+        }
+        else{
+            intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
+        }
     }
 
     @Override

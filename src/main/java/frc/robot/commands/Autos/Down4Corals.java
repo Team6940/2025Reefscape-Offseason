@@ -9,6 +9,7 @@ import java.util.Set;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.AutoPreparation;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
 import frc.robot.commands.GroundIntakeCommands.AutoIntakeCoral;
 // import frc.robot.commands.IntakeCommands.CentreCoralPos;
@@ -17,6 +18,7 @@ import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
+import frc.robot.commands.CoralCommands.NewCoralHybridScoring;
 
 public class Down4Corals extends SequentialCommandGroup {
     // TODO: it's possible to use HybridCommands directly instead of FollowPath in
@@ -41,15 +43,15 @@ public class Down4Corals extends SequentialCommandGroup {
                     .resetPose(chassis.generatePPPath("RBM-9").flipPath().getStartingHolonomicPose().get())));
         } // set the orignal pose
 
-        addCommands(chassis.followPPPath("RBM-9"));
-        addCommands(new CoralHybridScoring(9, 4, Button.kAutoButton).withTimeout(1));// score 9
+        addCommands(chassis.followPPPath("RBM-9").alongWith(new AutoPreparation()));
+        //addCommands(new NewCoralHybridScoring(9, 3, Button.kAutoButton,true).withTimeout(1));// score 9
 
-        addCommands(chassis.followPPPath("9-RSR").raceWith(new AutoIntakeCoral()));// intake
+        // addCommands(chassis.followPPPath("9-RSR").raceWith(new AutoIntakeCoral()));// intake
 
-        addCommands(chassis.followPPPath("RSR-7"));
-        addCommands(new CoralHybridScoring(7, 4, Button.kAutoButton).withTimeout(1));// score 7
+        // addCommands(chassis.followPPPath("RSR-7"));
+        // addCommands(new CoralHybridScoring(7, 4, Button.kAutoButton).withTimeout(1));// score 7
 
-        addCommands(chassis.followPPPath("7-RSR").raceWith(new AutoIntakeCoral()));// intake
+        // addCommands(chassis.followPPPath("7-RSR").raceWith(new AutoIntakeCoral()));// intake
 
         // addCommands(chassis.followPPPath("RSM-8"));
         // addCommands(new CoralHybridScoring(8, 4, Button.kAutoButton).withTimeout(1));// score 8
@@ -57,7 +59,7 @@ public class Down4Corals extends SequentialCommandGroup {
         // addCommands(chassis.followPPPath("8-RSR").raceWith(new AutoIntakeCoral()));// intake
 
         // addCommands(chassis.followPPPath("RSM-6"));
-        addCommands(new CoralHybridScoring(6, 4, Button.kAutoButton).withTimeout(1));// score 6
+        // addCommands(new CoralHybridScoring(6, 4, Button.kAutoButton).withTimeout(1));// score 6
     }
 
 }

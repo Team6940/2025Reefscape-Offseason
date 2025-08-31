@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.128474069148937,
-        "y": 2.5255485372340423
+        "x": 5.267984693877552,
+        "y": 2.3050701530612243
       },
       "prevControl": {
-        "x": 5.959314899823106,
-        "y": 2.2888997954489927
+        "x": 6.098825524551721,
+        "y": 2.0684214112761747
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 120.3187010202445
+    "rotation": -60.14817576939901
   },
   "reversed": false,
   "folder": "Down4Corals",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -2.1125808834501343
   },
   "useDefaultConstraints": false
 }
