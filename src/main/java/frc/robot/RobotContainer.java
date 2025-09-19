@@ -27,6 +27,7 @@ import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.ImprovedCommandXboxController.*;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.SuperStructure;
+import frc.robot.subsystems.SuperStructure.RobotStatus;
 import frc.robot.subsystems.SuperStructure.Selection;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
@@ -271,14 +272,18 @@ public class RobotContainer {
                     driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));
                     driverController.back().onTrue(new NewClimbCommand(Button.kStart));
             
+
                     driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightStick));
                     driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
+
             
         
                     driverController.b().whileTrue(Commands.defer(()->superStructure.getManualAlgaeIntakeCommand(),Set.of(arm,elevator,shooter)));
+
                     driverController.a().onTrue(new AlgaeManualScoring(Button.kY));
                     driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(() -> superStructure.getNewHybridCoralScoreCommand(Button.kLeftTrigger),Set.of(arm, elevator, shooter, chassis)));
                     driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());
+
 
 
 
@@ -304,7 +309,7 @@ public class RobotContainer {
                     // driverController.a().onTrue(new InstantCommand(()->chassis.resetPose(new Pose2d())));
                     // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(20)));
                     // driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
-                    
+
 
         
 

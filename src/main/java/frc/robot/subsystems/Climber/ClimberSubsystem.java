@@ -27,7 +27,7 @@ public class ClimberSubsystem extends SubsystemBase{
             io = new ClimberIOPhoenix6();
         }
         else {
-            io = new ClimberIOPhoenix6();
+            io = new ClimberIO(){};
         }
     };
 

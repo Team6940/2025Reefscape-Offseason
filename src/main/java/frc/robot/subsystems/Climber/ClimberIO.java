@@ -3,13 +3,13 @@ package frc.robot.subsystems.Climber;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface ClimberIO {
-    public void setRotation(double rotation);
+    default public void setRotation(double rotation){}
 
-    public void resetRotation(double rotation);
+    default public void resetRotation(double rotation){}
 
     default public void zeroRotation() {
         resetRotation(0.);
-    };
+    }
 
     //default public void setLockRPS(double rps){}
 
@@ -31,5 +31,5 @@ public interface ClimberIO {
         // public double ClimberVelocity;
     }
 
-    public void updateInputs(ClimberIOInputs inputs);
+    default public void updateInputs(ClimberIOInputs inputs){}
 }

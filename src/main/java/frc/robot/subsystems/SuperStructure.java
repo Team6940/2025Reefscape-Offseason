@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
+import org.ironmaple.simulation.SimulatedArena;
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -9,17 +11,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.*;
 import frc.robot.Library.MUtils;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
+import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
 import frc.robot.commands.CoralCommands.ReversedCoralHybridScoring;
+import frc.robot.commands.CoralCommands.ScoreL1;
 import frc.robot.commands.CoralCommands.NewCoralHybridScoring;
 import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
+import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 // import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
 import frc.robot.commands.AlgaeCommands.AlgaeManualIntake;
+import frc.robot.commands.AlgaeCommands.AlgaeManualScoring;
 import frc.robot.commands.Initialization;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -54,6 +60,7 @@ public class SuperStructure extends SubsystemBase {
     /** Subsystems */
     private CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     private IntakerSubsystem intaker = IntakerSubsystem.getInstance();
+    private GrArmSubsystem grArm = GrArmSubsystem.getInstance();
 
     /** Variables */
     private int m_targetReefLevelIndex = 4;
@@ -200,6 +207,13 @@ public class SuperStructure extends SubsystemBase {
     // already in STOW mode,
     // it should go directly to the scoring point despite its facing.
 
+    public Command getCoralL1ScoreCommand(){
+        if(robotStatus == RobotStatus.HOLDING_CORAL){
+            return new ScoreL1().andThen(()->robotStatus=RobotStatus.IDLE);
+        }
+        else return null;
+    }
+
     public Command getHyrbidCoralScoreCommand(Button executionButton) {
         if (robotStatus == RobotStatus.HOLDING_CORAL) {
             if (scoreMode == ScoreMode.STOW) {
@@ -223,10 +237,38 @@ public class SuperStructure extends SubsystemBase {
         } else
             return null;
     }
-    public Command getManualAlgaeIntakeCommand()
-    {
-        return new AlgaeManualIntake(chassis.generateAlgaeIntakeIndex(),Button.kA);
+
+    public Command getNewCoralAlignSequenceCommand(Button toggleButton) {
+        if (robotStatus == RobotStatus.IDLE) {
+            return new NewCoralAlignSequence(toggleButton).andThen(() -> robotStatus = RobotStatus.HOLDING_CORAL);
+        } else
+            return null;
     }
+
+    public Command getToggleIntakeCommand() {
+        if (robotStatus == RobotStatus.IDLE) {
+            return new ToggleIntake(grArm, intaker);
+        } else
+            return null;
+    }
+
+    public Command getManualAlgaeIntakeCommand() {
+        if (robotStatus == RobotStatus.IDLE) {
+            return new AlgaeManualIntake(chassis.generateAlgaeIntakeIndex(), Button.kA)
+                    .andThen(() -> robotStatus = RobotStatus.HOLDING_ALGAE);
+        } else
+            return null;
+    }
+
+
+    public Command getManualAlgaeScoreCommand() {
+        if (robotStatus == RobotStatus.HOLDING_ALGAE){
+            return new AlgaeManualScoring(Button.kY).andThen(()->robotStatus= RobotStatus.IDLE);
+        }
+        else return null;
+    }
+
+
     public Command getHybridAlgaeScoreCommand(Button triggeringButton, Button executionButton) {
         if (robotStatus == RobotStatus.HOLDING_ALGAE) {
             return new AlgaeHybridScoring(triggeringButton, executionButton)
@@ -258,8 +300,13 @@ public class SuperStructure extends SubsystemBase {
 
     @Override
     public void periodic() {
+        // Get the positions of the notes (both on the field and in the air)
+    //   Pose3d[] StackPoses = SimulatedArena.getInstance()
+    //         .getGamePiecesArrayByType("CoralAlgaeStacks");
+      // Publish to telemetry using AdvantageKit
+    //   Logger.recordOutput("FieldSimulation/CoralAlgaeStacksPositions", StackPoses);
 
-        maintainStatus();
+        // maintainStatus();
 
         // Add any periodic tasks here, such as updating telemetry or checking subsystem
         // states
@@ -335,16 +382,16 @@ public class SuperStructure extends SubsystemBase {
         SmartDashboard.putData("SuperStructure/generateAlgaeScorePose()", generatedAlgaeScorePoseField2d); // TODO
     }
 
-    private void maintainStatus() {
-        // if(isUnderCommand){
-        // return;
-        // }
-        // switch(robotStatus){
-        // case HOLDING_CORAL:
-        // setArmUp();
-        // setElevDown();
-        // break;
+    // private void maintainStatus() {
+    //     // if(isUnderCommand){
+    //     // return;
+    //     // }
+    //     // switch(robotStatus){
+    //     // case HOLDING_CORAL:
+    //     // setArmUp();
+    //     // setElevDown();
+    //     // break;
 
-        // }
-    }
+    //     // }
+    // }
 }
