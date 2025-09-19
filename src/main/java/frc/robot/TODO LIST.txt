@@ -13,3 +13,5 @@
 
     // TODO: Some Paths' contraints should be removed or modified to make the bot
     // run faster
+
+9.19: Getting started with git.
