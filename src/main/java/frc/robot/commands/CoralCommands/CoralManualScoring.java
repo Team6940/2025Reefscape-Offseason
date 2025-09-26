@@ -52,7 +52,7 @@ public class CoralManualScoring extends Command {
 
     @Override
     public void execute() {
-        chassis.driveFieldCentric(driverController, 1, 2);//this may needs tuning afterdays
+        chassis.driveFieldCentric(driverController, 0.3, 0.3);//this may needs tuning afterdays
         switch (state) {
             case AIMING:
                 elevator.setHeight(aimHeight);
@@ -63,14 +63,17 @@ public class CoralManualScoring extends Command {
                 break;
             case SCORING:
                 elevator.setHeight(scoreHeight);
-                arm.setPosition(aimAngle);
-                if (arm.isAtTargetPositon()) {
+                arm.setPosition(scoreAngle);
+                if (driverController.getButton(Button.kA)) {
                     state = ScoringState.DEPARTING;
+                }
+                if (!driverController.getButton(m_executionButton)) {
+                    state = ScoringState.AIMING;
                 }
                 break;
             case DEPARTING:
-                shooter.setRPS(aimAngle);
-                if (!driverController.getButton(m_executionButton)) {
+                shooter.setRPS(20.);
+                if (!driverController.getButton(Button.kA)) {
                     state = ScoringState.END;
                 }
             case END:

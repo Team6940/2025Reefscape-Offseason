@@ -36,7 +36,7 @@ public class ToggleIntake extends Command {
 
     @Override
     public void execute() {
-        if(driverController.getButton(Button.kRightTrigger)){
+        if(driverController.getButton(Button.kA)){
             intaker.setRPS(-20);
         }
         else{

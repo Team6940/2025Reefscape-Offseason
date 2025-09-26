@@ -170,7 +170,7 @@ public class Constants {
         public static final double kG = 0.66; // gravity
         public static final InvertedValue Inverted = InvertedValue.CounterClockwise_Positive;
         public static final double MaxVelocity = 1.6; // RPS
-        public static final double Acceleration = 1.3; // RPS^2
+        public static final double Acceleration = 2.4; // RPS^2
 
         public static final double MinDegs = -270.; // CCW Positive
         public static final double MaxDegs = -90.; 
@@ -266,13 +266,13 @@ public class Constants {
         public static final int leftMotorID = 15;
         public static final int rghtMotorID = 14;
 
-        public static final double kP = 10;
+        public static final double kP = 12;
         public static final double kI = 0;
         public static final double kD = 0.4;
         public static final double kS = 0.2;
         public static final double kV = 0.06;
         public static final double kG = 0.8;
-        public static final double Acceleration = 20.; // 102.
+        public static final double Acceleration = 40.; // 102.
         public static final double MaxVelocity = 15.; // 32.5
         public static final double MaxHeight = 1.;
         public static final double MinHeight = -0.28;
