@@ -124,7 +124,7 @@ public class NewCoralHybridScoring extends Command {
         arm.setPosition(aimAngle);
         if (
             // arm.isAtTargetPositon() && chassis.isAtTargetPose() && elevator.isAtTargetHeight()
-            driverController.getButton(Button.kLeftTrigger)
+            driverController.getButton(m_executionButton)
         ) 
         {
             state = ScoringState.SCORING;
@@ -137,7 +137,7 @@ public class NewCoralHybridScoring extends Command {
         if(m_targetReefLevelIndex>=2){
         arm.setPosition(scoreAngle);
         elevator.setHeight(scoreHeight);
-        if (arm.isAtTargetPositon() && elevator.isAtTargetHeight()) {
+        if (arm.isAtTargetPositon() && elevator.isAtTargetHeight() && driverController.getButton(Button.kA)) {
             SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING complete, moving to DEPARTING");
             state = ScoringState.DEPARTING;
             Transform2d retreatTransform2d = new Transform2d(FieldConstants.CoralScoreRetreatDistance, 0, Rotation2d.kZero);
@@ -147,11 +147,10 @@ public class NewCoralHybridScoring extends Command {
         } else {
             SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING in progress");
         }}
-        else
-        {
-            shooter.setRPS(ShooterConstants.CoralScoringRPS);
-        }
 
+        if(!driverController.getButton(m_executionButton)){
+            state = ScoringState.AIMING;
+        }
     }
 
     public void depart() {
