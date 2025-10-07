@@ -38,7 +38,7 @@ public class Constants {
         RPrepareScoreL1(0.2, -150.),
         RPrepareScoreL2(-0.28, -250),
         RPrepareScoreL3(-0.05, -250),
-        RPrepareScoreL4(0.6, -250),
+        RPrepareScoreL4(0.7, -235.),
         IdleDown(0,0),
         
         IdleGrab(0,0),
@@ -196,8 +196,8 @@ public class Constants {
         public static final double kG = 0.19; // gravity
         public static final InvertedValue Inverted = InvertedValue.CounterClockwise_Positive;
         public static final double GrArmRatio = 4606./65.; // LCY: 50. :24. //GY: 20. : 10.////--->(8. / 56. * 20. / 56.) ^ (-1)
-        public static final double MaxVelocity = 4.; // RPS
-        public static final double Acceleration = 3.; // RPS^2
+        public static final double MaxVelocity = 3.; // RPS
+        public static final double Acceleration = 4.; // RPS^2
 
 
 

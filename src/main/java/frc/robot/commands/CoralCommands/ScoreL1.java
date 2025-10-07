@@ -58,7 +58,7 @@ public class ScoreL1 extends Command {
     public void execute() {
         elevator.setHeight(UpperStructureState.RPrepareScoreL1.elevatorHeightMeters);
         arm.setPosition(UpperStructureState.RPrepareScoreL1.armAngleDegs);
-        if(driverController.getButton(Button.kLeftTrigger))
+        if(driverController.getButton(Button.kRightTrigger))
             shooter.setRPS(ShooterConstants.CoralScoringRPS);
         else
             shooter.setRPS(0);
