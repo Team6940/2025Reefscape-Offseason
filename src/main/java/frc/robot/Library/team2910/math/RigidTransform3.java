@@ -1,7 +1,7 @@
-package frc.robot.Library.team2910.math;
+package frc.robot.library.team2910.math;
 
-import frc.robot.Library.team2910.math.Rotation3;
-import frc.robot.Library.team2910.math.Vector3;
+import frc.robot.library.team2910.math.Rotation3;
+import frc.robot.library.team2910.math.Vector3;
 
 /**
  * A transform that represents a translation and rotation in 3d space

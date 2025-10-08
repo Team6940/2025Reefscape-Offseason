@@ -8,7 +8,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import frc.robot.Constants.ClimberConstants;
+import frc.robot.constants.GeneralConstants.ClimberConstants;
 
 public class ClimberIOPhoenix6 implements ClimberIO{
     private static TalonFX liftMotor = new TalonFX(ClimberConstants.ClimberliftMotorID, "canivore"); //TODO change to canivore

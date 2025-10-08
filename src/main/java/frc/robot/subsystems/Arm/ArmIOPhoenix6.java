@@ -11,7 +11,8 @@ import edu.wpi.first.math.util.Units;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
-import frc.robot.Constants.ArmConstants;
+
+import frc.robot.constants.GeneralConstants.ArmConstants;
 import frc.robot.subsystems.Arm.ArmIO.ArmIOInputs.EncoderMagnetHealth;
 
 public class ArmIOPhoenix6 implements ArmIO {

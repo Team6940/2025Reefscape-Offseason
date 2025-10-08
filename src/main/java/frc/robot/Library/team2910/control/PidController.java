@@ -1,6 +1,6 @@
-package frc.robot.Library.team2910.control;
+package frc.robot.library.team2910.control;
 
-import frc.robot.Library.team2910.math.MathUtils;
+import frc.robot.library.team2910.math.MathUtils;
 
 public class PidController {
     private PidConstants constants;

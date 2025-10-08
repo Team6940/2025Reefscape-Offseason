@@ -6,7 +6,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.constants.GeneralConstants.ShooterConstants;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
@@ -34,8 +34,7 @@ public class ShooterSubsystem extends SubsystemBase {
             io = new ShooterIOPhoenix6();
             // io = new ShooterIOEmpty();
         } else {
-            // TODO: Implement simulation code here
-            io = new ShooterIO(){};
+            io = new ShooterIOEmpty(); //TODO: simulation
         }
     }
 

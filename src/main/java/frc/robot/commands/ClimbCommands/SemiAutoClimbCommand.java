@@ -6,16 +6,16 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.FieldConstants;
-import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.constants.GeneralConstants.ArmConstants;
+import frc.robot.constants.GeneralConstants.ClimberConstants;
+import frc.robot.constants.GeneralConstants.DriveConstants;
+import frc.robot.constants.GeneralConstants.FieldConstants;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Climber.ClimberSubsystem;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
-import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 
 public class SemiAutoClimbCommand extends Command{
 

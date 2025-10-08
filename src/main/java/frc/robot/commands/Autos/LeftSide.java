@@ -9,11 +9,10 @@ import frc.robot.commands.AutoPreparation;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
 import frc.robot.commands.CoralCommands.CoralHybridScoring;
-// import frc.robot.commands.CoralCommands.HybridScoring;
-import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 // import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 // import frc.robot.subsystems.Shooter.ShooterSubsystem;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 
 public class LeftSide extends SequentialCommandGroup {
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();

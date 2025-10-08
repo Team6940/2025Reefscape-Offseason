@@ -5,9 +5,9 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.Library.MUtils;
 import frc.robot.commands.Rumble;
+import frc.robot.constants.GeneralConstants.ClimberConstants;
+import frc.robot.library.MUtils;
 
 public class ClimberSubsystem extends SubsystemBase{
     public static ClimberSubsystem m_Instance = null;
@@ -27,7 +27,7 @@ public class ClimberSubsystem extends SubsystemBase{
             io = new ClimberIOPhoenix6();
         }
         else {
-            io = new ClimberIO(){};
+            io = new ClimberIOEmpty(); //TODO: Implement ClimberIOSim
         }
     };
 

@@ -6,7 +6,7 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.constants.GeneralConstants.ShooterConstants;
 
 public class ShooterIOPhoenix6 implements ShooterIO{
     private static final TalonFX motor = new TalonFX(ShooterConstants.ShooterMotorID, "canivore");

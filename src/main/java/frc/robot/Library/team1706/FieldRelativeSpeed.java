@@ -1,4 +1,4 @@
-package frc.robot.Library.team1706;
+package frc.robot.library.team1706;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;

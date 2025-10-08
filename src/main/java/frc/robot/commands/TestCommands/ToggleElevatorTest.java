@@ -1,6 +1,6 @@
 package frc.robot.commands.TestCommands;
 
-import frc.robot.Constants.ElevatorConstants;
+import frc.robot.constants.GeneralConstants.ElevatorConstants;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;

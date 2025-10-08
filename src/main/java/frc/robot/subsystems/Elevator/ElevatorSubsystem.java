@@ -2,12 +2,12 @@ package frc.robot.subsystems.Elevator;
 
 import org.littletonrobotics.junction.Logger;
 
-import frc.robot.Constants.*;
-import frc.robot.Library.MUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import frc.robot.Robot;
+import frc.robot.constants.GeneralConstants.*;
+import frc.robot.library.MUtils;
 
 public class ElevatorSubsystem extends SubsystemBase{
     public static ElevatorSubsystem m_Instance = null;
@@ -26,7 +26,7 @@ public class ElevatorSubsystem extends SubsystemBase{
             io = new ElevatorIOPhoenix6();
         }
         else {
-            io = new ElevatorIO(){};
+            io = new ElevatorIOEmpty(); //TODO: change to simulation class
     }
     }
 

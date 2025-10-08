@@ -8,16 +8,16 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.FieldConstants;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.constants.GeneralConstants;
+import frc.robot.constants.GeneralConstants.ElevatorConstants;
+import frc.robot.constants.GeneralConstants.FieldConstants;
+import frc.robot.constants.GeneralConstants.ShooterConstants;
+import frc.robot.containers.RobotContainer;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
-import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 
@@ -32,8 +32,8 @@ public class AlgaeHybridScoring extends Command {
     
 
     Pose2d currentPose;
-    private double m_targetBargeLevel = Constants.FieldConstants.BargeHeight;
-    private double m_targetBargeAngle = Constants.FieldConstants.BargeAngle;
+    private double m_targetBargeLevel = GeneralConstants.FieldConstants.BargeHeight;
+    private double m_targetBargeAngle = GeneralConstants.FieldConstants.BargeAngle;
 
     private Button m_executionButton;
     private Button m_triggeringButton;

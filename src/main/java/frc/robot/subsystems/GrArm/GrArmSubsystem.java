@@ -5,11 +5,11 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.Library.MUtils;
-import frc.robot.Constants.ArmConstants;
+import frc.robot.constants.GeneralConstants.ArmConstants;
+import frc.robot.constants.GeneralConstants.GrArmConstants;
+import frc.robot.library.MUtils;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
-import frc.robot.Constants.GrArmConstants;
 
 public class GrArmSubsystem extends SubsystemBase {
 
@@ -28,8 +28,7 @@ public class GrArmSubsystem extends SubsystemBase {
         if (Robot.isReal()) {
             io = new GrArmIOPhoenix6();
         } else {
-            // TODO: Implement simulation code here
-            io = new GrArmIO(){};
+            io = new GrArmIOEmpty(); //TODO: change to sim
         }
     }
 

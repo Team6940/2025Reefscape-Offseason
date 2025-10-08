@@ -1,8 +1,8 @@
 package frc.robot.commands.TestCommands;
 
+import frc.robot.constants.GeneralConstants.ArmConstants;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ToggleArmTest extends Command {

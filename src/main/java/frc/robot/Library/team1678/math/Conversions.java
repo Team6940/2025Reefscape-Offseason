@@ -1,4 +1,4 @@
-package frc.robot.Library.team1678.math;
+package frc.robot.library.team1678.math;
 
 public class Conversions {
 

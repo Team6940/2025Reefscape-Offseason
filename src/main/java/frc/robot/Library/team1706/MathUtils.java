@@ -1,7 +1,7 @@
-package frc.robot.Library.team1706;
+package frc.robot.library.team1706;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import frc.robot.Constants.*;
+import frc.robot.constants.GeneralConstants.*;
 
 /**
  * This file is created to hold any particularly useful math utilies which may

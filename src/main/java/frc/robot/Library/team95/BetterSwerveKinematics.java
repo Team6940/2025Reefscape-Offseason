@@ -1,4 +1,4 @@
-package frc.robot.Library.team95;
+package frc.robot.library.team95;
 
 import edu.wpi.first.math.MathSharedStore;
 import edu.wpi.first.math.MathUsageId;

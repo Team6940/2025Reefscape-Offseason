@@ -15,9 +15,9 @@ import frc.robot.commands.GroundIntakeCommands.AutoIntakeCoral;
 // import frc.robot.commands.IntakeCommands.CentreCoralPos;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake; //TODO
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
-import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.commands.CoralCommands.NewCoralHybridScoring;
 
 public class Up4Corals extends SequentialCommandGroup {

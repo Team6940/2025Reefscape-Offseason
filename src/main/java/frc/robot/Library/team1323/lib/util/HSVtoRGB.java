@@ -1,4 +1,4 @@
-package frc.robot.Library.team1323.lib.util;
+package frc.robot.library.team1323.lib.util;
 
 public class HSVtoRGB {
 /**

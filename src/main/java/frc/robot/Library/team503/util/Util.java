@@ -1,4 +1,4 @@
-package frc.robot.Library.team503.util;
+package frc.robot.library.team503.util;
 import edu.wpi.first.math.geometry.Translation2d;
 import java.util.List;
 

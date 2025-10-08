@@ -1,9 +1,9 @@
-package frc.robot.Library.team2910.math;
+package frc.robot.library.team2910.math;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import frc.robot.Library.team2910.util.Interpolable;
+import frc.robot.library.team2910.util.Interpolable;
 
 /**
  * A rigid transform is a type of transformation that represents both a translation and a rotation.

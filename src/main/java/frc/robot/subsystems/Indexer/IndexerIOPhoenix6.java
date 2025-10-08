@@ -7,7 +7,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import frc.robot.Constants.IndexerConstants;
+import frc.robot.constants.GeneralConstants.IndexerConstants;
 
 public class IndexerIOPhoenix6 implements IndexerIO {
     private static final TalonFX leftMotor = new TalonFX(IndexerConstants.IndexerLeftMotorID, "canivore");

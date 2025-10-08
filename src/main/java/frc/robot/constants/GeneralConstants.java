@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.constants;
 
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -12,11 +12,11 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
-import frc.robot.Library.MUtils.SegmentOnTheField;
+import frc.robot.library.MUtils.SegmentOnTheField;
 
 import java.awt.geom.Point2D;
 
-public class Constants {
+public class GeneralConstants {
 
     public static class GlobalConstants {
         public final static float INF = (float) Math.pow(10, 6); // this was defined for the 1690 lib

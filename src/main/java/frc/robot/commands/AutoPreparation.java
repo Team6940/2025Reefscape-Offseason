@@ -3,8 +3,8 @@ package frc.robot.commands;
 import java.net.http.HttpClient.Redirect;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.FieldConstants;
+import frc.robot.constants.GeneralConstants.ElevatorConstants;
+import frc.robot.constants.GeneralConstants.FieldConstants;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 

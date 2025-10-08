@@ -1,22 +1,22 @@
 package frc.robot.commands;
 
-import frc.robot.Constants.*;
-import frc.robot.RobotContainer;
+import frc.robot.constants.GeneralConstants;
+import frc.robot.constants.GeneralConstants.*;
+import frc.robot.containers.RobotContainer;
 
 import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Climber.ClimberSubsystem;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
-import frc.robot.subsystems.ImprovedCommandXboxController;
-import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 
 public class Initialization extends Command {
     // This command is used to initialize everything in the robot when sth is wrong.
@@ -69,7 +69,7 @@ public class Initialization extends Command {
         elevator.setHeight(ElevatorConstants.IdleHeight);
         arm.reset();
         shooter.setRPS(0);
-        grArm.setPosition(Constants.GrArmConstants.RetractedPosition);
+        grArm.setPosition(GeneralConstants.GrArmConstants.RetractedPosition);
         intaker.setRPS(0);
         indexer.setRPS(0);
     }

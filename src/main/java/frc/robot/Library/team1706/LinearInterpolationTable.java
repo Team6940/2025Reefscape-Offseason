@@ -1,4 +1,4 @@
-package frc.robot.Library.team1706;
+package frc.robot.library.team1706;
 
 import java.awt.geom.Point2D;
 

@@ -1,4 +1,4 @@
-package frc.robot.Library.team503.util;
+package frc.robot.library.team503.util;
 
 /**
  * A Double that can be interpolated using the InterpolatingTreeMap.

@@ -14,19 +14,19 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.FieldConstants;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.UpperStructureState;
-import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.constants.GeneralConstants;
+import frc.robot.constants.TunerConstants;
+import frc.robot.constants.GeneralConstants.ArmConstants;
+import frc.robot.constants.GeneralConstants.ElevatorConstants;
+import frc.robot.constants.GeneralConstants.FieldConstants;
+import frc.robot.constants.GeneralConstants.ShooterConstants;
+import frc.robot.constants.GeneralConstants.UpperStructureState;
+import frc.robot.containers.RobotContainer;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Chassis.TunerConstants;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
-import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.SuperStructure.Selection;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
@@ -81,17 +81,17 @@ public class NewCoralHybridScoring extends Command {
         // if(m_targetReefLevelIndex<=1)
         if(m_isReversed)
         {
-            aimHeight = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
-            aimAngle = Constants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).armAngleDegs;
-            scoreHeight=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
-            scoreAngle=Constants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).armAngleDegs;
+            aimHeight = GeneralConstants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
+            aimAngle = GeneralConstants.UpperStructureState.valueOf("RPrepareScoreL"+m_targetReefLevelIndex).armAngleDegs;
+            scoreHeight=GeneralConstants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
+            scoreAngle=GeneralConstants.UpperStructureState.valueOf("RScoreL"+m_targetReefLevelIndex).armAngleDegs;
             targetPose = chassis.generateReefPoseReversed(m_targetReefPoseIndex,m_targetReefLevelIndex);
         }
         else{
-            aimHeight = Constants.UpperStructureState.valueOf("PrepareScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
-            aimAngle = Constants.UpperStructureState.valueOf("PrepareScoreL"+m_targetReefLevelIndex).armAngleDegs;
-            scoreHeight=Constants.UpperStructureState.valueOf("ScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
-            scoreAngle=Constants.UpperStructureState.valueOf("ScoreL"+m_targetReefLevelIndex).armAngleDegs;
+            aimHeight = GeneralConstants.UpperStructureState.valueOf("PrepareScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
+            aimAngle = GeneralConstants.UpperStructureState.valueOf("PrepareScoreL"+m_targetReefLevelIndex).armAngleDegs;
+            scoreHeight=GeneralConstants.UpperStructureState.valueOf("ScoreL"+m_targetReefLevelIndex).elevatorHeightMeters;
+            scoreAngle=GeneralConstants.UpperStructureState.valueOf("ScoreL"+m_targetReefLevelIndex).armAngleDegs;
             targetPose = chassis.generateReefPose(m_targetReefPoseIndex,m_targetReefLevelIndex);
 
         }

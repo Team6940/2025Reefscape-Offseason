@@ -1,13 +1,13 @@
 package frc.robot.commands.GroundIntakeCommands;
 
-import frc.robot.Constants.GrArmConstants;
-import frc.robot.Constants.IntakerConstants;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
-import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
-import frc.robot.subsystems.ImprovedCommandXboxController;
-import frc.robot.RobotContainer;
+import frc.robot.constants.GeneralConstants.GrArmConstants;
+import frc.robot.constants.GeneralConstants.IntakerConstants;
+import frc.robot.containers.RobotContainer;
 
 import java.util.function.BooleanSupplier;
 

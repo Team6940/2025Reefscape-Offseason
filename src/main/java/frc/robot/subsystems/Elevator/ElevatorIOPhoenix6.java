@@ -9,7 +9,7 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import frc.robot.Constants.ElevatorConstants;
+import frc.robot.constants.GeneralConstants.ElevatorConstants;
 
 public class ElevatorIOPhoenix6 implements ElevatorIO{
     private static TalonFX leftMotor, rghtMotor;

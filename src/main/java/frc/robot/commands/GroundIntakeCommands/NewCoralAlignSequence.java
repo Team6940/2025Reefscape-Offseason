@@ -3,16 +3,16 @@ package frc.robot.commands.GroundIntakeCommands;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
-import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.SuperStructure;
-import frc.robot.subsystems.ImprovedCommandXboxController.Button;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.FieldConstants;
-import frc.robot.Constants.IndexerConstants;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.RobotContainer;
+import frc.robot.constants.GeneralConstants.ArmConstants;
+import frc.robot.constants.GeneralConstants.ElevatorConstants;
+import frc.robot.constants.GeneralConstants.FieldConstants;
+import frc.robot.constants.GeneralConstants.IndexerConstants;
+import frc.robot.constants.GeneralConstants.ShooterConstants;
+import frc.robot.containers.RobotContainer;
 import frc.robot.subsystems.Arm.ArmSubsystem;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem.IndexerState;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -80,12 +80,12 @@ public class NewCoralAlignSequence extends Command {
         if (!driverController.getButton(Button.kRightTrigger)) {
             indexer.setLeftRPS(-4.);
             indexer.setRghtRPS(-8.);
-        } else
+        } else{
             indexer.setLeftRPS(4.);
             indexer.setRghtRPS(15.);
+        }
         if ((indexer.getIndexerState() == IndexerState.READY ||
-                driverController.getButton(m_toggleButton)) && arm.isAtTargetPositon()) {
-            // if (driverController.getButton(m_toggleButton)) {
+                driverController.getButton(m_toggleButton))) {
 
             state = IntakeState.DROPPING;
         }

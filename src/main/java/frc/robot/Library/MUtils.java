@@ -1,4 +1,4 @@
-package frc.robot.Library;
+package frc.robot.library;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Pose2d;

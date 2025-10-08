@@ -1,12 +1,12 @@
-package frc.robot.Library.team2910.math;
+package frc.robot.library.team2910.math;
 
-import static frc.robot.Library.team2910.math.MathUtils.epsilonEquals;
+import static frc.robot.library.team2910.math.MathUtils.epsilonEquals;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
-import frc.robot.Library.team2910.util.Interpolable;
+import frc.robot.library.team2910.util.Interpolable;
 
 /**
  * A vector representing a point in 2d space.

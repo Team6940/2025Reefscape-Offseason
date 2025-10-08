@@ -5,8 +5,8 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.Library.MUtils;
-import frc.robot.Constants.ArmConstants;
+import frc.robot.constants.GeneralConstants.ArmConstants;
+import frc.robot.library.MUtils;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ArmSubsystem extends SubsystemBase {
@@ -26,8 +26,7 @@ public class ArmSubsystem extends SubsystemBase {
         if (Robot.isReal()) {
             io = new ArmIOPhoenix6();
         } else {
-            // TODO: Implement simulation code here
-            io = new ArmIO(){};
+            io = new ArmIOEmpty();  //TODO: simulation
         }
     }
 

@@ -1,4 +1,4 @@
-package frc.robot.Library.team2910.math;
+package frc.robot.library.team2910.math;
 
 import java.text.DecimalFormat;
 

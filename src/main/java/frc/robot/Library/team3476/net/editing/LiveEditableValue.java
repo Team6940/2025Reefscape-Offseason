@@ -1,4 +1,4 @@
-package frc.robot.Library.team3476.net.editing;
+package frc.robot.library.team3476.net.editing;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableEvent;

@@ -6,8 +6,10 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.signals.GravityTypeValue;
-import frc.robot.Constants.GrArmConstants;
+
 import edu.wpi.first.math.util.Units;
+import frc.robot.constants.GeneralConstants.GrArmConstants;
+
 import com.ctre.phoenix6.hardware.core.CoreTalonFX;
 
 public class GrArmIOPhoenix6 implements GrArmIO {

@@ -1,13 +1,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.GrArmConstants;
-import frc.robot.Constants.UpperStructureState;
-import frc.robot.subsystems.ImprovedCommandXboxController.Button;
+import frc.robot.constants.GeneralConstants;
+import frc.robot.constants.GeneralConstants.ArmConstants;
+import frc.robot.constants.GeneralConstants.ElevatorConstants;
+import frc.robot.constants.GeneralConstants.GrArmConstants;
+import frc.robot.constants.GeneralConstants.UpperStructureState;
 import frc.robot.subsystems.Arm.ArmSubsystem;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
 

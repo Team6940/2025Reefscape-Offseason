@@ -1,5 +1,6 @@
 package frc.robot.subsystems.Intaker;
 
+import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.swerve.SwerveRequest.Idle;
@@ -7,9 +8,9 @@ import com.ctre.phoenix6.swerve.SwerveRequest.Idle;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.constants.GeneralConstants.IntakerConstants;
+import frc.robot.constants.GeneralConstants.ShooterConstants;
 import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
-import frc.robot.Constants.IntakerConstants;
-import frc.robot.Constants.ShooterConstants;
 
 public class IntakerSubsystem extends SubsystemBase{
     public static IntakerSubsystem m_instance;
@@ -35,8 +36,7 @@ public class IntakerSubsystem extends SubsystemBase{
             io = new IntakerIOPhoenix6();
         }
         else{
-            //TODO: Implement simulation code here
-            io = new IntakerIO(){};
+            io = new IntakerIOSim();
         }
     }
 
@@ -88,7 +88,7 @@ public class IntakerSubsystem extends SubsystemBase{
         io.updateInputs(inputs);
         Logger.processInputs("Intaker", inputs);
         Logger.recordOutput("Intaker/TargetRPS", targetRPS);
-        Logger.recordOutput("Intaker/IsAtTargetRPS", isAtTargetRPS());
+        // Logger.recordOutput("Intaker/IsAtTargetRPS", isAtTargetRPS());
     }
 
     private void processDashboard(){

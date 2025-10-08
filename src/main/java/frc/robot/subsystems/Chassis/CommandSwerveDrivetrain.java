@@ -26,23 +26,27 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.RobotController;
+// import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.subsystems.Chassis.TunerConstants.TunerSwerveDrivetrain;
+import frc.robot.subsystems.Controller.ImprovedCommandXboxController;
 // import frc.robot.subsystems.Vision.ImprovedLL;
 import frc.robot.subsystems.Vision.LimelightHelpers;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.ImprovedCommandXboxController;
-import frc.robot.Constants.*;
-import frc.robot.Library.MUtils.SegmentOnTheField;
-import frc.robot.Library.team1706.MathUtils;
-import frc.robot.Library.MUtils;;
+import frc.robot.constants.TunerConstants;
+import frc.robot.constants.GeneralConstants.*;
+import frc.robot.constants.TunerConstants.TunerSwerveDrivetrain;
+import frc.robot.containers.RobotContainer;
+import frc.robot.library.MUtils;
+import frc.robot.library.MUtils.SegmentOnTheField;
+import frc.robot.library.team1706.MathUtils;
+import frc.robot.library.team5516.utils.simulation.MapleSimSwerveDrivetrain;;
 
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
@@ -170,13 +174,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public CommandSwerveDrivetrain(
             SwerveDrivetrainConstants drivetrainConstants,
             SwerveModuleConstants<?, ?, ?>... modules) {
-        super(drivetrainConstants, modules);
+        super(drivetrainConstants, MapleSimSwerveDrivetrain.regulateModuleConstantsForSimulation(modules));
         if (Utils.isSimulation()) {
             startSimThread();
         }
         configureAutoBuilder();
-        configureMoveToPose();
-    }
+        }
 
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
@@ -197,12 +200,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             SwerveDrivetrainConstants drivetrainConstants,
             double odometryUpdateFrequency,
             SwerveModuleConstants<?, ?, ?>... modules) {
-        super(drivetrainConstants, odometryUpdateFrequency, modules);
+        super(
+                drivetrainConstants,
+                odometryUpdateFrequency,
+                MapleSimSwerveDrivetrain.regulateModuleConstantsForSimulation(modules));
         if (Utils.isSimulation()) {
             startSimThread();
         }
         configureAutoBuilder();
-        configureMoveToPose();
     }
 
     /**
@@ -233,19 +238,22 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      * @param modules                   Constants for each specific module
      */
     public CommandSwerveDrivetrain(
-            SwerveDrivetrainConstants drivetrainConstants,
-            double odometryUpdateFrequency,
-            Matrix<N3, N1> odometryStandardDeviation,
-            Matrix<N3, N1> visionStandardDeviation,
-            SwerveModuleConstants<?, ?, ?>... modules) {
-        super(drivetrainConstants, odometryUpdateFrequency, odometryStandardDeviation, visionStandardDeviation,
-                modules);
-        if (Utils.isSimulation()) {
-            startSimThread();
-        }
-        configureAutoBuilder();
-        configureMoveToPose();
+        SwerveDrivetrainConstants drivetrainConstants,
+        double odometryUpdateFrequency,
+        Matrix<N3, N1> odometryStandardDeviation,
+        Matrix<N3, N1> visionStandardDeviation,
+        SwerveModuleConstants<?, ?, ?>... modules) {
+    super(
+            drivetrainConstants,
+            odometryUpdateFrequency,
+            odometryStandardDeviation,
+            visionStandardDeviation,
+            MapleSimSwerveDrivetrain.regulateModuleConstantsForSimulation(modules));
+    if (Utils.isSimulation()) {
+        startSimThread();
     }
+    configureAutoBuilder();
+}
 
     private void configureAutoBuilder() {
         try {
@@ -350,21 +358,37 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         updateOdometry();
     }
 
+    private MapleSimSwerveDrivetrain mapleSimSwerveDrivetrain = null;
     private void startSimThread() {
-        m_lastSimTime = Utils.getCurrentTimeSeconds();
-
-        /* Run simulation at a faster rate so PID gains behave more reasonably */
-        m_simNotifier = new Notifier(() -> {
-            final double currentTime = Utils.getCurrentTimeSeconds();
-            double deltaTime = currentTime - m_lastSimTime;
-            m_lastSimTime = currentTime;
-
-            /* use the measured time delta, get battery voltage from WPILib */
-            updateSimState(deltaTime, RobotController.getBatteryVoltage());
-        });
-        m_simNotifier.startPeriodic(kSimLoopPeriod);
+        mapleSimSwerveDrivetrain = new MapleSimSwerveDrivetrain(
+            Seconds.of(kSimLoopPeriod),
+            // TODO: modify the following constants according to your robot
+            Pounds.of(115), // robot weight
+            Inches.of(30), // bumper length
+            Inches.of(30), // bumper width
+            DCMotor.getKrakenX60(1), // drive motor type
+            DCMotor.getKrakenX60(1), // steer motor type
+            1.2, // wheel COF
+            getModuleLocations(),
+            getPigeon2(),
+            getModules(),
+            TunerConstants.FrontLeft,
+            TunerConstants.FrontRight,
+            TunerConstants.BackLeft,
+            TunerConstants.BackRight);
+    /* Run simulation at a faster rate so PID gains behave more reasonably */
+    m_simNotifier = new Notifier(mapleSimSwerveDrivetrain::update);
+    m_simNotifier.startPeriodic(kSimLoopPeriod);
     }
 
+    @Override
+    public void resetPose(Pose2d pose) {
+        if (this.mapleSimSwerveDrivetrain != null)
+            mapleSimSwerveDrivetrain.mapleSimDrive.setSimulationWorldPose(pose);
+        Timer.delay(0.05); // Wait for simulation to update
+        super.resetPose(pose);
+    }
+    
     public Pose2d getPose() {
         return this.getState().Pose;
     }
@@ -404,28 +428,27 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 0, 0);
         LimelightHelpers.PoseEstimate mt2 = LimelightHelpers
                 .getBotPoseEstimate_wpiBlue_MegaTag2(RobotContainer.m_Limelight);
-        // ImprovedLL.MT2stddevs devs = ImprovedLL.getmt2Devs();
-        // ImprovedLL.mt2stdDev stdDev =
-        // ImprovedLL.getmt2Dev(RobotContainer.m_Limelight);
         if (mt2 == null) {
             DriverStation.reportWarning(RobotContainer.m_Limelight + " Diconnected!", false);
             return;
         }
 
         if (Math.abs(getRobotRelativeSpeeds().omegaRadiansPerSecond) <= 4 * Math.PI
-                && mt2.tagCount > 0
-                && mt2.avgTagDist < 4
+                && mt2.tagCount > 0 // ll fetch over one target
+                && mt2.avgTagDist < 4 // within 4 meters
                 && Math.hypot(getRobotRelativeSpeeds().vxMetersPerSecond,
-                        getRobotRelativeSpeeds().vyMetersPerSecond) < 2) {
+                        getRobotRelativeSpeeds().vyMetersPerSecond) < 2) {// not moving too fast
+            // Use vision measurement
             addVisionMeasurement(mt2.pose,
                     Utils.fpgaToCurrentTime(mt2.timestampSeconds),
                     VecBuilder.fill(PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea),
                             PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea), 100000000)
-            // VecBuilder.fill(0.00001,0.00001, 100000000.)
-            // VecBuilder.fill(devs.xdev, devs.ydev, 100000000.)
-            );
+            );// with very high rotation certainty
 
-            SmartDashboard.putNumber("tA", mt2.avgTagArea);
+            // Logger.recordOutput("Chassis/VisionPose", mt2.pose);
+
+            SmartDashboard.putNumber("tA",
+                                        mt2.avgTagArea);
             SmartDashboard.putNumber("Dev",
                     PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
         }

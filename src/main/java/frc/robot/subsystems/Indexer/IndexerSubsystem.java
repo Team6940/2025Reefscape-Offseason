@@ -5,7 +5,7 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.Constants.IndexerConstants;
+import frc.robot.constants.GeneralConstants.IndexerConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
     public static IndexerSubsystem m_instance;
@@ -37,8 +37,7 @@ public class IndexerSubsystem extends SubsystemBase {
         if (Robot.isReal()) {
             io = new IndexerIOPhoenix6();
         } else {
-            // TODO: Implement simulation code here
-            io = new IndexerIO(){};
+            io = new IndexerIOEmpty(); // TODO: simulation
         }
     }
 
