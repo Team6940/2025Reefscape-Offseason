@@ -32,11 +32,11 @@ public class Constants {
         PrepareScoreL3(-0.05, -290),
         PrepareScoreL4(0.6, -290),
         RScoreL1(0.15, -135.),
-        RScoreL2(-0.28, -210),
+        RScoreL2(-0.22, -195),
         RScoreL3(-0.05, -207),
         RScoreL4(0.6, -190),
         RPrepareScoreL1(0.2, -150.),
-        RPrepareScoreL2(-0.28, -250),
+        RPrepareScoreL2(-0.22, -250),
         RPrepareScoreL3(-0.05, -250),
         RPrepareScoreL4(0.7, -235.),
         IdleDown(0,0),
@@ -136,7 +136,7 @@ public class Constants {
 
         public static final double CoralIntakingRPS = -60.;
 
-        public static final double CoralScoringRPS = 20.;
+        public static final double CoralScoringRPS = 23.;
 
         public static final double AlgaeIntakingRPS = -120.;
 
@@ -247,8 +247,8 @@ public class Constants {
         public static final double moveToPoseRotationkI = 0.; // TODO
         public static final double moveToPoseRotationkD = 0.; // TODO
 
-        public static final double moveToPoseRotationToleranceRadians = Units.degreesToRadians(3.);
-        public static final double moveToPoseTranslationToleranceMeters = 0.04;
+        public static final double moveToPoseRotationToleranceRadians = Units.degreesToRadians(2.);
+        public static final double moveToPoseTranslationToleranceMeters = 0.02;
 
         public static final double maxMoveToSpeed = 3.8;
         public static final double maxMoveToAngularVelocity = Units.degreesToRadians(230.);
@@ -328,7 +328,7 @@ public class Constants {
         public static final double L2Fix=0.07;
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
         public static final Translation2d DReefTranslation12 = new Translation2d(2.3, 0.135);
-        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.34, 0.145);
+        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.34, 0.16);
         public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
         public static final double CoralScoreRetreatDistance = 0.3; // meters, this is the distance the robot will push
                                                                     // forward after

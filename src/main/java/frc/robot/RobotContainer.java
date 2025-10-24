@@ -29,6 +29,7 @@ import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.SuperStructure;
 import frc.robot.subsystems.SuperStructure.RobotStatus;
 import frc.robot.subsystems.SuperStructure.Selection;
+//import frc.robot.subsystems.Vision.VisionSubsystem;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Chassis.TunerConstants;
@@ -73,6 +74,7 @@ public class RobotContainer {
     public static final IntakerSubsystem intaker = IntakerSubsystem.getInstance();
     public static final IndexerSubsystem indexer = IndexerSubsystem.getInstance();
     public static final ClimberSubsystem climber = ClimberSubsystem.getInstance();
+    //public static final VisionSubsystem vision = VisionSubsystem.getInstance();
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -286,7 +288,8 @@ public class RobotContainer {
 
                     driverController.povDown().onTrue(superStructure.runOnce(() -> superStructure.changeCoralMode()));
 
-
+                    driverController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
+                    driverController.povRight().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
 
 
 
