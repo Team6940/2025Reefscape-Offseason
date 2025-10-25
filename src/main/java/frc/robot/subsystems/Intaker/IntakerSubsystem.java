@@ -1,16 +1,16 @@
 package frc.robot.subsystems.Intaker;
 
-import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.littletonrobotics.junction.Logger;
-
-import com.ctre.phoenix6.swerve.SwerveRequest.Idle;
-
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.constants.GeneralConstants.IntakerConstants;
-import frc.robot.constants.GeneralConstants.ShooterConstants;
-import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
+import frc.robot.constants.SimConstants.IntakerSimConstants;
+import frc.robot.util.Simulation.ComponentPublisher;
 
 public class IntakerSubsystem extends SubsystemBase{
     public static IntakerSubsystem m_instance;
@@ -18,48 +18,23 @@ public class IntakerSubsystem extends SubsystemBase{
         return m_instance == null? m_instance = new IntakerSubsystem() : m_instance;
     }
 
-    // private IntakerState state;
-
-    // public enum IntakerState {
-    //     IDLE,
-    //     READY,
-    //     GRABBING
-    // }
-
     private final IntakerIO io;
     private final IntakerIOInputsAutoLogged inputs = new IntakerIOInputsAutoLogged();
 
     private double targetRPS = 0.;
 
+    private ComponentPublisher m_componentPublisher;
+    private double targetAngleDegForSim = 0.0;   //
+    private double currentAngleDegForSim = 0.0;  //
+
     public IntakerSubsystem(){
+        this.m_componentPublisher = new ComponentPublisher("IntakerPose");
         if(Robot.isReal()){
             io = new IntakerIOPhoenix6();
-        }
-        else{
+       } else{
             io = new IntakerIOSim();
         }
     }
-
-    // public IntakerState getIntakerState() {
-    //     return state;
-    // }
-
-    // public boolean isReady(){
-    //     return getIntakerState() == IntakerState.READY;
-    // }
-
-    //     public void intakerStateUpdate(){
-    //     double current = inputs.motorCurrentAmps;
-    //     if(current<IntakerConstants.IntakerFreeSpinCurrentThreshold){
-    //         state=IntakerState.IDLE;
-    //     }
-    //     else if(current<IntakerConstants.IntakerHoldingCurrentThreshold){
-    //         state=IntakerState.READY;
-    //     }
-    //     else{
-    //         state=IntakerState.GRABBING;
-    //     }
-    // }
 
     public void setRPS(double rps){
         targetRPS = rps;
@@ -78,21 +53,73 @@ public class IntakerSubsystem extends SubsystemBase{
         io.setVoltage(voltage);
     }
 
+    // FOR SIM
+    public void startIntake() {
+        if (io instanceof IntakerIOSim sim) {
+            sim.setRunningState(true);
+        } 
+        targetAngleDegForSim = -90.0;
+        // else {
+        //     setRPS(IntakerConstants.IntakerIntakingRPS);
+        // }
+    }
+    public void stopIntake() {
+        if (io instanceof IntakerIOSim sim) {
+            sim.setRunningState(false);
+        }
+        targetAngleDegForSim = 0.0;
+        // setRPS(0.0);
+    }
+    public boolean hasCoral() {
+        return inputs.hasGamePiece;
+    }
+
+    public boolean ejectCoral() {
+        if (io instanceof IntakerIOSim sim) {
+            return sim.ejectCoral();
+        }
+        return false; // TODO
+    }
+
     @Override
     public void periodic() {
         processLog();
         processDashboard();
+
+        double step = 10.0; // maximum angle change per step (degrees)
+        if (Math.abs(targetAngleDegForSim - currentAngleDegForSim) > step) {
+            currentAngleDegForSim += Math.signum(targetAngleDegForSim - currentAngleDegForSim) * step;
+        } else {
+            currentAngleDegForSim = targetAngleDegForSim;
+        }
+        double angleRad = Math.toRadians(currentAngleDegForSim);
+        Pose3d pose = new Pose3d(
+            new Translation3d(
+                IntakerSimConstants.OFFSET_X,
+                IntakerSimConstants.OFFSET_Y,
+                IntakerSimConstants.OFFSET_Z
+            ),
+            new Rotation3d(
+                IntakerSimConstants.ROLL,
+                angleRad,
+                IntakerSimConstants.YAW
+            )
+        );
+        m_componentPublisher.setPose(pose);
     }
 
     public void processLog(){
         io.updateInputs(inputs);
         Logger.processInputs("Intaker", inputs);
         Logger.recordOutput("Intaker/TargetRPS", targetRPS);
-        // Logger.recordOutput("Intaker/IsAtTargetRPS", isAtTargetRPS());
+        Logger.recordOutput("Intaker/VelocityRPS", inputs.intakerVelocityRPS);
+        Logger.recordOutput("Intaker/HasGamePiece", inputs.hasGamePiece);
     }
 
     private void processDashboard(){
-        //TODO: Implement dashboard code here
+        SmartDashboard.putNumber("Intaker/TargetRPS", targetRPS);
+        SmartDashboard.putNumber("Intaker/VelocityRPS", inputs.intakerVelocityRPS);
+        SmartDashboard.putBoolean("Intaker/HasGamePiece", inputs.hasGamePiece);
     }
 
 }

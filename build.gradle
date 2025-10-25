@@ -114,6 +114,14 @@ dependencies {
     annotationProcessor "org.littletonrobotics.akit:akit-autolog:$akitJson.version"
 }
 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.github.kwhat:jnativehook:2.2.2'
+}
+
 // sourceSets {
 //     main {
 //         java.srcDirs += [ 'build/generated/sources/annotationProcessor/java/main/frc/robot/subsystems' ]

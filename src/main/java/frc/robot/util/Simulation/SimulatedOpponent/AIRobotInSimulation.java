@@ -1,4 +1,4 @@
-package frc.robot.util.Simulation.SimulateOpponent;
+package frc.robot.util.Simulation.SimulatedOpponent;
 // package frc.robot.subsystems.Simulation.SimulateOpponent;
 
 // import org.ironmaple.simulation.SimulatedArena;

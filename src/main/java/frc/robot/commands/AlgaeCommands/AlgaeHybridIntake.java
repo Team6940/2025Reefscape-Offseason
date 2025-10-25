@@ -1,16 +1,9 @@
 package frc.robot.commands.AlgaeCommands;
 
-import java.lang.reflect.Field;
-
-import com.ctre.phoenix6.mechanisms.swerve.LegacySwerveRequest.FieldCentric;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.GeneralConstants.ArmConstants;
 import frc.robot.constants.GeneralConstants.ElevatorConstants;
 import frc.robot.constants.GeneralConstants.FieldConstants;
 import frc.robot.constants.GeneralConstants.ShooterConstants;
@@ -23,7 +16,6 @@ import frc.robot.subsystems.SuperStructure;
 import frc.robot.subsystems.SuperStructure.RobotStatus;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
-import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 
 //WARNING: THIS COMMAND SHOULD NOT BE CALLED IF SHOOTER IS IN USE E.G SHOOTER READY TO SCORE CORAL
 public class AlgaeHybridIntake extends Command {

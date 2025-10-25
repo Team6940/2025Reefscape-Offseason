@@ -13,6 +13,7 @@ public class IntakerIOPhoenix6 implements IntakerIO {
 
     private static final VelocityVoltage dutycycle = new VelocityVoltage(0);
 
+
     public IntakerIOPhoenix6() {
         motorConfig();
     }
@@ -56,6 +57,7 @@ public class IntakerIOPhoenix6 implements IntakerIO {
         inputs.motorVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
         inputs.motorCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
         inputs.intakerVelocityRPS = motor.getVelocity().getValueAsDouble();
+        inputs.hasGamePiece = false; //TODO
     }
 
 

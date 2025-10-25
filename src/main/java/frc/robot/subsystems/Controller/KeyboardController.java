@@ -1,6 +1,11 @@
 package frc.robot.subsystems.Controller;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean;
 
 /**
@@ -113,6 +118,22 @@ public class KeyboardController {
             numpad8 = new LoggedNetworkBoolean("/SmartDashboard/keyboard/numpad8");
             numpad9 = new LoggedNetworkBoolean("/SmartDashboard/keyboard/numpad9");
             numpadDecimal = new LoggedNetworkBoolean("/SmartDashboard/keyboard/numpaddecimal");
+        }
+
+        public static void publishKeyboard(){
+            List<String> keys = Arrays.asList(
+                "esc", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11", "f12",
+                "delete", "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
+                "tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
+                "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'",
+                "shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "right shift",
+                "ctrl", "alt", "right ctrl",
+                "left", "right", "up", "down",
+                "numpad0", "numpad1", "numpad2", "numpad3", "numpad4","numpad5", "numpad6", "numpad7", "numpad8", "numpad9", "numpaddecimal"
+        );
+        for (String key : keys) {
+                SmartDashboard.putBoolean("keyboard/" + key, false);
+            }
         }
     
         public Trigger esc() {

@@ -26,6 +26,6 @@ public class LeftSide extends SequentialCommandGroup {
                     .resetPose(chassis.generatePPPath("LBL-Front").flipPath().getStartingHolonomicPose().get())));
         } // set original pose
 
-        addCommands(chassis.followPPPath("LBL-Front").alongWith(new AutoPreparation()));
+        // addCommands(chassis.followPPPath("LBL-Front").alongWith(new AutoPreparation()));
     }
 }

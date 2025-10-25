@@ -1,9 +1,5 @@
 package frc.robot.subsystems;
 
-import org.ironmaple.simulation.SimulatedArena;
-import org.littletonrobotics.junction.Logger;
-
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,13 +17,11 @@ import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.constants.GeneralConstants.*;
 import frc.robot.library.MUtils;
-// import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeHybridScoring;
 import frc.robot.commands.AlgaeCommands.AlgaeManualIntake;
 import frc.robot.commands.AlgaeCommands.AlgaeManualScoring;
 import frc.robot.commands.Initialization;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SuperStructure extends SubsystemBase {
 
@@ -300,25 +294,6 @@ public class SuperStructure extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // Get the positions of the notes (both on the field and in the air)
-    //   Pose3d[] StackPoses = SimulatedArena.getInstance()
-    //         .getGamePiecesArrayByType("CoralAlgaeStacks");
-      // Publish to telemetry using AdvantageKit
-    //   Logger.recordOutput("FieldSimulation/CoralAlgaeStacksPositions", StackPoses);
-
-        // maintainStatus();
-
-        // Add any periodic tasks here, such as updating telemetry or checking subsystem
-        // states
-
-        // SmartDashboard.putNumber("SuperStructure/operatorLevelIndex",m_operatorLevelIndex);
-
-        // SmartDashboard.putData("SuperStructure/targetPoseField2d",
-        // targetPoseField2d);
-
-        // generatedPoseField2d.setRobotPose(chassis.generateReefPose(chassis.generateReefIndex()));
-        // //TODO
-
         SmartDashboard.putNumber("SuperStructure/targetReefLevelIndex", m_targetReefLevelIndex);
 
         SmartDashboard.putNumber("SuperStructure/chassis.generateReefIndex()", chassis.generateReefIndex());
@@ -327,51 +302,16 @@ public class SuperStructure extends SubsystemBase {
 
         SmartDashboard.putBoolean("SuperStructure/isFacingReefCenter()", chassis.isFacingReefCenter());
 
-        // SmartDashboard.putData("SuperStructure/generatedPoseField2d",
-        // generatedPoseField2d); //TODO
-
-        // targetStationPoseField2d.setRobotPose(chassis.generateStationPose());
-
-        // SmartDashboard.putNumber("SuperStructure/targetStationPoseIndex",
-        // m_targetStationPoseIndex);
-
-        // SmartDashboard.putData("SuperStructure/targetStationPoseField2d",
-        // targetStationPoseField2d);
-
-        // TEMP_stationCenterPose.setRobotPose(chassis.generateAlignedStationPose());
-
-        // TEMP_stationCenterPose.setRobotPose(chassis.generateStationPose());
-
-        // SmartDashboard.putData("SuperStructure/TEMP_stationCenterPose",
-        // TEMP_stationCenterPose);
-
-        // SmartDashboard.putBoolean("is STOW", scoreMode == ScoreMode.STOW);
-
-        // generatedReefPoseField2d.setRobotPose(chassis.generateReefPose(((chassis.generateReefIndex()
-        // - 1) / 2 * 2 + (driverSelection == Selection.LEFT ? 1 : 2))));
-
-        // generatedReefPoseReversedField2d.setRobotPose(chassis.generateReefPoseReversed(((chassis.generateReefIndex()
-        // - 1) / 2 * 2 + (driverSelection == Selection.LEFT ? 1 : 2))));
-
         generatedAlgaeIntakePoseField2d
                 .setRobotPose(chassis.generateAlgaeIntakePose(chassis.generateAlgaeIntakeIndex()));
 
         generatedAlgaeScorePoseField2d.setRobotPose(chassis.generateAlgaeScorePose());
 
-        // SmartDashboard.putData("SuperStructure/operatorPose(generatedReefPosField2d)",
-        // generatedReefPosField2d);
-        // Logger.recordOutput("GeneratedPose",chassis.generateReefPose(((chassis.generateReefIndex()
-        // - 1) / 2 * 2 + (driverSelection == Selection.LEFT ? 1 : 2))));
         SmartDashboard.putString("SuperStructure/RobotStatus", robotStatus.toString());
 
         SmartDashboard.putString("SuperStructure/driverSelection", driverSelection.toString());
 
         SmartDashboard.putString("SuperStructure/scoreMode", scoreMode.toString());
-
-        // SmartDashboard.putString("SuperStructure/m_operatorReefFaceIndex(targetReefFace)",String.valueOf(m_operatorReefFaceIndex));
-        // //TODO
-
-        // SmartDashboard.putData("SuperStructure/generateAlgaeIntakePose()",); //TODO
 
         SmartDashboard.putData("SuperStructure/generateReefPose()", generatedReefPoseField2d); // TODO
 
@@ -381,17 +321,4 @@ public class SuperStructure extends SubsystemBase {
 
         SmartDashboard.putData("SuperStructure/generateAlgaeScorePose()", generatedAlgaeScorePoseField2d); // TODO
     }
-
-    // private void maintainStatus() {
-    //     // if(isUnderCommand){
-    //     // return;
-    //     // }
-    //     // switch(robotStatus){
-    //     // case HOLDING_CORAL:
-    //     // setArmUp();
-    //     // setElevDown();
-    //     // break;
-
-    //     // }
-    // }
 }

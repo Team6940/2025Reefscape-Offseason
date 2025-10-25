@@ -127,33 +127,6 @@ public class TurretAimingSystem {
         return null;
     }
     
-    /**
-     * 主解算函数 - 计算最优弹道解
-     * 区分“太远”和“太近”
-     */
-    // public BallisticSolution calculateOptimalTrajectory(double turretX, double turretY, double turretZ) {
-    //     isTargetTooFar = false;
-    //     isTargetTooClose = false;
-        
-    //     double[] params = calculateTargetParameters(turretX, turretY, turretZ);
-    //     double d = params[0];
-    //     double h = params[1];
-        
-    //     double vMin = calculateMinimumVelocity(d, h);
-
-    //     // 情况1：速度不足 → 太远
-    //     if (vMin == Double.MAX_VALUE || vMin > MAX_VELOCITY) {
-    //         isTargetTooFar = true;
-    //         return null;
-    //     }
-
-    //     // 情况2：速度足够，但角度/几何无解 → 太近
-    //     BallisticSolution solution = binarySearchOptimalSolution(d, h, vMin, MAX_VELOCITY);
-    //     if (solution == null) {
-    //         isTargetTooClose = true;
-    //     }
-    //     return solution;
-    // }
     public BallisticSolution calculateOptimalTrajectory(double turretX, double turretY, double turretZ) {
         isTargetTooFar = false;
         isTargetTooClose = false;

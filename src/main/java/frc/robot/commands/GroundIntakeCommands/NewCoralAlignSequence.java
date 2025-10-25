@@ -1,13 +1,11 @@
 package frc.robot.commands.GroundIntakeCommands;
 
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
-import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.SuperStructure;
-import frc.robot.constants.GeneralConstants.ArmConstants;
+import frc.robot.Robot;
 import frc.robot.constants.GeneralConstants.ElevatorConstants;
 import frc.robot.constants.GeneralConstants.FieldConstants;
-import frc.robot.constants.GeneralConstants.IndexerConstants;
 import frc.robot.constants.GeneralConstants.ShooterConstants;
 import frc.robot.containers.RobotContainer;
 import frc.robot.subsystems.Arm.ArmSubsystem;
@@ -15,6 +13,7 @@ import frc.robot.subsystems.Controller.ImprovedCommandXboxController;
 import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem.IndexerState;
+import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class NewCoralAlignSequence extends Command {
@@ -40,6 +39,7 @@ public class NewCoralAlignSequence extends Command {
     ArmSubsystem arm = ArmSubsystem.getInstance();
     IndexerSubsystem indexer = IndexerSubsystem.getInstance();
     SuperStructure robot = SuperStructure.getInstance();
+    IntakerSubsystem intaker = IntakerSubsystem.getInstance();
 
     public NewCoralAlignSequence(Button toggleButton) {
         addRequirements(shooter, elevator, arm, indexer);
@@ -77,16 +77,19 @@ public class NewCoralAlignSequence extends Command {
     private void align() {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
-        if (!driverController.getButton(Button.kRightTrigger)) {
+        if (!driverController.getButton(Button.kRightTrigger)) { // Invert spin.
             indexer.setLeftRPS(-4.);
             indexer.setRghtRPS(-8.);
         } else{
             indexer.setLeftRPS(4.);
             indexer.setRghtRPS(15.);
         }
-        if ((indexer.getIndexerState() == IndexerState.READY ||
-                driverController.getButton(m_toggleButton))) {
-
+        // Simulation mode: Once IntakeSimulation is activated, it "collects on contact". As soon as hasCoral() is true, it directly enters GRABBING.
+        //TODO delete this when elevator sim is ready.
+        if (Robot.isSimulation() && intaker.hasCoral()) {
+            state = IntakeState.GRABBING;
+        }
+        if ((indexer.getIndexerState() == IndexerState.READY || driverController.getButton(m_toggleButton))) {
             state = IntakeState.DROPPING;
         }
     }
@@ -107,11 +110,6 @@ public class NewCoralAlignSequence extends Command {
         if (arm.isAtSecuredPosition()) {
             state = IntakeState.RETRACTING;
         }
-        // if(arm.isAtSecuredPosition()){
-        // elevator.setHeight(0.1);//TODO MOVE INTO CONSTANTS
-        // }
-        // // elevator.setHeight(0.1);//TODO MOVE INTO CONSTANTS
-        // state = IntakeState.END;
     }
 
     private void retract() {
@@ -121,11 +119,6 @@ public class NewCoralAlignSequence extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        // shooter.stop();
-        // elevator.setHeight(ElevatorConstants.IdleHeight);// TODO : ALL ELEVATOR SET
-        // HEIGHT 0 SHOULD BE CHANGED TO SET
-        // // HEIGHT IDLE_HEIGHT, ENSURING NO CONFLICTING WITH INDEXER
-        // arm.reset();
         indexer.stop();
     }
 
