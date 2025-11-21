@@ -13,6 +13,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,7 +30,7 @@ import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.SuperStructure;
 import frc.robot.subsystems.SuperStructure.RobotStatus;
 import frc.robot.subsystems.SuperStructure.Selection;
-//import frc.robot.subsystems.Vision.VisionSubsystem;
+import frc.robot.subsystems.Vision.VisionSubsystem;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Chassis.TunerConstants;
@@ -74,7 +75,7 @@ public class RobotContainer {
     public static final IntakerSubsystem intaker = IntakerSubsystem.getInstance();
     public static final IndexerSubsystem indexer = IndexerSubsystem.getInstance();
     public static final ClimberSubsystem climber = ClimberSubsystem.getInstance();
-    //public static final VisionSubsystem vision = VisionSubsystem.getInstance();
+    public static final VisionSubsystem vision = VisionSubsystem.getInstance();
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -120,13 +121,7 @@ public class RobotContainer {
             
                     // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
                     // chassis will execute this command periodically
-                    chassis.setDefaultCommand(
-                        chassis.applyRequest(() -> drive
-                                .withVelocityX(-driverController.getLeftY() * Math.abs(driverController.getLeftY()) * MaxSpeed * 0.9)
-                                .withVelocityY(-driverController.getLeftX() * Math.abs(driverController.getLeftX()) * MaxSpeed * 0.9)
-                                .withRotationalRate(-driverController.getRightX() * MaxAngularRate * 0.9)
-                        ));
-            
+                    chassis.setDefaultCommand(chassis.run(()->chassis.driveFieldCentric(driverController,1)));
             
             
                     /**
@@ -196,148 +191,36 @@ public class RobotContainer {
                     //PLEASE COMMENT OUT ALL CODES FOR TESTING AFTER TEST IS ALL DONE.
             
             
-                    // /* ---------------------------------------- DRIVER CONTROLLER ----------------------------------------*/
-                    // /* Sticks */  
-                    // // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
-                    // driverController.leftStick().toggleOnTrue(new SemiAutoClimbCommand(Button.kLeftStick,Button.kRightStick));
-            
-                    // /* Bumpers & Triggers */
-                    // driverController.rightBumper().whileTrue(superStructure.runOnce(() -> superStructure.getHybridCoralScoreCommand(Button.kRightBumper)));
-                    // driverController.b().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeScoreCommand(Button.kB,Button.kRightTrigger)));
-                    //driverController.leftBumper().whileTrue(new ToggleIntake(grArm, intaker));
-                    // driverController.leftBumper().whileTrue(superStructure.runOnce(() -> superStructure.getCoralAlignSequenceCommand(Button.kLeftBumper)));
-                    // driverController.leftTrigger().whileTrue(superStructure.runOnce(() -> superStructure.getHybridAlgaeIntakeCommand(Button.kLeftTrigger)));
-            
-                    // /* Buttons */
-                    
-                    // driverController.b().whileTrue(chassis.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
-                    //driverController.povUp().onTrue(chassis.runOnce(() -> chassis.seedFieldCentric()));
-                    // driverController.y().onTrue(superStructure.runOnce(() -> superStructure.getInitializationCommand(Button.kY)));
-            
-                    // /* Povs */
-                    // operatorController.povUp().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefLevelIndex(1)));
-                    // operatorController.povDown().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefLevelIndex(-1)));
-                    // operatorController.povLeft().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefPoseIndex(1)));
-                    // operatorController.povRight().whileTrue(superStructure.runOnce(() -> superStructure.changeTargetReefPoseIndex(-1)));
-            
-                    // /* ---------------------------------------- OPERATOR CONTROLLER ----------------------------------------*/
-            
-                    // /* Sticks */
-                    // /* Bumpers & Triggers */
+                   
                     operatorController.leftBumper().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
                     operatorController.rightBumper().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
-                    // operatorController.leftTrigger().onTrue(superStructure.runOnce(() -> superStructure.setTargetAlgaeIntakeLevelIndex(0)));
-                    // operatorController.rightTrigger().onTrue(superStructure.runOnce(() -> superStructure.setTargetAlgaeIntakeLevelIndex(1)));
-                    // /* Buttons */
+
                     operatorController.a().onTrue(superStructure.runOnce(()-> superStructure.setTargetReefLevelIndex(1)));
                     operatorController.b().onTrue(superStructure.runOnce(()-> superStructure.setTargetReefLevelIndex(2)));
                     operatorController.x().onTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(3)));
                     operatorController.y().onTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(4)));
-                    
-                    // /* Povs */
-                    // operatorController.povUp().onTrue(superStructure.runOnce(() -> superStructure.setOperatorReefFaceIndex(6)));
-                    // operatorController.povDown().onTrue(superStructure.runOnce(() -> superStructure.setOperatorReefFaceIndex(3)));
-                    // operatorController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.changeOperatorReefFaceIndex(Selection.LEFT)));
-                    // operatorController.povRight().onTrue(superStructure.runOnce(() -> superStructure.changeOperatorReefFaceIndex(Selection.RIGHT)));
-            
-            
-                    ///THOSE ARE FOR TESTING.-------------------------------------------------------------------------------------------    
-                    //driverController.a().onTrue(new InstantCommand(()-> climber.setRotation(ClimberConstants.ClimberDefaultPos)));
-                    //driverController.b().onTrue(new InstantCommand(()-> climber.setRotation(ClimberConstants.ClimberExtensionPos)));
-                    //driverController.x().onTrue(new InstantCommand(()-> climber.setRotation(ClimberConstants.ClimberRetractionPos)));
-                    //driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));//This needs to be changed
-            
-                    //driverController.leftStick().toggleOnTrue(new InstantCommand(() -> climber.setPosition(1.)));//This needs to be changed
-                    //driverController.leftStick().toggleOnFalse(new InstantCommand(() -> climber.setPosition(0.)));//This needs to be changed
-            
-                    //driverController.povLeft().onTrue(new InstantCommand(() -> chassis.resetPose(chassis.generatePPPath("LBM-2").flipPath().getStartingHolonomicPose().get())));
-            
-                    // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("1"));
-                    // driverController.y().whileTrue(RobotContainer.chassis.followPPPath("2"));
-                    
-            
-                    // driverController.leftTrigger().whileTrue(new InstantCommand(()-> shooter.setRPS(10)));
-                    // driverController.rightTrigger().whileTrue(new InstantCommand(()->shooter.setRPS(-20)));
-                    // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(0)));
-            
-                    // driverController.x().onTrue(new InstantCommand(()->grArm.setPosition(90.)));
-                    // driverController.y().onTrue(new InstantCommand(()->grArm.setPosition(-60.)));
-                    // driverController.leftTrigger().onTrue(new InstantCommand(()->intaker.setRPS(10)));
-                    // driverController.rightTrigger().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
-            
-                    // driverController.y().whileTrue(new ToggleIntake(grArm, intaker));
-            
             
 
 
 
                     driverController.x().onTrue(new InstantCommand(() -> chassis.resetPose(new Pose2d(0, 4, new Rotation2d()))));
-                    driverController.back().onTrue(new NewClimbCommand(Button.kStart));
+                    // driverController.back().onTrue(new NewClimbCommand(Button.kStart));
             
 
-                    driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightTrigger));
-                    driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
+                    // driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightTrigger));
+                    // driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
 
             
         
-                    // driverController.b().whileTrue(Commands.defer(()->superStructure.getManualAlgaeIntakeCommand(),Set.of(arm,elevator,shooter)));
-
-                    // driverController.a().onTrue(new AlgaeManualScoring(Button.kY));
-                    driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(() -> superStructure.getCoralModeScoringCommand(Button.kRightTrigger),Set.of(arm, elevator, shooter, chassis)));
-                    driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());
-
-                    driverController.povDown().onTrue(superStructure.runOnce(() -> superStructure.changeCoralMode()));
-
-                    driverController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
-                    driverController.povRight().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
-
-
-
-
-                    // driverController.a().whileTrue(RobotContainer.chassis.followPPPath("LBM-2"));
-                    // driverController.b().whileTrue(RobotContainer.chassis.followPPPath("2-AlgaeLeft"));
-                    // driverController.x().whileTrue(RobotContainer.chassis.followPPPath("AlgaeLeft-5"));
-                
-            
-                    // driverController.y().whileTrue(Command.defer(()->));
-                    // driverController.y().onTrue(new InstantCommand(()->indexer.setLeftRPS(-6.)));
-                    // driverController.y().onFalse(new InstantCommand(()->indexer.setRPS(0)));
-            
-                    // driverController.a().onTrue(new InstantCommand(() -> indexer.setRPS(0)));
-                    // driverController.x().onTrue(new InstantCommand(()->indexer.setRPS(2)));
-                    // driverController.a().onTrue(new InstantCommand(()->indexer.setRPS(0)));
-                    // driverController.a().onTrue(new InstantCommand(() -> intaker.setRPS(0)));
-            
-                    // driverController.leftBumper().onTrue(new InstantCommand(()->shooter.setRPS(-20)));
-                    // driverController.leftBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
-                    // driverController.a().onTrue(new InstantCommand(()->chassis.resetPose(new Pose2d())));
-                    // driverController.rightBumper().whileTrue(new InstantCommand(()->shooter.setRPS(20)));
-                    // driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
-
-
         
+                    // driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(() -> superStructure.getCoralModeScoringCommand(Button.kRightTrigger),Set.of(arm, elevator, shooter, chassis)));
+                    // driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());
 
-        // driverController.rightBumper().onFalse(new InstantCommand(()->shooter.setRPS(0)));
+                    // driverController.povDown().onTrue(superStructure.runOnce(() -> superStructure.changeCoralMode()));
 
-        // driverController.povRight().onTrue(new InstantCommand(()->arm.setPosition(-90.)));
-        // driverController.povLeft().onTrue(new InstantCommand(() -> arm.setPosition(-165.)));
+                    // driverController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
+                    // driverController.povRight().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
 
-        //driverController.povUp().onTrue(new InstantCommand(()->elevator.liftHeight(0.1)));
-        //driverController.povDown().onTrue(new InstantCommand(()->elevator.liftHeight(-0.1)));
-
-        // // driverController.y().onTrue(new InstantCommand(()->intaker.setRPS(-2)));
-        //driverController.rightTrigger().onTrue(new InstantCommand(()->arm.setPosition(-90.)));
-        //driverController.rightBumper().onTrue(new InstantCommand(()->arm.setPosition(-271.)));
-        // // driverController.leftTrigger().whileTrue(new ZeroElevator());
-        // // driverController.rightTrigger().whileTrue(new SetStateIdleDown());
-
-        // driverController.a().onTrue(new InstantCommand(()->elevator.setHeight(-0.2)));//TODO MOVE INTO CONSTANTS
-
-        // driverController.povRight().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[1]));
-        // driverController.povUp().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[2]));
-        // driverController.povLeft().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[3]));
-        // driverController.povDown().whileTrue(new ToggleElevatorTest(elevator,Constants.FieldConstants.ElevatorHeights[4]));
-        //------------------------------------------------------------------------------------------------------------------
     }
 
     public Command getAutonomousCommand() {

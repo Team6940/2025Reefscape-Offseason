@@ -64,6 +64,22 @@ public class Constants {
         public static final double defaultDrivePower = 1.2;
 
     }
+    public static class VisionConstants{
+        public static InterpolatingDoubleTreeMap tyToDistance=new InterpolatingDoubleTreeMap();
+        
+        public static final Point2D[] tyToDistancePoints = {
+                // new Point2D(0.374, 0.003),
+                // new Point2D(0.071, 0.2),
+                // new Point2D(0.046, 0.4)
+                new Point2D.Double(Math.toRadians(-23.6), 0.75),
+                new Point2D.Double(Math.toRadians(-19.8), 0.85),
+                new Point2D.Double(Math.toRadians(-16.6), 0.95),
+                new Point2D.Double(Math.toRadians(-13.6), 1.05),
+                new Point2D.Double(Math.toRadians(-11.5), 1.15),
+                new Point2D.Double(Math.toRadians(-8), 1.25),
+                new Point2D.Double(Math.toRadians(-0.86), 1.75)
+        };
+    }
 
     public static class IntakerConstants {
         public static final int IntakerMotorID = 20;

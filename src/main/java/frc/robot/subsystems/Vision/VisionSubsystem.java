@@ -8,9 +8,12 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.VisionConstants;
 
 public class VisionSubsystem extends SubsystemBase {
     private final String limelightName = "limelight-neural";
+    private final Pose3d cameraPose3d = new Pose3d(new Translation3d(0.13, -0.17, 0.85),
+            new Rotation3d(0, 0.48363073, 0));
     public static VisionSubsystem vision;
 
     public static VisionSubsystem getInstance() {
@@ -19,6 +22,9 @@ public class VisionSubsystem extends SubsystemBase {
 
     public VisionSubsystem() {
         LimelightHelpers.setPipelineIndex(limelightName, 2);
+        for (var a : VisionConstants.tyToDistancePoints) {
+            VisionConstants.tyToDistance.put(a.getX(), a.getY());
+        }
     }
 
     /**
@@ -97,55 +103,51 @@ public class VisionSubsystem extends SubsystemBase {
         return k / Math.sqrt(ta);
     }
 
-    public Translation2d getObjectRobotRelativeTranslation2d(
-            LimelightHelpers.RawDetection detection) {
+    public Translation2d getObjectRobotRelativeTranslation2d(LimelightHelpers.RawDetection detection) {
         if (detection == null)
             return null;
-        Pose3d cameraPose = LimelightHelpers.getCameraPose3d_RobotSpace(this.limelightName);
-        if (cameraPose == null)
+
+        // 1. Camera-relative
+        Translation2d camRel = getObjectCameraRelativeTranslation2d(detection);
+        if (camRel == null)
             return null;
 
-        Translation2d cameraOffset = new Translation2d(cameraPose.getX(), cameraPose.getY());
-        Rotation2d cameraYawOffset = Rotation2d.fromDegrees(cameraPose.getRotation().getZ());
-        double cameraHeight = cameraPose.getZ();
+        // 2. Get camera pose in robot space
+        Pose3d cameraPose3d = this.cameraPose3d;
+        if (cameraPose3d == null)
+            return null;
 
-        // Convert angles to radians
-        double txRad = Math.toRadians(detection.txnc);
-        double tyRad = Math.toRadians(detection.tync);
-        double pitchRad = Math.toRadians(vision.getIMUPitch());
+        Translation2d cameraOffset = new Translation2d(cameraPose3d.getX(), cameraPose3d.getY());
+        Rotation2d cameraYawOffset = new Rotation2d(cameraPose3d.getRotation().getZ());
 
-        // Distance from camera to object along ground
-        double distance = cameraHeight / Math.tan(pitchRad + tyRad);
+        // 3. Rotate camera-relative detection into robot frame
+        Translation2d robotRel = camRel.rotateBy(cameraYawOffset).plus(cameraOffset);
 
-        // Robot-relative coordinates
-        double xRel = distance * Math.cos(txRad); // forward
-        double yRel = distance * Math.sin(txRad); // rightward (+)
-
-        var camRel = new Translation2d(xRel, yRel);
-        Translation2d rotated = camRel.rotateBy(cameraYawOffset);
-        Translation2d robotRelative = rotated.plus(cameraOffset);
-
-        return robotRelative;
+        return robotRel;
     }
 
     public Translation2d getObjectCameraRelativeTranslation2d(LimelightHelpers.RawDetection detection) {
         if (detection == null)
             return null;
 
-        double cameraHeight = 0.8;// tune this carefully
+        // Pull camera pose from LL config
+        Pose3d cameraPose3d = this.cameraPose3d;
+        if (cameraPose3d == null)
+            return null;
+
+        double cameraHeight = cameraPose3d.getZ();
+        double pitchRad = cameraPose3d.getRotation().getY(); // camera pitch from LL mount config
+
         double txRad = Math.toRadians(detection.txnc);
         double tyRad = Math.toRadians(detection.tync);
-        double pitchRad = Math.toRadians(vision.getIMUPitch());
 
-        // Distance from camera to object along ground
-        double distance = cameraHeight / Math.tan(pitchRad + tyRad);
+        // Ground-plane distance using camera pitch + vertical offset
+        // double distance = cameraHeight * Math.tan(Math.PI / 2 - pitchRad + tyRad);
+        double distance = VisionConstants.tyToDistance.get(tyRad);
+        double xRel = distance;
+        double yRel = Math.sqrt(distance * distance + cameraPose3d.getZ() * cameraPose3d.getZ()) * Math.tan(txRad);
 
-        // Robot-relative coordinates
-        double xRel = distance * Math.cos(txRad); // forward
-        double yRel = distance * Math.sin(txRad); // rightward (+)
-
-        var camRel = new Translation2d(xRel, yRel);
-        return camRel;
+        return new Translation2d(xRel, yRel);// seeing forward from the cam + left/right shifting
     }
 
     /**
@@ -160,5 +162,30 @@ public class VisionSubsystem extends SubsystemBase {
         // Example: show how many neural detections are found
         LimelightHelpers.RawDetection[] detections = getDetections();
         SmartDashboard.putNumber("LL4 Neural Detections", detections != null ? detections.length : 0);
+
+        // primary object info
+        LimelightHelpers.RawDetection primaryObject = getPrimaryObject();
+        if (primaryObject != null) {
+            Translation2d cameraObjectTranslation = getObjectCameraRelativeTranslation2d(primaryObject);
+            SmartDashboard.putString("Primary Object Translation CAM", cameraObjectTranslation.toString());
+        } else {
+            SmartDashboard.putString("Primary Object Translation CAM", "None");
+        }
+
+        if (primaryObject != null) {
+            Translation2d robotObjectTranslation = getObjectRobotRelativeTranslation2d(primaryObject);
+            SmartDashboard.putString("Primary Object Translation RBT", robotObjectTranslation.toString());
+        } else {
+            SmartDashboard.putString("Primary Object Translation RBT", "None");
+        }
+
+        // Get camera pose in robot space
+        Pose3d cameraPose3d = this.cameraPose3d;
+        // Print the camera pose to the SmartDashboard
+        if (cameraPose3d != null) {
+            SmartDashboard.putString("Camera Pose", cameraPose3d.toString());
+        } else {
+            SmartDashboard.putString("Camera Pose", "None");
+        }
     }
 }
