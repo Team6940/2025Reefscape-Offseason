@@ -1,6 +1,7 @@
 package frc.robot.subsystems.Vision;
 
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -8,12 +9,12 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.VisionConstants;
 
 public class VisionSubsystem extends SubsystemBase {
     private final String limelightName = "limelight-neural";
-    private final Pose3d cameraPose3d = new Pose3d(new Translation3d(0.13, -0.17, 0.85),
-            new Rotation3d(0, 0.48363073, 0));
+    private final Pose3d cameraPose3d = VisionConstants.cameraPose3d;
     public static VisionSubsystem vision;
 
     public static VisionSubsystem getInstance() {
@@ -22,8 +23,8 @@ public class VisionSubsystem extends SubsystemBase {
 
     public VisionSubsystem() {
         LimelightHelpers.setPipelineIndex(limelightName, 2);
-        for (var a : VisionConstants.tyToDistancePoints) {
-            VisionConstants.tyToDistance.put(a.getX(), a.getY());
+        for (var point : VisionConstants.tyToDistancePoints) {
+            VisionConstants.tyToDistance.put(point.getX(), point.getY());
         }
     }
 
@@ -86,12 +87,18 @@ public class VisionSubsystem extends SubsystemBase {
         return LimelightHelpers.getIMUData(limelightName);
     }
 
+    /*
+     * Get IMU pitch data
+     */
     public double getIMUPitch() {
         LimelightHelpers.IMUData imu = getIMUData();
         return imu != null ? imu.Pitch : 0.0;
     }
 
-    // use this func carefully! 'cause different perspectives varies greatly
+    /*
+     * use this func carefully! 'cause different perspectives varies greatly
+     * estimate distance from ta
+     */
     public static double estimateDistanceFromTA(double ta) {
         if (ta <= 0.0)
             return Double.POSITIVE_INFINITY; // No valid target
@@ -103,51 +110,75 @@ public class VisionSubsystem extends SubsystemBase {
         return k / Math.sqrt(ta);
     }
 
+    /*
+     * calculate the best intake pose
+     */
+    public Pose2d getObjectFieldRelativePose2d(LimelightHelpers.RawDetection detection, Pose2d robotPose) {
+        Rotation2d cameraYawOffset = new Rotation2d(cameraPose3d.getRotation().getZ());
+        var fieldRelTranslation2d = getObjectFieldRelativeTranslation2d(detection, robotPose);
+        Rotation2d targetRotation = robotPose.getTranslation().minus(fieldRelTranslation2d).getAngle()
+                .rotateBy(cameraYawOffset);
+        return new Pose2d(fieldRelTranslation2d, targetRotation);
+    }
+
+    /*
+     * Transform translationRobotRelative to translationFieldRelative
+     */
+    public Translation2d getObjectFieldRelativeTranslation2d(LimelightHelpers.RawDetection detection,
+            Pose2d robotPose) {
+        if (detection == null || robotPose == null)
+            return null;
+
+        // 1. Robot-relative
+        Translation2d robotRelTranslation2d = getObjectRobotRelativeTranslation2d(detection);
+        if (robotRelTranslation2d == null)
+            return null;
+
+        // 2. Rotate robot-relative detection into field frame
+        Translation2d fieldRelTranslation2d = robotRelTranslation2d
+                .rotateBy(robotPose.getRotation())
+                .plus(new Translation2d(robotPose.getX(), robotPose.getY()));
+
+        return fieldRelTranslation2d;
+    }
+
+    /*
+     * Transform translationCameraRelative to translationRobotRelative
+     */
     public Translation2d getObjectRobotRelativeTranslation2d(LimelightHelpers.RawDetection detection) {
         if (detection == null)
             return null;
 
         // 1. Camera-relative
-        Translation2d camRel = getObjectCameraRelativeTranslation2d(detection);
-        if (camRel == null)
-            return null;
-
-        // 2. Get camera pose in robot space
-        Pose3d cameraPose3d = this.cameraPose3d;
-        if (cameraPose3d == null)
+        Translation2d camRelTranslation2d = getObjectCameraRelativeTranslation2d(detection);
+        if (camRelTranslation2d == null)
             return null;
 
         Translation2d cameraOffset = new Translation2d(cameraPose3d.getX(), cameraPose3d.getY());
-        Rotation2d cameraYawOffset = new Rotation2d(cameraPose3d.getRotation().getZ());
+        Rotation2d cameraYawOffset = new Rotation2d(cameraPose3d.getRotation().getZ());// PI/0 theoretically
 
-        // 3. Rotate camera-relative detection into robot frame
-        Translation2d robotRel = camRel.rotateBy(cameraYawOffset).plus(cameraOffset);
+        // 2. Rotate camera-relative detection into robot frame
+        Translation2d robotRelTranslation2d = camRelTranslation2d.rotateBy(cameraYawOffset).plus(cameraOffset);
 
-        return robotRel;
+        return robotRelTranslation2d;
     }
 
+    /*
+     * Estimate object translation (camera relative) by ty & tx
+     */
     public Translation2d getObjectCameraRelativeTranslation2d(LimelightHelpers.RawDetection detection) {
         if (detection == null)
             return null;
 
-        // Pull camera pose from LL config
-        Pose3d cameraPose3d = this.cameraPose3d;
-        if (cameraPose3d == null)
-            return null;
-
-        double cameraHeight = cameraPose3d.getZ();
-        double pitchRad = cameraPose3d.getRotation().getY(); // camera pitch from LL mount config
-
         double txRad = Math.toRadians(detection.txnc);
         double tyRad = Math.toRadians(detection.tync);
 
-        // Ground-plane distance using camera pitch + vertical offset
-        // double distance = cameraHeight * Math.tan(Math.PI / 2 - pitchRad + tyRad);
         double distance = VisionConstants.tyToDistance.get(tyRad);
         double xRel = distance;
         double yRel = Math.sqrt(distance * distance + cameraPose3d.getZ() * cameraPose3d.getZ()) * Math.tan(txRad);
+        // calculate yRel from simple math
 
-        return new Translation2d(xRel, yRel);// seeing forward from the cam + left/right shifting
+        return new Translation2d(xRel, yRel);// x: seeing forward from the cam ; y: left/right shifting
     }
 
     /**
@@ -159,11 +190,11 @@ public class VisionSubsystem extends SubsystemBase {
         SmartDashboard.putString("LL4 Class", getDetectedClassName());
         SmartDashboard.putNumber("LL4 Class ID", getDetectedClassId());
 
-        // Example: show how many neural detections are found
+        // showing how many neural detections are found
         LimelightHelpers.RawDetection[] detections = getDetections();
         SmartDashboard.putNumber("LL4 Neural Detections", detections != null ? detections.length : 0);
 
-        // primary object info
+        // printing primary object translations
         LimelightHelpers.RawDetection primaryObject = getPrimaryObject();
         if (primaryObject != null) {
             Translation2d cameraObjectTranslation = getObjectCameraRelativeTranslation2d(primaryObject);
@@ -171,21 +202,18 @@ public class VisionSubsystem extends SubsystemBase {
         } else {
             SmartDashboard.putString("Primary Object Translation CAM", "None");
         }
-
         if (primaryObject != null) {
             Translation2d robotObjectTranslation = getObjectRobotRelativeTranslation2d(primaryObject);
             SmartDashboard.putString("Primary Object Translation RBT", robotObjectTranslation.toString());
         } else {
             SmartDashboard.putString("Primary Object Translation RBT", "None");
         }
-
-        // Get camera pose in robot space
-        Pose3d cameraPose3d = this.cameraPose3d;
-        // Print the camera pose to the SmartDashboard
-        if (cameraPose3d != null) {
-            SmartDashboard.putString("Camera Pose", cameraPose3d.toString());
+        if (primaryObject != null) {
+            Translation2d fieldObjectTranslation = getObjectFieldRelativeTranslation2d(primaryObject,
+                    RobotContainer.chassis.getPose());
+            SmartDashboard.putString("Primary Object Translation FLD", fieldObjectTranslation.toString());
         } else {
-            SmartDashboard.putString("Camera Pose", "None");
+            SmartDashboard.putString("Primary Object Translation FLD", "None");
         }
     }
 }

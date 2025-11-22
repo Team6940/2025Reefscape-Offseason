@@ -117,8 +117,6 @@ public class RobotContainer {
             
                     /* DEFAULT COMMANDS */  // TODO
                     chassis.registerTelemetry(logger::telemeterize);
-                    // chassis.setDefaultCommand(chassis.run(() -> chassis.driveFieldCentric(driverController, DriveConstants.defaultDrivePower))); //Field centric init.
-            
                     // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
                     // chassis will execute this command periodically
                     chassis.setDefaultCommand(chassis.run(()->chassis.driveFieldCentric(driverController,1)));
