@@ -206,7 +206,7 @@ public class RobotContainer {
             
 
                     // driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightTrigger));
-                    // driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
+                    driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
 
             
         

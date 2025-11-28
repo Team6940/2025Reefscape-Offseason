@@ -1,6 +1,9 @@
 package frc.robot.subsystems.Vision;
 
 import edu.wpi.first.math.geometry.Pose3d;
+
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -165,6 +168,9 @@ public class VisionSubsystem extends SubsystemBase {
 
     /*
      * Estimate object translation (camera relative) by ty & tx
+     * The output translation has been inverted to fit the x-y axis convention
+     * Left originally means positive tx, but in x-y axis, left should be negative y
+     * Therefore the yRel is inverted here and vice versa
      */
     public Translation2d getObjectCameraRelativeTranslation2d(LimelightHelpers.RawDetection detection) {
         if (detection == null)
@@ -177,6 +183,8 @@ public class VisionSubsystem extends SubsystemBase {
         double xRel = distance;
         double yRel = Math.sqrt(distance * distance + cameraPose3d.getZ() * cameraPose3d.getZ()) * Math.tan(txRad);
         // calculate yRel from simple math
+        yRel = -yRel;
+        //Make the translation fit the x-y axis
 
         return new Translation2d(xRel, yRel);// x: seeing forward from the cam ; y: left/right shifting
     }
@@ -199,20 +207,16 @@ public class VisionSubsystem extends SubsystemBase {
         if (primaryObject != null) {
             Translation2d cameraObjectTranslation = getObjectCameraRelativeTranslation2d(primaryObject);
             SmartDashboard.putString("Primary Object Translation CAM", cameraObjectTranslation.toString());
-        } else {
-            SmartDashboard.putString("Primary Object Translation CAM", "None");
-        }
-        if (primaryObject != null) {
             Translation2d robotObjectTranslation = getObjectRobotRelativeTranslation2d(primaryObject);
             SmartDashboard.putString("Primary Object Translation RBT", robotObjectTranslation.toString());
-        } else {
-            SmartDashboard.putString("Primary Object Translation RBT", "None");
-        }
-        if (primaryObject != null) {
             Translation2d fieldObjectTranslation = getObjectFieldRelativeTranslation2d(primaryObject,
                     RobotContainer.chassis.getPose());
             SmartDashboard.putString("Primary Object Translation FLD", fieldObjectTranslation.toString());
+            Pose2d fieldObjectPose = getObjectFieldRelativePose2d(primaryObject, RobotContainer.chassis.getPose());
+            Logger.recordOutput("PrimaryObjectPose", fieldObjectPose);
         } else {
+            SmartDashboard.putString("Primary Object Translation CAM", "None");
+            SmartDashboard.putString("Primary Object Translation RBT", "None");
             SmartDashboard.putString("Primary Object Translation FLD", "None");
         }
     }

@@ -3,12 +3,14 @@ package frc.robot.commands.GroundIntakeCommands;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.GrArmConstants;
 import frc.robot.Constants.IntakerConstants;
+import frc.robot.commands.Rumble;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.subsystems.Vision.VisionSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.RobotContainer;
@@ -44,6 +46,7 @@ public class ToggleIntake extends Command {
         if(vision.hasValidTarget()){
             autoIntakePose = vision.getObjectFieldRelativePose2d(vision.getPrimaryObject(), chassis.getPose());
             isAutoIntakingAvailable = true;
+            new Rumble(RumbleType.kBothRumble, 1.).withTimeout(0.3).schedule();
         }
     }
 

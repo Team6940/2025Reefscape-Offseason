@@ -83,7 +83,7 @@ public class Constants {
                 new Point2D.Double(Math.toRadians(-0.86), 1.75)
         };
 
-        public static final Pose3d cameraPose3d = new Pose3d(new Translation3d(0.13, -0.17, 0.85), new Rotation3d(0, 0.48363073, -Math.PI/2));
+        public static final Pose3d cameraPose3d = new Pose3d(new Translation3d(0.13, -0.17, 0.85), new Rotation3d(0, 0.48363073, Math.PI));
     }
 
     public static class IntakerConstants {
