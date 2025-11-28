@@ -9,12 +9,19 @@ import frc.robot.constants.GeneralConstants.FieldConstants;
 import frc.robot.constants.GeneralConstants.ShooterConstants;
 import frc.robot.containers.RobotContainer;
 import frc.robot.subsystems.Arm.ArmSubsystem;
+import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Controller.ImprovedCommandXboxController;
 import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Indexer.IndexerSubsystem.IndexerState;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
+
+import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoralOnField;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 
 public class NewCoralAlignSequence extends Command {
     enum IntakeState {
@@ -77,12 +84,22 @@ public class NewCoralAlignSequence extends Command {
     private void align() {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
-        if (!driverController.getButton(Button.kRightTrigger)) { // Invert spin.
+        if (!driverController.getButton(Button.kRightTrigger)) {
             indexer.setLeftRPS(-4.);
             indexer.setRghtRPS(-8.);
         } else{
             indexer.setLeftRPS(4.);
-            indexer.setRghtRPS(15.);
+            indexer.setRghtRPS(15.); 
+            Commands.runOnce(() -> intaker.ejectCoral()); // Eject coral if right trigger is held        
+//             if( Robot.isSimulation()){
+//                 Commands.runOnce(()->{
+//                     SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(
+//                     new Pose2d(CommandSwerveDrivetrain.getInstance().getPose().getX()+1., 
+//                     CommandSwerveDrivetrain.getInstance().getPose().getY()+1.,
+//                     CommandSwerveDrivetrain.getInstance().getPose().getRotation())));
+//                 });
+//  //TODO
+//             }
         }
         // Simulation mode: Once IntakeSimulation is activated, it "collects on contact". As soon as hasCoral() is true, it directly enters GRABBING.
         //TODO delete this when elevator sim is ready.
@@ -98,7 +115,6 @@ public class NewCoralAlignSequence extends Command {
         elevator.setHeight(ElevatorConstants.GrabbingHeight);
         if (shooter.isShooterReady()) {
             state = IntakeState.GRABBING;
-
         }
     }
 
@@ -110,6 +126,7 @@ public class NewCoralAlignSequence extends Command {
         if (arm.isAtSecuredPosition()) {
             state = IntakeState.RETRACTING;
         }
+        // intaker.ejectCoral(); //SIMULATION: immediately transfer coral to indexer
     }
 
     private void retract() {

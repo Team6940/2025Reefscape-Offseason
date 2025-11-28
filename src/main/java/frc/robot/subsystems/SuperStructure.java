@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -57,15 +58,8 @@ public class SuperStructure extends SubsystemBase {
     private GrArmSubsystem grArm = GrArmSubsystem.getInstance();
 
     /** Variables */
-    private int m_targetReefLevelIndex = 4;
+    public static int m_targetReefLevelIndex = 4; //TODO
     private int m_operatorReefFaceIndex = 3;
-    // private int m_targetReefPoseIndex = 1;
-    // private int m_targetStationPoseIndex = 1;
-    // private int m_targetStationLevelIndex = 1; //TODO
-    // private int m_targetAlgaeIntakeLevelIndex = 1;
-    // private Field2d targetPoseField2d = new Field2d();
-    // private Field2d targetStationPoseField2d = new Field2d();
-    // private Field2d TEMP_stationCenterPose = new Field2d();
     private Field2d generatedReefPoseField2d = new Field2d();
     private Field2d generatedReefPoseReversedField2d = new Field2d();
     private Field2d generatedAlgaeScorePoseField2d = new Field2d();
@@ -87,35 +81,15 @@ public class SuperStructure extends SubsystemBase {
         this.robotStatus = status;
     }
 
-    // public int getTargetReefPoseIndex() {
-    // return m_targetReefPoseIndex;
-    // }
-
-    // public int getTargetAlgaeIntakeLevelIndex() {
-    // return m_targetALgaeIntakeLevelIndex;
-    // }
-
     public void setTargetReefLevelIndex(int index) {
         m_targetReefLevelIndex = index;
     }
-
-    // public void setTargetAlgaeIntakeLevelIndex(int index) {
-    // m_targetALgaeIntakeLevelIndex = MUtils.numberLimit(0, 1, index); // TODO 0-1
-    // }
 
     public void setOperatorReefFaceIndex(int index) {
         m_operatorReefFaceIndex = MUtils.numberLimit(1, 6, index);
     }
 
-    // public void changeTargetAlgaeIntakeHeightIndex(int delta) {
-    // m_targetALgaeIntakeLevelIndex = MUtils.numberLimit(0, 1, delta); // TODO 0-1
-    // }
-
-    // public void changeTargetReefPoseIndex(int delta) {
-    // m_targetReefPoseIndex = MUtils.numberLimit(1, 12, delta); // TODO 1-12
-    // }
-
-    public void changeOperatorReefFaceIndex(Selection direction) { // TODO
+    public void changeOperatorReefFaceIndex(Selection direction) {
         switch (direction) {
             case LEFT:
                 switch (m_operatorReefFaceIndex) {
@@ -177,8 +151,12 @@ public class SuperStructure extends SubsystemBase {
 
     public Command getNewHybridCoralScoreCommand(Button executionButton) {
         // if (!chassis.isFacingReefCenter()) {
-            return new NewCoralHybridScoring(chassis.generateReefIndex(), m_targetReefLevelIndex, executionButton, true)
-                    .withSelection(driverSelection).andThen(() -> robotStatus = RobotStatus.IDLE);
+            return new NewCoralHybridScoring(
+                chassis.generateReefIndex(),
+                m_targetReefLevelIndex, 
+                executionButton,
+                true)
+            .withSelection(driverSelection).andThen(() -> robotStatus = RobotStatus.IDLE);
         // } else
         //     return null;
         // reversed scoring

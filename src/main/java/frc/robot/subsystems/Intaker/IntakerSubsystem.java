@@ -24,8 +24,8 @@ public class IntakerSubsystem extends SubsystemBase{
     private double targetRPS = 0.;
 
     private ComponentPublisher m_componentPublisher;
-    private double targetAngleDegForSim = 0.0;   //
-    private double currentAngleDegForSim = 0.0;  //
+    private double targetAngleDegForSim = 0.0;
+    private double currentAngleDegForSim = 0.0;
 
     public IntakerSubsystem(){
         this.m_componentPublisher = new ComponentPublisher("IntakerPose");
@@ -54,21 +54,13 @@ public class IntakerSubsystem extends SubsystemBase{
     }
 
     // FOR SIM
-    public void startIntake() {
-        if (io instanceof IntakerIOSim sim) {
-            sim.setRunningState(true);
-        } 
+    public void startIntake3D() {  
+            System.out.println("Intake started in simulation.");
         targetAngleDegForSim = -90.0;
-        // else {
-        //     setRPS(IntakerConstants.IntakerIntakingRPS);
-        // }
     }
-    public void stopIntake() {
-        if (io instanceof IntakerIOSim sim) {
-            sim.setRunningState(false);
-        }
+    public void stopIntake3D() {
+            System.out.println("Intake stopped in simulation.");
         targetAngleDegForSim = 0.0;
-        // setRPS(0.0);
     }
     public boolean hasCoral() {
         return inputs.hasGamePiece;
@@ -77,6 +69,13 @@ public class IntakerSubsystem extends SubsystemBase{
     public boolean ejectCoral() {
         if (io instanceof IntakerIOSim sim) {
             return sim.ejectCoral();
+        }
+        return false; // TODO
+    }
+
+    public boolean addCoral() {
+        if (io instanceof IntakerIOSim sim) {
+            return sim.addCoral();
         }
         return false; // TODO
     }
@@ -113,13 +112,11 @@ public class IntakerSubsystem extends SubsystemBase{
         Logger.processInputs("Intaker", inputs);
         Logger.recordOutput("Intaker/TargetRPS", targetRPS);
         Logger.recordOutput("Intaker/VelocityRPS", inputs.intakerVelocityRPS);
-        Logger.recordOutput("Intaker/HasGamePiece", inputs.hasGamePiece);
     }
 
     private void processDashboard(){
         SmartDashboard.putNumber("Intaker/TargetRPS", targetRPS);
         SmartDashboard.putNumber("Intaker/VelocityRPS", inputs.intakerVelocityRPS);
-        SmartDashboard.putBoolean("Intaker/HasGamePiece", inputs.hasGamePiece);
     }
 
 }

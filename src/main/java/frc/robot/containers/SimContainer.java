@@ -16,6 +16,7 @@ import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
+import frc.robot.util.Simulation.TrajectorySetter;
 import frc.robot.Telemetry;
 import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
@@ -31,7 +32,7 @@ public class SimContainer implements BaseContainer {
     /* INITIALIZE */
 
     private final Telemetry logger = new Telemetry(TunerConstants.kSpeedAt12Volts.in(MetersPerSecond));
-    public static final String m_Limelight = "limelight";
+//     public static final String m_Limelight = "limelight";
 
     public static final SuperStructure superStructure = SuperStructure.getInstance();
     public static final CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
@@ -43,6 +44,8 @@ public class SimContainer implements BaseContainer {
     public static final IndexerSubsystem indexer = IndexerSubsystem.getInstance();
     public static final ClimberSubsystem climber = ClimberSubsystem.getInstance();
 
+    TrajectorySetter trajectorySetter = new TrajectorySetter();
+
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
@@ -50,6 +53,7 @@ public class SimContainer implements BaseContainer {
 
     public static final double driveDeadbandKeyboard = 0.05;
     public static final double rotateDeadbandKeyboard = 0.09;
+    public static boolean startAim = false;
 
     public static final double triggerThresholdSim = 1.; //TODO:change base on uesd controller
 
@@ -92,59 +96,53 @@ public class SimContainer implements BaseContainer {
                                     -driverController.getRightX() * MaxAngularRate * 1.6)
                         ));
 
-        driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightStick));
-        driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
+        driverController.leftBumper()
+                .onTrue(new NewCoralAlignSequence(Button.kRightStick))
+                .whileTrue(new ToggleIntake(grArm, intaker));
+        driverController.rightBumper()
+                .whileTrue(Commands.runOnce(() -> startAim = true))
+                .onFalse(Commands.runOnce(() -> startAim = false));
+        driverController.rightTrigger().whileTrue(
+                Commands.runOnce(() -> trajectorySetter.setTrajectory()));
         
-            keyboardController.up().toggleOnTrue(
-                    chassis.applyRequest(() -> drive
-                            .withVelocityX(
-                                    3.)
-                            .withVelocityY(
-                                    0.)
-                            .withRotationalRate(
-                                    0.))
-                                    );
-            keyboardController.down().toggleOnTrue(
-                    chassis.applyRequest(() -> drive
-                            .withVelocityX(
-                                    -3.)
-                            .withVelocityY(
-                                    0.)
-                            .withRotationalRate(
-                                    0.))
-                                    );
-            keyboardController.left().toggleOnTrue(
-                    chassis.applyRequest(() -> drive
-                            .withVelocityX(
-                                    0.)
-                            .withVelocityY(
-                                    3.)
-                            .withRotationalRate(
-                                    0.)));
-            keyboardController.right().toggleOnTrue(
-                    chassis.applyRequest(() -> drive
-                            .withVelocityX(
-                                    0.)
-                            .withVelocityY(
-                                    -3.)
-                            .withRotationalRate(
-                                    0.)));
-            keyboardController.z().toggleOnTrue(
-                    chassis.applyRequest(() -> drive
-                            .withVelocityX(
-                                    0.)
-                            .withVelocityY(
-                                    0.)
-                            .withRotationalRate(
-                                    Math.toRadians(-360.))));
-            keyboardController.x().toggleOnTrue(
-                    chassis.applyRequest(() -> drive
-                            .withVelocityX(
-                                    0.)
-                            .withVelocityY(
-                                    0.)
-                            .withRotationalRate(
-                                    Math.toRadians(360.))));
+                
+        keyboardController.up().toggleOnTrue(
+                chassis.applyRequest(() -> drive
+                            .withVelocityX(1.)
+                            .withVelocityY(0.)
+                            .withRotationalRate(0.)));
+        keyboardController.down().toggleOnTrue(
+                chassis.applyRequest(() -> drive
+                            .withVelocityX(-1.)
+                            .withVelocityY(0.)
+                            .withRotationalRate(0.)));
+        keyboardController.left().toggleOnTrue(
+                chassis.applyRequest(() -> drive
+                            .withVelocityX( 0.)
+                            .withVelocityY(1.)
+                            .withRotationalRate(0.)));
+        keyboardController.right().toggleOnTrue(
+                chassis.applyRequest(() -> drive
+                            .withVelocityX(0.)
+                            .withVelocityY(-1.)
+                            .withRotationalRate(0.)));
+        keyboardController.z().toggleOnTrue(
+                chassis.applyRequest(() -> drive
+                            .withVelocityX(0.)
+                            .withVelocityY(0.)
+                            .withRotationalRate(Math.toRadians(180.))));
+        keyboardController.x().toggleOnTrue(
+                chassis.applyRequest(() -> drive
+                            .withVelocityX(0.)
+                            .withVelocityY(0.)
+                            .withRotationalRate(Math.toRadians(-180.))));
+                            
+        keyboardController.a()
+                .onTrue(Commands.runOnce(() -> startAim = true));
+        keyboardController.c()
+                .onTrue(Commands.runOnce(() -> startAim = false));
+        keyboardController.b().onTrue(
+                Commands.runOnce(() -> trajectorySetter.setTrajectory()));
         
 }
 

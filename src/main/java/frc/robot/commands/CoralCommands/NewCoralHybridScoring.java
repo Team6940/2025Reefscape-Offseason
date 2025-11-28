@@ -10,17 +10,13 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.GeneralConstants;
 import frc.robot.constants.TunerConstants;
-import frc.robot.constants.GeneralConstants.ArmConstants;
 import frc.robot.constants.GeneralConstants.ElevatorConstants;
 import frc.robot.constants.GeneralConstants.FieldConstants;
 import frc.robot.constants.GeneralConstants.ShooterConstants;
-import frc.robot.constants.GeneralConstants.UpperStructureState;
 import frc.robot.containers.RobotContainer;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
@@ -29,7 +25,6 @@ import frc.robot.subsystems.Controller.ImprovedCommandXboxController.Button;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.SuperStructure.Selection;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
-import frc.robot.subsystems.Shooter.ShooterSubsystem.ShooterState;
 
 public class NewCoralHybridScoring extends Command {
     enum ScoringState {
@@ -123,7 +118,6 @@ public class NewCoralHybridScoring extends Command {
         elevator.setHeight(aimHeight);
         arm.setPosition(aimAngle);
         if (
-            // arm.isAtTargetPositon() && chassis.isAtTargetPose() && elevator.isAtTargetHeight()
             driverController.getButton(Button.kLeftTrigger)
         ) 
         {
@@ -141,7 +135,6 @@ public class NewCoralHybridScoring extends Command {
             SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING complete, moving to DEPARTING");
             state = ScoringState.DEPARTING;
             Transform2d retreatTransform2d = new Transform2d(FieldConstants.CoralScoreRetreatDistance, 0, Rotation2d.kZero);
-            // Transform2d retreatTransform2d = new Transform2d(0, FieldConstants.CoralScorePushDistance, Rotation2d.kZero);
             Pose2d departPose = targetPose.plus(retreatTransform2d);
             targetPose = departPose;
         } else {

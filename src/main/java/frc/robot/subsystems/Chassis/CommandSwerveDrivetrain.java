@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.RobotBase;
 // import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -77,7 +78,25 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     /** Swerve request to apply during field-centric move to Pose */
     private static final SwerveRequest.ApplyFieldSpeeds m_moveToPoseDrive = new SwerveRequest.ApplyFieldSpeeds()
             .withDriveRequestType(DriveRequestType.Velocity);
-    PIDController m_translationXController, m_translationYController, m_rotationController;
+    PIDController 
+        m_translationXController = 
+            RobotBase.isReal()
+            ? null
+            : new PIDController(AutoConstants.moveToPoseTranslationkP, 
+                AutoConstants.moveToPoseTranslationkI, 
+                AutoConstants.moveToPoseTranslationkD),
+        m_translationYController = 
+            RobotBase.isReal()
+                ? null
+                : new PIDController(AutoConstants.moveToPoseTranslationkP, 
+                    AutoConstants.moveToPoseTranslationkI, 
+                    AutoConstants.moveToPoseTranslationkD), 
+        m_rotationController = 
+            RobotBase.isReal()
+            ? null
+            : new PIDController(AutoConstants.moveToPoseRotationkP, 
+                AutoConstants.moveToPoseRotationkI, 
+                AutoConstants.moveToPoseRotationkD); //TODO I FIX IT FOR SIMULATION BUT I DONT KNOW IF IT WILL CREATE ANY EXTRA PROBLEMS
     Pose2d m_targetPose2d = new Pose2d();
 
     /** Swerve request to apply during Manual drivemode */
@@ -227,12 +246,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      *                                  CAN FD, and 100 Hz on CAN 2.0.
      * @param odometryStandardDeviation The standard deviation for odometry
      *                                  calculation
-     *                                  in the form [x, y, theta]ᵀ, with units in
+     *                                  in the form [x, y, theta], with units in
      *                                  meters
      *                                  and radians
      * @param visionStandardDeviation   The standard deviation for vision
      *                                  calculation
-     *                                  in the form [x, y, theta]ᵀ, with units in
+     *                                  in the form [x, y, theta], with units in
      *                                  meters
      *                                  and radians
      * @param modules                   Constants for each specific module
@@ -253,6 +272,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         startSimThread();
     }
     configureAutoBuilder();
+    configureMoveToPose(); 
 }
 
     private void configureAutoBuilder() {
@@ -666,6 +686,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         t = t.rotateAround(FieldConstants.BlueReefCenterPos, dr);
         r = r.plus(dr);
+        r = new Rotation2d().minus(r);
 
         Pose2d res = new Pose2d(t, r);
 

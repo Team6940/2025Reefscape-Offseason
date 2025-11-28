@@ -27,8 +27,8 @@ public class MyDriveTrainSimulation extends AbstractDriveTrainSimulation {
         Pounds.of(115), // robot weight
         Inches.of(30),  // bumper length
         Inches.of(30),  // bumper width
-        Inches.of(30),  //TODO drivetrain track width x
-        Inches.of(30),  //TODO drivetrain track width y
+        Inches.of(28),  //TODO drivetrain track width x
+        Inches.of(28),  //TODO drivetrain track width y
         new Supplier<GyroSimulation>(){ //Supplier<GyroSimulation> gyroSimulationFactory,
             public GyroSimulation get() {
                 return new GyroSimulation(
@@ -47,8 +47,8 @@ public class MyDriveTrainSimulation extends AbstractDriveTrainSimulation {
                         Units.Volts.of(0.2),                 // driveFrictionVoltage
                         Units.Volts.of(0.2),                 // steerFrictionVoltage
                         Units.Meters.of(0.0508),             // wheelRadius
-                        Units.KilogramSquareMeters.of(0.01), // momentOfInertia
-                        1.                 // steerInertia
+                        Units.KilogramSquareMeters.of(0.01), // the rotational inertia of the entire steering mechanism
+                        1.2                // the coefficient of friction of the tires, normally around 1.2
                     )
                 );
             }        

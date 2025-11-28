@@ -6,6 +6,34 @@
   "configurations": [
     {
       "type": "java",
+      "name": "AimCalculatorV2",
+      "request": "launch",
+      "mainClass": "frc.robot.library.ideasFrom6940.turretAiming.V2.AimCalculatorV2",
+      "projectName": "reefscape_temp"
+    },
+    {
+      "type": "java",
+      "name": "AimCalculator",
+      "request": "launch",
+      "mainClass": "frc.robot.library.ideasFrom6940.turretAiming.AimCalculator",
+      "projectName": "reefscape_temp"
+    },
+    {
+      "type": "java",
+      "name": "AimingTest",
+      "request": "launch",
+      "mainClass": "frc.robot.library.ideasFrom6940.turretAiming.AimingTest",
+      "projectName": "reefscape_temp"
+    },
+    {
+      "type": "java",
+      "name": "AimingCalculator",
+      "request": "launch",
+      "mainClass": "frc.robot.library.ideasFrom6940.turretAiming.AimingCalculator",
+      "projectName": "reefscape_temp"
+    },
+    {
+      "type": "java",
       "name": "AimingTest",
       "request": "launch",
       "mainClass": "frc.robot.library.ideasFrom6940.TurretAiming.AimingTest",

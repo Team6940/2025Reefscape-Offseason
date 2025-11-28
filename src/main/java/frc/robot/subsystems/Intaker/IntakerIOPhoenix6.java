@@ -57,7 +57,6 @@ public class IntakerIOPhoenix6 implements IntakerIO {
         inputs.motorVoltageVolts = motor.getMotorVoltage().getValueAsDouble();
         inputs.motorCurrentAmps = motor.getSupplyCurrent().getValueAsDouble();
         inputs.intakerVelocityRPS = motor.getVelocity().getValueAsDouble();
-        inputs.hasGamePiece = false; //TODO
     }
 
 

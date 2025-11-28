@@ -7,7 +7,6 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -21,12 +20,14 @@ import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
+import frc.robot.util.Simulation.ScoringSimulator;
 import frc.robot.Telemetry;
 import frc. robot. commands.AlgaeCommands.AlgaeManualScoring;
 import frc.robot.commands.ClimbCommands.NewClimbCommand;
 import frc.robot.commands.CoralCommands.ScoreL1;
 import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
+import frc.robot.constants.SimConstants.FieldSimConstants;
 import frc.robot.constants.TunerConstants;
 import frc.robot.subsystems.Climber.ClimberSubsystem;
 import frc.robot.subsystems.Controller.ImprovedCommandXboxController;
@@ -38,25 +39,12 @@ public class RobotContainer implements BaseContainer{
 
     // TODO: change chassis drive deadband here
     public static final double driveDeadband = 0.05;
-    public static final double rotateDeadband = 0.01;
-    public static final double triggerThresholdReal = 0.3;
-    // public static final double triggerThresholdSim = 0.9; //TODO:change base on uesd controller
+    public static final double rotateDeadband = 0.09;
+    public static final double triggerThresholdReal = 1.; //0.3
 
     private final Telemetry logger = new Telemetry(TunerConstants.kSpeedAt12Volts.in(MetersPerSecond));
     public static final String m_Limelight = "limelight";
 
-    // public static final ImprovedCommandXboxController driverController = 
-    //     new ImprovedCommandXboxController(
-    //         0,
-    //         RobotBase.isSimulation() ?
-    //         triggerThresholdSim :
-    //         triggerThresholdReal);
-    // public static final ImprovedCommandXboxController operatorController = 
-    //     new ImprovedCommandXboxController(
-    //         1,
-    //         RobotBase.isSimulation() ?
-    //         triggerThresholdSim :
-    //         triggerThresholdReal);
     public static final ImprovedCommandXboxController driverController = new ImprovedCommandXboxController(
         0,
         triggerThresholdReal);
@@ -104,26 +92,18 @@ public class RobotContainer implements BaseContainer{
         return traditionalDriverController.getPOV();
     }
 
-    public RobotContainer() {configureBindings();}
+    public RobotContainer() {
+                chassis.resetPose(
+                new Pose2d(
+                        FieldSimConstants.CALIBRATION_X,
+                        FieldSimConstants.CALIBRATION_Y,
+                    new Rotation2d())); configureBindings();} //TODO: DELETE
             
     private void configureBindings() {
             
         chassis.registerTelemetry(logger::telemeterize);
                     // Note that X is defined as forward according to WPILib convention,and Y is defined as to the left according to WPILib convention.
-                    // chassis will execute this command periodically
-                    // chassis.setDefaultCommand(
-                    //     chassis.applyRequest(() -> drive
-                    //             .withVelocityX(
-                    //                 -driverController.getLeftY() 
-                    //                     * Math.abs(driverController.getLeftY()) * MaxSpeed * 0.9)
-                    //             .withVelocityY(
-                    //                 -driverController.getLeftX() 
-                    //                     * Math.abs(driverController.getLeftX()) * MaxSpeed * 0.9)
-                    //             .withRotationalRate(
-                    //                 RobotBase.isSimulation() ?
-                    //                 -driverController.getRightX() * MaxAngularRate * 1.6 :
-                    //                 -driverController.getRightX() * MaxAngularRate * 0.9) //TODO
-                    //     ));
+                    // chassis will execute this command periodically;
 
                     chassis.setDefaultCommand(
                         chassis.applyRequest(() -> drive
@@ -138,7 +118,7 @@ public class RobotContainer implements BaseContainer{
                         ));
 
                     /** 
-                     /////////////////// THIS IS THE OPERATION LOGIC FOR THE DRIVER/OPERATOR CONTROLLER ///////////////////
+                     /////////////////// OPERATION LOGIC FOR DRIVER/OPERATOR CONTROLLER ///////////////////
                      * Driver Controller:
                      * Left Stick: Translation
                      * Right Stick: Rotation
@@ -197,8 +177,11 @@ public class RobotContainer implements BaseContainer{
                     /* Sticks */  
 
                     /* Bumpers & Triggers */
-                    driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(() -> superStructure.getNewHybridCoralScoreCommand(Button.kLeftTrigger),Set.of(arm, elevator, shooter, chassis)));
-                    driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());
+                    driverController.leftBumper()
+                        .and(isNL1).whileTrue(Commands.defer(() -> superStructure.getNewHybridCoralScoreCommand(Button.kLeftTrigger),Set.of(arm, elevator, shooter, chassis)))
+                        .and(isL1).whileTrue(new ScoreL1());
+                    driverController.leftTrigger().onTrue(Commands.runOnce(()->ScoringSimulator.setCoralScoreSim(SuperStructure.m_targetReefLevelIndex)));//FOR SIM
+                    // driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());
                     driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightStick));
                     driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
             
@@ -208,8 +191,8 @@ public class RobotContainer implements BaseContainer{
                     driverController.x()
                     .onTrue(new InstantCommand(() -> chassis.resetPose(
                                 new Pose2d(
-                                    new Translation2d().getX(),
-                                    new Translation2d().getY(), 
+                                    2.,//new Translation2d().getX(),
+                                    2.,//new Translation2d().getY(), 
                                     new Rotation2d()
                                 ))));
                     driverController.back().onTrue(new NewClimbCommand(Button.kStart));

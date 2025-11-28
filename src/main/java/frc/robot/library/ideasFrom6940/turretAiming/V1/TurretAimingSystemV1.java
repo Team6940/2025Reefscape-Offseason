@@ -1,13 +1,10 @@
-package frc.robot.library.ideasFrom6940.TurretAiming;
+package frc.robot.library.ideasFrom6940.turretAiming.V1;
 
-import frc.robot.library.ideasFrom6940.TurretAiming.Constants.TurretConstants;
+import frc.robot.library.ideasFrom6940.turretAiming.constants.TurretConstants;
 
-/**
- * 弹道解算结果类
- */
 class BallisticSolution {
-    public final double launchVelocity;  // 出射速度 (m/s)
-    public final double elevationAngle;  // 俯仰角 (度)
+    public final double launchVelocity;  // (m/s)
+    public final double elevationAngle;  // elevation angle (degrees)
     
     public BallisticSolution(double velocity, double angle) {
         this.launchVelocity = velocity;
@@ -16,26 +13,22 @@ class BallisticSolution {
 }
 
 /**
- * 炮台自动瞄准系统
- * 使用二分法寻找最优弹道解
+ * Main Turret Aiming System. Using Binary Search to Find Optimal Ballistic Solution
  */
-public class TurretAimingSystem {
-    // 物理常量
-    private static final double G = 9.8;       // 重力加速度 (m/s²)
-    private static final double MAX_ELEVATION = TurretConstants.MAX_ELEVATION;  // 最大俯仰角 (度)
-    private static final double MAX_VELOCITY = TurretConstants.MAX_VELOCITY;   // 固定最大出射速度 (m/s)
+public class TurretAimingSystemV1 {
+    private static final double G = 9.81; //TODO: CHANGE TO LOCAL GRAVITY / JUST JOKING HAHA.
+    private static final double MAX_ELEVATION = TurretConstants.MAX_ELEVATION;
+    private static final double MAX_VELOCITY = TurretConstants.MAX_VELOCITY;
     
-    // 目标坐标（由外部输入）
     private double targetX;
     private double targetY;
     private double targetZ;
-    
-    // 解算状态标志
+
     private boolean isTargetTooFar = false;
     private boolean isTargetTooClose = false;
     
     /**
-     * 设置目标坐标
+     * Sets the target position.
      */
     public void setTarget(double x, double y, double z) {
         this.targetX = x;
@@ -44,34 +37,37 @@ public class TurretAimingSystem {
     }
     
     /**
-     * 计算炮台到目标的水平距离和高度差
+     * Calculate horizontal distance and height difference from turret to target.
+     * 
+     * @return double[] {horizontal distance d, height difference h}
      */
     private double[] calculateTargetParameters(double turretX, double turretY, double turretZ) {
         double dx = targetX - turretX;
         double dy = targetY - turretY;
         double dz = targetZ - turretZ;
         
-        double horizontalDistance = Math.sqrt(dx * dx + dy * dy);  // XY平面距离
-        double heightDifference = dz;  // Z方向高度差
+        double horizontalDistance = Math.sqrt(dx * dx + dy * dy);  // Horizontal distance in XY plane
+        double heightDifference = dz;  // Height difference in Z direction
         
         return new double[]{horizontalDistance, heightDifference};
     }
 
     /**
-     * 计算最小所需速度
+     * Calculate minimum required velocity
+     * @return minimum velocity (m/s) OR Double.MAX_VALUE if no solution
      */
     private double calculateMinimumVelocity(double d, double h) {
         double denominator = -h + Math.sqrt(h * h + d * d);
         if (denominator <= 0) {
-            return Double.MAX_VALUE; // 无解
+            return Double.MAX_VALUE; // no solution
         }
         return d * Math.sqrt(G / denominator);
     }
     
     /**
-     * 计算给定速度下的高抛弹道俯仰角和飞行时间
+     * Calculate high-trajectory elevation angle and flight time for given velocity
      */
-    private double[] calculateHighTrajectory(double v, double d, double h) {
+    private double[] calculateTrajectory(double v, double d, double h) {
         double A = (G * d * d) / (2 * v * v);
         double discriminant = d * d - 4 * A * (h + A);
         
@@ -79,7 +75,7 @@ public class TurretAimingSystem {
             return null;
         }
         
-        double u = (d + Math.sqrt(discriminant)) / (2 * A);  // 高抛解
+        double u = (d + Math.sqrt(discriminant)) / (2 * A);  // TODO: selected high-trajectory solution, change base on needs
         double thetaRad = Math.atan(u);
         double thetaDeg = Math.toDegrees(thetaRad);
         
@@ -94,7 +90,7 @@ public class TurretAimingSystem {
     }
     
     /**
-     * 使用二分法寻找最优解
+     * Use binary search to find the optimal solution.
      */
     private BallisticSolution binarySearchOptimalSolution(double d, double h, double vMin, double vMax) {
         int left = (int) Math.ceil(vMin);
@@ -106,7 +102,7 @@ public class TurretAimingSystem {
         
         while (left <= right) {
             int mid = (left + right) / 2;
-            double[] result = calculateHighTrajectory(mid, d, h);
+            double[] result = calculateTrajectory(mid, d, h);
             
             if (result != null) {
                 double flightTime = result[1];
@@ -135,24 +131,27 @@ public class TurretAimingSystem {
         double d = params[0];
         double h = params[1];
     
-        // 特殊情况：目标在正上方或重合 → 太近
+        // Special case: target is directly above or coincident : return too close
         if (d < 1e-6 && h >= 0) {
             isTargetTooClose = true;
-            return null;
+            // return null;
+            return new BallisticSolution(Double.NaN, Double.NaN);
         }
     
         double vMin = calculateMinimumVelocity(d, h);
     
-        // 情况1：速度不足 → 太远
+        // Case 1: insufficient velocity : this means too far
         if (vMin == Double.MAX_VALUE || vMin > MAX_VELOCITY) {
             isTargetTooFar = true;
-            return null;
+            // return null;
+            return new BallisticSolution(Double.NaN, Double.NaN);
         }
     
-        // 情况2：速度足够，但角度/几何无解 → 太近
+        // Case 2: sufficient velocity but no angle/geometry solution : this means too close
         BallisticSolution solution = binarySearchOptimalSolution(d, h, vMin, MAX_VELOCITY);
         if (solution == null) {
             isTargetTooClose = true;
+            return new BallisticSolution(Double.NaN, Double.NaN);
         }
         return solution;
     }

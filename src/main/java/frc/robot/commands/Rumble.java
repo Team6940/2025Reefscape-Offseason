@@ -6,8 +6,6 @@ import frc.robot.containers.RobotContainer;
 
 public class Rumble extends Command{
 
-    // (Ivan 2025.5.26): This makes the controller rumble.
-
     RumbleType m_RumbleType;
     double value=0.;
       public Rumble(RumbleType _RumbleType,double _value){

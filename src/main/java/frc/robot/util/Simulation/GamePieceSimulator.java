@@ -11,7 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Commands;
 
-public class GamePieceSetter {
+public class GamePieceSimulator {
 
     public static void setGamePieceSim() {
         SimulatedArena.getInstance().clearGamePieces();
@@ -20,20 +20,28 @@ public class GamePieceSetter {
             new Pose2d(7, 7, Rotation2d.fromDegrees(90))));
         SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(
             new Pose2d(4, 7,Rotation2d.fromDegrees(90))));
-
         SimulatedArena.getInstance().addGamePiece(new ReefscapeAlgaeOnField(
             new Translation2d(5, 7)));
-
         SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(
             new Translation2d(6, 7)));
-        
+
+        SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(
+                new Translation2d(1.2192, 2.1892)));
+        SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(
+                new Translation2d(1.2192, 4.0180)));
+        SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(
+                new Translation2d(1.2192, 5.8468)));
+        SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(
+                new Translation2d(16.3308, 2.1892)));
+        SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(
+                new Translation2d(16.3308, 4.0180)));
+        SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(
+                new Translation2d(16.3308, 5.8468)));
+
+
     }
 
-    public static void clearGamePieces() {
-        SimulatedArena.getInstance().clearGamePieces();
-    }
-
-    public static void setCoral_HP(String HPselection) {
+    public static void setCoralAtHP(String HPselection) {
         Commands.either(
             Commands.runOnce( ()->SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(
                 new Pose2d(2, 4, Rotation2d.fromDegrees(0))))),

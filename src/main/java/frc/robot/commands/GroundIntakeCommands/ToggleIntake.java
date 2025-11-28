@@ -23,11 +23,9 @@ public class ToggleIntake extends Command {
 
     @Override
     public void initialize() {
-        intaker.startIntake();
+        intaker.startIntake3D();//SIM
         grArm.setPosition(GrArmConstants.ExtendedPosition);
         intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
-        //indexer.setLeftRPS(-5.);
-        //indexer.setRghtRPS(-10);
         
     }
 
@@ -43,10 +41,9 @@ public class ToggleIntake extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        intaker.stopIntake();
+        intaker.stopIntake3D();//SIM
         grArm.setPosition(GrArmConstants.RetractedPosition);
         intaker.setRPS(0);
-        //indexer.stop();
         
     }
 

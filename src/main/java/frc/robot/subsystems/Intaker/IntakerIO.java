@@ -13,6 +13,8 @@ public interface IntakerIO {
         public double motorCurrentAmps;
         public double intakerVelocityRPS;
         public boolean hasGamePiece;
+        public int gamepieces;
+        public boolean isIntakeRunning;
     }
     
 }
