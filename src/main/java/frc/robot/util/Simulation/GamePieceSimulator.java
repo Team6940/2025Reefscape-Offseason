@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 
 public class GamePieceSimulator {
 
-    public static void setGamePieceSim() {
+    public static void setFieldGamePieceSim() {
         SimulatedArena.getInstance().clearGamePieces();
 
         SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(
@@ -37,16 +37,14 @@ public class GamePieceSimulator {
                 new Translation2d(16.3308, 4.0180)));
         SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(
                 new Translation2d(16.3308, 5.8468)));
-
-
     }
 
-    public static void setCoralAtHP(String HPselection) {
+    public static void setCoralAtHPSim(String HPselection) { //TODO
         Commands.either(
             Commands.runOnce( ()->SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(
-                new Pose2d(2, 4, Rotation2d.fromDegrees(0))))),
+                new Pose2d(1.2192, 6, Rotation2d.fromDegrees(0))))),
             Commands.runOnce( ()->SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(
-                new Pose2d(2, 4, Rotation2d.fromDegrees(0))))),
+                new Pose2d(1.2192, 1, Rotation2d.fromDegrees(0))))),
             () -> HPselection.equals("RIGHT"));
     }
 

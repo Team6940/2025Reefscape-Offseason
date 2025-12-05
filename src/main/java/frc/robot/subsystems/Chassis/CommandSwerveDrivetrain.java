@@ -686,7 +686,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         t = t.rotateAround(FieldConstants.BlueReefCenterPos, dr);
         r = r.plus(dr);
-        r = new Rotation2d().minus(r);
+        r = new Rotation2d(Math.PI).plus(r);
 
         Pose2d res = new Pose2d(t, r);
 

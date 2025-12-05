@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -47,8 +48,7 @@ public class Robot extends LoggedRobot {
 
   public Robot() {
     GeneralConstants.initializeConstants();
-    // this.m_baseContainer = RobotBase.isSimulation() ? new SimContainer() : new RobotContainer();
-    this.m_baseContainer = new RobotContainer();
+    this.m_baseContainer = RobotBase.isSimulation() ? new SimContainer() : new RobotContainer();
 
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
     Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
@@ -61,7 +61,7 @@ public class Robot extends LoggedRobot {
   public void robotInit() {
     Logger.start();
     m_timer.start();
-    GamePieceSimulator.setGamePieceSim();
+    // GamePieceSimulator.setFieldGamePieceSim();
 
     Logger.recordOutput("AimingClac/Positions/Target", new Pose3d(
       NewFieldConstants.kTestScoringElement.getX(),

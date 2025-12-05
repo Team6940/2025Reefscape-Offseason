@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -50,7 +49,7 @@ public class SuperStructure extends SubsystemBase {
 
     private RobotStatus robotStatus = RobotStatus.IDLE;
     private ScoreMode scoreMode = ScoreMode.STOW;
-    Selection driverSelection = Selection.LEFT;
+    public Selection driverSelection = Selection.LEFT;
 
     /** Subsystems */
     private CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();

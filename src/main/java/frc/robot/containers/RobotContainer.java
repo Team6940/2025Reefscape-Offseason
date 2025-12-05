@@ -20,7 +20,6 @@ import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
-import frc.robot.util.Simulation.ScoringSimulator;
 import frc.robot.Telemetry;
 import frc. robot. commands.AlgaeCommands.AlgaeManualScoring;
 import frc.robot.commands.ClimbCommands.NewClimbCommand;
@@ -97,7 +96,9 @@ public class RobotContainer implements BaseContainer{
                 new Pose2d(
                         FieldSimConstants.CALIBRATION_X,
                         FieldSimConstants.CALIBRATION_Y,
-                    new Rotation2d())); configureBindings();} //TODO: DELETE
+                    new Rotation2d()));
+                     configureBindings();
+                } 
             
     private void configureBindings() {
             
@@ -180,21 +181,16 @@ public class RobotContainer implements BaseContainer{
                     driverController.leftBumper()
                         .and(isNL1).whileTrue(Commands.defer(() -> superStructure.getNewHybridCoralScoreCommand(Button.kLeftTrigger),Set.of(arm, elevator, shooter, chassis)))
                         .and(isL1).whileTrue(new ScoreL1());
-                    driverController.leftTrigger().onTrue(Commands.runOnce(()->ScoringSimulator.setCoralScoreSim(SuperStructure.m_targetReefLevelIndex)));//FOR SIM
-                    // driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());
-                    driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightStick));
-                    driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
+                    // driverController.leftTrigger().onTrue(Commands.runOnce(()->ScoringSimulator.setCoralScoreSim(SuperStructure.m_targetReefLevelIndex)));//FOR SIM
+                    driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightStick)) //right trigger: intake reverse
+                        .whileTrue(new ToggleIntake(grArm, intaker));
             
                     /* Buttons */
                     driverController.a().onTrue(new AlgaeManualScoring(Button.kY));
                     driverController.b().whileTrue(Commands.defer(()->superStructure.getManualAlgaeIntakeCommand(),Set.of(arm,elevator,shooter)));
                     driverController.x()
                     .onTrue(new InstantCommand(() -> chassis.resetPose(
-                                new Pose2d(
-                                    2.,//new Translation2d().getX(),
-                                    2.,//new Translation2d().getY(), 
-                                    new Rotation2d()
-                                ))));
+                                new Pose2d(2.,2.,new Rotation2d()))));
                     driverController.back().onTrue(new NewClimbCommand(Button.kStart));
 
                     /* Povs */

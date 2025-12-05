@@ -16,23 +16,27 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.LinearVelocity;
 import frc.robot.Robot;
 import frc.robot.library.ideasFrom6940.turretAiming.constants.TurretConstants;
+import frc.robot.subsystems.SuperStructure;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 
 public class ScoringSimulator {
+    private static SuperStructure superStructure = SuperStructure.getInstance();
     public static void setCoralScoreSim(int levelIndex){
         Pose2d pose = CommandSwerveDrivetrain.getInstance().getPose();
         SimulatedArena.getInstance()
         .addGamePieceProjectile(new ReefscapeCoralOnFly(
             pose.getTranslation(),
-            new Translation2d(0.35, 0), //TODO
+            superStructure.driverSelection == SuperStructure.Selection.LEFT? 
+                new Translation2d(0.35, 0.01) :
+                new Translation2d(0.35, 0), //TODO
             CommandSwerveDrivetrain.getInstance().getState().Speeds,
             pose.getRotation(),
             levelIndex == 1 ?
                 Meters.of(0.76) : 
                 levelIndex == 2 ? 
-                    Meters.of(1.28) :
+                    Meters.of(1.18) :
                     levelIndex == 3 ? 
-                        Meters.of(1.84) :                   
+                        Meters.of(1.44) :                   
                             Meters.of(1.97),
             MetersPerSecond.of(2), // The initial speed of the coral   
             Degrees.of(-35)) // The coral is ejected at a 35-degree slope
