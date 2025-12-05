@@ -205,7 +205,7 @@ public class RobotContainer {
                     // driverController.back().onTrue(new NewClimbCommand(Button.kStart));
             
 
-                    // driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightTrigger));
+                    //driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightTrigger));
                     driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
 
             

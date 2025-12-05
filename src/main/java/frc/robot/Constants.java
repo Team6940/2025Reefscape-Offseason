@@ -83,7 +83,7 @@ public class Constants {
                 new Point2D.Double(Math.toRadians(-0.86), 1.75)
         };
 
-        public static final Pose3d cameraPose3d = new Pose3d(new Translation3d(0.13, -0.17, 0.85), new Rotation3d(0, 0.48363073, Math.PI));
+        public static final Pose3d cameraPose3d = new Pose3d(new Translation3d(0.17, 0.13, 0.85), new Rotation3d(0, 0.48363073, 0));
     }
 
     public static class IntakerConstants {
@@ -306,7 +306,7 @@ public class Constants {
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
         public static final double IntakingHeight = 0.1;
         public static final double DroppingHeight = 0.;
-        public static final double IdleHeight = 0.15;//TODO
+        public static final double IdleHeight = 0.19;//TODO
         public static final double GrabbingHeight = 0.01;
 
     }

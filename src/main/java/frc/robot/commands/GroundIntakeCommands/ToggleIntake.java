@@ -17,11 +17,13 @@ import frc.robot.RobotContainer;
 
 import java.util.function.BooleanSupplier;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ToggleIntake extends Command {
     Pose2d autoIntakePose;
-    boolean isAutoIntakingAvailable = false;
+    boolean ltHeldLastCycle = false;
 
     GrArmSubsystem grArm = GrArmSubsystem.getInstance();
     IntakerSubsystem intaker = IntakerSubsystem.getInstance();
@@ -39,40 +41,59 @@ public class ToggleIntake extends Command {
     @Override
     public void initialize() {
         grArm.setPosition(GrArmConstants.ExtendedPosition);
-        intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
-        //indexer.setLeftRPS(-5.);
-        //indexer.setRghtRPS(-10);
-        
-        if(vision.hasValidTarget()){
-            autoIntakePose = vision.getObjectFieldRelativePose2d(vision.getPrimaryObject(), chassis.getPose());
-            isAutoIntakingAvailable = true;
-            new Rumble(RumbleType.kBothRumble, 1.).withTimeout(0.3).schedule();
-        }
+        // intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
     }
 
     @Override
     public void execute() {
-        if(isAutoIntakingAvailable && driverController.getButton(Button.kLeftTrigger)){
-            chassis.hybridMoveToPose(autoIntakePose, driverController,0.2, 20);
-        }
-        else{
-            chassis.driveFieldCentric(driverController,1);
+        boolean ltHeld = driverController.getButton(Button.kLeftTrigger);
+        // ----------------------------------------------
+        // 1) LT JUST PRESSED → capture & freeze pose
+        // ----------------------------------------------
+        if (ltHeld && !ltHeldLastCycle) { // rising edges
+            if (vision.hasValidTarget()) {
+                autoIntakePose = vision.getObjectFieldRelativePose2d(
+                        vision.getLowestObject(0.),
+                        chassis.getPose());
+            } else {
+                autoIntakePose = null;
+            }
         }
 
-        if(driverController.getButton(Button.kA)){
-            intaker.setRPS(-20);
+        // ----------------------------------------------
+        // 2) Rumble if valid target
+        // ----------------------------------------------
+        if (vision.hasValidTarget()) {
+            new Rumble(RumbleType.kBothRumble, 1.).withTimeout(0.02).schedule();
         }
-        else{
-            intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
+
+        // ----------------------------------------------
+        // 3) If LT held and pose frozen → auto-align
+        // ----------------------------------------------
+        if (ltHeld && autoIntakePose != null) {
+            chassis.hybridMoveToPose(autoIntakePose, driverController, 0.5, 20);
+        } else {
+            chassis.driveFieldCentric(driverController, 1);
         }
+
+        // ----------------------------------------------
+        // 4) Update LT history
+        // ----------------------------------------------
+        ltHeldLastCycle = ltHeld;
+
+        // if (driverController.getButton(Button.kA)) {
+        //     intaker.setRPS(-20);
+        // } else {
+        //     intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
+        // } // this decides whether to run the intaker in or out
+
+        Logger.recordOutput("ToggleIntakeAutoPose", autoIntakePose);
     }
 
     @Override
     public void end(boolean interrupted) {
         grArm.setPosition(GrArmConstants.RetractedPosition);
         intaker.setRPS(0);
-        //indexer.stop();
-        
     }
 
     public boolean isFinished() {
