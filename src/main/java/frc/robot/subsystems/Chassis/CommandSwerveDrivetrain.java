@@ -42,6 +42,7 @@ import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.Constants.*;
 import frc.robot.Library.MUtils.SegmentOnTheField;
 import frc.robot.Library.team1706.MathUtils;
+import frc.robot.Library.team2910.math.Rotation3;
 import frc.robot.Library.MUtils;;
 
 /**
@@ -393,6 +394,25 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 -_InputTranslation.getY() * manual_MaxSpeed * 0.5,
                 -_InputTranslation.getX() * manual_MaxSpeed* 0.5,
                 -controller.getRightX() * manual_MaxAngularRate * 0.9);
+    }
+
+    public void autoAlignToTarget(ImprovedCommandXboxController controller, Translation2d robotRelTranslation2d) {
+        @SuppressWarnings("resource")
+        PIDController rotationController = new PIDController(0.5, 0.0, 0.0);
+        rotationController.enableContinuousInput(-Math.PI, Math.PI);
+        Rotation2d currentRotation2d = getPose().getRotation();
+        Rotation2d thetaDeviation = robotRelTranslation2d.getAngle();
+        Rotation2d targeRotation2d = currentRotation2d.plus(thetaDeviation);
+        double rotationalSpeed = rotationController.calculate(currentRotation2d.getRadians(),targeRotation2d.getRadians());
+
+        Translation2d _InputTranslation = new Translation2d(controller.getLeftX(), controller.getLeftY());
+        _InputTranslation = _InputTranslation.times(_InputTranslation.getNorm());
+
+        // Drive field-centric with calculated rotational speed
+        driveFieldCentric(
+                -_InputTranslation.getY() * manual_MaxSpeed * 0.5,
+                -_InputTranslation.getX() * manual_MaxSpeed * 0.5,
+                rotationalSpeed);
     }
 
     public void driveFieldCentric(ImprovedCommandXboxController controller, double power, double maxSpeed) {
