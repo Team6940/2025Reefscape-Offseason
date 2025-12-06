@@ -6,8 +6,11 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -32,13 +35,13 @@ public class GeneralConstants {
         PrepareScoreL3(-0.05, -290),
         PrepareScoreL4(0.6, -290),
         RScoreL1(0.15, -135.),
-        RScoreL2(-0.28, -210),
+        RScoreL2(-0.22, -195),
         RScoreL3(-0.05, -207),
         RScoreL4(0.6, -190),
         RPrepareScoreL1(0.2, -150.),
-        RPrepareScoreL2(-0.28, -250),
+        RPrepareScoreL2(-0.22, -250),
         RPrepareScoreL3(-0.05, -250),
-        RPrepareScoreL4(0.6, -250),
+        RPrepareScoreL4(0.7, -235.),
         IdleDown(0,0),
         
         IdleGrab(0,0),
@@ -63,6 +66,24 @@ public class GeneralConstants {
         public static final int IntakeButton = 0;
         public static final double defaultDrivePower = 1.2;
 
+    }
+    public static class VisionConstants{
+        public static InterpolatingDoubleTreeMap tyToDistance=new InterpolatingDoubleTreeMap();
+        
+        public static final Point2D[] tyToDistancePoints = {
+                // new Point2D(0.374, 0.003),
+                // new Point2D(0.071, 0.2),
+                // new Point2D(0.046, 0.4)
+                new Point2D.Double(Math.toRadians(-23.6), 0.75),
+                new Point2D.Double(Math.toRadians(-19.8), 0.85),
+                new Point2D.Double(Math.toRadians(-16.6), 0.95),
+                new Point2D.Double(Math.toRadians(-13.6), 1.05),
+                new Point2D.Double(Math.toRadians(-11.5), 1.15),
+                new Point2D.Double(Math.toRadians(-8), 1.25),
+                new Point2D.Double(Math.toRadians(-0.86), 1.75)
+        };
+
+        public static final Pose3d cameraPose3d = new Pose3d(new Translation3d(0.17, 0.13, 0.85), new Rotation3d(0, 0.48363073, 0));
     }
 
     public static class IntakerConstants {
@@ -136,7 +157,7 @@ public class GeneralConstants {
 
         public static final double CoralIntakingRPS = -60.;
 
-        public static final double CoralScoringRPS = 20.;
+        public static final double CoralScoringRPS = 23.;
 
         public static final double AlgaeIntakingRPS = -120.;
 
@@ -170,7 +191,7 @@ public class GeneralConstants {
         public static final double kG = 0.66; // gravity
         public static final InvertedValue Inverted = InvertedValue.CounterClockwise_Positive;
         public static final double MaxVelocity = 1.6; // RPS
-        public static final double Acceleration = 1.3; // RPS^2
+        public static final double Acceleration = 2.4; // RPS^2
 
         public static final double MinDegs = -270.; // CCW Positive
         public static final double MaxDegs = -90.; 
@@ -196,8 +217,8 @@ public class GeneralConstants {
         public static final double kG = 0.19; // gravity
         public static final InvertedValue Inverted = InvertedValue.CounterClockwise_Positive;
         public static final double GrArmRatio = 4606./65.; // LCY: 50. :24. //GY: 20. : 10.////--->(8. / 56. * 20. / 56.) ^ (-1)
-        public static final double MaxVelocity = 4.; // RPS
-        public static final double Acceleration = 3.; // RPS^2
+        public static final double MaxVelocity = 3.; // RPS
+        public static final double Acceleration = 4.; // RPS^2
 
 
 
@@ -207,7 +228,7 @@ public class GeneralConstants {
         public static final double GrArmPositionToleranceDegs = 3.;
 
         public static final double RetractedPosition = 90.;
-        public static final double ExtendedPosition = -66.;
+        public static final double ExtendedPosition = -62.;
         //public static final double Deadband = 0.24;
     }
 
@@ -247,8 +268,8 @@ public class GeneralConstants {
         public static final double moveToPoseRotationkI = 0.; // TODO
         public static final double moveToPoseRotationkD = 0.; // TODO
 
-        public static final double moveToPoseRotationToleranceRadians = Units.degreesToRadians(3.);
-        public static final double moveToPoseTranslationToleranceMeters = 0.04;
+        public static final double moveToPoseRotationToleranceRadians = Units.degreesToRadians(2.);
+        public static final double moveToPoseTranslationToleranceMeters = 0.02;
 
         public static final double maxMoveToSpeed = 3.8;
         public static final double maxMoveToAngularVelocity = Units.degreesToRadians(230.);
@@ -266,13 +287,13 @@ public class GeneralConstants {
         public static final int leftMotorID = 15;
         public static final int rghtMotorID = 14;
 
-        public static final double kP = 10;
+        public static final double kP = 12;
         public static final double kI = 0;
         public static final double kD = 0.4;
         public static final double kS = 0.2;
         public static final double kV = 0.06;
         public static final double kG = 0.8;
-        public static final double Acceleration = 20.; // 102.
+        public static final double Acceleration = 40.; // 102.
         public static final double MaxVelocity = 15.; // 32.5
         public static final double MaxHeight = 1.;
         public static final double MinHeight = -0.28;
@@ -285,7 +306,7 @@ public class GeneralConstants {
         public static final double RollerRoundToMeters = 0.04 * Math.PI;
         public static final double IntakingHeight = 0.1;
         public static final double DroppingHeight = 0.;
-        public static final double IdleHeight = 0.15;//TODO
+        public static final double IdleHeight = 0.19;//TODO
         public static final double GrabbingHeight = 0.01;
 
     }
@@ -328,7 +349,7 @@ public class GeneralConstants {
         public static final double L2Fix=0.07;
         public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.);
         public static final Translation2d DReefTranslation12 = new Translation2d(2.3, 0.135);
-        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.34, 0.145);
+        public static final Translation2d DReefTranslation12Reversed = new Translation2d(1.34, 0.16);
         public static final Translation2d DAlgaeTranslation6 = new Translation2d(1.4,0);//todo
         public static final double CoralScoreRetreatDistance = 0.3; // meters, this is the distance the robot will push
                                                                     // forward after
