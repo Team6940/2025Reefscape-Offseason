@@ -193,10 +193,10 @@ public class RobotContainer {
                     operatorController.leftBumper().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
                     operatorController.rightBumper().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
 
-                    operatorController.a().onTrue(superStructure.runOnce(()-> superStructure.setTargetReefLevelIndex(1)));
-                    operatorController.b().onTrue(superStructure.runOnce(()-> superStructure.setTargetReefLevelIndex(2)));
-                    operatorController.x().onTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(3)));
-                    operatorController.y().onTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(4)));
+                    operatorController.a().onTrue(superStructure.runOnce(()-> superStructure.setTargetReefLevelIndex(1))); //down 1
+                    operatorController.b().onTrue(superStructure.runOnce(()-> superStructure.setTargetReefLevelIndex(2))); //right 2
+                    operatorController.x().onTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(3))); //left 3
+                    operatorController.y().onTrue(superStructure.runOnce(() -> superStructure.setTargetReefLevelIndex(4))); //up 4
             
 
 
@@ -205,11 +205,12 @@ public class RobotContainer {
                     // driverController.back().onTrue(new NewClimbCommand(Button.kStart));
             
 
-                    //driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightTrigger));
-                    driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
+                    // driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightTrigger));
+                    // driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
 
             
         
+
         
                     // driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(() -> superStructure.getCoralModeScoringCommand(Button.kRightTrigger),Set.of(arm, elevator, shooter, chassis)));
                     // driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());

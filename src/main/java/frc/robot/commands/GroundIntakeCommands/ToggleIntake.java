@@ -41,7 +41,7 @@ public class ToggleIntake extends Command {
     @Override
     public void initialize() {
         grArm.setPosition(GrArmConstants.ExtendedPosition);
-        // intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
+        intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
     }
 
     @Override
@@ -81,11 +81,11 @@ public class ToggleIntake extends Command {
         // ----------------------------------------------
         ltHeldLastCycle = ltHeld;
 
-        // if (driverController.getButton(Button.kA)) {
-        //     intaker.setRPS(-20);
-        // } else {
-        //     intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
-        // } // this decides whether to run the intaker in or out
+        if (driverController.getButton(Button.kA)) {
+            intaker.setRPS(-20);
+        } else {
+            intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
+        } // this decides whether to run the intaker in or out
 
         Logger.recordOutput("ToggleIntakeAutoPose", autoIntakePose);
     }

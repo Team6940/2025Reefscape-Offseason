@@ -228,7 +228,7 @@ public class Constants {
         public static final double GrArmPositionToleranceDegs = 3.;
 
         public static final double RetractedPosition = 90.;
-        public static final double ExtendedPosition = -66.;
+        public static final double ExtendedPosition = -62.;
         //public static final double Deadband = 0.24;
     }
 
