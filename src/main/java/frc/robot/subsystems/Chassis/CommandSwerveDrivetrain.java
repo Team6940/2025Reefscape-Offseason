@@ -430,22 +430,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public void driveFieldCentric(ImprovedCommandXboxController controller, double power) {
-        Translation2d _InputTranslation=new Translation2d(controller.getLeftX(), controller.getLeftY());
-        _InputTranslation=_InputTranslation.times(_InputTranslation.getNorm());
-
         driveFieldCentric(
-                -_InputTranslation.getY() * manual_MaxSpeed * 0.5,
-                -_InputTranslation.getX() * manual_MaxSpeed* 0.5,
-                -controller.getRightX() * manual_MaxAngularRate * 0.9);
+                -MathUtils.signedPow(controller.getLeftY(), power) * manual_MaxSpeed,
+                -MathUtils.signedPow(controller.getLeftX(), power) * manual_MaxSpeed,
+                -controller.getRightX() * manual_MaxAngularRate);
     }
 
     public void driveFieldCentric(ImprovedCommandXboxController controller, double power, double maxSpeed) {
-        Translation2d _InputTranslation = new Translation2d(controller.getLeftX(), controller.getLeftY());
-        _InputTranslation = _InputTranslation.times(_InputTranslation.getNorm());
-
         driveFieldCentric(
-                _InputTranslation.getY() * maxSpeed,
-                _InputTranslation.getX() * maxSpeed,
+                -MathUtils.signedPow(controller.getLeftY(), power) * maxSpeed,
+                -MathUtils.signedPow(controller.getLeftX(), power) * maxSpeed,
                 -controller.getRightX() * manual_MaxAngularRate);
     }
 
@@ -682,7 +676,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             dt = new Translation2d(dt.getX() + FieldConstants.L2Fix, dt.getY());
         }
         if (index % 2 == 1) {
-            dt = new Translation2d(dt.getX(), -dt.getY());
+            dt = new Translation2d(dt.getX(), -dt.getY()+0.05);
         }
         t = t.plus(dt);
 

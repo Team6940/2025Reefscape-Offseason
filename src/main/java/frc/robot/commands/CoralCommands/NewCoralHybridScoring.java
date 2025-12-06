@@ -4,19 +4,12 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
-import java.lang.annotation.Target;
-
-import org.littletonrobotics.junction.Logger;
-
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.GeneralConstants;
@@ -59,8 +52,15 @@ public class NewCoralHybridScoring extends Command {
     ArmSubsystem arm = ArmSubsystem.getInstance();
     CommandSwerveDrivetrain chassis = CommandSwerveDrivetrain.getInstance();
     ImprovedCommandXboxController driverController = RobotContainer.driverController;
+    
+    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
-    private final Timer triggerTimer = new Timer();
+    public static final double driveDeadband = 0.045;
+    public static final double rotateDeadband = 0.045;
+    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+            .withDeadband(MaxSpeed * driveDeadband).withRotationalDeadband(MaxAngularRate * rotateDeadband)
+            .withDriveRequestType(DriveRequestType.Velocity); // Use open-loop control for drive 
 
     public NewCoralHybridScoring(int targetReefPoseIndex, int targetReefLevelIndex, Button executionButton, boolean isReversed) {
         addRequirements(elevator, shooter, chassis, arm);
@@ -99,7 +99,6 @@ public class NewCoralHybridScoring extends Command {
             chassis.hybridMoveToPose(targetPose, driverController,
                 FieldConstants.reefTranslationAdjustmentRange, FieldConstants.reefRotationAdjustmentRangeDegs);
         SmartDashboard.putString("CORAL hybrid Scoring State", state.toString());
-        Logger.recordOutput("CoralScoringTargetPose", targetPose);
         switch (state) {
             case AIMING:
                 aim();
@@ -119,12 +118,9 @@ public class NewCoralHybridScoring extends Command {
         elevator.setHeight(aimHeight);
         arm.setPosition(aimAngle);
         if (
-            // arm.isAtTargetPositon() && chassis.isAtTargetPose() && elevator.isAtTargetHeight()
-            driverController.getButton(m_executionButton)
+            driverController.getButton(Button.kLeftTrigger)
         ) 
         {
-            triggerTimer.reset();
-            triggerTimer.start();
             state = ScoringState.SCORING;
         }
     
@@ -135,45 +131,20 @@ public class NewCoralHybridScoring extends Command {
         if(m_targetReefLevelIndex>=2){
         arm.setPosition(scoreAngle);
         elevator.setHeight(scoreHeight);
-
-        if (!driverController.getButton(m_executionButton)) {
-            triggerTimer.stop();
-            if(triggerTimer.get() < 0.3){//&& arm is at position
-                if(arm.isAtTargetPositon()){
-                    SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING complete, moving to DEPARTING");
-                    state = ScoringState.DEPARTING;
-                    Transform2d retreatTransform2d = new Transform2d(FieldConstants.CoralScoreRetreatDistance, 0,Rotation2d.kZero);
-                    Pose2d departPose = targetPose.plus(retreatTransform2d);
-                    targetPose = departPose;
-                }
-            }
-            else{
-                state = ScoringState.AIMING;
-            }
-        }
-
-        if (driverController.getButton(Button.kA)) {
-            //if (driverController.getButton(Button.kA)) {
+        if (arm.isAtTargetPositon() && elevator.isAtTargetHeight()) {
             SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING complete, moving to DEPARTING");
             state = ScoringState.DEPARTING;
             Transform2d retreatTransform2d = new Transform2d(FieldConstants.CoralScoreRetreatDistance, 0, Rotation2d.kZero);
             Pose2d departPose = targetPose.plus(retreatTransform2d);
             targetPose = departPose;
+        } else {
+            SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING in progress");
+        }}
+        else
+        {
+            shooter.setRPS(ShooterConstants.CoralScoringRPS);
         }
-        
-        // if (arm.isAtTargetPositon() && elevator.isAtTargetHeight() && driverController.getButton(Button.kA)) {
-        //     //if (driverController.getButton(Button.kA)) {
-        //     SmartDashboard.putString("CORAL hybrid Scoring State", "SCORING complete, moving to DEPARTING");
-        //     state = ScoringState.DEPARTING;
-        //     Transform2d retreatTransform2d = new Transform2d(FieldConstants.CoralScoreRetreatDistance, 0, Rotation2d.kZero);
-        //     Pose2d departPose = targetPose.plus(retreatTransform2d);
-        //     targetPose = departPose;
-        // }}
 
-        // if(!driverController.getButton(m_executionButton)){
-        //     state = ScoringState.AIMING;
-        // }
-    }
     }
 
     public void depart() {

@@ -11,8 +11,8 @@ import edu.wpi.first.math.util.Units;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Library.MUtils;
+
+import frc.robot.constants.GeneralConstants.ArmConstants;
 import frc.robot.subsystems.Arm.ArmIO.ArmIOInputs.EncoderMagnetHealth;
 
 public class ArmIOPhoenix6 implements ArmIO {
@@ -23,8 +23,7 @@ public class ArmIOPhoenix6 implements ArmIO {
 
     public ArmIOPhoenix6() {
         encoderConfig();
-        motorConfig(); 
-        //resetPosition(-90.);     //Motor is better configured after encoder because it might be attached to the encoder;
+        motorConfig();      //Motor is better configured after encoder because it might be attached to the encoder;
     }
 
     private void motorConfig() {
@@ -62,7 +61,7 @@ public class ArmIOPhoenix6 implements ArmIO {
     private void encoderConfig() {
         encoder = new CANcoder(ArmConstants.ArmEncoderID, "canivore");
         CANcoderConfiguration config = new CANcoderConfiguration();
-        config.MagnetSensor.MagnetOffset = -0.0969+1.;//-1.0969
+        config.MagnetSensor.MagnetOffset = -0.8675;
         config.MagnetSensor.SensorDirection = ArmConstants.EncoderDirection;
         encoder.getConfigurator().apply(config);
     }
