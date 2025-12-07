@@ -402,7 +402,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         rotationController.enableContinuousInput(-Math.PI, Math.PI);
         Rotation2d currentRotation2d = getPose().getRotation();
         Rotation2d thetaDeviation = robotRelTranslation2d.getAngle();
-        Rotation2d targetRotation2d = currentRotation2d.plus(thetaDeviation);
+        Rotation2d adjustmentRotation2d = Rotation2d.fromDegrees(-controller.getRightX() * 15.);
+        Rotation2d targetRotation2d = currentRotation2d.plus(thetaDeviation).plus(adjustmentRotation2d);
         double rotationalSpeed = rotationController.calculate(currentRotation2d.getRadians(),targetRotation2d.getRadians());
 
         Translation2d _InputTranslation = new Translation2d(controller.getLeftX(), controller.getLeftY());

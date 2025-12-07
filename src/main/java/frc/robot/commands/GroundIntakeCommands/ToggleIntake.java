@@ -50,19 +50,6 @@ public class ToggleIntake extends Command {
         // ----------------------------------------------
         // 1) LT JUST PRESSED → capture & freeze pose
         // ----------------------------------------------
-        if (ltHeld && !ltHeldLastCycle) { // rising edges
-            if (vision.hasValidTarget()) {
-                autoIntakePose = vision.getObjectFieldRelativePose2d(
-                        vision.getLowestObject(0.),
-                        chassis.getPose());
-            } else {
-                autoIntakePose = null;
-            }
-        }
-
-        // ----------------------------------------------
-        // 2) Rumble if valid target
-        // ----------------------------------------------
         if (vision.hasValidTarget()) {
             new Rumble(RumbleType.kBothRumble, 1.).withTimeout(0.02).schedule();
         }
@@ -70,16 +57,12 @@ public class ToggleIntake extends Command {
         // ----------------------------------------------
         // 3) If LT held and pose frozen → auto-align
         // ----------------------------------------------
-        if (ltHeld && autoIntakePose != null) {
-            chassis.hybridMoveToPose(autoIntakePose, driverController, 0.5, 20);
+        if (ltHeld && vision.hasValidTarget()) {
+            chassis.autoAlignToTarget(driverController,
+                    vision.getObjectRobotRelativeTranslation2d(vision.getLowestObject(0)));
         } else {
             chassis.driveFieldCentric(driverController, 1);
         }
-
-        // ----------------------------------------------
-        // 4) Update LT history
-        // ----------------------------------------------
-        ltHeldLastCycle = ltHeld;
 
         if (driverController.getButton(Button.kA)) {
             intaker.setRPS(-20);
@@ -87,7 +70,7 @@ public class ToggleIntake extends Command {
             intaker.setRPS(IntakerConstants.IntakerIntakingRPS);
         } // this decides whether to run the intaker in or out
 
-        Logger.recordOutput("ToggleIntakeAutoPose", autoIntakePose);
+        //Logger.recordOutput("ToggleIntakeAutoPose", autoIntakePose);
     }
 
     @Override
