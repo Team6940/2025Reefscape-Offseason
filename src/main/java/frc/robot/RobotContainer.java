@@ -205,20 +205,20 @@ public class RobotContainer {
                     // driverController.back().onTrue(new NewClimbCommand(Button.kStart));
             
 
-                    // driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightTrigger));
-                    // driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
+                    driverController.rightBumper().onTrue(new NewCoralAlignSequence(Button.kRightTrigger));
+                    driverController.rightBumper().whileTrue(new ToggleIntake(grArm, intaker));
 
             
         
 
         
-                    // driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(() -> superStructure.getCoralModeScoringCommand(Button.kRightTrigger),Set.of(arm, elevator, shooter, chassis)));
-                    // driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());
+                    driverController.leftBumper().and(isNL1).whileTrue(Commands.defer(() -> superStructure.getCoralModeScoringCommand(Button.kRightTrigger),Set.of(arm, elevator, shooter, chassis)));
+                    driverController.leftBumper().and(isL1).whileTrue(new ScoreL1());
 
-                    // driverController.povDown().onTrue(superStructure.runOnce(() -> superStructure.changeCoralMode()));
+                    driverController.povDown().onTrue(superStructure.runOnce(() -> superStructure.changeCoralMode()));
 
-                    // driverController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
-                    // driverController.povRight().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
+                    driverController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
+                    driverController.povRight().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
 
     }
 

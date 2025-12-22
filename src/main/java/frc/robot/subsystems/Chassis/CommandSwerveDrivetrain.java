@@ -398,7 +398,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public void autoAlignToTarget(ImprovedCommandXboxController controller, Translation2d robotRelTranslation2d) {
         @SuppressWarnings("resource")
-        PIDController rotationController = new PIDController(0.5, 0.0, 0.0);
+        PIDController rotationController = new PIDController(10., 0.0, 0.0);
         rotationController.enableContinuousInput(-Math.PI, Math.PI);
         Rotation2d currentRotation2d = getPose().getRotation();
         Rotation2d thetaDeviation = robotRelTranslation2d.getAngle();
