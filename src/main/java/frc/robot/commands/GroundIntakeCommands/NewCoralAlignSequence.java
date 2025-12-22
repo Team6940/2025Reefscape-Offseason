@@ -26,8 +26,10 @@ public class NewCoralAlignSequence extends Command {
         END
     }
 
+    private boolean isIntakingFromRghtSide = true;
     private IntakeState state;
     private ImprovedCommandXboxController driverController = RobotContainer.driverController;
+    private ImprovedCommandXboxController operatorController = RobotContainer.operatorController;
 
     /**
      * This works as an emergency continue button, in case the sensor is <b>not</b>
@@ -78,12 +80,28 @@ public class NewCoralAlignSequence extends Command {
         shooter.setRPS(ShooterConstants.CoralIntakingRPS);
         elevator.setHeight(ElevatorConstants.IntakingHeight);
         
-        if (!driverController.getButton(Button.kA)) {
-            indexer.setLeftRPS(-4.);
-            indexer.setRghtRPS(-8.);
-        } else
-            indexer.setLeftRPS(4.); 
-            indexer.setRghtRPS(15.);
+        if(operatorController.getButton(Button.kLeftTrigger)){
+            isIntakingFromRghtSide = false;
+        }
+        else if(operatorController.getButton(Button.kRightTrigger)){
+            isIntakingFromRghtSide = true;
+        }
+
+        if(driverController.getButton(Button.kA)){
+            indexer.setLeftRPS(15.);//Left CCW
+            indexer.setRghtRPS(-15.);//Rght CW
+        }//reversing coral out of indexer
+        else{
+            if(isIntakingFromRghtSide){
+                indexer.setLeftRPS(4.);//slightly reversing
+                indexer.setRghtRPS(15.);//intake
+            }
+            else{
+                indexer.setLeftRPS(-15.);//intake
+                indexer.setRghtRPS(-4.);//slightly reversing
+            }
+        }
+
         if ((
                 driverController.getButton(m_toggleButton)) && arm.isAtTargetPositon()) {
             // if (driverController.getButton(m_toggleButton)) {
