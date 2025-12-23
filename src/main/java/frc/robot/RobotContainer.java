@@ -1,57 +1,38 @@
 package frc.robot;
 
-import static edu.wpi.first.units.Units.*;
-
-import java.io.ObjectInputStream.GetField;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
-
-// import javax.print.StreamPrintService;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DriverStation;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.FieldConstants;
-import frc.robot.subsystems.ImprovedCommandXboxController;
-import frc.robot.subsystems.ImprovedCommandXboxController.*;
-import frc.robot.subsystems.Indexer.IndexerSubsystem;
-import frc.robot.subsystems.SuperStructure;
-import frc.robot.subsystems.SuperStructure.RobotStatus;
-import frc.robot.subsystems.SuperStructure.Selection;
-import frc.robot.subsystems.Vision.VisionSubsystem;
+import frc.robot.commands.CoralCommands.ScoreL1;
+import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
+import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
+import frc.robot.commands.TestCommands.FollowTrajectoryCommand;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Chassis.TunerConstants;
+import frc.robot.subsystems.Climber.ClimberSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.GrArm.GrArmSubsystem;
+import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.subsystems.ImprovedCommandXboxController.Button;
+import frc.robot.subsystems.Indexer.IndexerSubsystem;
 import frc.robot.subsystems.Intaker.IntakerSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
-import frc.robot.commands.SetStateIdleDown;
-import frc.robot.commands.ZeroElevator;
-import frc.robot.commands.AlgaeCommands.AlgaeHybridIntake;
-import frc.robot.commands.AlgaeCommands.AlgaeManualIntake;
-import frc. robot. commands.AlgaeCommands.AlgaeManualScoring;
-import frc.robot.commands.ClimbCommands.NewClimbCommand;
-import frc.robot.commands.ClimbCommands.SemiAutoClimbCommand;
-import frc.robot.commands.CoralCommands.ScoreL1;
-import frc.robot.commands.GroundIntakeCommands.CoralAlignSequence;
-import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
-import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
-import frc.robot.commands.TestCommands.ToggleElevatorTest;
-import frc.robot.commands.TestCommands.ToggleArmTest;
-import frc.robot.subsystems.Climber.ClimberSubsystem;
+import frc.robot.subsystems.SuperStructure;
+import frc.robot.subsystems.SuperStructure.Selection;
+import frc.robot.subsystems.Vision.VisionSubsystem;
 
 public class RobotContainer {
 
@@ -217,8 +198,10 @@ public class RobotContainer {
 
                     driverController.povDown().onTrue(superStructure.runOnce(() -> superStructure.changeCoralMode()));
 
-                    driverController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
-                    driverController.povRight().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
+                    // driverController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
+                    // driverController.povRight().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
+                    driverController.povLeft().onTrue(new FollowTrajectoryCommand("Trajectory_StowToL4"));
+                    driverController.povRight().onTrue(new FollowTrajectoryCommand("Trajectory_L4ToStow"));
 
     }
 
