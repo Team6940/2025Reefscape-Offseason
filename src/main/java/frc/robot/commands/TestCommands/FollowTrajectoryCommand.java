@@ -31,6 +31,7 @@ public class FollowTrajectoryCommand extends Command {
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             br.readLine(); // skip header
+            br.readLine(); // skip two lines
             String line;
             while ((line = br.readLine()) != null) {
                 String[] tokens = line.split(",");
@@ -39,7 +40,7 @@ public class FollowTrajectoryCommand extends Command {
                         Double.parseDouble(tokens[1]), // height
                         Double.parseDouble(tokens[2]), // angle (deg)
                         Double.parseDouble(tokens[3]), // dh
-                        Double.parseDouble(tokens[4]) // dtheta
+                        Double.parseDouble(tokens[4])  // dtheta
                 ));
             }
         } catch (Exception e) {
@@ -76,6 +77,7 @@ public class FollowTrajectoryCommand extends Command {
 
         elevator.setHeight(height);
         arm.setPosition(angle);
+        // This should be commented before tested on the robot
         Logger.recordOutput("TrajectoryFollowerDesiredHeight", height);
         Logger.recordOutput("TrajectoryFollowerDesiredDegree", angle);
     }
@@ -91,5 +93,8 @@ public class FollowTrajectoryCommand extends Command {
         TrajectoryPoint last = trajectory.get(trajectory.size() - 1);
         elevator.setHeight(last.height);
         arm.setPosition(last.angleDeg);
+        // This should be commented before tested on the robot
+        Logger.recordOutput("TrajectoryFollowerLastHeight", last.height);
+        Logger.recordOutput("TrajectoryFollowerLastDegree", last.angleDeg);
     }
 }

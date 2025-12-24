@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.CoralCommands.ScoreL1;
 import frc.robot.commands.GroundIntakeCommands.NewCoralAlignSequence;
 import frc.robot.commands.GroundIntakeCommands.ToggleIntake;
-import frc.robot.commands.TestCommands.FollowTrajectoryCommand;
 import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Chassis.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Chassis.TunerConstants;
@@ -198,10 +197,10 @@ public class RobotContainer {
 
                     driverController.povDown().onTrue(superStructure.runOnce(() -> superStructure.changeCoralMode()));
 
-                    // driverController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
-                    // driverController.povRight().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
-                    driverController.povLeft().onTrue(new FollowTrajectoryCommand("Trajectory_StowToL4"));
-                    driverController.povRight().onTrue(new FollowTrajectoryCommand("Trajectory_L4ToStow"));
+                    driverController.povLeft().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.LEFT)));
+                    driverController.povRight().onTrue(superStructure.runOnce(() -> superStructure.setDriverSelection(Selection.RIGHT)));
+                    //driverController.povLeft().onTrue(new FollowTrajectoryCommand("Trajectory_StowToL4.csv"));
+                    //driverController.povRight().onTrue(new FollowTrajectoryCommand("Trajectory_L4ToStow.csv"));
 
     }
 

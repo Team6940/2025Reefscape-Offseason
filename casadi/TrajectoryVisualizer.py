@@ -8,7 +8,7 @@ if len(sys.argv) < 2:
     sys.exit(1)
 
 file_path = sys.argv[1]
-df = pd.read_csv(file_path)
+df = pd.read_csv(file_path, skiprows = 1)
 
 # Create a figure with 3 subplots (stacked vertically)
 fig, axs = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
